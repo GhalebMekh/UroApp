@@ -12,6 +12,16 @@ export default function Login({ onLogin }) {
     e.preventDefault();
     setError('');
 
+    if (!email || !password) {
+      setError('Email and password required');
+      return;
+    }
+
+    if (isSignup && !name) {
+      setError('Name required');
+      return;
+    }
+
     if (isSignup && password.length < 4) {
       setError('Password must be at least 4 characters');
       return;
@@ -51,7 +61,7 @@ export default function Login({ onLogin }) {
             <p className="text-muted text-sm">Residency platform for on-duty clinicians</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
             {isSignup && (
               <div>
                 <label className="block text-sm font-medium text-ink mb-2">Name</label>
@@ -73,7 +83,6 @@ export default function Login({ onLogin }) {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="resident@hospital.edu"
                 className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
-                required
               />
             </div>
 
@@ -85,7 +94,6 @@ export default function Login({ onLogin }) {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
-                required
               />
             </div>
 
