@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import { apiFetch } from './lib/api';
 
 export default function App() {
   const [token, setToken] = useState(localStorage.getItem('token'));
@@ -10,18 +11,8 @@ export default function App() {
   useEffect(() => {
     if (token) {
       // Verify token and fetch user
-      fetch('/api/auth/me', {
-        headers: { 'Authorization': `Bearer ${token}` },
-      })
-        .then(r => r.json())
-        .then(data => {
-          if (data.error) {
-            setToken(null);
-            localStorage.removeItem('token');
-          } else {
-            setUser(data);
-          }
-        })
+      apiFetch('/api/auth/me', { token })
+        .then(setUser)
         .catch(() => {
           setToken(null);
           localStorage.removeItem('token');

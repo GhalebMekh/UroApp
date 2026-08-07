@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PatientList from '../components/PatientList';
 import PatientDetail from '../components/PatientDetail';
+import { apiFetch } from '../lib/api';
 
 export default function Dashboard({ token, user, onLogout }) {
   const [patients, setPatients] = useState([]);
@@ -13,11 +14,8 @@ export default function Dashboard({ token, user, onLogout }) {
 
   const fetchPatients = async () => {
     try {
-      const res = await fetch('/api/patients', {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await res.json();
-      setPatients(data);
+      const data = await apiFetch('/api/patients', { token });
+      setPatients(Array.isArray(data) ? data : []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -27,19 +25,9 @@ export default function Dashboard({ token, user, onLogout }) {
 
   const handleAddPatient = async (patientData) => {
     try {
-      const res = await fetch('/api/patients', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(patientData),
-      });
-      const data = await res.json();
-      if (data.success) {
-        fetchPatients();
-        setSelectedPatient(null);
-      }
+      await apiFetch('/api/patients', { method: 'POST', token, body: patientData });
+      fetchPatients();
+      setSelectedPatient(null);
     } catch (e) {
       console.error(e);
     }
@@ -48,15 +36,9 @@ export default function Dashboard({ token, user, onLogout }) {
   const handleDeletePatient = async (patientId) => {
     if (!window.confirm('Delete this patient?')) return;
     try {
-      const res = await fetch(`/api/patients/${patientId}`, {
-        method: 'DELETE',
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await res.json();
-      if (data.success) {
-        fetchPatients();
-        setSelectedPatient(null);
-      }
+      await apiFetch(`/api/patients/${patientId}`, { method: 'DELETE', token });
+      fetchPatients();
+      setSelectedPatient(null);
     } catch (e) {
       console.error(e);
     }

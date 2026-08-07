@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../lib/api';
 
 export default function Login({ onLogin }) {
-  console.log('Login component loaded - Version: textarea-fix-v2');
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,21 +31,11 @@ export default function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const endpoint = isSignup ? '/api/auth/signup' : '/api/auth/login';
-      const body = isSignup ? { email, password, name } : { email, password };
-
-      const res = await fetch(endpoint, {
+      const data = await apiFetch(isSignup ? '/api/auth/signup' : '/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: isSignup ? { email, password, name } : { email, password },
       });
-
-      const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        onLogin(data.token, { id: data.userId, name: data.name || 'Resident' });
-      }
+      onLogin(data.token, { id: data.userId, name: data.name || name || 'Resident' });
     } catch (e) {
       setError(e.message);
     } finally {
@@ -89,13 +79,13 @@ export default function Login({ onLogin }) {
 
             <div>
               <label className="block text-sm font-medium text-ink mb-2">Password</label>
-              <textarea
+              <input
+                type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value.replace(/\n/g, ''))}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet resize-none"
-                rows="1"
-                style={{height: '42px'}}
+                autoComplete={isSignup ? 'new-password' : 'current-password'}
+                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
               />
             </div>
 

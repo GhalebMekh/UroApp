@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../lib/api';
 
 export default function PatientDetail({ patient, token, onSave, onDelete, onClose }) {
   const [formData, setFormData] = useState(
@@ -19,10 +20,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
 
   const fetchPatientDetails = async () => {
     try {
-      const res = await fetch(`/api/patients/${patient.id}`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await res.json();
+      const data = await apiFetch(`/api/patients/${patient.id}`, { token });
       setFormData(data);
       setSoapNotes(data.soapNotes || []);
     } catch (e) {
@@ -52,19 +50,13 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
     if (!soapNote.s && !soapNote.o && !soapNote.a && !soapNote.p) return;
 
     try {
-      const res = await fetch(`/api/patients/${patient.id}/soap`, {
+      await apiFetch(`/api/patients/${patient.id}/soap`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(soapNote),
+        token,
+        body: soapNote,
       });
-      const data = await res.json();
-      if (data.success) {
-        setSoapNote({ s: '', o: '', a: '', p: '' });
-        fetchPatientDetails();
-      }
+      setSoapNote({ s: '', o: '', a: '', p: '' });
+      fetchPatientDetails();
     } catch (e) {
       console.error(e);
     }
