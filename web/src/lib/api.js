@@ -7,7 +7,19 @@
  * origin (e.g. https://uroapp-backend.onrender.com) or every /api request is
  * answered by the static host with HTML.
  */
-const API_BASE = (import.meta.env.VITE_API_BASE || '').replace(/\/$/, '');
+/** Used by production builds when VITE_API_BASE isn't set on the host. */
+const DEFAULT_PROD_API = 'https://uroapp-backend.onrender.com';
+
+function resolveBase() {
+  const configured = import.meta.env.VITE_API_BASE;
+  // "/" is the escape hatch for hosts that rewrite /api to the backend themselves.
+  if (configured === '/') return '';
+  if (configured) return configured.replace(/\/$/, '');
+  // import.meta.env.DEV is true only under `vite dev`, where the proxy applies.
+  return import.meta.env.DEV ? '' : DEFAULT_PROD_API;
+}
+
+const API_BASE = resolveBase();
 
 /** Shown when the response body isn't JSON — almost always a misrouted /api call. */
 const UNREACHABLE =
