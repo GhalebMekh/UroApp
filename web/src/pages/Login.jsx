@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 
 export default function Login({ onLogin }) {
+  console.log('Login component loaded - Version: textarea-fix-v2');
   const [isSignup, setIsSignup] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
