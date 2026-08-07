@@ -89,11 +89,13 @@ export default function Login({ onLogin }) {
             <div>
               <label className="block text-sm font-medium text-ink mb-2">Password</label>
               <input
-                type="password"
+                type="text"
+                inputMode="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
+                autoComplete="off"
               />
             </div>
 
