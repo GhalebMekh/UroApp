@@ -45,15 +45,22 @@ export default function Dashboard({ token, user, onLogout }) {
   };
 
   return (
-    <div className="flex h-screen bg-navy">
-      {/* Sidebar */}
-      <div className="w-80 bg-navy-2 border-r border-line flex flex-col">
-        <div className="p-6 border-b border-line">
+    // 100dvh, not h-screen: on iOS Safari 100vh is taller than the visible area,
+    // so the bottom of the sidebar hides behind the URL bar.
+    <div className="flex h-[100dvh] flex-col overflow-hidden bg-navy md:flex-row">
+      {/* Sidebar — full width on a phone, fixed rail from md up. A phone shows
+          one pane at a time, so it steps aside once a patient is selected. */}
+      <div
+        className={`${
+          selectedPatient ? 'hidden md:flex' : 'flex'
+        } min-h-0 w-full flex-col border-line bg-navy-2 md:w-80 md:border-r`}
+      >
+        <div className="border-b border-line p-6">
           <h1 className="font-display text-2xl font-bold text-ink mb-1">UroApp</h1>
           <p className="text-sm text-muted">Hi, {user.name}</p>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="min-h-0 flex-1 overflow-y-auto">
           <PatientList
             patients={patients}
             selectedId={selectedPatient?.id}
@@ -62,26 +69,31 @@ export default function Dashboard({ token, user, onLogout }) {
           />
         </div>
 
-        <div className="p-4 border-t border-line space-y-2">
+        {/* pb-safe keeps the buttons clear of the iPhone home indicator. */}
+        <div className="space-y-2 border-t border-line p-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
           <button
             onClick={() => setSelectedPatient({ new: true })}
-            className="w-full py-2 rounded bg-violet text-navy font-semibold hover:bg-violet-soft transition"
+            className="min-h-[44px] w-full rounded bg-violet py-2 font-semibold text-navy transition hover:bg-violet-soft"
           >
             + New Patient
           </button>
           <button
             onClick={onLogout}
-            className="w-full py-2 rounded bg-steel text-muted hover:bg-steel/80 transition text-sm"
+            className="min-h-[44px] w-full rounded bg-steel py-2 text-sm text-muted transition hover:bg-steel/80"
           >
             Log Out
           </button>
         </div>
       </div>
 
-      {/* Main */}
-      <div className="flex-1 overflow-y-auto">
+      {/* Detail pane — hidden on a phone until something is selected. */}
+      <div
+        className={`${
+          selectedPatient ? 'flex' : 'hidden md:flex'
+        } min-h-0 flex-1 flex-col overflow-y-auto`}
+      >
         {loading ? (
-          <div className="flex items-center justify-center h-full text-muted">
+          <div className="flex h-full items-center justify-center text-muted">
             Loading...
           </div>
         ) : selectedPatient ? (
@@ -93,7 +105,7 @@ export default function Dashboard({ token, user, onLogout }) {
             onClose={() => setSelectedPatient(null)}
           />
         ) : (
-          <div className="flex items-center justify-center h-full text-muted">
+          <div className="flex h-full items-center justify-center text-muted">
             Select or create a patient
           </div>
         )}
