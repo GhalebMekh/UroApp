@@ -21,7 +21,15 @@ interface ApiResponse {
   articles: Article[];
 }
 
-const API_BASE = import.meta.env.VITE_ARTICLES_API || 'http://localhost:3001';
+/**
+ * Where the articles service lives. In dev that's the local server on 3001; in
+ * a deployed build it must come from VITE_ARTICLES_API, because localhost on a
+ * colleague's phone is their own device (and http:// on an https:// page is
+ * blocked as mixed content). Null means "not configured" — the screen then says
+ * so instead of failing on a request that could never have worked.
+ */
+const API_BASE: string | null =
+  import.meta.env.VITE_ARTICLES_API || (import.meta.env.DEV ? 'http://localhost:3001' : null);
 
 export function ArticlesScreen() {
   const [articles, setArticles] = useState<Article[]>([]);
@@ -31,22 +39,39 @@ export function ArticlesScreen() {
   const [weeklyTopic, setWeeklyTopic] = useState<string>('');
 
   useEffect(() => {
+    if (API_BASE === null) {
+      setLoading(false);
+      setError('Weekly reads needs a live connection and is not available in this build.');
+      return;
+    }
+
     const fetchArticles = async () => {
       try {
         setLoading(true);
         const url = `${API_BASE}/api/articles${subspecialty ? `?subspecialty=${subspecialty}` : ''}`;
         const res = await fetch(url);
-        const data: ApiResponse = await res.json();
+
+        // Read as text first: a misrouted /api call is answered with HTML, and
+        // res.json() on that throws a parser error rather than a usable one.
+        const raw = await res.text();
+        let data: ApiResponse;
+        try {
+          data = JSON.parse(raw) as ApiResponse;
+        } catch {
+          console.error(`Expected JSON from ${url}, got ${res.status}:`, raw.slice(0, 200));
+          throw new Error('The articles service returned an unexpected response.');
+        }
 
         if (data.success) {
           setArticles(data.articles);
           setWeeklyTopic(data.articles[0]?.topic || '');
           setError(null);
         } else {
-          setError('Failed to fetch articles');
+          setError('Could not load this week’s articles.');
         }
       } catch (e) {
-        setError(`Could not connect to articles server: ${e instanceof Error ? e.message : 'Unknown error'}`);
+        console.error(e);
+        setError('Could not reach the articles service. Check your connection and try again.');
       } finally {
         setLoading(false);
       }
@@ -97,15 +122,18 @@ export function ArticlesScreen() {
       <div className="px-4 py-6">
         {loading && (
           <div className="text-center text-muted">
-            <div className="mb-2">📚 Loading articles...</div>
-            <p className="text-sm">Fetching from PubMed Central</p>
+            <div className="mb-2 text-sm">Loading articles…</div>
+            <p className="text-xs text-muted-2">Fetching from PubMed Central</p>
           </div>
         )}
 
+        {/* Steel, not crimson: crimson is reserved for risk/calculus cues (CLAUDE.md). */}
         {error && (
-          <div className="rounded-card border border-crimson/30 bg-crimson/10 p-4 text-sm text-crimson">
-            ⚠️ {error}
-            <p className="mt-2 text-xs text-crimson/70">Make sure the articles server is running at {API_BASE}</p>
+          <div className="rounded-card border border-line bg-steel p-4">
+            <p className="text-sm text-ink">{error}</p>
+            <p className="mt-2 text-xs text-muted">
+              The rest of UroApp works offline — calculators, guidelines and drugs are all available.
+            </p>
           </div>
         )}
 
