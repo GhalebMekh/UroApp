@@ -63,5 +63,5 @@ export const SEARCH_INDEX: SearchItem[] = [
   { label: 'Intra-op scenarios', sub: 'Decision case', screen: 'scenarios', keywords: kw('intraoperative scenario decision case simulator turbt branching complications management or training') },
   { label: 'Drug interactions', sub: 'Pharmacology', screen: 'drugs', keywords: kw('drug interactions pde5i nitrates alpha-blocker antimuscarinic mirabegron testosterone warfarin fluoroquinolone tmp-smx interaction') },
   { label: 'Consent generator', sub: 'OR · bilingual', screen: 'residency', keywords: kw('consent generator bilingual arabic english surgical complications turp vasectomy nephrectomy موافقة') },
-  { label: 'Evidence AI', sub: 'Home', screen: 'home', keywords: kw('evidence ai assistant question') },
+  { label: 'Evidence AI', sub: 'In development', screen: 'more', keywords: kw('evidence ai assistant question') },
 ];
