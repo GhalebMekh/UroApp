@@ -11,6 +11,12 @@ export default function Login({ onLogin }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+
+    if (isSignup && password.length < 4) {
+      setError('Password must be at least 4 characters');
+      return;
+    }
+
     setLoading(true);
 
     try {
