@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    /* Use dvh, not vh (CLAUDE.md) so the mobile chrome doesn't crop the layout */
+    min-height: 100dvh;
+    background-color: theme('colors.navy.DEFAULT');
+    color: theme('colors.ink');
+    font-family: theme('fontFamily.sans');
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Arabic text gets a dedicated Arabic face. Times New Roman's Arabic (where it
+     exists at all) is poor, so force RTL content to IBM Plex Sans Arabic — this
+     covers the bilingual consent forms and any future Arabic UI. */
+  [dir='rtl'],
+  :lang(ar) {
+    font-family: theme('fontFamily.arabic');
+  }
+
+  /* Respect the user's motion preference (ported from the original site) */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Safe-area insets for the persistent top bar and bottom nav (CLAUDE.md) */
+  .pt-safe {
+    padding-top: env(safe-area-inset-top);
+  }
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .top-safe {
+    top: env(safe-area-inset-top);
+  }
+}

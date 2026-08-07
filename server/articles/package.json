@@ -1,0 +1,20 @@
+{
+  "name": "uroapp-articles-server",
+  "version": "1.0.0",
+  "description": "Weekly automated urology articles from PubMed Central",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node --watch index.js",
+    "start": "node index.js",
+    "fetch": "node fetchArticles.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "node-cron": "^3.0.2",
+    "sqlite3": "^5.1.6",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {}
+}
