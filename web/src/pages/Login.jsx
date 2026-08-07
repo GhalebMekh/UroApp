@@ -88,14 +88,13 @@ export default function Login({ onLogin }) {
 
             <div>
               <label className="block text-sm font-medium text-ink mb-2">Password</label>
-              <input
-                type="text"
-                inputMode="password"
+              <textarea
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => setPassword(e.target.value.replace(/\n/g, ''))}
                 placeholder="••••••••"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
-                autoComplete="off"
+                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet resize-none"
+                rows="1"
+                style={{height: '42px'}}
               />
             </div>
 
