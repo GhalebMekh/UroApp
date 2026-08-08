@@ -36,12 +36,20 @@ app.post('/api/auth/signup', async (req, res) => {
     const { email, password, name } = req.body;
     if (!email || !password) return res.status(400).json({ error: 'Email and password required' });
 
+    const displayName = (name || '').trim() || 'Resident';
     const hash = await bcrypt.hash(password, 10);
-    const userId = await createUser(email, hash, name || 'Resident');
+    const userId = await createUser(email, hash, displayName);
 
     const token = jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '30d' });
-    res.json({ success: true, token, userId });
+    res.json({ success: true, token, userId, name: displayName });
   } catch (e) {
+    // The unique index on users.email is what stops a second account being
+    // created for the same person; say so plainly instead of leaking SQL.
+    if (String(e.message).includes('UNIQUE constraint failed')) {
+      return res
+        .status(409)
+        .json({ error: 'An account already exists for this email. Log in instead.' });
+    }
     res.status(400).json({ error: e.message });
   }
 });

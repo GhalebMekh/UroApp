@@ -1,9 +1,19 @@
 import sqlite3 from 'sqlite3';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { mkdirSync } from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const dbPath = join(__dirname, 'uroapp.db');
+
+/**
+ * Where the database file lives. The default sits beside the code, which is
+ * fine locally but is wiped on every deploy and every cold start on a host with
+ * an ephemeral filesystem — taking all accounts and patients with it. Point
+ * DATABASE_PATH at a mounted persistent disk (e.g. /var/data/uroapp.db) in
+ * production so the data outlives the container.
+ */
+const dbPath = process.env.DATABASE_PATH || join(__dirname, 'uroapp.db');
+mkdirSync(dirname(dbPath), { recursive: true });
 
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) console.error('DB error:', err);
@@ -118,11 +128,18 @@ export function initDB() {
   });
 }
 
+/**
+ * Sign-up and sign-in must agree on the stored form of an address, or a phone
+ * that capitalises the first letter creates an account the same person then
+ * cannot sign in to. Normalising in one place keeps both paths consistent.
+ */
+export const normalizeEmail = (email) => String(email ?? '').trim().toLowerCase();
+
 export function createUser(email, passwordHash, name) {
   return new Promise((resolve, reject) => {
     db.run(
       'INSERT INTO users (email, passwordHash, name) VALUES (?, ?, ?)',
-      [email, passwordHash, name],
+      [normalizeEmail(email), passwordHash, name],
       function (err) {
         if (err) reject(err);
         else resolve(this.lastID);
@@ -133,7 +150,7 @@ export function createUser(email, passwordHash, name) {
 
 export function getUserByEmail(email) {
   return new Promise((resolve, reject) => {
-    db.get('SELECT * FROM users WHERE email = ?', [email], (err, row) => {
+    db.get('SELECT * FROM users WHERE email = ?', [normalizeEmail(email)], (err, row) => {
       if (err) reject(err);
       else resolve(row);
     });
