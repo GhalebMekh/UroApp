@@ -1,5 +1,6 @@
 import { TIER_LABEL, type Tier, useEntitlements } from '@/lib/entitlements';
 import { cn } from '@/lib/cn';
+import { lockApp, passcodeEnabled } from '@/lib/passcode';
 
 const TIERS: Tier[] = ['resident', 'pro', 'elite'];
 
@@ -29,6 +30,24 @@ export function MoreScreen() {
             Clinical responsibility remains with the treating physician.
           </p>
         </section>
+
+        {/* Lets a shared or borrowed device be handed over locked. Hidden when
+            no passcode is configured, where the button would do nothing. */}
+        {passcodeEnabled && (
+          <section className="rounded-[16px] border border-line bg-navy-2 p-5">
+            <h3 className="text-[15px] font-semibold">Access</h3>
+            <p className="mb-3 text-[12px] text-muted-2">
+              Locking clears this device’s unlock; the passcode is needed again.
+            </p>
+            <button
+              type="button"
+              onClick={() => void lockApp()}
+              className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+            >
+              Lock this device
+            </button>
+          </section>
+        )}
 
         {/* Status of features that are announced but not yet shipped, so the
             app never implies something is available when it isn't. */}
