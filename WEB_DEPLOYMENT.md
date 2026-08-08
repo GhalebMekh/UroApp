@@ -9,6 +9,20 @@ UroApp now includes:
 
 All residents share the web platform; each logs in with their own account and manages their own patients.
 
+### What the static site serves
+
+`web/` builds **both** apps into one site (`web/scripts/build-site.mjs`):
+
+| Path | App | Notes |
+|---|---|---|
+| `/` | The full UroApp (repo root) | Calculators, guidelines, Academic, Residency — fully offline |
+| `/patients/` | The multi-user platform (`web/`) | Login, patient list, SOAP notes — needs the backend |
+
+No Render settings change for this: the root directory stays `web`, the build
+command stays `npm install && npm run build`, and the publish directory stays
+`dist`. Both paths are real directories with their own `index.html`, so no SPA
+rewrite rule is required.
+
 ---
 
 ## Local Testing
@@ -107,10 +121,19 @@ Output: `➜ Local: http://localhost:3000`
 
 ## Database & Persistence
 
-**SQLite database** (`server/main/uroapp.db`) on Render's free tier:
-- Persists between restarts
-- Stores users, patients, SOAP notes
-- Auto-cleaned old data (optional cron job)
+⚠️ **SQLite on the free tier does NOT persist.** The container filesystem is
+ephemeral: it is reset on every deploy and every wake from idle sleep, taking
+all accounts and patients with it. The symptom is being able to sign up twice
+with the same address (the unique index would otherwise reject it) and then
+getting "Invalid credentials" on the next visit.
+
+To make data survive, the database file must sit outside the container:
+- Attach a **persistent disk** to the backend service (requires a paid instance),
+  mount it at `/var/data`, and set `DATABASE_PATH=/var/data/uroapp.db`
+- Or move to a hosted **PostgreSQL** instance and port `db.js` to it
+
+`db.js` already reads `DATABASE_PATH` and creates the directory, so attaching a
+disk needs no code change — only the environment variable.
 
 **For scale** (100+ concurrent residents):
 - Upgrade to PostgreSQL on Render (free tier available, $15/mo paid)
