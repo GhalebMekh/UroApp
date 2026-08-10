@@ -3,6 +3,23 @@ import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { todayISO } from '@/lib/date';
+import {
+  ALERT_COLOURS,
+  CHANNEL_LABELS,
+  COLOUR_LABELS,
+  TIP_LABELS,
+  catheterDays,
+  cbiChannelMismatch,
+  describeCatheter,
+  emptyCatheter,
+  isRetaining,
+  netOutput,
+  type Catheter,
+  type CatheterChannels,
+  type CatheterTip,
+  type UrineColour,
+  type UrineEntry,
+} from '@/lib/catheter';
 
 type Admission = 'elective' | 'er';
 type Sex = 'male' | 'female' | '';
@@ -48,6 +65,7 @@ interface Patient {
   labs: Labs;
   imaging: string;
   activeIssues: string;
+  catheter: Catheter;
   notes: SoapNote[];
 }
 
@@ -88,11 +106,47 @@ function emptyPatient(): Patient {
     labs: emptyLabs(),
     imaging: '',
     activeIssues: '',
+    catheter: emptyCatheter(),
     notes: [],
   };
 }
 
 const str = (v: unknown): string => (typeof v === 'string' ? v : '');
+
+/** One of `allowed`, else ''. Keeps stored enums safe across schema changes. */
+function oneOf<T extends string>(v: unknown, allowed: readonly T[]): T | '' {
+  return typeof v === 'string' && (allowed as readonly string[]).includes(v) ? (v as T) : '';
+}
+
+/** Patients saved before the catheter field existed have no `catheter` key. */
+function normalizeCatheter(raw: unknown): Catheter {
+  if (!raw || typeof raw !== 'object') return emptyCatheter();
+  const c = raw as Record<string, unknown>;
+  const log = Array.isArray(c.log) ? (c.log as Record<string, unknown>[]) : [];
+  return {
+    present: c.present === true,
+    inserted: str(c.inserted),
+    size: str(c.size),
+    tip: oneOf<Exclude<CatheterTip, ''>>(c.tip, ['regular', 'coude']),
+    channels: oneOf<Exclude<CatheterChannels, ''>>(c.channels, ['2-way', '3-way']),
+    cbi: c.cbi === true,
+    fixation: str(c.fixation),
+    log: log.map((e) => ({
+      id: str(e.id) || crypto.randomUUID(),
+      datetime: str(e.datetime) || new Date().toISOString(),
+      volume: str(e.volume),
+      irrigation: str(e.irrigation),
+      colour: oneOf<Exclude<UrineColour, ''>>(e.colour, [
+        'clear',
+        'straw',
+        'concentrated',
+        'pink',
+        'frank',
+        'clots',
+      ]),
+    })),
+  };
+}
 
 /** Coerce stored data (including the legacy pre-SOAP shape) into a Patient. */
 function normalize(raw: Record<string, unknown>): Patient {
@@ -115,6 +169,7 @@ function normalize(raw: Record<string, unknown>): Patient {
     labs: { ...emptyLabs(), hb: str(labs.hb), wbc: str(labs.wbc), plt: str(labs.plt), cr: str(labs.cr), egfr: str(labs.egfr), na: str(labs.na), k: str(labs.k), crp: str(labs.crp), other: str(labs.other) },
     imaging: str(raw.imaging),
     activeIssues: str(raw.activeIssues),
+    catheter: normalizeCatheter(raw.catheter),
     notes: notes.map((n) => ({
       id: str(n.id) || crypto.randomUUID(),
       date: str(n.date) || new Date().toISOString(),
@@ -301,6 +356,268 @@ function Field({
   );
 }
 
+/** A labelled row of mutually-exclusive chips; clicking the active one clears it. */
+function ChipRow<T extends string>({
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  label: string;
+  value: T | '';
+  options: { value: T; label: string }[];
+  onChange: (v: T | '') => void;
+}) {
+  return (
+    <label className="block">
+      <span className="mb-[7px] block text-[13px] font-semibold text-muted">{label}</span>
+      <div className="flex flex-wrap gap-2">
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(value === o.value ? '' : o.value)}
+            className={cn(
+              'min-h-[44px] flex-1 rounded-[10px] border px-3 text-[12px] font-semibold transition-colors',
+              value === o.value
+                ? 'border-violet bg-violet/[0.18] text-violet-soft'
+                : 'border-line bg-navy text-muted hover:border-violet',
+            )}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </label>
+  );
+}
+
+function CatheterSection({
+  catheter: c,
+  onChange,
+}: {
+  catheter: Catheter;
+  onChange: (patch: Partial<Catheter>) => void;
+}) {
+  const [entry, setEntry] = useState<{ volume: string; irrigation: string; colour: UrineColour }>({
+    volume: '',
+    irrigation: '',
+    colour: '',
+  });
+
+  const days = catheterDays(c.inserted);
+  const mismatch = cbiChannelMismatch(c);
+
+  function addEntry() {
+    if (!entry.volume.trim() && !entry.colour) return;
+    const next: UrineEntry = {
+      id: crypto.randomUUID(),
+      datetime: new Date().toISOString(),
+      ...entry,
+    };
+    onChange({ log: [next, ...c.log] });
+    setEntry({ volume: '', irrigation: '', colour: '' });
+  }
+
+  return (
+    <Section title="Urinary catheter">
+      <button
+        type="button"
+        onClick={() => onChange({ present: !c.present })}
+        className={cn(
+          'min-h-[44px] w-full rounded-[10px] border px-3 text-[13px] font-semibold transition-colors',
+          c.present
+            ? 'border-violet bg-violet/[0.18] text-violet-soft'
+            : 'border-line bg-navy text-muted hover:border-violet',
+        )}
+      >
+        {c.present ? 'Catheter in situ' : 'No catheter — tap to add'}
+      </button>
+
+      {c.present && (
+        <>
+          <div className="grid grid-cols-2 gap-3">
+            <label className="block">
+              <span className="mb-[7px] block text-[13px] font-semibold text-muted">Inserted</span>
+              <input
+                type="date"
+                value={c.inserted}
+                max={todayISO()}
+                onChange={(e) => onChange({ inserted: e.target.value })}
+                className={inputCls}
+              />
+            </label>
+            <Field label="Size (Fr)" value={c.size} onChange={(v) => onChange({ size: v })} placeholder="e.g. 18" />
+          </div>
+
+          {days !== null && (
+            <div className="rounded-[10px] border border-line bg-navy px-3 py-2 text-[12.5px] text-muted-2">
+              In situ <span className="font-mono text-ink">day {days}</span> — infection risk rises
+              with dwell time; review the need for it daily.
+            </div>
+          )}
+
+          <ChipRow<Exclude<CatheterTip, ''>>
+            label="Tip"
+            value={c.tip}
+            onChange={(v) => onChange({ tip: v })}
+            options={[
+              { value: 'regular', label: TIP_LABELS.regular },
+              { value: 'coude', label: TIP_LABELS.coude },
+            ]}
+          />
+
+          <ChipRow<Exclude<CatheterChannels, ''>>
+            label="Channels"
+            value={c.channels}
+            onChange={(v) => onChange({ channels: v })}
+            options={[
+              { value: '2-way', label: CHANNEL_LABELS['2-way'] },
+              { value: '3-way', label: CHANNEL_LABELS['3-way'] },
+            ]}
+          />
+
+          <button
+            type="button"
+            onClick={() => onChange({ cbi: !c.cbi })}
+            className={cn(
+              'min-h-[44px] w-full rounded-[10px] border px-3 text-[12px] font-semibold transition-colors',
+              c.cbi
+                ? 'border-teal bg-teal/[0.16] text-teal'
+                : 'border-line bg-navy text-muted hover:border-teal',
+            )}
+          >
+            {c.cbi ? 'On continuous bladder irrigation' : 'Not on irrigation'}
+          </button>
+
+          {mismatch && (
+            <div className="rounded-[10px] border border-amber/40 bg-amber/[0.1] px-3 py-2 text-[12.5px] text-amber">
+              CBI runs through the third channel — a 2-way catheter cannot irrigate. Check the
+              catheter actually in situ.
+            </div>
+          )}
+
+          <Field
+            label="Fixation"
+            value={c.fixation}
+            onChange={(v) => onChange({ fixation: v })}
+            placeholder="e.g. thigh strap; abdominal wall post-hypospadias"
+          />
+
+          {/* Output log */}
+          <div className="border-t border-line pt-3.5">
+            <div className="mb-2.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-teal">
+              Urine output
+            </div>
+
+            <div className={cn('grid gap-2.5', c.cbi ? 'grid-cols-2' : 'grid-cols-1')}>
+              <Field
+                label="Drained (mL)"
+                value={entry.volume}
+                onChange={(v) => setEntry((p) => ({ ...p, volume: v }))}
+                placeholder="e.g. 450"
+              />
+              {c.cbi && (
+                <Field
+                  label="Irrigant in (mL)"
+                  value={entry.irrigation}
+                  onChange={(v) => setEntry((p) => ({ ...p, irrigation: v }))}
+                  placeholder="e.g. 2000"
+                />
+              )}
+            </div>
+
+            <div className="mt-2.5">
+              <ChipRow<Exclude<UrineColour, ''>>
+                label="Colour"
+                value={entry.colour}
+                onChange={(v) => setEntry((p) => ({ ...p, colour: v }))}
+                options={(Object.keys(COLOUR_LABELS) as Exclude<UrineColour, ''>[]).map((k) => ({
+                  value: k,
+                  label: COLOUR_LABELS[k],
+                }))}
+              />
+            </div>
+
+            {c.cbi && (
+              <p className="mt-2 text-[12px] text-muted-2">
+                On CBI the bag collects irrigant plus urine — record both so the true output is
+                the difference, not the bag volume.
+              </p>
+            )}
+
+            <button
+              type="button"
+              onClick={addEntry}
+              className="mt-3 min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+            >
+              Add reading
+            </button>
+
+            <div className="mt-3.5 space-y-2">
+              {c.log.length === 0 ? (
+                <p className="text-[13px] text-muted-2">No readings yet.</p>
+              ) : (
+                c.log.map((e) => {
+                  const net = netOutput(e, c.cbi);
+                  const retaining = isRetaining(e, c.cbi);
+                  const alert = retaining || (e.colour && ALERT_COLOURS.includes(e.colour));
+                  return (
+                    <div
+                      key={e.id}
+                      className={cn(
+                        'rounded-[10px] border px-3 py-2.5',
+                        alert ? 'border-crimson/50 bg-crimson/[0.08]' : 'border-line bg-navy',
+                      )}
+                    >
+                      <div className="flex items-baseline justify-between gap-3">
+                        <span className="text-[11px] text-muted-2">
+                          {new Date(e.datetime).toLocaleString()}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => onChange({ log: c.log.filter((x) => x.id !== e.id) })}
+                          className="text-[11px] text-muted-2 hover:text-crimson"
+                        >
+                          Remove
+                        </button>
+                      </div>
+                      <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-[13px]">
+                        {net !== null && (
+                          <span className="font-mono text-ink">
+                            {net} mL
+                            {c.cbi && <span className="text-muted-2"> net</span>}
+                          </span>
+                        )}
+                        {c.cbi && e.volume.trim() && (
+                          <span className="text-[11.5px] text-muted-2">
+                            ({e.volume} drained − {e.irrigation.trim() || '0'} in)
+                          </span>
+                        )}
+                        {e.colour && (
+                          <span className={cn(ALERT_COLOURS.includes(e.colour) ? 'text-crimson' : 'text-muted')}>
+                            {COLOUR_LABELS[e.colour]}
+                          </span>
+                        )}
+                      </div>
+                      {retaining && (
+                        <div className="mt-1.5 text-[12px] text-crimson">
+                          More irrigant in than out — check for clot retention and a blocked
+                          catheter; the bladder may be filling.
+                        </div>
+                      )}
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          </div>
+        </>
+      )}
+    </Section>
+  );
+}
+
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-3.5 rounded-[20px] border border-line bg-navy-2 p-6">
@@ -434,6 +751,13 @@ function PatientDetail({
         </Section>
       </div>
 
+      <div className="mt-5">
+        <CatheterSection
+          catheter={patient.catheter}
+          onChange={(patch) => onChange({ catheter: { ...patient.catheter, ...patch } })}
+        />
+      </div>
+
       <Section title="Progress — SOAP">
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           <Field label="Subjective" value={note.s} onChange={(v) => setNote((n) => ({ ...n, s: v }))} textarea placeholder="Symptoms, overnight events" />
@@ -507,6 +831,29 @@ function summaryLabs(labs: Labs): string[] {
   return out;
 }
 
+/** Catheter block for the printable summary; empty when there is no catheter. */
+function catheterHtml(c: Catheter): string {
+  if (!c.present) return '';
+  const head = describeCatheter(c);
+  const readings = c.log
+    .map((e) => {
+      const net = netOutput(e, c.cbi);
+      const bits = [
+        net !== null ? `${net} mL${c.cbi ? ' net' : ''}` : '',
+        e.colour ? COLOUR_LABELS[e.colour] : '',
+        isRetaining(e, c.cbi) ? 'more in than out — check for blockage' : '',
+      ].filter(Boolean);
+      return `<div class="row"><b>${escapeHtml(new Date(e.datetime).toLocaleString())}</b> ${escapeHtml(bits.join(' · '))}</div>`;
+    })
+    .join('');
+  return (
+    `<h2>Urinary catheter</h2>` +
+    (head ? `<p>${escapeHtml(head)}</p>` : '') +
+    (c.fixation.trim() ? `<div class="row"><b>Fixation</b> ${escapeHtml(c.fixation)}</div>` : '') +
+    readings
+  );
+}
+
 function buildSummaryHtml(p: Patient): string {
   const sexAge = [p.age && `${p.age} years old`, p.sex].filter(Boolean).join(' ');
   const row = (label: string, val: string) =>
@@ -533,6 +880,7 @@ function buildSummaryHtml(p: Patient): string {
     (labs.length ? `<h2>Labs</h2><p>${labs.map(escapeHtml).join(' · ')}</p>` : '') +
     (p.imaging.trim() ? `<h2>Imaging</h2><p>${escapeHtml(p.imaging)}</p>` : '') +
     (p.activeIssues.trim() ? `<h2>Active issues</h2><p>${escapeHtml(p.activeIssues)}</p>` : '') +
+    catheterHtml(p.catheter) +
     (soap ? `<h2>Progress (SOAP)</h2>${soap}` : '') +
     `<div class="note">De-identified working summary — a first name/initials and bed only, no full name or ` +
     `medical-record number. A personal aide-mémoire, not a medical record. Dispose of securely.</div>`
@@ -629,6 +977,28 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
         {p.activeIssues.trim() && (
           <SummaryBlock title="Active issues">
             <p className="text-[13.5px] text-ink">{p.activeIssues}</p>
+          </SummaryBlock>
+        )}
+
+        {p.catheter.present && (
+          <SummaryBlock title="Urinary catheter">
+            <SummaryRow label="Catheter" value={describeCatheter(p.catheter)} />
+            <SummaryRow label="Fixation" value={p.catheter.fixation} />
+            {p.catheter.log.slice(0, 5).map((e) => {
+              const net = netOutput(e, p.catheter.cbi);
+              return (
+                <SummaryRow
+                  key={e.id}
+                  label={new Date(e.datetime).toLocaleString()}
+                  value={[
+                    net !== null ? `${net} mL${p.catheter.cbi ? ' net' : ''}` : '',
+                    e.colour ? COLOUR_LABELS[e.colour] : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' · ')}
+                />
+              );
+            })}
           </SummaryBlock>
         )}
 

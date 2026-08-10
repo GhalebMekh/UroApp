@@ -14,6 +14,7 @@ export type Screen =
   | 'calculators'
   | 'residency'
   | 'imaging'
+  | 'instruments'
   | 'pediatrics'
   | 'guidelines'
   | 'surveillance'

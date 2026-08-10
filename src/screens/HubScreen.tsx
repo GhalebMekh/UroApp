@@ -54,6 +54,7 @@ function Hub({
 const CLINICAL_ITEMS: HubItem[] = [
   { id: 'calculators', label: 'Calculators', note: 'Nomograms · risk' },
   { id: 'imaging', label: 'Imaging', note: 'PI-RADS · Bosniak' },
+  { id: 'instruments', label: 'Instruments', note: 'Scopes · lasers' },
   { id: 'drugs', label: 'Drug interactions', note: 'Pharmacology' },
   { id: 'surveillance', label: 'Surveillance schedule', note: 'Follow-up' },
   { id: 'pediatrics', label: 'Pediatrics', note: 'Dosing · fluids' },

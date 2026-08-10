@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { cn } from '@/lib/cn';
 import { CitationNote } from '@/components/CitationNote';
 import { TwistScore } from '@/components/oncall/TwistScore';
+import { AastTraumaGrading } from '@/components/oncall/AastTraumaGrading';
+import { UrosepsisFirstHour } from '@/components/oncall/UrosepsisFirstHour';
 import { EMERGENCIES } from '@/data/oncall';
 
 export function OnCallScreen() {
@@ -84,6 +86,18 @@ export function OnCallScreen() {
       {em.id === 'torsion' && (
         <div className="mt-5 lg:max-w-lg">
           <TwistScore />
+        </div>
+      )}
+
+      {em.id === 'obstructed-kidney' && (
+        <div className="mt-5 lg:max-w-lg">
+          <UrosepsisFirstHour />
+        </div>
+      )}
+
+      {em.id === 'gu-trauma' && (
+        <div className="mt-5 lg:max-w-lg">
+          <AastTraumaGrading />
         </div>
       )}
     </div>

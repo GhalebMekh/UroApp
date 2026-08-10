@@ -89,4 +89,35 @@ export const EMERGENCIES: Emergency[] = [
     redFlags: ['Single/transplant kidney', 'Anuria', 'Signs of septic shock'],
     citation: eau('Urolithiasis', 'urolithiasis'),
   },
+  {
+    id: 'gu-trauma',
+    name: 'Genitourinary trauma',
+    oneLiner:
+      'Blunt or penetrating injury to the kidney, ureter, bladder or urethra. The kidney is the commonest genitourinary organ injured; grade the injury with AAST below.',
+    clock:
+      'Haemodynamic status sets the pace — instability despite active resuscitation means theatre, not the CT scanner or angiography suite.',
+    immediate: [
+      'Resuscitate with the trauma team; the genitourinary injury is rarely the one that kills first.',
+      'Image the stable patient: IV contrast-enhanced CT with a delayed excretory phase whenever renal injury is known or suspected — the delayed phase is what shows urinary extravasation.',
+      'Blood at the meatus after pelvic trauma? Retrograde urethrogram BEFORE any catheter. Never pass a catheter blindly.',
+      'Gross haematuria with a pelvic fracture? Retrograde cystography (plain film or CT) — bladder injury is present in about 29% of these patients.',
+      'Establish prompt urinary drainage in pelvic-fracture urethral injury — suprapubic if the urethra cannot be safely catheterised.',
+      'Grade the injury with AAST (below), then decide: unstable or an expanding/pulsatile haematoma means exploration; a stable renal injury with urinary extravasation alone can usually be observed.',
+      'Suspected renal pelvis or proximal ureteric avulsion needs prompt intervention, not observation.',
+    ],
+    redFlags: [
+      'Do not catheterise before a RUG if blood is at the meatus',
+      'Haematuria is unreliable in ureteric injury and is often absent',
+      'Unstable despite resuscitation → theatre, not angiography',
+      'Re-image AAST Grade IV–V, or any patient who develops fever, worsening flank pain or ongoing blood loss',
+    ],
+    citation: {
+      authors: 'AUA (Morey et al.)',
+      journal: 'J Urol',
+      year: 2014,
+      doi: '10.1016/j.juro.2014.05.004',
+      url: 'https://www.auanet.org/guidelines-and-quality/guidelines/urotrauma-guideline',
+      label: 'AUA Urotrauma guideline — 192:327-335 (amended 2017, 2020)',
+    },
+  },
 ];

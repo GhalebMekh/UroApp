@@ -9,6 +9,7 @@ import { HomeScreen } from '@/screens/HomeScreen';
 import { ClinicalHubScreen, AcademicHubScreen } from '@/screens/HubScreen';
 import { CalculatorsScreen } from '@/screens/CalculatorsScreen';
 import { ImagingScreen } from '@/screens/ImagingScreen';
+import { InstrumentsScreen } from '@/screens/InstrumentsScreen';
 import { PediatricsScreen } from '@/screens/PediatricsScreen';
 import { ResidencyScreen } from '@/screens/ResidencyScreen';
 import { GuidelinesScreen } from '@/screens/GuidelinesScreen';
@@ -68,6 +69,7 @@ export default function App() {
           {currentScreen === 'calculators' && <CalculatorsScreen />}
           {currentScreen === 'residency' && <ResidencyScreen />}
           {currentScreen === 'imaging' && <ImagingScreen />}
+          {currentScreen === 'instruments' && <InstrumentsScreen />}
           {currentScreen === 'pediatrics' && <PediatricsScreen />}
           {currentScreen === 'guidelines' && <GuidelinesScreen />}
           {currentScreen === 'surveillance' && <SurveillanceScreen />}
