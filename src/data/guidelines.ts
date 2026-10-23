@@ -25,10 +25,8 @@ export interface Guideline {
   auaUrl?: string;
   /** EAU guideline URL (uroweb.org) */
   eauUrl?: string;
-  /** AUA PDF download link (in public/guidelines/) */
-  pdfUrl?: string;
-  /** EAU PDF download link (in public/guidelines/eau/) */
-  eauPdfUrl?: string;
+  // No bundled guideline PDFs: AUA and EAU terms forbid redistributing them in
+  // an app without a licence. Link to the society's own page instead.
 }
 
 export type GuidelineCategory = 'oncological' | 'non-oncological';
@@ -337,7 +335,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Bladder cancer',
     condition: 'Non-muscle and muscle-invasive disease management',
     eauUrl: 'https://uroweb.org/guidelines/non-muscle-invasive-bladder-cancer',
-    eauPdfUrl: '/guidelines/eau/nmibc-bladder-cancer.pdf',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/bladder-cancer-non-muscle-invasive-guideline',
     quickAlgorithm: `
 1. Initial workup:
@@ -941,7 +938,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Lower urinary tract symptoms & male LUTS management',
     eauUrl: 'https://uroweb.org/guidelines/management-of-non-neurogenic-male-luts',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/bph-guideline',
-    pdfUrl: '/guidelines/non-oncology/bph.pdf',
     quickAlgorithm: `
 1. Symptom severity (IPSS):
    • IPSS ≤7 (mild) → watchful waiting, lifestyle modification
@@ -1078,7 +1074,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Overactive bladder (OAB)',
     condition: 'Urgency ± urgency incontinence with or without frequency',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/idiopathic-overactive-bladder',
-    pdfUrl: '/guidelines/non-oncology/oab.pdf',
     quickAlgorithm: `
 1. Definition: ≥1 episode of urgency incontinence/week OR ≥8 voids/day + ≥2 urgent episodes/week
    • Dry OAB: urgency & frequency without incontinence
@@ -1212,7 +1207,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Stress urinary incontinence (SUI)',
     condition: 'Involuntary urine leakage with physical exertion, coughing, sneezing',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/stress-urinary-incontinence-(sui)-guideline',
-    pdfUrl: '/guidelines/non-oncology/sui.pdf',
     quickAlgorithm: `
 1. Diagnosis: Leakage with Valsalva, cough, exercise (NOT with urgency)
    • History alone diagnostic (high specificity)
@@ -1324,7 +1318,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Nephrolithiasis: prevention and medical expulsion therapy',
     eauUrl: 'https://uroweb.org/guidelines/urolithiasis',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/kidney-stones-medical-mangement-guideline',
-    pdfUrl: '/guidelines/non-oncology/stones-medical.pdf',
     quickAlgorithm: `
 1. Acute stone management:
    • NSAIDs (ketorolac 30–60 mg IV/IM q4–6h) or IV morphine 4–8 mg
@@ -1462,7 +1455,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Asymptomatic microscopic hematuria (AMH)',
     condition: 'Hematuria ≥3 RBC/hpf without urinary symptoms',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/microhematuria',
-    pdfUrl: '/guidelines/non-oncology/microhematuria.pdf',
     quickAlgorithm: `
 1. Define AMH: ≥3 RBC/hpf on urinalysis (or ≥3 RBC/μL on flow cytometry)
    • Repeat UA to confirm (transient hematuria common)
@@ -1585,7 +1577,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Recurrent bacterial UTI: ≥2 episodes in 6 months or ≥3 in 12 months',
     eauUrl: 'https://uroweb.org/guidelines/urological-infections',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/recurrent-uti',
-    pdfUrl: '/guidelines/non-oncology/ruti.pdf',
     quickAlgorithm: `
 1. Confirm diagnosis:
    • Each episode: symptoms (dysuria, frequency, urgency) + culture ≥10^2–10^3 CFU/mL (midstream clean-catch)
@@ -1707,7 +1698,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Stone intervention: SWL, ureteroscopy, PCNL',
     eauUrl: 'https://uroweb.org/guidelines/urolithiasis',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/surgical-management-of-kidney-and-ureteral-stones',
-    pdfUrl: '/guidelines/non-oncology/stones-surgical.pdf',
     quickAlgorithm: `
 1. Emergency: obstruction + infection (fever, sepsis)
    → urgent decompression (ureteral stent OR percutaneous nephrostomy); defer definitive
@@ -1792,7 +1782,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Bladder dysfunction from neurologic disease or injury',
     eauUrl: 'https://uroweb.org/guidelines/neuro-urology',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/adult-neurogenic-lower-urinary-tract-dysfunction',
-    pdfUrl: '/guidelines/non-oncology/nlutd.pdf',
     quickAlgorithm: `
 1. Risk-stratify at diagnosis (low vs. moderate/high risk):
    • Based on neurologic condition, urodynamic hostility (high detrusor pressures,
@@ -1880,7 +1869,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Chronic bladder pain, pressure, or discomfort with urinary symptoms',
     eauUrl: 'https://uroweb.org/guidelines/chronic-pelvic-pain',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/diagnosis-and-treatment-interstitial-of-cystitis/bladder-pain-syndrome-(2022)',
-    pdfUrl: '/guidelines/non-oncology/ic-bps.pdf',
     quickAlgorithm: `
 1. Diagnosis (clinical): bladder pain/pressure/discomfort >6 weeks with urinary symptoms,
    after excluding infection, malignancy, and other confusable disorders
@@ -1955,7 +1943,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Chronic prostatitis / chronic pelvic pain syndrome',
     eauUrl: 'https://uroweb.org/guidelines/chronic-pelvic-pain',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/male-chronic-pelvic-pain',
-    pdfUrl: '/guidelines/non-oncology/cpp.pdf',
     quickAlgorithm: `
 1. Characterize with a validated phenotype approach (e.g., UPOINT domains):
    Urinary, Psychosocial, Organ-specific, Infection, Neurologic/systemic, Tenderness
@@ -2030,7 +2017,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Anterior urethral narrowing: evaluation and reconstruction',
     eauUrl: 'https://uroweb.org/guidelines/urethral-strictures',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/urethral-stricture-guideline',
-    pdfUrl: '/guidelines/non-oncology/urethral-stricture.pdf',
     quickAlgorithm: `
 1. Diagnose & map: uroflow + PVR; confirm and characterize length/location with
    retrograde urethrogram ± cystoscopy
@@ -2108,7 +2094,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Renal, ureteral, bladder, and genitourinary trauma',
     eauUrl: 'https://uroweb.org/guidelines/urological-trauma',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/urotrauma-guideline',
-    pdfUrl: '/guidelines/non-oncology/urotrauma.pdf',
     quickAlgorithm: `
 1. Renal trauma:
    • Image with CT (with IV contrast + delayed excretory phase) in hemodynamically
@@ -2188,7 +2173,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Incontinence after prostate treatment (IPT)',
     condition: 'Stress incontinence following prostatectomy or radiation',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/incontinence-after-prostate-treatment',
-    pdfUrl: '/guidelines/non-oncology/ipt.pdf',
     quickAlgorithm: `
 1. Evaluate: history, exam, pad testing/pad count, UA; cystoscopy to assess sphincter
    and exclude anastomotic stricture/recurrence; consider urodynamics
@@ -2253,7 +2237,6 @@ export const GUIDELINES: Guideline[] = [
     title: 'Genitourinary syndrome of menopause (GSM)',
     condition: 'Vulvovaginal and urinary symptoms from estrogen deficiency',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/genitourinary-syndrome-of-menopause',
-    pdfUrl: '/guidelines/non-oncology/gsm.pdf',
     quickAlgorithm: `
 1. Recognize the cluster: vaginal dryness/irritation, dyspareunia, urinary urgency/
    frequency, and recurrent UTI attributable to postmenopausal estrogen deficiency
@@ -2318,7 +2301,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Evaluation and treatment of erectile dysfunction',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/erectile-dysfunction-(ed)-guideline',
-    pdfUrl: '/guidelines/non-oncology/ed.pdf',
     quickAlgorithm: `
 1. Evaluate: sexual, medical, and psychosocial history; validated instrument (IIEF/SHIM);
    focused exam; check testosterone (morning) and screen cardiovascular risk
@@ -2389,7 +2371,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Penile curvature from tunica albuginea fibrosis',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/peyronies-disease-guideline',
-    pdfUrl: '/guidelines/non-oncology/peyronies.pdf',
     quickAlgorithm: `
 1. Assess: history (onset, pain, curvature, deformity, erectile function); exam of
    plaque; objective curvature measurement on a functional (e.g., injection-induced)
@@ -2467,7 +2448,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Prolonged erection — ischemic (emergency) vs. non-ischemic',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/diagnosis-and-management-of-priapism-aua/smsna-guideline-(2022)',
-    pdfUrl: '/guidelines/non-oncology/priapism.pdf',
     quickAlgorithm: `
 1. Determine type (this changes everything):
    • Ischemic (low-flow) → painful, rigid; EMERGENCY — corporal blood gas shows
@@ -2537,7 +2517,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Diagnosis and management of low testosterone',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/testosterone-deficiency-guideline',
-    pdfUrl: '/guidelines/non-oncology/testosterone.pdf',
     quickAlgorithm: `
 1. Diagnose on symptoms + biochemistry:
    • Two separate early-morning total testosterone levels
@@ -2613,7 +2592,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Evaluation and management of the infertile male',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/male-infertility',
-    pdfUrl: '/guidelines/non-oncology/male-infertility.pdf',
     quickAlgorithm: `
 1. Evaluate both partners; for the male: reproductive history, exam, and ≥2 semen
    analyses
@@ -2694,7 +2672,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Male permanent contraception: technique and follow-up',
     eauUrl: 'https://uroweb.org/guidelines/sexual-and-reproductive-health',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/vasectomy-guideline',
-    pdfUrl: '/guidelines/non-oncology/vasectomy.pdf',
     quickAlgorithm: `
 1. Counsel: vasectomy is intended to be permanent; discuss alternatives, ~small failure
    rate, and that it does not protect against STIs
@@ -2763,7 +2740,6 @@ export const GUIDELINES: Guideline[] = [
     condition: 'Pediatric undescended testis: evaluation and orchiopexy',
     eauUrl: 'https://uroweb.org/guidelines/paediatric-urology',
     auaUrl: 'https://www.auanet.org/guidelines-and-quality/guidelines/cryptorchidism-guideline',
-    pdfUrl: '/guidelines/non-oncology/cryptorchidism.pdf',
     quickAlgorithm: `
 1. Diagnose clinically — do NOT order routine ultrasound to locate a non-palpable
    testis (it does not reliably change management)

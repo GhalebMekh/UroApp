@@ -22,7 +22,7 @@ const GROUPS: { category: GuidelineCategory; label: string; blurb: string; accen
   },
 ];
 
-/** One expandable guideline card with its society links and bundled PDFs. */
+/** One expandable guideline card with its society links. */
 function GuidelineCard({
   guideline,
   expanded,
@@ -58,9 +58,9 @@ function GuidelineCard({
         </div>
       )}
 
-      {/* Source links: AUA / EAU guideline pages + bundled PDFs.
-          Grouped by society — link then its offline PDF. */}
-      {(guideline.auaUrl || guideline.eauUrl || guideline.pdfUrl || guideline.eauPdfUrl) && (
+      {/* Source links: the societies' own guideline pages (no bundled PDFs —
+          see the Guideline type). */}
+      {(guideline.auaUrl || guideline.eauUrl) && (
         <div className="flex flex-wrap gap-2 border-t border-line px-6 py-3">
           {guideline.auaUrl && (
             <a
@@ -72,16 +72,6 @@ function GuidelineCard({
               AUA guideline ↗
             </a>
           )}
-          {guideline.pdfUrl && (
-            <a
-              href={guideline.pdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[8px] border border-line bg-navy px-3 py-1.5 text-[12px] font-semibold text-teal transition-colors hover:border-teal"
-            >
-              📄 AUA PDF
-            </a>
-          )}
           {guideline.eauUrl && (
             <a
               href={guideline.eauUrl}
@@ -90,16 +80,6 @@ function GuidelineCard({
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[8px] border border-line bg-navy px-3 py-1.5 text-[12px] font-semibold text-amber transition-colors hover:border-amber"
             >
               EAU guideline ↗
-            </a>
-          )}
-          {guideline.eauPdfUrl && (
-            <a
-              href={guideline.eauPdfUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-[8px] border border-line bg-navy px-3 py-1.5 text-[12px] font-semibold text-teal transition-colors hover:border-teal"
-            >
-              📄 EAU PDF
             </a>
           )}
         </div>

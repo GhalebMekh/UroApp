@@ -52,6 +52,8 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 - Never reproduce copyrighted material verbatim (AUA/EAU guideline text, AJCC TNM tables,
   ACR PI-RADS). Summarize the criteria and cite + link the source. Licensing needed before
   shipping any verbatim guideline/staging content in a paid tier.
+- Never bundle guideline PDFs (AUA/EAU/etc.) in the app, `public/` or the repo — both
+  societies' terms forbid redistribution in apps without a licence. Link to the official page.
 - The Evidence AI must: cite every claim, state when evidence is conflicting or absent,
   and never give patient-specific directives — only evidence summaries for clinician judgment.
 - Store NO patient-identifiable data anywhere. Calculator inputs stay on-device.

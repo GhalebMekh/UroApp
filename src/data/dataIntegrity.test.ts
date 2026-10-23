@@ -29,8 +29,7 @@ function isSupportedSourceUrl(url: string): boolean {
     EAU_PATTERN.test(url) ||
     url.startsWith('https://pubmed.ncbi.nlm.nih.gov/') ||
     url.startsWith('https://doi.org/') ||
-    url.startsWith('https://www.baus.org.uk/') ||
-    url.startsWith('/guidelines/') // bundled local PDF
+    url.startsWith('https://www.baus.org.uk/')
   );
 }
 
@@ -58,10 +57,11 @@ describe('guidelines', () => {
     }
   });
 
-  it('points every bundled PDF at the public guidelines folder', () => {
+  // AUA/EAU terms forbid redistributing guideline PDFs in an app without a
+  // licence; every guideline must still link out to its society's page.
+  it('links every guideline to an official society page', () => {
     for (const g of GUIDELINES) {
-      if (g.pdfUrl) expect(g.pdfUrl, `${g.id} pdfUrl`).toMatch(/^\/guidelines\/.+\.pdf$/);
-      if (g.eauPdfUrl) expect(g.eauPdfUrl, `${g.id} eauPdfUrl`).toMatch(/^\/guidelines\/.+\.pdf$/);
+      expect(g.auaUrl || g.eauUrl, `${g.id} has no AUA/EAU link`).toBeTruthy();
     }
   });
 
