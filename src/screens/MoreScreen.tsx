@@ -39,7 +39,11 @@ export function MoreScreen() {
           Restore Purchases
         </button>
 
-        {/* Preview-only tier switcher. RevenueCat owns the real entitlement. */}
+        {/* Development-only tier switcher, so gated screens can be previewed.
+            Stripped from production builds: in the App Store build it would
+            unlock paid tiers without in-app purchase (guideline 3.1.1).
+            RevenueCat owns the real entitlement. */}
+        {import.meta.env.DEV && (
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
           <h3 className="text-[15px] font-semibold">Subscription tier</h3>
           <p className="mb-3 text-[12px] text-muted-2">
@@ -63,6 +67,7 @@ export function MoreScreen() {
             ))}
           </div>
         </section>
+        )}
       </div>
     </div>
   );

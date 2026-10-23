@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { TopBar } from '@/components/TopBar';
 import { BottomNav } from '@/components/BottomNav';
 import { DisclaimerGate } from '@/components/DisclaimerGate';
 import { SearchOverlay } from '@/components/SearchOverlay';
+import { ProGate } from '@/components/ProGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
 import { NAV_ITEMS, type Screen } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -10,6 +11,8 @@ import { ClinicalHubScreen, AcademicHubScreen } from '@/screens/HubScreen';
 import { CalculatorsScreen } from '@/screens/CalculatorsScreen';
 import { ImagingScreen } from '@/screens/ImagingScreen';
 import { InstrumentsScreen } from '@/screens/InstrumentsScreen';
+import { MdtScreen } from '@/screens/MdtScreen';
+import { CmeScreen } from '@/screens/CmeScreen';
 import { PediatricsScreen } from '@/screens/PediatricsScreen';
 import { ResidencyScreen } from '@/screens/ResidencyScreen';
 import { GuidelinesScreen } from '@/screens/GuidelinesScreen';
@@ -34,6 +37,10 @@ export default function App() {
   const [history, setHistory] = useState<Screen[]>([]);
   const [tier, setTier] = useState<Tier>('resident');
   const [searchOpen, setSearchOpen] = useState(false);
+  /** A calculator the Calculators screen should open (set by search, Home pins and recents). */
+  const [calcFocus, setCalcFocus] = useState<string | null>(null);
+  // Stable identity: CalculatorsScreen lists it as an effect dependency.
+  const clearCalcFocus = useCallback(() => setCalcFocus(null), []);
 
   function navigate(screen: Screen) {
     if (screen === currentScreen) return;
@@ -41,6 +48,12 @@ export default function App() {
     setHistory(ROOT_SCREENS.has(screen) ? [] : [...history, currentScreen]);
     setCurrentScreen(screen);
     window.scrollTo({ top: 0 });
+  }
+
+  /** Open one calculator: its tab, scrolled into view. Works from any screen, including Calculators. */
+  function openCalculator(id: string) {
+    setCalcFocus(id);
+    navigate('calculators');
   }
 
   function goBack() {
@@ -59,25 +72,58 @@ export default function App() {
             canGoBack={history.length > 0}
             onBack={goBack}
           />
-          <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} onNavigate={navigate} />
+          <SearchOverlay
+            open={searchOpen}
+            onClose={() => setSearchOpen(false)}
+            onNavigate={navigate}
+            onOpenCalculator={openCalculator}
+          />
 
         {/* pb leaves room for the fixed bottom nav (~64px + safe area) */}
         <main className="flex-1 pb-24">
-          {currentScreen === 'home' && <HomeScreen onNavigate={navigate} />}
+          {currentScreen === 'home' && <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} />}
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
-          {currentScreen === 'calculators' && <CalculatorsScreen />}
+          {currentScreen === 'calculators' && (
+            <CalculatorsScreen focusId={calcFocus} onFocusHandled={clearCalcFocus} />
+          )}
           {currentScreen === 'residency' && <ResidencyScreen />}
           {currentScreen === 'imaging' && <ImagingScreen />}
           {currentScreen === 'instruments' && <InstrumentsScreen />}
+          {currentScreen === 'mdt' && (
+            <ProGate feature="mdt">
+              <MdtScreen onOpenCalculator={openCalculator} />
+            </ProGate>
+          )}
+          {currentScreen === 'cme' && (
+            <ProGate feature="cme">
+              <CmeScreen />
+            </ProGate>
+          )}
           {currentScreen === 'pediatrics' && <PediatricsScreen />}
           {currentScreen === 'guidelines' && <GuidelinesScreen />}
-          {currentScreen === 'surveillance' && <SurveillanceScreen />}
+          {currentScreen === 'surveillance' && (
+            <ProGate feature="surveillance">
+              <SurveillanceScreen />
+            </ProGate>
+          )}
           {currentScreen === 'conferences' && <ConferencesScreen />}
-          {currentScreen === 'rehearsal' && <OperativeRehearsalScreen />}
-          {currentScreen === 'scenarios' && <IntraopScenariosScreen />}
+          {currentScreen === 'rehearsal' && (
+            <ProGate feature="rehearsal">
+              <OperativeRehearsalScreen />
+            </ProGate>
+          )}
+          {currentScreen === 'scenarios' && (
+            <ProGate feature="scenarios">
+              <IntraopScenariosScreen />
+            </ProGate>
+          )}
           {currentScreen === 'drugs' && <DrugsScreen />}
-          {currentScreen === 'articles' && <ArticlesScreen />}
+          {currentScreen === 'articles' && (
+            <ProGate feature="articles">
+              <ArticlesScreen />
+            </ProGate>
+          )}
           {currentScreen === 'more' && <MoreScreen />}
         </main>
 

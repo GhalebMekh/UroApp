@@ -163,15 +163,16 @@ export function ConsentScreen() {
     setFields((f) => ({ ...f, [key]: value }));
   }
 
+  const fileStem = () => `consent-${proc?.id ?? 'form'}-${fields.date || todayISO()}`;
+
   function print() {
     if (!proc) return;
-    if (!printHtmlDocument(buildPrintHtml(proc, fields))) setPrintError(true);
+    if (!printHtmlDocument(buildPrintHtml(proc, fields), fileStem())) setPrintError(true);
   }
 
   function save() {
     if (!proc) return;
-    const stem = `consent-${proc.id}-${fields.date || todayISO()}`;
-    if (!saveHtmlDocument(stem, buildPrintHtml(proc, fields))) setPrintError(true);
+    if (!saveHtmlDocument(fileStem(), buildPrintHtml(proc, fields))) setPrintError(true);
   }
 
   const input =

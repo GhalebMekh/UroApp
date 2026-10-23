@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { SEARCH_INDEX } from '@/data/searchIndex';
+import { SEARCH_INDEX, type SearchItem } from '@/data/searchIndex';
 import type { Screen } from '@/navigation';
 import { SearchIcon } from './icons';
 
@@ -7,10 +7,12 @@ interface SearchOverlayProps {
   open: boolean;
   onClose: () => void;
   onNavigate: (screen: Screen) => void;
+  /** Opens one calculator directly (right tab, scrolled to it). */
+  onOpenCalculator: (id: string) => void;
 }
 
 /** App-wide quick search — jumps to the workspace that holds a matching item. */
-export function SearchOverlay({ open, onClose, onNavigate }: SearchOverlayProps) {
+export function SearchOverlay({ open, onClose, onNavigate, onOpenCalculator }: SearchOverlayProps) {
   const [q, setQ] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -37,8 +39,9 @@ export function SearchOverlay({ open, onClose, onNavigate }: SearchOverlayProps)
 
   if (!open) return null;
 
-  function go(screen: Screen) {
-    onNavigate(screen);
+  function go(item: SearchItem) {
+    if (item.calcId) onOpenCalculator(item.calcId);
+    else onNavigate(item.screen);
     onClose();
   }
 
@@ -73,7 +76,7 @@ export function SearchOverlay({ open, onClose, onNavigate }: SearchOverlayProps)
               <li key={`${item.screen}-${item.label}`}>
                 <button
                   type="button"
-                  onClick={() => go(item.screen)}
+                  onClick={() => go(item)}
                   className="flex w-full items-center justify-between rounded-[10px] px-3 py-2.5 text-left transition-colors hover:bg-steel"
                 >
                   <span className="text-[14px] font-medium text-ink">{item.label}</span>

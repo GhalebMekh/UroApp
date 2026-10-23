@@ -15,6 +15,8 @@ export type Screen =
   | 'residency'
   | 'imaging'
   | 'instruments'
+  | 'mdt'
+  | 'cme'
   | 'pediatrics'
   | 'guidelines'
   | 'surveillance'

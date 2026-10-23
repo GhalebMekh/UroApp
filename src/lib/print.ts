@@ -41,8 +41,19 @@ export const PRINT_CSS = `
   @media print { body { margin: 12mm; } }
 `;
 
-/** Send a complete, self-contained HTML document to the printer. */
-export function printHtmlDocument(fullHtml: string): boolean {
+/**
+ * Send a complete, self-contained HTML document to the printer.
+ *
+ * Inside the native shell this opens the share sheet instead, which offers
+ * Print alongside Save to Files. iOS's WKWebView does not reliably honour
+ * window.print() from a web page, and a Print button that silently does
+ * nothing is an App Review rejection (guideline 2.1, app completeness).
+ * The check lives here, not in printDocument, so callers that build their own
+ * HTML (the bilingual consent form) are covered too.
+ */
+export function printHtmlDocument(fullHtml: string, fileStem = 'UroApp document'): boolean {
+  if (Capacitor.isNativePlatform()) return saveHtmlDocument(fileStem, fullHtml);
+
   const frame = document.createElement('iframe');
   frame.setAttribute('aria-hidden', 'true');
   frame.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
@@ -85,9 +96,9 @@ export function buildDocument(title: string, bodyHtml: string, extraCss = ''): s
   );
 }
 
-/** Build a standard UroApp document and print it. */
+/** Build a standard UroApp document and print it (share sheet on native). */
 export function printDocument(title: string, bodyHtml: string, extraCss = ''): boolean {
-  return printHtmlDocument(buildDocument(title, bodyHtml, extraCss));
+  return printHtmlDocument(buildDocument(title, bodyHtml, extraCss), title);
 }
 
 /** Turn a title into a safe file name stem. */

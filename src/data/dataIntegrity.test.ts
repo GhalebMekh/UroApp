@@ -15,6 +15,7 @@ import { SURVEILLANCE } from './surveillance';
 import { DRUG_INTERACTIONS } from './drugInteractions';
 import { CONFERENCES } from './conferences';
 import { SCENARIOS } from './scenarios';
+import { RAD_SYSTEMS } from './radiology';
 import { buildICS } from '../lib/ics';
 
 /** AUA guideline pages live under /guidelines-and-quality/guidelines/. */
@@ -359,5 +360,51 @@ describe('drug interactions', () => {
       if (!d.source.url) continue;
       expect(isSupportedSourceUrl(d.source.url), `${d.id} source ${d.source.url}`).toBe(true);
     }
+  });
+});
+
+/**
+ * Radiopaedia articles are illustration, not the source of truth — the criteria
+ * stand on each system's primary citation. These guards exist because the
+ * obvious slug is repeatedly the wrong one: `…pi-rads` redirects to
+ * `…pi-rads-2`, VI-RADS carries a `-3`, and the un-versioned Bosniak slug
+ * resolves to the superseded 2005 article. A test cannot check that a URL still
+ * resolves, so it checks shape and pins the two links that must not drift.
+ */
+const RADIOPAEDIA_ARTICLE = /^https:\/\/radiopaedia\.org\/articles\/[a-z0-9-]+$/;
+
+describe('radiology references', () => {
+  it('has unique system ids', () => {
+    const ids = RAD_SYSTEMS.map((s) => s.id);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('gives every system a primary citation with a resolvable link', () => {
+    for (const s of RAD_SYSTEMS) {
+      expect(s.citation.url, `${s.id} citation`).toMatch(/^https:\/\//);
+    }
+  });
+
+  it('uses a well-formed Radiopaedia article URL wherever one is given', () => {
+    for (const s of RAD_SYSTEMS) {
+      if (!s.radiopaediaUrl) continue;
+      expect(RADIOPAEDIA_ARTICLE.test(s.radiopaediaUrl), `${s.id} → ${s.radiopaediaUrl}`).toBe(true);
+      // No tracking or locale query strings — they make the link brittle.
+      expect(s.radiopaediaUrl).not.toContain('?');
+    }
+  });
+
+  it('points Bosniak at the 2019 article, never the superseded 2005 one', () => {
+    const bosniak = RAD_SYSTEMS.find((s) => s.id === 'bosniak')!;
+    expect(bosniak.name).toContain('2019');
+    expect(bosniak.radiopaediaUrl).toContain('version-2019');
+    expect(bosniak.radiopaediaUrl).not.toContain('2005');
+  });
+
+  it('keeps the non-obvious PI-RADS and VI-RADS slugs that were browser-verified', () => {
+    const pirads = RAD_SYSTEMS.find((s) => s.id === 'pirads')!;
+    const virads = RAD_SYSTEMS.find((s) => s.id === 'virads')!;
+    expect(pirads.radiopaediaUrl).toMatch(/pi-rads-2$/);
+    expect(virads.radiopaediaUrl).toMatch(/vi-rads-3$/);
   });
 });

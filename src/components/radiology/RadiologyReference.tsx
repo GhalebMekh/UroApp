@@ -75,6 +75,25 @@ export function RadiologyReference() {
         Criteria summarised in UroApp's own words — not a verbatim reproduction of the
         source tables. For reporting, use the full published system.
       </p>
+      {system.radiopaediaUrl && (
+        <a
+          href={system.radiopaediaUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-4 flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] border border-line bg-navy px-3.5 py-2.5 text-[12.5px] text-muted transition-colors hover:border-violet hover:text-ink"
+        >
+          <span>
+            Worked examples and images on Radiopaedia
+            <span className="block text-[11px] text-muted-2">
+              External — opens in a browser and needs a connection
+            </span>
+          </span>
+          <span aria-hidden="true" className="shrink-0 text-violet-soft">
+            ↗
+          </span>
+        </a>
+      )}
+
       <CitationNote citation={system.citation} />
     </section>
   );

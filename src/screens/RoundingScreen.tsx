@@ -20,6 +20,15 @@ import {
   type UrineColour,
   type UrineEntry,
 } from '@/lib/catheter';
+import {
+  countOutstanding,
+  countOverdue,
+  dueLabel,
+  reminderStatus,
+  sortReminders,
+  type Reminder,
+  type ReminderStatus,
+} from '@/lib/reminders';
 
 type Admission = 'elective' | 'er';
 type Sex = 'male' | 'female' | '';
@@ -66,6 +75,7 @@ interface Patient {
   imaging: string;
   activeIssues: string;
   catheter: Catheter;
+  reminders: Reminder[];
   notes: SoapNote[];
 }
 
@@ -107,6 +117,7 @@ function emptyPatient(): Patient {
     imaging: '',
     activeIssues: '',
     catheter: emptyCatheter(),
+    reminders: [],
     notes: [],
   };
 }
@@ -116,6 +127,17 @@ const str = (v: unknown): string => (typeof v === 'string' ? v : '');
 /** One of `allowed`, else ''. Keeps stored enums safe across schema changes. */
 function oneOf<T extends string>(v: unknown, allowed: readonly T[]): T | '' {
   return typeof v === 'string' && (allowed as readonly string[]).includes(v) ? (v as T) : '';
+}
+
+/** Patients saved before reminders existed have no `reminders` key. */
+function normalizeReminders(raw: unknown): Reminder[] {
+  if (!Array.isArray(raw)) return [];
+  return (raw as Record<string, unknown>[]).map((r) => ({
+    id: str(r.id) || crypto.randomUUID(),
+    text: str(r.text),
+    due: str(r.due),
+    done: r.done === true,
+  }));
 }
 
 /** Patients saved before the catheter field existed have no `catheter` key. */
@@ -170,6 +192,7 @@ function normalize(raw: Record<string, unknown>): Patient {
     imaging: str(raw.imaging),
     activeIssues: str(raw.activeIssues),
     catheter: normalizeCatheter(raw.catheter),
+    reminders: normalizeReminders(raw.reminders),
     notes: notes.map((n) => ({
       id: str(n.id) || crypto.randomUUID(),
       date: str(n.date) || new Date().toISOString(),
@@ -262,6 +285,27 @@ function AdmissionBadge({ admission }: { admission: Admission }) {
   );
 }
 
+/** Overdue count if any, else the outstanding count — nothing when all clear. */
+function ReminderBadge({ reminders }: { reminders: Reminder[] }) {
+  const overdue = countOverdue(reminders);
+  const outstanding = countOutstanding(reminders);
+  if (outstanding === 0) return null;
+
+  return (
+    <span
+      title={overdue > 0 ? `${overdue} overdue` : `${outstanding} outstanding`}
+      className={cn(
+        'shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold',
+        overdue > 0
+          ? 'border-crimson/50 bg-crimson/[0.12] text-crimson'
+          : 'border-line bg-steel text-muted-2',
+      )}
+    >
+      {overdue > 0 ? `${overdue} overdue` : `${outstanding} to do`}
+    </span>
+  );
+}
+
 function PatientList({
   patients,
   loaded,
@@ -275,15 +319,43 @@ function PatientList({
   onOpen: (id: string) => void;
   onDelete: (id: string) => void;
 }) {
+  const [handoverError, setHandoverError] = useState(false);
+  const stem = `ward-handover-${todayISO()}`;
+
   return (
     <>
-      <button
-        type="button"
-        onClick={onAdd}
-        className="mt-8 min-h-[44px] rounded-[11px] bg-violet px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
-      >
-        + Add patient
-      </button>
+      <div className="mt-8 flex flex-wrap gap-2">
+        <button
+          type="button"
+          onClick={onAdd}
+          className="min-h-[44px] rounded-[11px] bg-violet px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+        >
+          + Add patient
+        </button>
+        {patients.length > 0 && (
+          <>
+            <button
+              type="button"
+              onClick={() => setHandoverError(!printDocument('Ward handover', buildHandoverHtml(patients)))}
+              className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink transition-colors hover:border-violet"
+            >
+              Print handover
+            </button>
+            <button
+              type="button"
+              onClick={() => setHandoverError(!saveDocument('Ward handover', buildHandoverHtml(patients), '', stem))}
+              className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink transition-colors hover:border-teal"
+            >
+              Save handover
+            </button>
+          </>
+        )}
+      </div>
+      {handoverError && (
+        <p className="mt-3 rounded-[10px] border border-crimson/50 bg-crimson/[0.10] px-4 py-3 text-[12px] text-muted">
+          Printing was blocked. Use Save handover instead, or your browser’s own Print command.
+        </p>
+      )}
 
       <div className="mt-6 space-y-2.5">
         {!loaded ? (
@@ -308,6 +380,7 @@ function PatientList({
                   <div className="flex items-center gap-2">
                     <span className="truncate text-[15px] font-semibold">{p.name || 'Unnamed'}</span>
                     <AdmissionBadge admission={p.admission} />
+                    <ReminderBadge reminders={p.reminders} />
                   </div>
                   <div className="mt-0.5 truncate text-[12.5px] text-muted-2">{meta || 'Tap to add details'}</div>
                 </button>
@@ -389,6 +462,134 @@ function ChipRow<T extends string>({
         ))}
       </div>
     </label>
+  );
+}
+
+const REMINDER_ACCENT: Record<ReminderStatus, string> = {
+  overdue: 'border-crimson/50 bg-crimson/[0.1] text-crimson',
+  soon: 'border-amber/50 bg-amber/[0.1] text-amber',
+  upcoming: 'border-teal/40 bg-teal/[0.08] text-teal',
+  undated: 'border-line bg-navy text-muted-2',
+  done: 'border-line bg-navy text-muted-2',
+};
+
+function RemindersSection({
+  reminders,
+  onChange,
+}: {
+  reminders: Reminder[];
+  onChange: (next: Reminder[]) => void;
+}) {
+  const [text, setText] = useState('');
+  const [due, setDue] = useState('');
+
+  const sorted = sortReminders(reminders);
+  const overdue = countOverdue(reminders);
+
+  function add() {
+    if (!text.trim()) return;
+    onChange([{ id: crypto.randomUUID(), text: text.trim(), due, done: false }, ...reminders]);
+    setText('');
+    setDue('');
+  }
+
+  return (
+    <Section title="Plan reminders">
+      {overdue > 0 && (
+        <div className="rounded-[10px] border border-crimson/40 bg-crimson/[0.1] px-3 py-2 text-[12.5px] text-crimson">
+          {overdue} {overdue === 1 ? 'reminder is' : 'reminders are'} overdue.
+        </div>
+      )}
+
+      <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-[1fr_auto]">
+        <Field
+          label="What needs doing"
+          value={text}
+          onChange={setText}
+          placeholder="e.g. Chase histology; repeat Hb; book stent removal"
+        />
+        <label className="block">
+          <span className="mb-[7px] block text-[13px] font-semibold text-muted">Due (optional)</span>
+          <input
+            type="datetime-local"
+            value={due}
+            onChange={(e) => setDue(e.target.value)}
+            className={inputCls}
+          />
+        </label>
+      </div>
+
+      <button
+        type="button"
+        onClick={add}
+        className="min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+      >
+        Add reminder
+      </button>
+
+      <div className="space-y-2">
+        {sorted.length === 0 ? (
+          <p className="text-[13px] text-muted-2">No reminders yet.</p>
+        ) : (
+          sorted.map((r) => {
+            const status = reminderStatus(r);
+            return (
+              <div
+                key={r.id}
+                className={cn(
+                  'flex items-start gap-3 rounded-[10px] border px-3 py-2.5',
+                  status === 'overdue' ? 'border-crimson/50 bg-crimson/[0.08]' : 'border-line bg-navy',
+                )}
+              >
+                <button
+                  type="button"
+                  aria-pressed={r.done}
+                  aria-label={r.done ? 'Mark not done' : 'Mark done'}
+                  onClick={() =>
+                    onChange(reminders.map((x) => (x.id === r.id ? { ...x, done: !x.done } : x)))
+                  }
+                  className={cn(
+                    'mt-px grid h-6 w-6 shrink-0 place-items-center rounded-[6px] border text-[12px] transition-colors',
+                    r.done
+                      ? 'border-teal bg-teal/20 text-teal'
+                      : 'border-line bg-steel text-transparent hover:border-teal',
+                  )}
+                >
+                  ✓
+                </button>
+
+                <div className="min-w-0 flex-1">
+                  <div
+                    className={cn(
+                      'text-[13.5px]',
+                      r.done ? 'text-muted-2 line-through' : 'text-ink',
+                    )}
+                  >
+                    {r.text}
+                  </div>
+                  <span
+                    className={cn(
+                      'mt-1 inline-block rounded-full border px-2 py-0.5 text-[11px]',
+                      REMINDER_ACCENT[status],
+                    )}
+                  >
+                    {dueLabel(r)}
+                  </span>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => onChange(reminders.filter((x) => x.id !== r.id))}
+                  className="shrink-0 text-[11px] text-muted-2 hover:text-crimson"
+                >
+                  Remove
+                </button>
+              </div>
+            );
+          })
+        )}
+      </div>
+    </Section>
   );
 }
 
@@ -752,6 +953,13 @@ function PatientDetail({
       </div>
 
       <div className="mt-5">
+        <RemindersSection
+          reminders={patient.reminders}
+          onChange={(reminders) => onChange({ reminders })}
+        />
+      </div>
+
+      <div className="mt-5">
         <CatheterSection
           catheter={patient.catheter}
           onChange={(patch) => onChange({ catheter: { ...patient.catheter, ...patch } })}
@@ -831,6 +1039,94 @@ function summaryLabs(labs: Labs): string[] {
   return out;
 }
 
+/**
+ * One-page ward handover for every patient on the list — the safe version of
+ * a "shared workflow": it hands over through whatever channel the hospital
+ * already approves, without any shared server or patient data leaving the
+ * phone. Sorted by bed so it reads in ward-round order.
+ */
+function buildHandoverHtml(patients: Patient[]): string {
+  const sorted = [...patients].sort((a, b) =>
+    (a.location || '~').localeCompare(b.location || '~', undefined, { numeric: true }),
+  );
+
+  const blocks = sorted
+    .map((p) => {
+      const head = [
+        p.name || 'Unnamed',
+        [p.age && `${p.age}y`, p.sex].filter(Boolean).join(' '),
+        p.location && `Bed ${p.location}`,
+        p.admission === 'er' ? 'via ER' : 'elective',
+      ]
+        .filter(Boolean)
+        .join(' · ');
+
+      const row = (label: string, val: string) =>
+        val.trim() ? `<div class="row"><b>${escapeHtml(label)}</b> ${escapeHtml(val)}</div>` : '';
+
+      // Catheter: description plus the most recent reading (log is newest-first).
+      let catheter = '';
+      if (p.catheter.present) {
+        const last = p.catheter.log[0];
+        const net = last ? netOutput(last, p.catheter.cbi) : null;
+        const reading = last
+          ? [
+              net !== null ? `${net} mL${p.catheter.cbi ? ' net' : ''}` : '',
+              last.colour ? COLOUR_LABELS[last.colour] : '',
+              isRetaining(last, p.catheter.cbi) ? 'MORE IN THAN OUT — check for blockage' : '',
+            ]
+              .filter(Boolean)
+              .join(', ')
+          : '';
+        catheter = row('Catheter', [describeCatheter(p.catheter), reading && `last: ${reading}`].filter(Boolean).join(' — '));
+      }
+
+      const open = sortReminders(p.reminders).filter((r) => !r.done);
+      const todo = open.length
+        ? `<div class="row"><b>Outstanding</b></div>` +
+          open.map((r) => `<div class="row">&nbsp;&nbsp;• ${escapeHtml(r.text)} <i>(${escapeHtml(dueLabel(r))})</i></div>`).join('')
+        : '';
+
+      const latest = p.notes[0]; // notes are stored newest-first
+      const plan = latest?.p.trim()
+        ? row(`Plan (${new Date(latest.date).toLocaleDateString()})`, latest.p)
+        : '';
+
+      return (
+        `<div class="card"><h3>${escapeHtml(head)}</h3>` +
+        row('Admitted as', p.reason) +
+        row('Active issues', p.activeIssues) +
+        catheter +
+        todo +
+        plan +
+        `</div>`
+      );
+    })
+    .join('');
+
+  return (
+    `<h1>Ward handover</h1>` +
+    `<p class="sub">${patients.length} patient${patients.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString())}</p>` +
+    blocks +
+    `<div class="note">De-identified working list — first name/initials and bed only, no full names or ` +
+    `medical-record numbers. A personal aide-mémoire, not a medical record. Hand over through your ` +
+    `hospital's approved channel and dispose of securely.</div>`
+  );
+}
+
+/** Outstanding reminders for the printable summary; completed ones are omitted. */
+function remindersHtml(reminders: Reminder[]): string {
+  const open = sortReminders(reminders).filter((r) => !r.done);
+  if (open.length === 0) return '';
+  const rows = open
+    .map(
+      (r) =>
+        `<div class="row"><b>${escapeHtml(dueLabel(r))}</b> ${escapeHtml(r.text)}</div>`,
+    )
+    .join('');
+  return `<h2>Outstanding</h2>${rows}`;
+}
+
 /** Catheter block for the printable summary; empty when there is no catheter. */
 function catheterHtml(c: Catheter): string {
   if (!c.present) return '';
@@ -880,6 +1176,7 @@ function buildSummaryHtml(p: Patient): string {
     (labs.length ? `<h2>Labs</h2><p>${labs.map(escapeHtml).join(' · ')}</p>` : '') +
     (p.imaging.trim() ? `<h2>Imaging</h2><p>${escapeHtml(p.imaging)}</p>` : '') +
     (p.activeIssues.trim() ? `<h2>Active issues</h2><p>${escapeHtml(p.activeIssues)}</p>` : '') +
+    remindersHtml(p.reminders) +
     catheterHtml(p.catheter) +
     (soap ? `<h2>Progress (SOAP)</h2>${soap}` : '') +
     `<div class="note">De-identified working summary — a first name/initials and bed only, no full name or ` +

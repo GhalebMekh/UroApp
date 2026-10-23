@@ -55,6 +55,7 @@ const CLINICAL_ITEMS: HubItem[] = [
   { id: 'calculators', label: 'Calculators', note: 'Nomograms · risk' },
   { id: 'imaging', label: 'Imaging', note: 'PI-RADS · Bosniak' },
   { id: 'instruments', label: 'Instruments', note: 'Scopes · lasers' },
+  { id: 'mdt', label: 'MDT case sheets', note: 'Tumour board' },
   { id: 'drugs', label: 'Drug interactions', note: 'Pharmacology' },
   { id: 'surveillance', label: 'Surveillance schedule', note: 'Follow-up' },
   { id: 'pediatrics', label: 'Pediatrics', note: 'Dosing · fluids' },
@@ -62,8 +63,9 @@ const CLINICAL_ITEMS: HubItem[] = [
 
 const ACADEMIC_ITEMS: HubItem[] = [
   { id: 'guidelines', label: 'Guidelines', note: 'AUA · EAU' },
-  { id: 'articles', label: 'Weekly reads', note: 'PubMed Central' },
+  { id: 'articles', label: 'Weekly reads', note: 'PubMed · weekly' },
   { id: 'conferences', label: 'Conferences', note: 'Dates · calendar' },
+  { id: 'cme', label: 'CME / CPD tracker', note: 'Hours · cycle' },
   { id: 'rehearsal', label: 'Operative rehearsal', note: 'Step drill' },
   { id: 'scenarios', label: 'Intra-op scenarios', note: 'Decision case' },
 ];

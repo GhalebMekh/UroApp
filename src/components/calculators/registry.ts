@@ -1,6 +1,8 @@
 import type { ComponentType } from 'react';
 import { PsaToolkit } from './PsaToolkit';
 import { CapraScore } from './CapraScore';
+import { CapraSScore } from './CapraSScore';
+import { AdrenalIncidentaloma } from './AdrenalIncidentaloma';
 import { EortcNmibc } from './EortcNmibc';
 import { TnmStaging } from './TnmStaging';
 import { IgcccgClassifier } from './IgcccgClassifier';
@@ -18,12 +20,15 @@ import { OabssCalculator } from './OabssCalculator';
 import { PvrInterpretation } from './PvrInterpretation';
 import { ProstateTreatmentEligibility } from './ProstateTreatmentEligibility';
 import { SemenAnalysisInterpreter } from './SemenAnalysisInterpreter';
+import { FreeTestosterone } from './FreeTestosterone';
+import { ClavienDindo } from './ClavienDindo';
+import { CharlsonIndex } from './CharlsonIndex';
 
 /** Every calculator is either an oncology tool or a benign/functional one. */
 export type CalcCategory = 'oncological' | 'non-oncological';
 
 /** Organ system for oncology calculators (groups under Oncological category). */
-export type OncologyOrgan = 'prostate' | 'bladder' | 'kidney' | 'testis' | 'general';
+export type OncologyOrgan = 'prostate' | 'bladder' | 'kidney' | 'adrenal' | 'testis' | 'general';
 
 export interface CalcEntry {
   id: string;
@@ -39,6 +44,7 @@ export const CALCULATORS: CalcEntry[] = [
   // Prostate oncology
   { id: 'psa', title: 'PSA toolkit', category: 'oncological', organ: 'prostate', Component: PsaToolkit },
   { id: 'capra', title: 'UCSF-CAPRA', category: 'oncological', organ: 'prostate', Component: CapraScore },
+  { id: 'capra-s', title: 'CAPRA-S (post-prostatectomy)', category: 'oncological', organ: 'prostate', Component: CapraSScore },
   { id: 'isup-grade-group', title: 'ISUP Grade Group converter', category: 'oncological', organ: 'prostate', Component: IsupGradeGroupConverter },
   // Bladder oncology
   { id: 'eortc', title: 'EORTC NMIBC risk', category: 'oncological', organ: 'bladder', Component: EortcNmibc },
@@ -46,6 +52,8 @@ export const CALCULATORS: CalcEntry[] = [
   { id: 'imdc-heng', title: 'IMDC (Heng) risk', category: 'oncological', organ: 'kidney', Component: ImdcHengRisk },
   { id: 'renal', title: 'R.E.N.A.L. Nephrometry', category: 'oncological', organ: 'kidney', Component: RenalCalculator },
   { id: 'padua', title: 'PADUA score', category: 'oncological', organ: 'kidney', Component: PaduaScore },
+  // Adrenal
+  { id: 'adrenal-incidentaloma', title: 'Adrenal incidentaloma (ESE 2023)', category: 'oncological', organ: 'adrenal', Component: AdrenalIncidentaloma },
   // Testis oncology
   { id: 'igcccg', title: 'IGCCCG germ cell prognosis', category: 'oncological', organ: 'testis', Component: IgcccgClassifier },
   // General/multi-organ
@@ -60,6 +68,9 @@ export const CALCULATORS: CalcEntry[] = [
   { id: 'ipss', title: 'IPSS + QoL', category: 'non-oncological', Component: IpssCalculator },
   { id: 'shim', title: 'IIEF-5 (SHIM)', category: 'non-oncological', Component: ShimCalculator },
   { id: 'semen-analysis', title: 'Semen analysis (WHO 2021)', category: 'non-oncological', Component: SemenAnalysisInterpreter },
+  { id: 'free-testosterone', title: 'Free & bioavailable testosterone', category: 'non-oncological', Component: FreeTestosterone },
+  { id: 'clavien-dindo', title: 'Clavien–Dindo complication grade', category: 'non-oncological', Component: ClavienDindo },
+  { id: 'charlson', title: 'Charlson Comorbidity Index', category: 'non-oncological', Component: CharlsonIndex },
 ];
 
 export interface CalcGroup {
@@ -82,6 +93,7 @@ export const ONCOLOGY_ORGANS: OncologyOrganGroup[] = [
   { organ: 'prostate', label: 'Prostate', icon: 'prostate' },
   { organ: 'bladder', label: 'Bladder', icon: 'bladder' },
   { organ: 'kidney', label: 'Kidney & renal mass', icon: 'kidney' },
+  { organ: 'adrenal', label: 'Adrenal', icon: 'adrenal' },
   { organ: 'testis', label: 'Testis', icon: 'testis' },
   { organ: 'general', label: 'General staging', icon: 'general' },
 ];

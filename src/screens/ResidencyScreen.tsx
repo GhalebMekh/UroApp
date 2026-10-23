@@ -1,5 +1,6 @@
 import { useState, type ComponentType } from 'react';
 import { cn } from '@/lib/cn';
+import { ProGate } from '@/components/ProGate';
 import { InpatientIcon, OnCallIcon, ScalpelIcon } from '@/components/icons';
 import { RoundingScreen } from './RoundingScreen';
 import { OnCallScreen } from './OnCallScreen';
@@ -54,7 +55,11 @@ export function ResidencyScreen() {
 
       {/* Content */}
       <div className="flex-1">
-        {section === 'inpatient' && <RoundingScreen />}
+        {section === 'inpatient' && (
+          <ProGate feature="inpatient">
+            <RoundingScreen />
+          </ProGate>
+        )}
         {section === 'oncall' && <OnCallScreen />}
         {section === 'or' && (
           <div>
@@ -79,9 +84,17 @@ export function ResidencyScreen() {
               </div>
             </div>
 
-            {orTab === 'logbook' && <OperativeLogScreen />}
+            {orTab === 'logbook' && (
+              <ProGate feature="logbook">
+                <OperativeLogScreen />
+              </ProGate>
+            )}
             {orTab === 'procedures' && <ProceduresScreen />}
-            {orTab === 'consent' && <ConsentScreen />}
+            {orTab === 'consent' && (
+              <ProGate feature="consent">
+                <ConsentScreen />
+              </ProGate>
+            )}
           </div>
         )}
       </div>

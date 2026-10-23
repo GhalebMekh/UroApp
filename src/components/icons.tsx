@@ -155,6 +155,25 @@ export function KidneyIcon({ className }: IconProps) {
   );
 }
 
+/** Star — favourite toggle. `filled` shows the pinned state. */
+export function StarIcon({ className, filled = false }: IconProps & { filled?: boolean }) {
+  return (
+    <svg {...base} className={className} aria-hidden="true" fill={filled ? 'currentColor' : 'none'}>
+      <path d="m12 3.5 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8Z" />
+    </svg>
+  );
+}
+
+/** Adrenal — triangular gland capping the upper pole of a kidney. */
+export function AdrenalIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M8.5 9.5 12.5 3.5l4 6Z" />
+      <path d="M14 11c-2.9 0-5 2.2-5 5s2.1 5 5 5c1.4 0 2.3-.8 2.3-1.9 0-1-.8-1.6-.8-3.1s.8-2.1.8-3.1c0-1.1-.9-1.9-2.3-1.9Z" />
+    </svg>
+  );
+}
+
 /** Testis — oval with a short cord. */
 export function TestisIcon({ className }: IconProps) {
   return (

@@ -30,6 +30,4 @@ export const FAQS: Faq[] = [
   { q: 'Who is UroApp for?', a: 'Urology residents and practising urologists who want validated, cited bedside tools. It is built for licensed healthcare professionals, not patients.' },
   { q: 'Does it work offline?', a: 'Yes — the calculators, guideline summaries, surveillance schedules and operative reference are bundled on-device and work without a connection. A few outbound links (official guideline pages, conference sites) need the internet.' },
   { q: 'Where do the numbers and recommendations come from?', a: 'Every score, threshold and recommendation is tied to its primary source — the AUA or EAU guideline, or the original publication — with a link to verify. Nothing is written from memory, and the app summarises evidence for your judgment rather than issuing patient-specific directives.' },
-  { q: 'Is any patient data stored?', a: 'No. UroApp stores no patient-identifiable information — calculator inputs and the ward-round list stay on your device and are de-identified by design.' },
-  { q: 'When does the iOS app launch?', a: 'It is in active development. An iPhone (TestFlight) build is planned once the native wrap is complete; today it runs as a web preview.' },
-];
+  { q: 'Is any patient data stored?', a: 'No. UroApp stores no patient-identifiable information — calculator inputs and the ward-round list stay on your device and are de-identified by design.' },];

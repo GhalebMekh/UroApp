@@ -1,31 +1,21 @@
 import { Wrap } from './section';
 
-/** "TestFlight soon" call-to-action band + footer. */
+/**
+ * Home-page footer.
+ *
+ * The "UroApp for iPhone — in development / TestFlight planned" band that used
+ * to sit here was removed for the App Store build: inside the shipped app it is
+ * false, and pre-release wording invites rejection under guideline 2.2
+ * (betas and demos do not belong on the App Store).
+ */
 export function AppCta() {
   return (
-    <>
-      <section className="border-t border-line py-20">
-        <Wrap>
-          <div className="rounded-[22px] border border-violet/[0.35] bg-ai-soft px-8 py-[46px] text-center">
-            <h3 className="mb-2.5 font-display text-[clamp(24px,4vw,30px)] font-semibold">
-              UroApp for iPhone — in development
-            </h3>
-            <p className="mx-auto max-w-[520px] text-muted">
-              The offline calculators, guideline summaries, surveillance schedules, operative
-              reference and bilingual consent generator are being packaged for iPhone. A TestFlight
-              build is planned once the native wrap is complete.
-            </p>
-          </div>
-        </Wrap>
-      </section>
-
-      <footer className="border-t border-line py-12 text-[13px] text-muted-2">
-        <Wrap>
-          <div className="text-center">
-            © 2026 UroApp · Jeddah, Saudi Arabia · For licensed healthcare professionals
-          </div>
-        </Wrap>
-      </footer>
-    </>
+    <footer className="border-t border-line py-12 text-[13px] text-muted-2">
+      <Wrap>
+        <div className="text-center">
+          © 2026 UroApp · Jeddah, Saudi Arabia · For licensed healthcare professionals
+        </div>
+      </Wrap>
+    </footer>
   );
 }

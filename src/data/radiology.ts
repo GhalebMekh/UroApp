@@ -35,6 +35,19 @@ export interface RadSystem {
   /** What the score estimates. */
   outcome: string;
   citation: Citation;
+  /**
+   * Radiopaedia article for worked examples and images. SECONDARY — the
+   * criteria above stand on the primary citation; this is illustration only,
+   * and needs a connection, unlike the rest of the app.
+   *
+   * Every URL here was opened in a browser and confirmed to land on the
+   * intended article (verified 2026-08-11). Do NOT guess these slugs: the
+   * obvious forms are wrong. `…pi-rads` redirects to `…pi-rads-2`, VI-RADS
+   * carries a `-3` suffix, and `bosniak-classification-system-of-renal-cystic-
+   * masses` resolves to the superseded VERSION 2005 article — which would
+   * silently contradict the 2019 criteria this file teaches.
+   */
+  radiopaediaUrl?: string;
   categories: RadCategory[];
 }
 
@@ -46,6 +59,8 @@ export const RAD_SYSTEMS: RadSystem[] = [
     modality: 'Prostate multiparametric MRI',
     outcome: 'Likelihood of clinically significant prostate cancer (csPCa)',
     citation: CITATIONS.pirads,
+    radiopaediaUrl:
+      'https://radiopaedia.org/articles/prostate-imaging-reporting-and-data-system-pi-rads-2',
     categories: [
       {
         code: '1',
@@ -91,6 +106,9 @@ export const RAD_SYSTEMS: RadSystem[] = [
     modality: 'Renal cystic mass — CT or MRI',
     outcome: 'Likelihood that a cystic renal mass is malignant',
     citation: CITATIONS.bosniak,
+    // Version-2019 article specifically — the un-versioned slug lands on 2005.
+    radiopaediaUrl:
+      'https://radiopaedia.org/articles/bosniak-classification-of-cystic-renal-masses-version-2019',
     categories: [
       {
         code: 'I',
@@ -136,6 +154,8 @@ export const RAD_SYSTEMS: RadSystem[] = [
     modality: 'Bladder multiparametric MRI',
     outcome: 'Likelihood of detrusor (muscle) invasion in bladder cancer',
     citation: CITATIONS.virads,
+    radiopaediaUrl:
+      'https://radiopaedia.org/articles/vesical-imaging-reporting-and-data-system-vi-rads-3',
     categories: [
       {
         code: '1',

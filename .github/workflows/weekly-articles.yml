@@ -1,0 +1,43 @@
+# Refreshes Weekly reads every Sunday. Writes public/feeds/articles.json and
+# commits it; the app fetches that file from raw.githubusercontent.com when
+# online and falls back to the copy bundled in the build when offline.
+# No server to keep alive, nothing to pay for.
+name: Weekly articles feed
+
+on:
+  schedule:
+    - cron: '0 2 * * 0' # Sundays 02:00 UTC — same slot as the old server cron
+  workflow_dispatch: {} # allow a manual run from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install fetcher dependencies
+        working-directory: server/articles
+        run: npm ci --omit=dev
+
+      - name: Fetch this week's articles
+        working-directory: server/articles
+        run: node exportFeed.js
+
+      - name: Commit the new feed
+        run: |
+          if git diff --quiet -- public/feeds/articles.json; then
+            echo "Feed unchanged."
+            exit 0
+          fi
+          git config user.name "uroapp-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/feeds/articles.json
+          git commit -m "Refresh weekly articles feed"
+          git push

@@ -3,12 +3,11 @@ import type { CapacitorConfig } from '@capacitor/cli';
 /**
  * Capacitor configuration for the native wrap (Sprint 3 — see CLAUDE.md).
  *
- * The native projects are not generated yet. On a Mac with Xcode installed:
- *   npm i -D @capacitor/cli @capacitor/ios
+ * The iOS project lives in ios/ (Swift Package Manager, not CocoaPods) and was
+ * generated on Windows. It is built in the cloud by codemagic.yaml, so no local
+ * Mac is required. After changing web code or plugins:
  *   npm run build
- *   npx cap add ios
  *   npx cap sync ios
- *   npx cap run ios
  */
 const config: CapacitorConfig = {
   appId: 'com.uroapp.clinical',

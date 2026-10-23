@@ -71,6 +71,16 @@ const LOCAL_ANAESTHESIA: BilingualText = {
   ar: 'عادةً تخدير موضعي كإجراء يومي (دون مبيت).',
 };
 
+const LOCAL_OR_GA: BilingualText = {
+  en: 'Flexible cystoscopy under local anaesthetic gel, or rigid cystoscopy under general or spinal anaesthesia. Anaesthetic risks, if any, are discussed separately.',
+  ar: 'تنظير مرن تحت هلام مخدر موضعي، أو تنظير صلب تحت تخدير عام أو نصفي. تُناقَش مخاطر التخدير، إن وُجدت، بشكل منفصل.',
+};
+
+const ANALGESIA_SEDATION: BilingualText = {
+  en: 'Pain relief, with or without sedation; the type is agreed with the treating team.',
+  ar: 'مسكنات للألم مع التهدئة أو بدونها، ويُتفَق على نوعها مع الفريق المعالج.',
+};
+
 const GA_ONLY: BilingualText = {
   en: 'General anaesthesia. Anaesthetic and cardiovascular risks are discussed separately by the anaesthetist.',
   ar: 'تخدير عام. تُناقَش مخاطر التخدير والقلب والأوعية بشكل منفصل مع طبيب التخدير.',
@@ -357,5 +367,196 @@ export const CONSENT_PROCEDURES: ConsentProcedure[] = [
     ],
     anaesthesia: GA_ONLY,
     source: { label: 'Radtka & Han, Oper Tech Gen Surg 2008', url: 'https://doi.org/10.1053/j.optechgensurg.2008.05.001' },
+  },
+
+  // ── Added 2026-10: complications carried over from the sourced write-ups in
+  //    procedures.ts (BAUS patient information + AUA guideline), reworded for
+  //    patients. Frequency words appear only where that source uses them.
+  {
+    id: 'cystoscopy',
+    name: {
+      en: 'Cystoscopy ± ureteric stent — Telescopic examination of the bladder',
+      ar: 'تنظير المثانة ± دعامة حالبية — فحص المثانة بالمنظار',
+    },
+    description: {
+      en: 'A thin telescope is passed through the urethra to look inside the bladder and urethra — a flexible scope under local anaesthetic gel, or a rigid scope under general or spinal anaesthesia. If needed, a temporary tube (stent) can be placed up the ureter at the same time to relieve a blockage.',
+      ar: 'يُدخَل منظار رفيع عبر مجرى البول لفحص المثانة والإحليل من الداخل — بمنظار مرن مع هلام مخدر موضعي، أو بمنظار صلب تحت تخدير عام أو نصفي. وعند الحاجة يمكن تركيب أنبوب مؤقت (دعامة) في الحالب في الوقت نفسه لتخفيف الانسداد.',
+    },
+    benefits: [
+      { en: 'Finds the cause of blood in the urine, repeated infections or urinary symptoms.', ar: 'معرفة سبب وجود الدم في البول أو الالتهابات المتكررة أو أعراض التبول.' },
+      { en: 'Checks for, or follows up, bladder tumours.', ar: 'الكشف عن أورام المثانة أو متابعتها.' },
+      { en: 'If a stent is placed: relieves the blockage and protects the kidney.', ar: 'عند تركيب الدعامة: تخفيف الانسداد وحماية الكلية.' },
+    ],
+    alternatives: [
+      { en: 'Imaging alone (ultrasound or CT), which cannot see the bladder lining as well.', ar: 'الاكتفاء بالتصوير (الأشعة الصوتية أو المقطعية)، وهو أقل قدرة على رؤية بطانة المثانة.' },
+      { en: 'For a blockage: a drain placed through the skin into the kidney (nephrostomy).', ar: 'في حال الانسداد: أنبوب تصريف يُركَّب عبر الجلد إلى الكلية (فغر الكلية).' },
+      { en: 'No investigation, accepting that a cause may be missed.', ar: 'عدم إجراء الفحص، مع احتمال عدم اكتشاف السبب.' },
+    ],
+    complications: [
+      { en: 'Burning, frequency and some blood in the urine for a few days (common, settles on its own).', ar: 'حرقة وتكرار في التبول وبعض الدم في البول لبضعة أيام (شائع ويزول من تلقاء نفسه).' },
+      { en: 'Urinary infection.', ar: 'التهاب المسالك البولية.' },
+      { en: 'Injury to the urethra; rarely a later narrowing (stricture).', ar: 'إصابة في مجرى البول؛ ونادراً تضيّق لاحق في الإحليل.' },
+      { en: 'Difficulty passing urine afterwards, especially in men with an enlarged prostate.', ar: 'صعوبة التبول بعد الإجراء، خاصة لدى الرجال المصابين بتضخم البروستاتا.' },
+      { en: 'The scope may not pass, needing a different approach.', ar: 'قد يتعذّر إدخال المنظار، مما يستدعي طريقة أخرى.' },
+      { en: 'If a stent is placed: discomfort and frequency while it is in, movement of the stent, and the need to remove it on time — a forgotten stent can become crusted and hard to remove.', ar: 'عند تركيب الدعامة: انزعاج وتكرار في التبول أثناء وجودها، واحتمال تحرّكها، وضرورة إزالتها في موعدها — فالدعامة المنسية قد تتكلّس ويصعب إزالتها.' },
+    ],
+    anaesthesia: LOCAL_OR_GA,
+    source: { label: 'BAUS patient information (cystoscopy)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
+  },
+
+  {
+    id: 'turbt',
+    name: {
+      en: 'TURBT — Telescopic removal of a bladder tumour',
+      ar: 'استئصال ورم المثانة عبر الإحليل بالمنظار (TURBT)',
+    },
+    description: {
+      en: 'The bladder tumour is removed with a telescope passed through the urethra, under general or spinal anaesthesia, and the tissue is examined to confirm the type and depth of the tumour. A single dose of medicine may be placed in the bladder afterwards to lower the chance of it coming back.',
+      ar: 'يُستأصَل ورم المثانة بمنظار يُدخَل عبر مجرى البول تحت تخدير عام أو نصفي، وتُفحَص الأنسجة لتحديد نوع الورم وعمقه. وقد تُوضَع جرعة واحدة من دواء داخل المثانة بعد العملية لتقليل احتمال عودته.',
+    },
+    benefits: [
+      { en: 'Removes the visible tumour.', ar: 'إزالة الورم الظاهر.' },
+      { en: 'Gives the diagnosis and stage, which guide any further treatment.', ar: 'تحديد التشخيص ومرحلة الورم، مما يوجّه أي علاج لاحق.' },
+    ],
+    alternatives: [
+      { en: 'No treatment — the tumour cannot be diagnosed or staged, and may grow and bleed.', ar: 'عدم العلاج — لا يمكن تشخيص الورم أو تحديد مرحلته، وقد يكبر وينزف.' },
+      { en: 'Further treatment (such as bladder medicines, surgery or radiotherapy) depends on what this operation finds.', ar: 'يعتمد العلاج اللاحق (مثل أدوية المثانة أو الجراحة أو العلاج الإشعاعي) على نتيجة هذه العملية.' },
+    ],
+    complications: [
+      { en: 'Blood in the urine; occasionally clots blocking the catheter, a transfusion, or a return to theatre.', ar: 'دم في البول؛ وأحياناً جلطات تسدّ القسطرة، أو الحاجة لنقل دم أو العودة لغرفة العمليات.' },
+      { en: 'A hole in the bladder wall — usually heals with a catheter; occasionally needs an operation to repair.', ar: 'ثقب في جدار المثانة — يلتئم غالباً بالقسطرة، وقد يحتاج أحياناً إلى جراحة لإصلاحه.' },
+      { en: 'A sudden leg movement from nerve stimulation during surgery, which can cause a perforation or bleeding.', ar: 'حركة مفاجئة في الساق نتيجة تحفيز عصب أثناء العملية، قد تسبب ثقباً أو نزيفاً.' },
+      { en: 'Absorption of irrigation fluid, causing confusion or strain on the heart.', ar: 'امتصاص سائل الغسيل، مما قد يسبب تشوّشاً أو إجهاداً للقلب.' },
+      { en: 'Urinary infection or sepsis.', ar: 'التهاب المسالك البولية أو الإنتان (تسمم الدم).' },
+      { en: 'The tumour may come back, and more treatment may be needed if the first resection is incomplete.', ar: 'قد يعود الورم، وقد تلزم معالجة إضافية إذا لم يكتمل الاستئصال الأول.' },
+      { en: 'Scarring that narrows the urethra or bladder neck.', ar: 'تندّب يسبب تضيّق الإحليل أو عنق المثانة.' },
+      { en: 'Bladder irritation from the medicine placed in the bladder.', ar: 'تهيّج المثانة بسبب الدواء الموضوع داخلها.' },
+    ],
+    anaesthesia: GA_SPINAL,
+    source: { label: 'BAUS patient information (TURBT)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
+  },
+
+  {
+    id: 'semi-rigid-urs',
+    name: {
+      en: 'Semi-rigid ureteroscopy — Telescopic treatment of a ureteric stone',
+      ar: 'تنظير الحالب شبه الصلب — علاج حصوة الحالب بالمنظار',
+    },
+    description: {
+      en: 'A telescope is passed through the urethra and bladder into the ureter to break the stone with a laser or remove it with a basket. A temporary internal tube (stent) may be left to help the kidney drain.',
+      ar: 'يُدخَل منظار عبر مجرى البول والمثانة إلى الحالب لتفتيت الحصوة بالليزر أو إزالتها بالسلة، وقد تُترَك أنبوبة داخلية مؤقتة (دعامة) لمساعدة الكلية على التصريف.',
+    },
+    benefits: [
+      { en: 'Removes or breaks up the stone.', ar: 'إزالة الحصوة أو تفتيتها.' },
+      { en: 'Relieves pain and blockage of the kidney.', ar: 'تخفيف الألم وانسداد الكلية.' },
+    ],
+    alternatives: [
+      { en: 'Waiting for the stone to pass, with pain relief and medicines.', ar: 'انتظار نزول الحصوة مع المسكنات والأدوية.' },
+      { en: 'Shockwave lithotripsy from outside the body.', ar: 'تفتيت الحصوة بالموجات التصادمية من خارج الجسم.' },
+      { en: 'A drain or stent first, with stone treatment later.', ar: 'تركيب أنبوب تصريف أو دعامة أولاً، ثم علاج الحصوة لاحقاً.' },
+    ],
+    complications: [
+      { en: 'The stone may move up into the kidney, needing a flexible telescope to finish.', ar: 'قد تنتقل الحصوة إلى الكلية، مما يستدعي استخدام منظار مرن لإكمال العلاج.' },
+      { en: 'Urinary infection or sepsis — the risk is higher with an infected or blocking stone.', ar: 'التهاب المسالك البولية أو الإنتان — ويزداد الخطر مع الحصوة الملتهبة أو المسبّبة للانسداد.' },
+      { en: 'Injury to the ureter; rarely a serious tear that needs reconstructive surgery.', ar: 'إصابة في الحالب؛ ونادراً تمزّق خطير يحتاج إلى جراحة ترميمية.' },
+      { en: 'Stent discomfort — loin or bladder pain, burning, frequency and blood in the urine.', ar: 'انزعاج من الدعامة — ألم في الخاصرة أو المثانة، وحرقة، وتكرار في التبول، ودم في البول.' },
+      { en: 'Stone fragments may remain and need further treatment; later narrowing of the ureter.', ar: 'قد تبقى أجزاء من الحصوة وتحتاج علاجاً إضافياً؛ وقد يحدث تضيّق في الحالب لاحقاً.' },
+    ],
+    anaesthesia: GA_SPINAL,
+    source: { label: 'BAUS patient information (ureteroscopy)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
+  },
+
+  {
+    id: 'pcnl',
+    name: {
+      en: 'PCNL — Keyhole removal of kidney stones through the back',
+      ar: 'استخراج حصوات الكلية عبر الجلد بالمنظار (PCNL)',
+    },
+    description: {
+      en: 'A tunnel is made through the skin of the back into the kidney, guided by X-ray or ultrasound, and the stone is broken and removed through a telescope. A drain tube may be left in the kidney afterwards.',
+      ar: 'يُفتَح ممرّ عبر جلد الظهر إلى الكلية بتوجيه الأشعة السينية أو الصوتية، وتُفتَّت الحصوة وتُستخرَج بالمنظار. وقد يُترَك أنبوب تصريف في الكلية بعد العملية.',
+    },
+    benefits: [
+      { en: 'Clears large or complex kidney stones.', ar: 'إزالة حصوات الكلية الكبيرة أو المعقّدة.' },
+      { en: 'A higher chance of becoming stone-free than other methods for large stones.', ar: 'فرصة أعلى للتخلّص من الحصوة مقارنةً بالطرق الأخرى في حالة الحصوات الكبيرة.' },
+    ],
+    alternatives: [
+      { en: 'Ureteroscopy, which may need several sessions for a large stone.', ar: 'تنظير الحالب والكلية، وقد يتطلب عدة جلسات للحصوة الكبيرة.' },
+      { en: 'Shockwave lithotripsy, which is less effective for large stones.', ar: 'التفتيت بالموجات التصادمية، وهو أقل فعالية للحصوات الكبيرة.' },
+      { en: 'Leaving the stone, with the risk of pain, infection and kidney damage.', ar: 'ترك الحصوة، مع خطر الألم والالتهاب وتضرّر الكلية.' },
+    ],
+    complications: [
+      { en: 'Bleeding — the main risk; may need a transfusion or a procedure to block the bleeding vessel.', ar: 'النزيف — وهو الخطر الرئيسي؛ وقد يستدعي نقل دم أو إجراءً لسدّ الوعاء النازف.' },
+      { en: 'Infection or severe infection (sepsis) after the operation.', ar: 'التهاب أو التهاب شديد (إنتان) بعد العملية.' },
+      { en: 'Leakage of urine from the kidney.', ar: 'تسرّب البول من الكلية.' },
+      { en: 'Injury to the lining of the lung, with fluid or air around the lung — mainly when the kidney is entered high up.', ar: 'إصابة غشاء الرئة مع تجمّع سوائل أو هواء حولها — خاصةً عند الدخول من الجزء العلوي للكلية.' },
+      { en: 'Injury to nearby organs — bowel, spleen or liver.', ar: 'إصابة الأعضاء المجاورة — الأمعاء أو الطحال أو الكبد.' },
+      { en: 'Stone fragments may remain, needing another procedure.', ar: 'قد تبقى أجزاء من الحصوة، مما يستدعي إجراءً آخر.' },
+      { en: 'Loss of kidney function, or a collection of urine around the kidney.', ar: 'فقدان جزء من وظيفة الكلية، أو تجمّع البول حول الكلية.' },
+    ],
+    anaesthesia: GA_SPINAL,
+    source: { label: 'BAUS patient information (PCNL)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
+  },
+
+  {
+    id: 'eswl',
+    name: {
+      en: 'Shockwave lithotripsy (ESWL) — Breaking stones from outside the body',
+      ar: 'تفتيت الحصوات بالموجات التصادمية من خارج الجسم (ESWL)',
+    },
+    description: {
+      en: 'Focused shockwaves are passed through the skin to break a kidney or ureteric stone into small pieces, which then pass in the urine. The stone is located with X-ray or ultrasound, and no cut is made.',
+      ar: 'تُوجَّه موجات تصادمية مركّزة عبر الجلد لتفتيت حصوة الكلية أو الحالب إلى قطع صغيرة تخرج مع البول، ويُحدَّد مكان الحصوة بالأشعة السينية أو الصوتية دون أي جرح.',
+    },
+    benefits: [
+      { en: 'Treats the stone without surgery or a cut.', ar: 'علاج الحصوة دون جراحة أو جرح.' },
+    ],
+    alternatives: [
+      { en: 'Ureteroscopy with laser.', ar: 'تنظير الحالب مع التفتيت بالليزر.' },
+      { en: 'PCNL for large stones.', ar: 'استخراج الحصوة عبر الجلد للحصوات الكبيرة.' },
+      { en: 'Waiting for a small stone to pass.', ar: 'انتظار نزول الحصوة إذا كانت صغيرة.' },
+    ],
+    complications: [
+      { en: 'Blood in the urine — almost everyone, usually settling quickly.', ar: 'دم في البول — لدى الجميع تقريباً، ويزول غالباً بسرعة.' },
+      { en: 'Pain (colic) as the fragments pass.', ar: 'ألم (مغص) أثناء نزول أجزاء الحصوة.' },
+      { en: 'Fragments can block the ureter and may need a stent or ureteroscopy.', ar: 'قد تسدّ الأجزاء المتفتتة الحالب، وقد يلزم تركيب دعامة أو إجراء تنظير.' },
+      { en: 'Bruising or a blood collection around the kidney.', ar: 'كدمة أو تجمّع دموي حول الكلية.' },
+      { en: 'Urinary infection or sepsis, especially with an infected stone.', ar: 'التهاب المسالك البولية أو الإنتان، خاصةً مع الحصوة الملتهبة.' },
+      { en: 'The stone may not break, or pieces may remain, needing more sessions or another treatment.', ar: 'قد لا تتفتّت الحصوة أو تبقى منها أجزاء، مما يستدعي جلسات إضافية أو علاجاً آخر.' },
+    ],
+    anaesthesia: ANALGESIA_SEDATION,
+    source: { label: 'BAUS patient information (shockwave lithotripsy)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
+  },
+
+  {
+    id: 'optical-urethrotomy',
+    name: {
+      en: 'Optical urethrotomy — Telescopic cut of a urethral narrowing',
+      ar: 'شقّ تضيّق الإحليل بالمنظار (Optical urethrotomy)',
+    },
+    description: {
+      en: 'A telescope is passed into the urethra and the narrowed segment (stricture) is cut open under direct vision. A catheter may be left in afterwards.',
+      ar: 'يُدخَل منظار في مجرى البول ويُشَقّ الجزء المتضيّق تحت الرؤية المباشرة، وقد تُترَك قسطرة بعد العملية.',
+    },
+    benefits: [
+      { en: 'Improves the urine flow.', ar: 'تحسين تدفّق البول.' },
+      { en: 'A shorter, simpler procedure than reconstructive surgery.', ar: 'إجراء أقصر وأبسط من الجراحة الترميمية.' },
+    ],
+    alternatives: [
+      { en: 'Urethroplasty — surgical reconstruction of the urethra, with a much higher long-term success.', ar: 'رأب الإحليل — ترميم الإحليل جراحياً، ونسبة نجاحه على المدى الطويل أعلى بكثير.' },
+      { en: 'Regular stretching (dilation) of the urethra.', ar: 'التوسيع المنتظم للإحليل.' },
+      { en: 'No treatment, accepting a poor flow and the risk of being unable to pass urine.', ar: 'عدم العلاج، مع قبول ضعف التدفّق وخطر احتباس البول.' },
+    ],
+    complications: [
+      { en: 'The narrowing comes back — the main problem; success is only about 35–70% even for short strictures, and lower for longer ones.', ar: 'عودة التضيّق — وهي المشكلة الرئيسية؛ إذ تتراوح نسبة النجاح بين 35 و70% تقريباً حتى في التضيّقات القصيرة، وتقلّ في الأطول.' },
+      { en: 'Bleeding from the urethra.', ar: 'نزيف من الإحليل.' },
+      { en: 'Leakage of irrigation fluid into the tissues.', ar: 'تسرّب سائل الغسيل إلى الأنسجة.' },
+      { en: 'Urinary infection.', ar: 'التهاب المسالك البولية.' },
+      { en: 'Incontinence if the cut reaches the sphincter muscle (uncommon).', ar: 'سلس البول إذا امتدّ الشقّ إلى العضلة العاصرة (غير شائع).' },
+      { en: 'Erection problems (uncommon).', ar: 'مشكلات في الانتصاب (غير شائعة).' },
+      { en: 'Needing reconstructive surgery (urethroplasty) later.', ar: 'الحاجة لاحقاً إلى جراحة ترميمية (رأب الإحليل).' },
+    ],
+    anaesthesia: GA_SPINAL,
+    source: { label: 'BAUS patient information (optical urethrotomy)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
   },
 ];

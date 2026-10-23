@@ -2,6 +2,7 @@ import { PediatricFluids } from '@/components/calculators/PediatricFluids';
 import { PediatricAntibiotics } from '@/components/pediatrics/PediatricAntibiotics';
 import { SfuHydronephrosis } from '@/components/pediatrics/SfuHydronephrosis';
 import { UtiWorkup } from '@/components/pediatrics/UtiWorkup';
+import { VurGrading } from '@/components/pediatrics/VurGrading';
 
 /** Pediatric essentials — fluids, dosing, hydronephrosis grading, UTI workup. */
 export function PediatricsScreen() {
@@ -23,6 +24,7 @@ export function PediatricsScreen() {
         <PediatricAntibiotics />
         <SfuHydronephrosis />
         <UtiWorkup />
+        <VurGrading />
       </div>
     </div>
   );

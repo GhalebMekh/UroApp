@@ -13,6 +13,8 @@ export interface SearchItem {
   label: string;
   sub: string;
   screen: Screen;
+  /** For calculators: which one to open, so search lands on it rather than the list top. */
+  calcId?: string;
   /** Lower-cased haystack for matching. */
   keywords: string;
 }
@@ -24,6 +26,7 @@ export const SEARCH_INDEX: SearchItem[] = [
     label: c.title,
     sub: `Calculator · ${c.category === 'oncological' ? 'Oncological' : 'Non-oncological'}`,
     screen: 'calculators' as Screen,
+    calcId: c.id,
     keywords: kw(c.title, c.id),
   })),
   ...PROCEDURES.map((p) => ({
