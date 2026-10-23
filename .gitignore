@@ -31,3 +31,8 @@ dist-ssr
 # Capacitor (Sprint 3)
 ios/App/App/public
 .capacitor
+
+# Database / runtime state
+*.db
+*.sqlite
+*.sqlite3

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { apiFetch } from '../lib/api';
 
 export default function Login({ onLogin }) {
   const [isSignup, setIsSignup] = useState(false);
@@ -30,21 +31,14 @@ export default function Login({ onLogin }) {
     setLoading(true);
 
     try {
-      const endpoint = isSignup ? '/api/auth/signup' : '/api/auth/login';
-      const body = isSignup ? { email, password, name } : { email, password };
-
-      const res = await fetch(endpoint, {
+      const cleanEmail = email.trim().toLowerCase();
+      const data = await apiFetch(isSignup ? '/api/auth/signup' : '/api/auth/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body: isSignup
+          ? { email: cleanEmail, password, name: name.trim() }
+          : { email: cleanEmail, password },
       });
-
-      const data = await res.json();
-      if (data.error) {
-        setError(data.error);
-      } else {
-        onLogin(data.token, { id: data.userId, name: data.name || 'Resident' });
-      }
+      onLogin(data.token, { id: data.userId, name: data.name || name || 'Resident' });
     } catch (e) {
       setError(e.message);
     } finally {
@@ -77,12 +71,20 @@ export default function Login({ onLogin }) {
 
             <div>
               <label className="block text-sm font-medium text-ink mb-2">Email</label>
+              {/* iOS otherwise capitalises and autocorrects the address, so the
+                  account is created under one spelling and looked up under
+                  another. The server lower-cases too; both ends must agree. */}
               <input
                 type="email"
+                inputMode="email"
+                autoCapitalize="none"
+                autoCorrect="off"
+                spellCheck={false}
+                autoComplete="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="resident@hospital.edu"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
+                className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
               />
             </div>
 
@@ -93,6 +95,7 @@ export default function Login({ onLogin }) {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
+                autoComplete={isSignup ? 'new-password' : 'current-password'}
                 className="w-full px-4 py-2 rounded bg-steel border border-line text-ink placeholder-muted-2 focus:outline-none focus:border-violet"
               />
             </div>

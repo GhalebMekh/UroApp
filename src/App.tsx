@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { TopBar } from '@/components/TopBar';
 import { BottomNav } from '@/components/BottomNav';
 import { DisclaimerGate } from '@/components/DisclaimerGate';
+import { PasscodeGate } from '@/components/PasscodeGate';
 import { SearchOverlay } from '@/components/SearchOverlay';
 import { ProGate } from '@/components/ProGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
@@ -65,6 +66,9 @@ export default function App() {
 
   return (
     <EntitlementsContext.Provider value={{ tier, setTier }}>
+      {/* Access first, then the medical disclaimer — no reason to show clinical
+          terms to someone who cannot get in. */}
+      <PasscodeGate>
       <DisclaimerGate>
         <div className="flex min-h-[100dvh] flex-col">
           <TopBar
@@ -134,6 +138,7 @@ export default function App() {
           />
         </div>
       </DisclaimerGate>
+      </PasscodeGate>
     </EntitlementsContext.Provider>
   );
 }

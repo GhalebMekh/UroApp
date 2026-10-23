@@ -1,5 +1,6 @@
 import { TIER_LABEL, type Tier, useEntitlements } from '@/lib/entitlements';
 import { cn } from '@/lib/cn';
+import { lockApp, passcodeEnabled } from '@/lib/passcode';
 
 const TIERS: Tier[] = ['resident', 'pro', 'elite'];
 
@@ -28,6 +29,42 @@ export function MoreScreen() {
             output must be verified against primary sources and local protocols.
             Clinical responsibility remains with the treating physician.
           </p>
+        </section>
+
+        {/* Lets a shared or borrowed device be handed over locked. Hidden when
+            no passcode is configured, where the button would do nothing. */}
+        {passcodeEnabled && (
+          <section className="rounded-[16px] border border-line bg-navy-2 p-5">
+            <h3 className="text-[15px] font-semibold">Access</h3>
+            <p className="mb-3 text-[12px] text-muted-2">
+              Locking clears this device’s unlock; the passcode is needed again.
+            </p>
+            <button
+              type="button"
+              onClick={() => void lockApp()}
+              className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+            >
+              Lock this device
+            </button>
+          </section>
+        )}
+
+        {/* Status of features that are announced but not yet shipped, so the
+            app never implies something is available when it isn't. */}
+        <section className="rounded-[16px] border border-line bg-navy-2 p-5">
+          <h3 className="mb-3 text-[15px] font-semibold">In development</h3>
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="text-[14px] font-semibold">Evidence AI</div>
+              <p className="mt-1 text-[13px] text-muted">
+                A cited evidence assistant for clinical questions. Not available
+                yet — every tool in the app today is offline and sourced.
+              </p>
+            </div>
+            <span className="shrink-0 rounded-full border border-line bg-steel px-2.5 py-1 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted">
+              Soon
+            </span>
+          </div>
         </section>
 
         {/* Restore Purchases — must stay visible (CLAUDE.md). Wired to

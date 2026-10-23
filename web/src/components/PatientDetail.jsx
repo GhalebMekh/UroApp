@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { apiFetch } from '../lib/api';
 
 export default function PatientDetail({ patient, token, onSave, onDelete, onClose }) {
   const [formData, setFormData] = useState(
@@ -19,10 +20,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
 
   const fetchPatientDetails = async () => {
     try {
-      const res = await fetch(`/api/patients/${patient.id}`, {
-        headers: { 'Authorization': `Bearer ${token}` },
-      });
-      const data = await res.json();
+      const data = await apiFetch(`/api/patients/${patient.id}`, { token });
       setFormData(data);
       setSoapNotes(data.soapNotes || []);
     } catch (e) {
@@ -52,19 +50,13 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
     if (!soapNote.s && !soapNote.o && !soapNote.a && !soapNote.p) return;
 
     try {
-      const res = await fetch(`/api/patients/${patient.id}/soap`, {
+      await apiFetch(`/api/patients/${patient.id}/soap`, {
         method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(soapNote),
+        token,
+        body: soapNote,
       });
-      const data = await res.json();
-      if (data.success) {
-        setSoapNote({ s: '', o: '', a: '', p: '' });
-        fetchPatientDetails();
-      }
+      setSoapNote({ s: '', o: '', a: '', p: '' });
+      fetchPatientDetails();
     } catch (e) {
       console.error(e);
     }
@@ -75,15 +67,24 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="flex items-center justify-between mb-8">
-        <h2 className="font-display text-3xl font-bold text-ink">
+    <div className="mx-auto w-full max-w-4xl p-5 pb-[max(2rem,env(safe-area-inset-bottom))] sm:p-8">
+      {/* A phone shows one pane at a time, so it needs a way back to the list.
+          On md+ both panes are visible and the control would be redundant. */}
+      <button
+        onClick={onClose}
+        className="mb-4 inline-flex min-h-[44px] items-center gap-1 text-sm text-violet-soft transition hover:text-violet md:hidden"
+      >
+        ‹ All patients
+      </button>
+
+      <div className="mb-8 flex items-start justify-between gap-4">
+        <h2 className="font-display text-2xl font-bold text-ink sm:text-3xl">
           {patient.new ? 'New Patient' : formData.name}
         </h2>
         {!patient.new && (
           <button
             onClick={() => onDelete(patient.id)}
-            className="px-4 py-2 rounded bg-crimson/20 text-crimson hover:bg-crimson/30 transition text-sm"
+            className="shrink-0 rounded bg-crimson/20 px-4 py-2 text-sm text-crimson transition hover:bg-crimson/30"
           >
             Delete
           </button>
@@ -91,7 +92,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
       </div>
 
       <form onSubmit={handleSavePatient} className="space-y-6">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-ink mb-2">Name *</label>
             <input
@@ -100,7 +101,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
           <div>
@@ -110,7 +111,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               name="age"
               value={formData.age}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
           <div>
@@ -119,7 +120,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               name="sex"
               value={formData.sex}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             >
               <option value="">Select</option>
               <option value="M">Male</option>
@@ -133,7 +134,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               name="mrn"
               value={formData.mrn}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
           <div>
@@ -143,7 +144,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               name="location"
               value={formData.location}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
           <div>
@@ -153,7 +154,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               name="admission"
               value={formData.admission}
               onChange={handleInputChange}
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
         </div>
@@ -165,11 +166,11 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
             value={formData.reason}
             onChange={handleInputChange}
             rows="2"
-            className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+            className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div>
             <label className="block text-sm font-medium text-ink mb-2">PMH</label>
             <textarea
@@ -178,7 +179,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               onChange={handleInputChange}
               rows="2"
               placeholder="Past Medical History"
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
           <div>
@@ -189,7 +190,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
               onChange={handleInputChange}
               rows="2"
               placeholder="Past Surgical History"
-              className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+              className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
             />
           </div>
         </div>
@@ -201,14 +202,14 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
             value={formData.meds}
             onChange={handleInputChange}
             rows="2"
-            className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+            className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
           />
         </div>
 
         <button
           type="submit"
           disabled={saving}
-          className="px-6 py-2 rounded bg-violet text-navy font-semibold hover:bg-violet-soft transition disabled:opacity-50"
+          className="min-h-[44px] px-6 py-2 rounded bg-violet text-navy font-semibold hover:bg-violet-soft transition disabled:opacity-50"
         >
           {saving ? 'Saving...' : 'Save Patient'}
         </button>
@@ -225,7 +226,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
                 value={soapNote.s}
                 onChange={(e) => setSoapNote({ ...soapNote, s: e.target.value })}
                 rows="2"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+                className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
               />
             </div>
             <div>
@@ -234,7 +235,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
                 value={soapNote.o}
                 onChange={(e) => setSoapNote({ ...soapNote, o: e.target.value })}
                 rows="2"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+                className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
               />
             </div>
             <div>
@@ -243,7 +244,7 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
                 value={soapNote.a}
                 onChange={(e) => setSoapNote({ ...soapNote, a: e.target.value })}
                 rows="2"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+                className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
               />
             </div>
             <div>
@@ -252,12 +253,12 @@ export default function PatientDetail({ patient, token, onSave, onDelete, onClos
                 value={soapNote.p}
                 onChange={(e) => setSoapNote({ ...soapNote, p: e.target.value })}
                 rows="2"
-                className="w-full px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
+                className="w-full min-h-[44px] px-4 py-2 rounded bg-steel border border-line text-ink focus:outline-none focus:border-violet"
               />
             </div>
             <button
               type="submit"
-              className="px-6 py-2 rounded bg-teal text-navy font-semibold hover:bg-teal/80 transition"
+              className="min-h-[44px] px-6 py-2 rounded bg-teal text-navy font-semibold hover:bg-teal/80 transition"
             >
               Add SOAP Note
             </button>
