@@ -8,7 +8,10 @@
 #   3. App Store Connect → Users and Access → Integrations → create an API key
 #      (App Manager role). Add it in Codemagic → Teams → Integrations →
 #      Developer Portal, and put the name you give it in `app_store_connect` below.
-#   4. Connect the GitHub repo in Codemagic and start the "ios-testflight" workflow.
+#   4. Codemagic → this app → Environment variables → create the group "uroapp_app"
+#      with VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (from Supabase →
+#      Project Settings → API). The group must exist even while it is empty.
+#   5. Connect the GitHub repo in Codemagic and start the "ios-testflight" workflow.
 #
 # Notes on deviations from Codemagic's own Capacitor example, which assumes
 # CocoaPods and agvtool:
@@ -33,6 +36,8 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.uroapp.clinical
+      groups:
+        - uroapp_app # build-time VITE_* settings (accounts); see step 4 above
       vars:
         APP_STORE_APPLE_ID: 0000000000 # ← numeric Apple ID of the app record
       node: 24.16.0 # matches the local toolchain

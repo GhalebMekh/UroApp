@@ -1,0 +1,111 @@
+<!doctype html>
+<!--
+  DRAFT — not yet published. Before publishing (copy to public/privacy.html):
+    {{SUPPORT_EMAIL}}   the dedicated UroApp support mailbox
+    {{SUPABASE_REGION}} the region chosen when creating the Supabase project
+    {{EFFECTIVE_DATE}}  the date this version goes live
+  Keep it in step with ios/App/App/PrivacyInfo.xcprivacy and the App Store
+  "App Privacy" answers in docs/PUBLISHING.md.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>UroApp Privacy Policy</title>
+<style>
+  :root { color-scheme: dark; }
+  body { margin: 0; background: #0A1628; color: #E8EDF5; font: 16px/1.6 Inter, system-ui, sans-serif; }
+  main { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
+  h1 { font-family: "Times New Roman", serif; font-size: 32px; margin: 0 0 4px; }
+  h2 { font-family: "Times New Roman", serif; font-size: 22px; margin: 32px 0 8px; }
+  p, li { color: #C9D3E1; }
+  .muted { color: #8A9AB3; font-size: 14px; }
+  a { color: #A99DF9; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px; border-bottom: 1px solid #26384f; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+<h1>Privacy Policy</h1>
+<p class="muted">UroApp · effective {{EFFECTIVE_DATE}}</p>
+
+<p>UroApp is a clinical reference and training app for urologists and urology residents, published
+by Dr Ghaleb Al-Mekhlafi (Jeddah, Saudi Arabia) as an individual developer ("we"). This policy
+explains what the app does with information. In short, <strong>most of UroApp works entirely on
+your device. Nothing is collected unless you choose to create an account, and patient information
+must never be entered.</strong></p>
+
+<h2>Without an account</h2>
+<ul>
+  <li>Calculators, guidelines, drug information and every other reference tool run on your device.
+  Inputs are not sent anywhere.</li>
+  <li>Your ward list, logbook, MDT case sheets, CME record, app-lock settings and favourites are
+  stored only on your device.</li>
+  <li>We use no analytics, no advertising and no tracking of any kind.</li>
+  <li><strong>Weekly reads</strong> downloads a list of published articles from GitHub
+  (raw.githubusercontent.com). Like any website, GitHub receives your device's IP address when it
+  serves that file. Links to guidelines, journals and conferences open those organisations'
+  websites, which have their own privacy policies.</li>
+</ul>
+
+<h2>If you create an account (optional)</h2>
+<p>An account backs up some of your data and keeps it in step between your devices. We then store:</p>
+<table>
+  <tr><th>Information</th><th>Why</th></tr>
+  <tr><td>Email address and password (stored only as a secure hash)</td><td>To sign you in and send sign-up and password-reset codes</td></tr>
+  <tr><td>Profile: display name, training level or role, institution (all optional)</td><td>Shown in the app and printed on your own logbook and CME exports</td></tr>
+  <tr><td>Operative logbook entries (date, patient sex, procedure, your role, complication grade and note)</td><td>Backup and sync</td></tr>
+  <tr><td>CME / CPD activities and your CME target</td><td>Backup and sync</td></tr>
+  <tr><td>Favourite and recently used calculators</td><td>Backup and sync</td></tr>
+</table>
+<p><strong>Never uploaded:</strong> your ward list and MDT case sheets. They stay on your device
+even when you are signed in, and our database is configured to refuse them.</p>
+<p>Account data is stored by our hosting provider, Supabase, in the {{SUPABASE_REGION}} region, and
+sign-up and reset emails are sent through an email delivery provider. These providers process the
+data only on our behalf. Each signed-in user can access only their own data; this is enforced by
+the database itself.</p>
+
+<h2>Patient information</h2>
+<p>UroApp is designed so that no patient-identifiable information is needed. Do not enter patient
+names, record numbers, dates of birth or other identifiers anywhere in the app, including
+free-text notes. You are responsible for complying with your institution's rules and applicable
+law when recording clinical activity.</p>
+
+<h2>Subscriptions and payments</h2>
+<p>Subscriptions are sold and billed by Apple. We never see your payment details. To know which
+features you have unlocked, the app receives your subscription status from Apple through our
+subscription service provider (RevenueCat), using an anonymous app identifier.</p>
+
+<h2>Keeping and deleting your data</h2>
+<ul>
+  <li>Account data is kept until you delete your account.</li>
+  <li><strong>More → Account → Delete account</strong> permanently deletes your account, profile
+  and cloud backup straight away. Copies in our provider's routine backups are removed in line
+  with its standard backup cycle.</li>
+  <li>Data on your device stays there until you delete it or delete the app. <strong>Sign out → remove
+  from this device</strong> clears it from that device.</li>
+</ul>
+
+<h2>Your rights</h2>
+<p>Under Saudi Arabia's Personal Data Protection Law and similar laws, you can ask to see, correct
+or delete your personal data, or withdraw consent, which you can also do yourself by deleting
+your account. Contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p>
+
+<h2>Security</h2>
+<p>Data is encrypted in transit (HTTPS). The optional app lock (PIN or Face ID) protects your ward
+list, logbook, MDT sheets and CME record from someone else using your phone. No system is
+perfectly secure, so please use a strong, unique password.</p>
+
+<h2>Children</h2>
+<p>UroApp is for healthcare professionals and is not directed at anyone under 18.</p>
+
+<h2>Changes</h2>
+<p>If this policy changes, we will update the date above and, for material changes, tell you in
+the app.</p>
+
+<h2>Contact</h2>
+<p><a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a></p>
+</main>
+</body>
+</html>

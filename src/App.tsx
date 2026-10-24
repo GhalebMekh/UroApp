@@ -6,6 +6,8 @@ import { PasscodeGate } from '@/components/PasscodeGate';
 import { SearchOverlay } from '@/components/SearchOverlay';
 import { ProGate } from '@/components/ProGate';
 import { AppLockProvider } from '@/components/AppLockProvider';
+import { AccountProvider } from '@/components/AccountProvider';
+import { SyncBoundary } from '@/components/SyncBoundary';
 import { LockGate } from '@/components/LockGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
 import { NAV_ITEMS, type Screen } from '@/navigation';
@@ -69,6 +71,7 @@ export default function App() {
   return (
     <EntitlementsContext.Provider value={{ tier, setTier }}>
     <AppLockProvider>
+    <AccountProvider>
       {/* Access first, then the medical disclaimer — no reason to show clinical
           terms to someone who cannot get in. */}
       <PasscodeGate>
@@ -88,6 +91,7 @@ export default function App() {
 
         {/* pb leaves room for the fixed bottom nav (~64px + safe area) */}
         <main className="flex-1 pb-24">
+          <SyncBoundary>
           {currentScreen === 'home' && <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} />}
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
@@ -136,6 +140,7 @@ export default function App() {
             </ProGate>
           )}
           {currentScreen === 'more' && <MoreScreen />}
+          </SyncBoundary>
         </main>
 
           <BottomNav
@@ -146,6 +151,7 @@ export default function App() {
         </div>
       </DisclaimerGate>
       </PasscodeGate>
+    </AccountProvider>
     </AppLockProvider>
     </EntitlementsContext.Provider>
   );

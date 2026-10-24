@@ -5,6 +5,8 @@ import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { todayISO } from '@/lib/date';
 import { SegmentedField } from '@/components/calculators/primitives';
 import { ProGate } from '@/components/ProGate';
+import { useAccount } from '@/lib/accountContext';
+import { profileByline } from '@/lib/profile';
 import { CD_GRADES, CD_SHORT, cdBand, cdLabel, isCdGrade, type CdGrade } from '@/lib/clavienDindo';
 import {
   normalizeEntry,
@@ -149,6 +151,7 @@ export function OperativeLogScreen() {
   const byProcedure = useMemo(() => summariseByProcedure(entries), [entries]);
 
   const [printError, setPrintError] = useState(false);
+  const byline = profileByline(useAccount().profile);
 
   /** Body HTML shared by print and save. */
   function buildLogBody() {
@@ -174,6 +177,7 @@ export function OperativeLogScreen() {
 
     return `
       <h1>Operative logbook</h1>
+      ${byline ? `<p class="sub">${escapeHtml(byline)}</p>` : ''}
       <p class="sub">Generated ${new Date().toLocaleDateString()} · ${counts.total} case${counts.total === 1 ? '' : 's'}</p>
       <div class="stats">
         <span>Total <b>${counts.total}</b></span>

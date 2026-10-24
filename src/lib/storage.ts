@@ -6,6 +6,14 @@
  */
 import { Preferences } from '@capacitor/preferences';
 
+/** Notified after every write or removal — cloud sync uses it to know what changed. */
+const changeListeners = new Set<(key: string) => void>();
+
+export function onStorageChange(listener: (key: string) => void): () => void {
+  changeListeners.add(listener);
+  return () => changeListeners.delete(listener);
+}
+
 export async function getItem(key: string): Promise<string | null> {
   try {
     const { value } = await Preferences.get({ key });
@@ -21,6 +29,7 @@ export async function setItem(key: string, value: string): Promise<void> {
   } catch {
     /* storage unavailable — ignore */
   }
+  changeListeners.forEach((l) => l(key));
 }
 
 export async function removeItem(key: string): Promise<void> {
@@ -29,6 +38,7 @@ export async function removeItem(key: string): Promise<void> {
   } catch {
     /* ignore */
   }
+  changeListeners.forEach((l) => l(key));
 }
 
 /** Read and JSON-parse a value, returning `fallback` if absent or malformed. */

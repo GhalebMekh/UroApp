@@ -8,6 +8,7 @@
  * can read that storage. No server is involved and nothing leaves the device.
  */
 import { getJSON, removeItem, setJSON } from './storage';
+import { syncBaseKey } from './syncMerge';
 
 const KEY = 'uroapp.applock.v1';
 
@@ -139,8 +140,12 @@ export async function saveLock(settings: LockSettings): Promise<void> {
   await setJSON(KEY, settings);
 }
 
-/** "Forgot PIN": the only way back in without the PIN is to wipe what it protected. */
+/**
+ * "Forgot PIN": the only way back in without the PIN is to wipe what it
+ * protected. The sync snapshots go too, so a signed-in user's next sync
+ * restores the backup instead of mirroring the wipe to the cloud.
+ */
 export async function eraseLockedData(): Promise<void> {
-  await Promise.all(PRIVATE_DATA_KEYS.map((k) => removeItem(k)));
+  await Promise.all(PRIVATE_DATA_KEYS.flatMap((k) => [removeItem(syncBaseKey(k)), removeItem(k)]));
   await saveLock(LOCK_OFF);
 }

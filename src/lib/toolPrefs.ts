@@ -70,6 +70,12 @@ function subscribe(listener: () => void) {
 
 const getSnapshot = () => state;
 
+/** Re-read storage after cloud sync has replaced the saved favourites. */
+export async function reloadToolPrefs(): Promise<void> {
+  state = normalizePrefs(await getJSON<unknown>(STORAGE_KEY, null));
+  listeners.forEach((l) => l());
+}
+
 export function useToolPrefs(): ToolPrefs {
   return useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
 }

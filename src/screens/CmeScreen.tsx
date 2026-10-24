@@ -3,6 +3,8 @@ import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { todayISO } from '@/lib/date';
+import { useAccount } from '@/lib/accountContext';
+import { profileByline } from '@/lib/profile';
 import {
   CME_TYPE_LABEL,
   inCycle,
@@ -30,6 +32,7 @@ export function CmeScreen() {
   const [target, setTarget] = useState<CmeTarget>({ hours: 0, cycleStart: '', cycleEnd: '' });
   const [loaded, setLoaded] = useState(false);
   const [printError, setPrintError] = useState(false);
+  const byline = profileByline(useAccount().profile);
 
   // form
   const [date, setDate] = useState(todayISO());
@@ -90,13 +93,14 @@ export function CmeScreen() {
     const cycle = cycleSet ? `${target.cycleStart || '…'} to ${target.cycleEnd || '…'}` : 'all dates';
     return (
       `<h1>CME / CPD record</h1>` +
+      (byline ? `<p class="sub">${escapeHtml(byline)}</p>` : '') +
       `<p class="sub">Cycle: ${escapeHtml(cycle)} · generated ${escapeHtml(new Date().toLocaleDateString())}</p>` +
       `<div class="stats"><span>Total hours <b>${summary.total}</b></span><span>Accredited <b>${summary.accredited}</b></span>` +
       (target.hours > 0 ? `<span>Target <b>${target.hours}</b></span><span>Remaining <b>${summary.remaining}</b></span>` : '') +
       `</div>` +
       `<table><thead><tr><th>Date</th><th>Activity</th><th>Provider</th><th>Type</th><th>Hours</th><th>Accredited</th><th>Reference</th></tr></thead>` +
       `<tbody>${rows || '<tr><td colspan="7">No activities in this cycle.</td></tr>'}</tbody></table>` +
-      `<div class="note">Self-reported record kept on the user's device. Keep the original certificates; ` +
+      `<div class="note">Self-reported record. Keep the original certificates; ` +
       `check credit rules with your licensing body.</div>`
     );
   }

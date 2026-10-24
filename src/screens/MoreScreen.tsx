@@ -2,6 +2,7 @@ import { TIER_LABEL, type Tier, useEntitlements } from '@/lib/entitlements';
 import { cn } from '@/lib/cn';
 import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
+import { AccountSettings } from '@/components/AccountSettings';
 
 const TIERS: Tier[] = ['resident', 'pro', 'elite'];
 
@@ -31,6 +32,8 @@ export function MoreScreen() {
             Clinical responsibility remains with the treating physician.
           </p>
         </section>
+
+        <AccountSettings />
 
         <AppLockSettings />
 
