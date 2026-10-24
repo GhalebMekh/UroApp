@@ -5,6 +5,8 @@ import { DisclaimerGate } from '@/components/DisclaimerGate';
 import { PasscodeGate } from '@/components/PasscodeGate';
 import { SearchOverlay } from '@/components/SearchOverlay';
 import { ProGate } from '@/components/ProGate';
+import { AppLockProvider } from '@/components/AppLockProvider';
+import { LockGate } from '@/components/LockGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
 import { NAV_ITEMS, type Screen } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -66,6 +68,7 @@ export default function App() {
 
   return (
     <EntitlementsContext.Provider value={{ tier, setTier }}>
+    <AppLockProvider>
       {/* Access first, then the medical disclaimer — no reason to show clinical
           terms to someone who cannot get in. */}
       <PasscodeGate>
@@ -96,12 +99,16 @@ export default function App() {
           {currentScreen === 'instruments' && <InstrumentsScreen />}
           {currentScreen === 'mdt' && (
             <ProGate feature="mdt">
-              <MdtScreen onOpenCalculator={openCalculator} />
+              <LockGate>
+                <MdtScreen onOpenCalculator={openCalculator} />
+              </LockGate>
             </ProGate>
           )}
           {currentScreen === 'cme' && (
             <ProGate feature="cme">
-              <CmeScreen />
+              <LockGate>
+                <CmeScreen />
+              </LockGate>
             </ProGate>
           )}
           {currentScreen === 'pediatrics' && <PediatricsScreen />}
@@ -139,6 +146,7 @@ export default function App() {
         </div>
       </DisclaimerGate>
       </PasscodeGate>
+    </AppLockProvider>
     </EntitlementsContext.Provider>
   );
 }

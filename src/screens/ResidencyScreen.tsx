@@ -1,6 +1,7 @@
 import { useState, type ComponentType } from 'react';
 import { cn } from '@/lib/cn';
 import { ProGate } from '@/components/ProGate';
+import { LockGate } from '@/components/LockGate';
 import { InpatientIcon, OnCallIcon, ScalpelIcon } from '@/components/icons';
 import { RoundingScreen } from './RoundingScreen';
 import { OnCallScreen } from './OnCallScreen';
@@ -57,7 +58,9 @@ export function ResidencyScreen() {
       <div className="flex-1">
         {section === 'inpatient' && (
           <ProGate feature="inpatient">
-            <RoundingScreen />
+            <LockGate>
+              <RoundingScreen />
+            </LockGate>
           </ProGate>
         )}
         {section === 'oncall' && <OnCallScreen />}
@@ -86,7 +89,9 @@ export function ResidencyScreen() {
 
             {orTab === 'logbook' && (
               <ProGate feature="logbook">
-                <OperativeLogScreen />
+                <LockGate>
+                  <OperativeLogScreen />
+                </LockGate>
               </ProGate>
             )}
             {orTab === 'procedures' && <ProceduresScreen />}

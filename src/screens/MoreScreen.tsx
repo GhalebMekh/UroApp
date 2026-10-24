@@ -1,6 +1,7 @@
 import { TIER_LABEL, type Tier, useEntitlements } from '@/lib/entitlements';
 import { cn } from '@/lib/cn';
 import { lockApp, passcodeEnabled } from '@/lib/passcode';
+import { AppLockSettings } from '@/components/AppLockSettings';
 
 const TIERS: Tier[] = ['resident', 'pro', 'elite'];
 
@@ -30,6 +31,8 @@ export function MoreScreen() {
             Clinical responsibility remains with the treating physician.
           </p>
         </section>
+
+        <AppLockSettings />
 
         {/* Lets a shared or borrowed device be handed over locked. Hidden when
             no passcode is configured, where the button would do nothing. */}
