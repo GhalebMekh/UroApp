@@ -73,7 +73,7 @@ export default function App() {
           terms to someone who cannot get in. */}
       <PasscodeGate>
       <DisclaimerGate>
-        <div className="flex min-h-[100dvh] flex-col">
+        <div className="flex min-h-[100dvh] flex-col px-safe">
           <TopBar
             onOpenSearch={() => setSearchOpen(true)}
             canGoBack={history.length > 0}

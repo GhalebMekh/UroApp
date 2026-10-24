@@ -20,7 +20,7 @@ interface BottomNavProps {
  */
 export function BottomNav({ items, current, onNavigate }: BottomNavProps) {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-navy/[0.92] pb-safe backdrop-blur-[14px]">
+    <nav className="fixed inset-x-0 bottom-0 z-50 border-t border-line bg-navy/[0.92] px-safe pb-safe backdrop-blur-[14px]">
       <ul className="mx-auto flex max-w-wrap items-stretch justify-around px-2">
         {items.map(({ id, label, Icon }) => {
           const active = id === current;

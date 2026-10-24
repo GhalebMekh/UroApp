@@ -55,4 +55,10 @@
   .top-safe {
     top: env(safe-area-inset-top);
   }
+  /* Side insets: landscape iPhones and the iPhone Duo's inner display put the
+     camera housing on the left or right edge. */
+  .px-safe {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
 }
