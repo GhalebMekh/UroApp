@@ -19,9 +19,23 @@ const webDir = join(dirname(fileURLToPath(import.meta.url)), '..');
 const repoRoot = join(webDir, '..');
 const outDir = join(webDir, 'dist');
 
+/**
+ * The website is a preview of the App Store release, so limit it here by
+ * construction rather than depending on a variable being set on the host —
+ * a missing variable would silently publish the complete product.
+ *
+ * This affects only the site build. `npm run build` at the repo root, which is
+ * what `npx cap sync ios` ships, still produces the full app. Set
+ * VITE_PREVIEW_MODE=false explicitly to publish an unrestricted website.
+ */
+const siteEnv = {
+  ...process.env,
+  VITE_PREVIEW_MODE: process.env.VITE_PREVIEW_MODE ?? 'true',
+};
+
 const run = (cmd, args, cwd) => {
   console.log(`\n$ ${cmd} ${args.join(' ')}   (in ${cwd})`);
-  execFileSync(cmd, args, { cwd, stdio: 'inherit' });
+  execFileSync(cmd, args, { cwd, stdio: 'inherit', env: siteEnv });
 };
 
 rmSync(outDir, { recursive: true, force: true });

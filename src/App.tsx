@@ -28,6 +28,8 @@ import { IntraopScenariosScreen } from '@/screens/IntraopScenariosScreen';
 import { DrugsScreen } from '@/screens/DrugsScreen';
 import { ArticlesScreen } from '@/screens/ArticlesScreen';
 import { MoreScreen } from '@/screens/MoreScreen';
+import { AppStoreLockScreen } from '@/screens/AppStoreLockScreen';
+import { isLocked, lockCopy } from '@/lib/preview';
 
 /**
  * Master state-machine router (CLAUDE.md): a single `currentScreen` drives
@@ -91,7 +93,12 @@ export default function App() {
 
         {/* pb leaves room for the fixed bottom nav (~64px + safe area) */}
         <main className="flex-1 pb-24">
-          <SyncBoundary>
+          {/* A preview build withholds the workspaces that ship with the iOS
+              release; the hubs still list them so the scope stays visible. */}
+          {isLocked(currentScreen) ? (
+            <AppStoreLockScreen {...lockCopy(currentScreen)} />
+          ) : (
+            <SyncBoundary>
           {currentScreen === 'home' && <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} />}
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
@@ -140,7 +147,8 @@ export default function App() {
             </ProGate>
           )}
           {currentScreen === 'more' && <MoreScreen />}
-          </SyncBoundary>
+            </SyncBoundary>
+          )}
         </main>
 
           <BottomNav
