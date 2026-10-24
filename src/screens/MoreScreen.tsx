@@ -2,6 +2,16 @@ import { TIER_LABEL, type Tier, useEntitlements } from '@/lib/entitlements';
 import { cn } from '@/lib/cn';
 import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
+import { previewMode } from '@/lib/preview';
+
+/** e.g. "24 Oct 2026, 10:30" — readable without a timezone lookup. */
+const builtAt = new Date(__BUILD_TIME__).toLocaleString('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+});
 
 const TIERS: Tier[] = ['resident', 'pro', 'elite'];
 
@@ -108,6 +118,12 @@ export function MoreScreen() {
           </div>
         </section>
         )}
+
+        {/* Which build this is. A deployed copy otherwise gives no way to tell
+            whether the latest commit has gone live. */}
+        <p className="text-center font-mono text-[11px] text-muted-2">
+          {previewMode ? 'Web preview' : 'Build'} {__BUILD_COMMIT__} · {builtAt}
+        </p>
       </div>
     </div>
   );
