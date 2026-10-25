@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-20T22:24:54.028Z",
-  "week": 43,
-  "topic": "Urethral injuries in pelvic trauma",
+  "generatedAt": "2026-10-25T07:09:56.212Z",
+  "week": 44,
+  "topic": "Testicular trauma and torsion emergency management",
   "subspecialties": [
     "topic",
     "oncology",
@@ -11,48 +11,48 @@
   ],
   "articles": [
     {
-      "pmid": "42480724",
-      "title": "Preoperative Factors Associated With Surgical Complexity in Pelvic Fracture Urethral Injury: Systematic Review.",
-      "authors": "Yadav S, Khurana U, Yadav A",
-      "journal": "Urology",
-      "pubDate": "2026-09-01",
+      "pmid": "42919974",
+      "title": "Microbiome interactions in renal cell carcinoma: evidence, challenges and opportunities.",
+      "authors": "Lindgaard C, Hvidt AK, Keller AK",
+      "journal": "Nat Rev Urol",
+      "pubDate": "2026-10-23",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42480724/",
-      "subspecialty": "topic",
-      "topic": "Urethral injuries in pelvic trauma"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42919974/",
+      "subspecialty": "oncology",
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
-      "pmid": "42420120",
-      "title": "Contemporary Review of Pelvic Fracture Urethral Injury Management and Outcomes.",
-      "authors": "Cavalcanti A, Suhurt P",
+      "pmid": "42919739",
+      "title": "Epidemiology, Risk Factors, and Prevention of Prostate Cancer.",
+      "authors": "Gandaglia G, Weiner AB, Briganti A",
+      "journal": "Eur Urol",
+      "pubDate": "2026-10-23",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42919739/",
+      "subspecialty": "oncology",
+      "topic": "Testicular trauma and torsion emergency management"
+    },
+    {
+      "pmid": "42907259",
+      "title": "Risk-stratified Prostate Cancer Screening in 2026: Blood- and Urine-based Biomarkers.",
+      "authors": "Stangl-Kremser J, Salami SS",
       "journal": "Eur Urol Focus",
-      "pubDate": "2026-06-01",
+      "pubDate": "2026-10-21",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42420120/",
-      "subspecialty": "topic",
-      "topic": "Urethral injuries in pelvic trauma"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42907259/",
+      "subspecialty": "oncology",
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
-      "pmid": "41230166",
-      "title": "Management of pelvic fracture urethral injury.",
-      "authors": "Joshi PM, Costa-Grau M, Kandhari P",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2025-10-31",
+      "pmid": "42901957",
+      "title": "MRI and PSMA PET/CT: Foes or friends for the early detection of prostate cancer?",
+      "authors": "Girometti R, Giannarini G, Crestani A",
+      "journal": "Prostate Cancer Prostatic Dis",
+      "pubDate": "2026-10-20",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41230166/",
-      "subspecialty": "topic",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "41068516",
-      "title": "A systematic review and meta-analysis of surgical approaches in pelvic fracture-associated urethral injury: primary endoscopic realignment versus delayed urethroplasty.",
-      "authors": "Owen K, Joe W, Palgunadi IN",
-      "journal": "World J Urol",
-      "pubDate": "2025-10-09",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41068516/",
-      "subspecialty": "topic",
-      "topic": "Urethral injuries in pelvic trauma"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42901957/",
+      "subspecialty": "oncology",
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42899400",
@@ -63,7 +63,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42899400/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42897296",
@@ -74,7 +74,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42897296/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42892578",
@@ -85,7 +85,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42892578/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42888115",
@@ -96,7 +96,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42888115/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42881230",
@@ -107,7 +107,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42881230/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42881114",
@@ -118,161 +118,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42881114/",
       "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42881094",
-      "title": "Perioperative enfortumab vedotin-pembrolizumab, gemcitabine-cisplatin-durvalumab, and dose-dense MVAC in cisplatin-eligible muscle-invasive bladder cancer: A benefit-risk Bayesian network meta-analysis.",
-      "authors": "Subiela JD, González-Padilla DA, Scilipoti P",
-      "journal": "Urol Oncol",
-      "pubDate": "2026-09-22",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42881094/",
-      "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42875601",
-      "title": "Metabolic and oncological effects of metformin added to ADT in prostate cancer: systematic review and meta-analysis including STAMPEDE.",
-      "authors": "Fakhri F, Alkhairi Z, Sarhan T",
-      "journal": "Prostate Cancer Prostatic Dis",
-      "pubDate": "2026-10-14",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42875601/",
-      "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42869701",
-      "title": "Translational research models for variant subtype bladder cancers: A comprehensive review of the current landscape.",
-      "authors": "Nanjo GU, Fu Z, Smani S",
-      "journal": "Urol Oncol",
-      "pubDate": "2026-10-13",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42869701/",
-      "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42866860",
-      "title": "A narrative review of the state of urinary diversion: ileal conduit, neobladder, continent cutaneous, and cutaneous ureterostomy.",
-      "authors": "Sandberg ML, Thole D, Bissette R",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2026-09-30",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42866860/",
-      "subspecialty": "oncology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42898237",
-      "title": "Primary Versus Delayed Ureteroscopy for Obstructing Ureteric Calculi: A Systematic Review and Meta-analysis from the European Association of Urology Endourology.",
-      "authors": "Sugrue DD, Cullivan O, Ryan FR",
-      "journal": "Eur Urol Open Sci",
-      "pubDate": "2026-12-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42898237/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42888853",
-      "title": "Flexible and navigable suction ureteric access sheath and direct-in-scope suction in endourology: a systematic evidence map of study characteristics and research trends.",
-      "authors": "Scilipoti P, Zorzi F, Gonzalez CG",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-16",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42888853/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42866845",
-      "title": "Sodium-glucose cotransporter 2 inhibitors vs. glucagon-like peptide-1 receptor agonists and dipeptidyl peptidase-4 inhibitors for incident and recurrent urolithiasis: a European Association of Urology Endourology systematic review.",
-      "authors": "Pischetola A, Esperto F, Tsaturyan A",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2026-09-30",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42866845/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42862368",
-      "title": "Laparoscopic and robotic management of symptomatic calyceal diverticula: a systematic review on behalf of YAU and EAU endourology.",
-      "authors": "Spinos T, Ergul R, Peteinaris A",
-      "journal": "World J Urol",
-      "pubDate": "2026-10-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42862368/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42862355",
-      "title": "Experimental and clinical studies: a scoping review of intrarenal pressure in percutaneous nephrolithotomy.",
-      "authors": "Giulioni C, Castellani D, Cafarelli A",
-      "journal": "World J Urol",
-      "pubDate": "2026-10-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42862355/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42859243",
-      "title": "The effect of a stress ball on pain, anxiety, satisfaction, and treatment continuation during extracorporeal shock wave lithotripsy: a randomized controlled trial.",
-      "authors": "Kanat C, Bozkul G, Kettaş Dölek E",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-10-10",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42859243/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42859231",
-      "title": "Bridging evidence gaps in opioid-sparing postoperative pain control for percutaneous nephrolithotomy: a network meta-analysis identifying optimal strategies.",
-      "authors": "Li P, Tao K, Jian Z",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-10-10",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42859231/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42806833",
-      "title": "Risk Factors for Primary Retrograde Ureteral Access Failure During Ureteroscopy-A Systematic Review and Meta-Analysis by the YAU and EAU Section of Endourology.",
-      "authors": "Boeykens M, Aspeslagh L, Nowak Ł",
-      "journal": "J Endourol",
-      "pubDate": "2026-09-29",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42806833/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42806066",
-      "title": "Intraoperative positioning strategies to improve stone-free outcomes during retrograde intrarenal surgery: a systematic review and meta-analysis.",
-      "authors": "Wang L, Huang W, Wan B",
-      "journal": "World J Urol",
-      "pubDate": "2026-09-28",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42806066/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42803944",
-      "title": "Changes in renal function in patients with chronic kidney disease after ureteroscopy: a systematic review and meta-analysis from EAU endourology.",
-      "authors": "Talyshinskii A, Frascheri MF, Tzelves L",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-09-28",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42803944/",
-      "subspecialty": "endourology",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42821513",
@@ -283,7 +129,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42821513/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42811152",
@@ -294,7 +140,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42811152/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42791104",
@@ -305,7 +151,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42791104/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42678688",
@@ -316,7 +162,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42678688/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42667381",
@@ -327,7 +173,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42667381/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42641288",
@@ -338,7 +184,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42641288/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42637569",
@@ -349,7 +195,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42637569/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42620985",
@@ -360,7 +206,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42620985/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42606607",
@@ -371,7 +217,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42606607/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     },
     {
       "pmid": "42604881",
@@ -382,84 +228,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42604881/",
       "subspecialty": "pediatric",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42729133",
-      "title": "Oxidative stress in bladder outlet obstruction: a narrative review.",
-      "authors": "Zhou YY, Shi B, Zhang CH",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2026-08-31",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42729133/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42709214",
-      "title": "Flexible ureteroscopy with a flexible and negative suction ureteral access sheath versus traditional sheath for treatment of infectious upper urinary tract stones: A prospective, randomized controlled study.",
-      "authors": "Wang Q, Tang QL, Liu FD",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-09-08",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42709214/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42619656",
-      "title": "State of the Art: Single-Port Robot-Assisted Extraperitoneal Transvesical Surgery-Technique, Indications, Outcomes, and Pitfalls.",
-      "authors": "Alkassis M, Turcan A, Santodirocco L",
-      "journal": "J Endourol",
-      "pubDate": "2026-08-20",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42619656/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42584481",
-      "title": "Urethral calculi indications and outcomes of surgical management: a systematic review by EAU endourology.",
-      "authors": "Soytürk S, Doğan E, Ferizli AA",
-      "journal": "World J Urol",
-      "pubDate": "2026-08-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42584481/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42552506",
-      "title": "The UroLume endoprosthesis and UroLume cripple syndrome: a systematic review and meta-analysis of pathophysiology, complications, surgical management, psychological burden, and epidemiology of surviving patients worldwide.",
-      "authors": "Kapos IP",
-      "journal": "World J Urol",
-      "pubDate": "2026-08-04",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42552506/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42477956",
-      "title": "Consensus-Based Development of a Surgical Checklist for Transurethral Resection of Bladder Tumor: An Initiative of the Japanese Society of Urologic Oncology.",
-      "authors": "Taoka R, Hayakawa N, Kimura T",
-      "journal": "Int J Urol",
-      "pubDate": "2026-07-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42477956/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
-    },
-    {
-      "pmid": "42442241",
-      "title": "Hot vs cold knife for endoscopic ablation of posterior urethral valves: a systematic review by the EAU-YAU paediatric urology working group.",
-      "authors": "Madarriaga YQ, Dönmez Mİ, Gernhold C",
-      "journal": "J Pediatr Urol",
-      "pubDate": "2026-10-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42442241/",
-      "subspecialty": "reconstructive",
-      "topic": "Urethral injuries in pelvic trauma"
+      "topic": "Testicular trauma and torsion emergency management"
     }
   ]
 }
