@@ -27,6 +27,18 @@ export type Screen =
   | 'articles'
   | 'more';
 
+export type ResidencySection = 'inpatient' | 'oncall' | 'or';
+export type OrTab = 'logbook' | 'procedures' | 'consent';
+
+/** Where to open the Residency screen when another screen links into it. */
+export interface ResidencyTarget {
+  section: ResidencySection;
+  orTab?: OrTab;
+}
+
+/** A link from one screen to another, optionally into a Residency tab. */
+export type ScreenLink = { screen: Screen } | { residency: ResidencyTarget };
+
 /**
  * Bottom-nav model. Order here is the on-screen order. Clinical and Academic are
  * hub screens: Clinical groups the point-of-care tools (calculators, imaging,

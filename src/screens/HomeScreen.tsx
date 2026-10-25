@@ -1,4 +1,4 @@
-import type { Screen } from '@/navigation';
+import type { Screen, ScreenLink } from '@/navigation';
 import { Hero } from './home/Hero';
 import { Suite } from './home/Suite';
 import { Faq } from './home/Faq';
@@ -9,15 +9,17 @@ import { YourTools } from './home/YourTools';
 export function HomeScreen({
   onNavigate,
   onOpenCalculator,
+  onOpenLink,
 }: {
   onNavigate: (s: Screen) => void;
   onOpenCalculator: (id: string) => void;
+  onOpenLink: (link: ScreenLink) => void;
 }) {
   return (
     <>
       <YourTools onOpenCalculator={onOpenCalculator} />
       <Hero onNavigate={onNavigate} />
-      <Suite />
+      <Suite onOpenLink={onOpenLink} />
       <Faq />
       <AppCta />
     </>

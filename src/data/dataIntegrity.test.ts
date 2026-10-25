@@ -180,6 +180,30 @@ describe('procedures', () => {
       ).toBe(true);
     }
   });
+
+  it('keys every danger zone to a real step, with all fields filled', () => {
+    for (const p of PROCEDURES) {
+      for (const z of p.dangerZones ?? []) {
+        expect(z.step, `${p.id} danger zone "${z.structure}" step`).toBeGreaterThanOrEqual(0);
+        expect(z.step, `${p.id} danger zone "${z.structure}" step`).toBeLessThan(p.steps.length);
+        expect(z.structure.trim() && z.risk.trim() && z.bailout.trim(), `${p.id} danger zone empty field`).toBeTruthy();
+      }
+    }
+  });
+
+  it('cites a source for every pre-op / danger-zone / post-op section and leaves none empty', () => {
+    for (const p of PROCEDURES) {
+      const hasExtras = !!p.preop || !!p.dangerZones?.length || !!p.postop?.length;
+      if (!hasExtras) continue;
+      expect(p.extrasSource ?? p.citation, `${p.id} extras need a source`).toBeTruthy();
+      if (p.preop) {
+        expect(p.preop.indications.length, `${p.id} preop.indications`).toBeGreaterThan(0);
+        expect(p.preop.workup.length, `${p.id} preop.workup`).toBeGreaterThan(0);
+        expect(p.preop.setup.length, `${p.id} preop.setup`).toBeGreaterThan(0);
+      }
+      if (p.postop) expect(p.postop.length, `${p.id} postop`).toBeGreaterThan(0);
+    }
+  });
 });
 
 describe('surveillance', () => {

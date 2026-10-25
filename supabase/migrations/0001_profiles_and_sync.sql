@@ -31,7 +31,8 @@ create table public.user_data (
                 'uroapp.oplog.v1',
                 'uroapp.cme.v1',
                 'uroapp.cme.target.v1',
-                'uroapp.tools.v1'
+                'uroapp.tools.v1',
+                'uroapp.rehearsal.v1'
               )),
   value       jsonb not null check (octet_length(value::text) <= 2000000),
   version     integer not null default 1 check (version >= 1),

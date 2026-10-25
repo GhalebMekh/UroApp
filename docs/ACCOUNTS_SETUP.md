@@ -1,7 +1,7 @@
 # Accounts & cloud backup — Supabase setup
 
-UroApp's account is **optional**. It backs up the **logbook, CME record (and target) and tool
-favourites**, and keeps them in step between a user's iPhone and iPad. The **ward list and MDT
+UroApp's account is **optional**. It backs up the **logbook, CME record (and target), tool
+favourites and rehearsal progress**, and keeps them in step between a user's iPhone and iPad. The **ward list and MDT
 case sheets never leave the device**. The app enforces this, and so does the database, which
 rejects their keys.
 
@@ -86,7 +86,7 @@ VITE_SUPABASE_PUBLISHABLE_KEY=...
 ### How sync behaves (for reference)
 
 - It syncs when you sign in, when the app opens or comes back to the front (at most once a
-  minute), a few seconds after you change the logbook, CME or favourites, and from **Sync now**.
+  minute), a few seconds after you change the logbook, CME, favourites or rehearsal progress, and from **Sync now**.
 - Merging is per item. A case added on the iPhone and another on the iPad both survive.
   Deleting a case on one device deletes it on the other. If both devices edited the *same*
   item, this device wins, but an edit is never lost to a deletion.

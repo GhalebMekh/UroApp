@@ -1,6 +1,7 @@
 import type { ComponentType } from 'react';
 import { Section } from './section';
 import { FEATURES, type FeatureIcon, type FeatureTag } from '@/data/marketing';
+import type { ScreenLink } from '@/navigation';
 import {
   CalculatorIcon,
   CalendarIcon,
@@ -37,8 +38,8 @@ function Tag({ tag }: { tag: Exclude<FeatureTag, null> }) {
   );
 }
 
-/** "The Suite" feature grid. */
-export function Suite() {
+/** "The Suite" feature grid — each card opens its tool. */
+export function Suite({ onOpenLink }: { onOpenLink: (link: ScreenLink) => void }) {
   return (
     <Section
       id="features"
@@ -50,9 +51,11 @@ export function Suite() {
         {FEATURES.map((f) => {
           const Icon = ICON[f.icon];
           return (
-          <article
+          <button
             key={f.title}
-            className="relative overflow-hidden rounded-card border border-line bg-navy-2 p-[26px] transition hover:-translate-y-[3px] hover:border-violet/50"
+            type="button"
+            onClick={() => onOpenLink(f.link)}
+            className="group relative overflow-hidden rounded-card border border-line bg-navy-2 p-[26px] text-left transition hover:-translate-y-[3px] hover:border-violet/50 focus-visible:border-violet focus-visible:outline-none"
           >
             {f.tag && <Tag tag={f.tag} />}
             <div className="mb-4 grid h-[42px] w-[42px] place-items-center rounded-[11px] bg-steel text-[20px] text-violet-soft">
@@ -60,7 +63,13 @@ export function Suite() {
             </div>
             <h3 className="mb-2 text-[17px] font-semibold tracking-[-0.01em]">{f.title}</h3>
             <p className="text-[14px] text-muted">{f.blurb}</p>
-          </article>
+            <span className="mt-4 inline-flex items-center gap-1 text-[13px] font-semibold text-violet-soft">
+              Open
+              <span aria-hidden="true" className="transition-transform group-hover:translate-x-0.5">
+                →
+              </span>
+            </span>
+          </button>
           );
         })}
       </div>

@@ -10,7 +10,7 @@ import { AccountProvider } from '@/components/AccountProvider';
 import { SyncBoundary } from '@/components/SyncBoundary';
 import { LockGate } from '@/components/LockGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
-import { NAV_ITEMS, type Screen } from '@/navigation';
+import { NAV_ITEMS, type ResidencyTarget, type Screen, type ScreenLink } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { ClinicalHubScreen, AcademicHubScreen } from '@/screens/HubScreen';
 import { CalculatorsScreen } from '@/screens/CalculatorsScreen';
@@ -48,6 +48,9 @@ export default function App() {
   const [calcFocus, setCalcFocus] = useState<string | null>(null);
   // Stable identity: CalculatorsScreen lists it as an effect dependency.
   const clearCalcFocus = useCallback(() => setCalcFocus(null), []);
+  /** A Residency tab to open on arrival (set by Home cards); cleared once used. */
+  const [residencyTarget, setResidencyTarget] = useState<ResidencyTarget | null>(null);
+  const clearResidencyTarget = useCallback(() => setResidencyTarget(null), []);
 
   function navigate(screen: Screen) {
     if (screen === currentScreen) return;
@@ -61,6 +64,16 @@ export default function App() {
   function openCalculator(id: string) {
     setCalcFocus(id);
     navigate('calculators');
+  }
+
+  /** Follow a link to a screen, or into a specific Residency tab. */
+  function openLink(link: ScreenLink) {
+    if ('residency' in link) {
+      setResidencyTarget(link.residency);
+      navigate('residency');
+    } else {
+      navigate(link.screen);
+    }
   }
 
   function goBack() {
@@ -99,13 +112,17 @@ export default function App() {
             <AppStoreLockScreen {...lockCopy(currentScreen)} />
           ) : (
             <SyncBoundary>
-          {currentScreen === 'home' && <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} />}
+          {currentScreen === 'home' && (
+            <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} onOpenLink={openLink} />
+          )}
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
           {currentScreen === 'calculators' && (
             <CalculatorsScreen focusId={calcFocus} onFocusHandled={clearCalcFocus} />
           )}
-          {currentScreen === 'residency' && <ResidencyScreen />}
+          {currentScreen === 'residency' && (
+            <ResidencyScreen initial={residencyTarget} onInitialHandled={clearResidencyTarget} />
+          )}
           {currentScreen === 'imaging' && <ImagingScreen />}
           {currentScreen === 'instruments' && <InstrumentsScreen />}
           {currentScreen === 'mdt' && (

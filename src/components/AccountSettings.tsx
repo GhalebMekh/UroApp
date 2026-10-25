@@ -291,7 +291,7 @@ function SignedIn() {
         {confirm === 'signout' && (
           <div className="space-y-2">
             <p className="text-[13px] text-muted">
-              Keep your logbook, CME record and favourites on this device after signing out?
+              Keep your logbook, CME record, favourites and rehearsal progress on this device after signing out?
               Remove them if this device will be used by someone else — your backup stays in your account.
             </p>
             <button type="button" disabled={busy} onClick={() => void act(() => account.signOut(false))} className={`${secondary} w-full`}>
@@ -338,7 +338,7 @@ export function AccountSettings() {
     <section className="rounded-[16px] border border-line bg-navy-2 p-5">
       <h3 className="text-[15px] font-semibold">Account</h3>
       <p className="mb-4 mt-1 text-[12px] text-muted-2">
-        Optional. Backs up your logbook, CME record and favourites, and keeps them in step between your
+        Optional. Backs up your logbook, CME record, favourites and rehearsal progress, and keeps them in step between your
         iPhone and iPad. Your ward list and MDT sheets never leave this device.
       </p>
       {status === 'loading' && <p className="text-[13px] text-muted">Loading…</p>}

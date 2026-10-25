@@ -1,7 +1,7 @@
 /**
  * Cloud backup and sync for a signed-in user (Supabase `user_data` table).
  *
- * What syncs: logbook, CME record + target, tool favourites.
+ * What syncs: logbook, CME record + target, tool favourites, rehearsal progress.
  * What never syncs: the inpatient ward list and MDT case sheets — both hold
  * initials, ages and clinical detail (owner decisions 2026-10-24). They are not
  * in SYNCED, and the database rejects their keys outright as well.
@@ -20,6 +20,7 @@ export const SYNCED: ReadonlyArray<{ key: string; kind: SyncKind }> = [
   { key: 'uroapp.cme.v1', kind: 'collection' },
   { key: 'uroapp.cme.target.v1', kind: 'value' },
   { key: 'uroapp.tools.v1', kind: 'value' },
+  { key: 'uroapp.rehearsal.v1', kind: 'collection' },
 ];
 
 export const SYNCED_KEYS: ReadonlySet<string> = new Set(SYNCED.map((s) => s.key));

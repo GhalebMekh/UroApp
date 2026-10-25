@@ -72,7 +72,7 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
   - Contact info → **Email address**
   - Contact info → **Name** (display name)
   - Identifiers → **User ID**
-  - User content → **Other user content** (logbook, CME record, favourites, profile role/institution)
+  - User content → **Other user content** (logbook, CME record, favourites, rehearsal progress, profile role/institution)
 - **Purchases:** subscription status handled via Apple / RevenueCat. Re-check this section once
   RevenueCat is added.
 - Not collected: location, health records about the user, browsing, diagnostics, ads data.

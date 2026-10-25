@@ -1,4 +1,5 @@
-import { useState, type ComponentType } from 'react';
+import { useEffect, useState, type ComponentType } from 'react';
+import type { OrTab, ResidencySection, ResidencyTarget } from '@/navigation';
 import { cn } from '@/lib/cn';
 import { ProGate } from '@/components/ProGate';
 import { LockGate } from '@/components/LockGate';
@@ -9,12 +10,21 @@ import { OperativeLogScreen } from './OperativeLogScreen';
 import { ProceduresScreen } from './ProceduresScreen';
 import { ConsentScreen } from './ConsentScreen';
 
-type ResidencySection = 'inpatient' | 'oncall' | 'or';
-type OrTab = 'logbook' | 'procedures' | 'consent';
+export function ResidencyScreen({
+  initial,
+  onInitialHandled,
+}: {
+  /** Tab to open on arrival, e.g. from a Home card; read once on mount. */
+  initial?: ResidencyTarget | null;
+  onInitialHandled?: () => void;
+}) {
+  const [section, setSection] = useState<ResidencySection>(initial?.section ?? 'inpatient');
+  const [orTab, setOrTab] = useState<OrTab>(initial?.orTab ?? 'logbook');
 
-export function ResidencyScreen() {
-  const [section, setSection] = useState<ResidencySection>('inpatient');
-  const [orTab, setOrTab] = useState<OrTab>('logbook');
+  // Consume the link so a later tap on the Residency tab opens the default view.
+  useEffect(() => {
+    if (initial) onInitialHandled?.();
+  }, [initial, onInitialHandled]);
 
   const sections: { id: ResidencySection; label: string; Icon: ComponentType<{ className?: string }> }[] = [
     { id: 'inpatient', label: 'Inpatient', Icon: InpatientIcon },

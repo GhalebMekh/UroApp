@@ -5,6 +5,14 @@
  * one procedure at a time from a named source; do not write steps from memory.
  */
 import type { Citation } from './citations';
+import type { DangerZone } from '@/lib/rehearsal';
+
+export interface PreOp {
+  indications: string[];
+  workup: string[];
+  /** Positioning, antibiotic prophylaxis, kit. */
+  setup: string[];
+}
 
 export interface Procedure {
   id: string;
@@ -18,6 +26,14 @@ export interface Procedure {
   citation: Citation;
   /** Optional society guideline anchoring indications/timing/complications. */
   guideline?: Citation;
+  /** Before theatre — added procedure by procedure, each from `extrasSource`. */
+  preop?: PreOp;
+  /** Structures at risk, keyed to a step, with the bail-out. Feeds the danger-zone quiz. */
+  dangerZones?: DangerZone[];
+  /** After theatre: drains, catheters, stents, discharge, follow-up. */
+  postop?: string[];
+  /** Source for preop / dangerZones / postop when it differs from `citation`. */
+  extrasSource?: Citation;
 }
 
 const orchidopexy: Procedure = {
