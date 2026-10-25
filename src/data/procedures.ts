@@ -7,6 +7,23 @@
 import type { Citation } from './citations';
 import type { DangerZone } from '@/lib/rehearsal';
 
+const CWW_URL = 'https://search.worldcat.org/search?q=ti%3ACampbell-Walsh-Wein+urology+twelfth+edition';
+
+/** A chapter of Campbell-Walsh-Wein 12th ed (Elsevier, 2021) — the source of the pre-op, danger-zone and post-op sections. */
+function cww(chapter: string, authors: string): Citation {
+  return {
+    authors,
+    journal: 'Campbell-Walsh-Wein Urology, 12th ed',
+    year: 2021,
+    url: CWW_URL,
+    label: `${chapter} — Elsevier`,
+  };
+}
+
+/** Antibiotic prophylaxis wording, from the AUA 2008 best-practice table reproduced in Campbell ch 8. */
+const PROPHYLAXIS_NOTE =
+  'Give within 60 minutes before incision and stop within 24 hours; re-dose if surgery exceeds 4 hours. Choose by the local antibiogram and check the current AUA statement (Campbell ch 8 tabulates the 2008 version).';
+
 export interface PreOp {
   indications: string[];
   workup: string[];
@@ -68,6 +85,55 @@ const orchidopexy: Procedure = {
     'Vas deferens injury (impaired fertility).',
     'Persistent testicular-cancer risk despite repair — counsel on self-examination.',
   ],
+  preop: {
+    indications: [
+      'A palpable undescended testis that has not descended by 6 months of corrected age — operate after 6 months, preferably by 12 months.',
+      'Acquired (ascended) testis.',
+      'Orchiectomy instead is reserved for a visibly abnormal or atrophic testis, a postpubertal patient, or insufficient vasal length.',
+    ],
+    workup: [
+      'Clinical diagnosis — no ultrasound or MRI before referral.',
+      'Bilateral nonpalpable testes or proximal hypospadias: karyotype and hormones first (see Pediatrics → Undescended testis).',
+      'Re-examine under anaesthesia to confirm the testis is palpable and find its lowest position.',
+    ],
+    setup: [
+      'General anaesthesia plus local infiltration, an ilioinguinal block or a caudal (the caudal helps for bilateral or combined penile surgery).',
+      'Approach: standard inguinal, or a primary scrotal (Bianchi) incision for a low, prescrotal palpable testis.',
+      'Antibiotic prophylaxis only if risk factors (clean surgery that does not enter the urinary tract). ' + PROPHYLAXIS_NOTE,
+    ],
+  },
+  dangerZones: [
+    {
+      step: 1,
+      structure: 'Ilioinguinal nerve',
+      risk: 'It runs on the cord under the external oblique and is injured when the aponeurosis is opened.',
+      bailout: 'Open the external oblique along its fibres from the external ring and keep the nerve in view throughout.',
+    },
+    {
+      step: 2,
+      structure: 'Long-looping vas',
+      risk: 'The vas can loop down below the testis and be cut with the gubernaculum.',
+      bailout: 'Transect the gubernaculum distal to the sac, only after seeing where the vas runs.',
+    },
+    {
+      step: 4,
+      structure: 'Vas and spermatic vessels at the hernia sac',
+      risk: 'Stripping the sac skeletonises and can injure the vas and vessels.',
+      bailout: 'Open the internal spermatic fascia longitudinally to free an intact sac with minimal handling of the cord structures, then ligate it at the internal ring.',
+    },
+    {
+      step: 6,
+      structure: 'Testicular blood supply',
+      risk: 'A cord under tension or twisted as it is passed to the scrotum causes retraction or atrophy.',
+      bailout: 'Gain length (open the transversalis fascia, divide lateral bands, dissect retroperitoneally, move the testis under the epigastric vessels — the Prentiss manoeuvre). Pass it untwisted. If it still will not reach, a two-stage repair is preferable to orchiectomy.',
+    },
+  ],
+  postop: [
+    'Follow up for at least 6 months to confirm position and size; in one series atrophy was 1.9% and non-scrotal position 10.3%, and earlier reviews found higher rates for abdominal or peeping testes (24%) than for those beyond the ring (10%).',
+    'Long-term follow-up for fertility counselling, cancer risk and self-examination.',
+    'If the testis atrophies completely, no further surgery is needed — offer a prosthesis at least 6 months after scrotal surgery or after puberty, through an inguinal approach.',
+  ],
+  extrasSource: cww('Ch 46, Etiology, Diagnosis, and Management of the Undescended Testis', 'Barthold & Hagerty'),
   citation: {
     authors: 'Dunn et al.',
     journal: 'Oper Tech Gen Surg',
@@ -113,6 +179,48 @@ const vasectomy: Procedure = {
     'Spontaneous recanalisation with return of fertility (~1 in 2000).',
     'Early failure if contraception is stopped before confirmed azoospermia.',
   ],
+  preop: {
+    indications: [
+      'A man who wants permanent contraception, after counselling on alternatives.',
+      'Conventional (open) isolation instead of minimally invasive for previous scrotal surgery or trauma, thick tight scrotal skin, or a varicocele, hydrocele or spermatocele.',
+    ],
+    workup: [
+      'In-person or telephone consultation: medical and surgical history and a genital examination (both vasa palpable).',
+      'Counsel on: the possible need for a repeat vasectomy if sperm persist, recanalisation and pregnancy, and a 1–2% risk of chronic scrotal pain; sign the consent beforehand.',
+    ],
+    setup: [
+      'Local anaesthetic ± oral sedation (IV sedation or general anaesthesia if local will not suffice); use the finest needle (25–32 G) — topical cream alone is not enough.',
+      'Minimally invasive isolation (≤ 10 mm opening, e.g. no-scalpel) — less pain and fewer complications.',
+      'Plan an AUA-recommended occlusion (each < 1% failure): mucosal cautery with or without fascial interposition and without clips or ties, or open-ended with the abdominal end cauterised and interposed.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'The same vas twice',
+      risk: 'Through a single midline opening it is possible to grasp and divide one vas twice and leave the other intact — a technical early failure.',
+      bailout: 'A gentle tug on the isolated vas should move the testis on that side; some surgeons use two openings to avoid the problem.',
+    },
+    {
+      step: 1,
+      structure: 'Convoluted vas',
+      risk: 'An opening placed too low reaches the small, convoluted vas, which is harder to handle now and at any future reversal.',
+      bailout: 'Open at the penoscrotal junction or between it and the top of the testis, where the vas is straight.',
+    },
+    {
+      step: 5,
+      structure: 'Cord vessels (scrotal haematoma)',
+      risk: 'Bleeding is the main complication of scrotal surgery; an expanding haematoma with a falling haematocrit can signal retroperitoneal bleeding from a retracted vessel.',
+      bailout: 'Most haematomas settle — drain only if very large, infected or enlarging. Persistent cord bleeding: re-ligate through a small subinguinal incision, extending into the retroperitoneum if the cord has retracted.',
+    },
+  ],
+  postop: [
+    'Semen analysis on a fresh sample 8–16 weeks after surgery, after at least 10–20 ejaculations (older men clear sperm more slowly).',
+    'Stop other contraception only once it shows azoospermia or rare non-motile sperm (≤ 100,000/mL).',
+    'Motile sperm on the first test: repeat at 6 months; if still present, it has failed — arrange a repeat vasectomy.',
+    'Late failure from recanalisation occurs in about 1 in 2000; pregnancy after a confirmed success is about 0.05%.',
+  ],
+  extrasSource: cww('Ch 83, Surgery of the Scrotum and Seminal Vesicles (vasectomy)', 'Hawksworth, Khera et al.'),
   citation: {
     authors: 'Basso',
     journal: 'Oper Tech Gen Surg',
@@ -156,6 +264,61 @@ const rplnd: Procedure = {
     'Bowel ischaemia from mesenteric traction.',
     'Bleeding, ileus, wound complications.',
   ],
+  preop: {
+    indications: [
+      'Primary RPLND for non-seminomatous germ cell tumour as in the summary above.',
+      'Post-chemotherapy: a residual retroperitoneal mass once serum tumour markers have normalised — generally never with rising markers.',
+    ],
+    workup: [
+      'Abdominal CT within 6 weeks: masses, and anatomy such as duplicated renal vessels or an IVC thrombus (total occlusion may need IVC resection).',
+      'Tumour markers within 7–10 days; chest CT with prior lung lesions or a planned lung resection.',
+      'After bleomycin (lung toxicity about 11% vs 1.7% without it): pulmonary function tests, and a chest physician if abnormal.',
+      'Offer sperm banking to anyone who may want children; no bowel preparation needed.',
+    ],
+    setup: [
+      'Tell the anaesthetist about bleomycin: low inspired oxygen and conservative fluids — and repeat it at the time-out.',
+      'Supine, arms out; orogastric tube; midline incision from xiphoid to just below the umbilicus (transperitoneal, or extraperitoneal in selected patients).',
+      'Antibiotic prophylaxis per the AUA statement. ' + PROPHYLAXIS_NOTE,
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Liver',
+      risk: 'Upper-abdominal retraction can tear the liver.',
+      bailout: 'Divide the round ligament and release the falciform toward the IVC before placing retractors.',
+    },
+    {
+      step: 1,
+      structure: 'Lumbar arteries and veins',
+      risk: 'About three pairs of lumbar arteries, and variable lumbar veins — a superior right lumbar vein just below the renal vein, and a large common lumbar vein near the IMA level — bleed when torn during rolling.',
+      bailout: 'Identify and doubly ligate each before rolling the vessels; expect the common lumbar vein at the IMA level.',
+    },
+    {
+      step: 2,
+      structure: 'Lymphatics at the renal veins (chyle)',
+      risk: 'Unsecured lymphatics, especially at the cephalad end and behind the duodenum and pancreas, cause chylous leak or ascites.',
+      bailout: 'Clip liberally at the top of the template; inspect the bed at the end and clip or suture any leak; low-fat diet afterwards.',
+    },
+    {
+      step: 3,
+      structure: 'Postganglionic sympathetic fibres (L1–L4)',
+      risk: 'Right fibres run beneath the IVC; left fibres leave from under the left renal vein around the aorta and IMA. Cutting them causes loss of antegrade ejaculation.',
+      bailout: 'Identify the fibres before splitting and rolling, isolate them, and pass the node packet around them as it is freed.',
+    },
+    {
+      step: 5,
+      structure: 'Left renal hilum (post-chemotherapy)',
+      risk: 'A bulky residual mass can engulf the hilum — nephrectomy needed in 5–31% (about 15% in a large series); the strongest predictor is a mass over 10 cm, mostly left-sided.',
+      bailout: 'Anticipate and counsel beforehand; salvage the kidney where possible, as further cisplatin may be needed.',
+    },
+  ],
+  postop: [
+    'Before closing: inspect for residual nodes, lymph leak and bleeding (warm irrigation helps), and check bowel, liver, stomach and pancreas.',
+    'No routine drain; after a large dissection, a non-suction drain until output is serous and under 100 mL/24 h on a regular diet.',
+    'No nasogastric tube; clear fluids that evening, low-fat diet days 1–2, non-opioid analgesia, out of bed on day 1; home at about day 3–5.',
+  ],
+  extrasSource: cww('Ch 77, Surgery of Testicular Tumors', 'Riggs, Gaston & Clark'),
   citation: {
     authors: 'Wood',
     journal: 'Oper Tech Gen Surg',
@@ -201,6 +364,63 @@ const lapNephrectomy: Procedure = {
     'Ileus, bleeding.',
     'General laparoscopic risks (port-site, gas embolism).',
   ],
+  preop: {
+    indications: [
+      'The same indications as open radical nephrectomy for renal cancer (contraindications in the summary above), or simple nephrectomy for a benign, poorly functioning kidney.',
+      'Approach (transperitoneal, retroperitoneal, hand-assisted, robotic) by resources, experience and the patient — outcomes are comparable.',
+    ],
+    workup: [
+      'Previous abdominal or retroperitoneal surgery shapes access: adhesions raise bowel-injury risk.',
+      'Cardiopulmonary reserve: pneumoperitoneum impairs ventilation and venous return; severe lung disease may not tolerate hypercarbia (lower pressure, helium, or open).',
+      'Obesity is not a contraindication but raises complication and conversion rates.',
+      'Review imaging for the number and position of renal arteries and veins.',
+    ],
+    setup: [
+      'General anaesthesia, orogastric tube, catheter, compression stockings; modified flank (30–45°), pressure points padded, patient secured so the table can tilt.',
+      'Prep and drape the whole abdomen and flank in case of conversion; 3–5 trocars.',
+      'Antibiotic prophylaxis per the AUA statement. ' + PROPHYLAXIS_NOTE,
+      'VTE prophylaxis by risk: compression devices for low risk, add pharmacological prophylaxis for high risk.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 1,
+      structure: 'Great vessels and bowel at access',
+      risk: 'Most life-threatening vascular injuries happen at Veress or first-trocar insertion, as do about a third of bowel injuries.',
+      bailout: 'After previous surgery, enter away from scars, use open (Hasson) access, or go retroperitoneal.',
+    },
+    {
+      step: 2,
+      structure: 'Bowel and mesentery',
+      risk: 'Unrecognised bowel injury (0.1–0.8%) carries about 3% mortality; half are thermal injuries from energy devices near bowel, often out of view.',
+      bailout: 'Keep energy away from bowel and instruments in view; imbricate a superficial thermal injury found at surgery; close any mesenteric defect. After surgery, pain out of proportion at one port site, distension and a low white count mean CT with oral contrast and usually exploration.',
+    },
+    {
+      step: 3,
+      structure: 'Right gonadal vein–IVC junction',
+      risk: 'Lifting the ureter and lower pole can tear the gonadal vein where it enters the cava.',
+      bailout: 'Press with gauze for several minutes; once a grasper controls the hole, clip or suture it — never blindly.',
+    },
+    {
+      step: 4,
+      structure: 'Renal artery and vein',
+      risk: 'Injuries come from unidentified structures, sharp hilar dissection, or a stapler that misses part of the vessel or misfires (stapling over clips is a preventable cause).',
+      bailout: 'Never use plastic clips alone on the renal artery. For brisk bleeding, a hand through a small lower midline incision holds pressure while you suture or convert in a controlled way.',
+    },
+    {
+      step: 5,
+      structure: 'Spleen, pancreas and diaphragm',
+      risk: 'Splenic tears from traction on its ligaments and pancreatic injury (each up to 0.5%) on the left; liver and gallbladder on the right; diaphragmatic injury at the upper pole.',
+      bailout: 'Spleen: argon beam and topical haemostats, splenectomy if needed. Pancreas: close a capsular tear with non-absorbable suture or drain; deeper injury needs formal repair — call general surgery. Diaphragm: a sudden rise in airway pressure means pneumothorax — repair, evacuate, chest X-ray.',
+    },
+  ],
+  postop: [
+    'Before closing, lower the insufflation pressure to unmask venous bleeding; check the dissection bed, adrenal, mesentery, gonadal vessels and ureteric stump.',
+    'Hypotension, tachycardia and a falling haematocrit suggest bleeding — CT; most settle conservatively, and arterial bleeding is usually embolised.',
+    'Watch for unrecognised bowel injury (port-site pain, distension, diarrhoea, low-grade fever) in the first days.',
+    'Complications cluster in a surgeon’s first ~20 cases — supervise accordingly.',
+  ],
+  extrasSource: cww('Ch 102, Laparoscopic and Robotic Surgery of the Kidney', 'Moreira & Kavoussi'),
   citation: {
     authors: 'Gettman & Segura',
     journal: 'Oper Tech Gen Surg',
@@ -262,6 +482,60 @@ const turp: Procedure = {
     url: 'https://www.auanet.org/guidelines-and-quality/guidelines/bph-guideline',
     label: 'AUA BPH Guideline',
   },
+  preop: {
+    indications: [
+      'Moderate to severe LUTS from BPH that persist despite a trial of medical therapy.',
+      'Urinary retention after a failed trial without catheter (an alpha-blocker during the trial improves the chance of voiding).',
+      'Recurrent gross haematuria from the prostate once infection, cancer and trauma are excluded.',
+      'Bladder stones or diverticula, recurrent UTI from a high residual, or bilateral hydronephrosis with impaired renal function.',
+    ],
+    workup: [
+      'Symptom score, uroflow and post-void residual; pressure-flow studies when bladder function is in doubt (e.g. large-volume retention).',
+      'Prostate volume — transrectal ultrasound is more accurate than DRE or cystoscopy and guides the choice of technique.',
+      'Review anticoagulation: if it cannot be stopped, a laser technique carries less bleeding risk.',
+      'With obstructive uropathy, decompress and let renal function and oedema settle before definitive surgery.',
+    ],
+    setup: [
+      'Antibiotic prophylaxis for all patients (cystoscopy with manipulation). ' + PROPHYLAXIS_NOTE,
+      'Match the irrigant to the energy: saline for bipolar, glycine or water for monopolar (and check the grounding pad).',
+      'Hang irrigation about 60 cm above the patient — each extra 10 cm more than doubles fluid absorption.',
+      'Before resecting, inspect the bladder for tumour and note the ureteric orifices, trigone, bladder neck, verumontanum and sphincter.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 2,
+      structure: 'External urethral sphincter',
+      risk: 'Resecting distal to the verumontanum, especially at the apex and anteriorly where the sphincter tilts proximally, causes stress incontinence.',
+      bailout: 'Prevention is the only remedy: resect the apex last in a dry field and leave residual apical tissue — a repeat resection is far better than an incontinent patient.',
+    },
+    {
+      step: 2,
+      structure: 'Prostatic capsule and venous sinuses',
+      risk: 'Over-resection or perforation opens venous sinuses: bleeding, extravasation and absorption of irrigant (TUR syndrome — confusion, nausea, visual change, hypertension, bradycardia).',
+      bailout: 'Finish promptly and secure haemostasis; tamponade venous bleeding with an over-inflated catheter balloon on traction; check sodium (below 120 mmol/L risks seizures) and correct slowly with hypertonic saline if neurological signs appear.',
+    },
+    {
+      step: 2,
+      structure: 'Ureteric orifices',
+      risk: 'A large median lobe or high bladder neck hides the orifices, which can be resected.',
+      bailout: 'Identify them before resecting (70° lens, intravenous dye); if still hidden, start in the midline and take down the median lobe first — the orifices usually appear once its mass is gone.',
+    },
+    {
+      step: 4,
+      structure: 'Bladder neck and trigone',
+      risk: 'Over-resecting the dorsal bladder neck undermines the trigone, and heavy fulguration of the neck predisposes to bladder-neck contracture.',
+      bailout: 'Expose but do not resect the bladder-neck fibres; finish the prostatic floor last without undermining. A contracture (about 2%, typically falling flow around 6 months) is confirmed cystoscopically: dilate, then incise endoscopically if needed; open Y-V plasty for intractable cases.',
+    },
+  ],
+  postop: [
+    'Large-bore three-way catheter, balloon volume matched to the resected tissue so it does not fall into the fossa; brief traction for bleeding; continuous irrigation if the effluent is not clear.',
+    'Expect 800–1000 mL of irrigant absorption even in an uncomplicated resection — prescribe IV fluids accordingly; check sodium after long or large resections.',
+    'Bladder spasm or rectal pain: check the catheter is not blocked before giving antispasmodics.',
+    'Remove the catheter at 24–48 hours if there was no significant perforation or bleeding; many go home on day 1.',
+    'Stool softeners for about a month; avoid perineal pressure for 4–6 weeks; warn of dysuria for a few weeks and passage of tissue with minor bleeding at 1–4 weeks.',
+  ],
+  extrasSource: cww('Ch 146, Minimally Invasive and Endoscopic Management of BPH (TURP); ch 8 for prophylaxis', 'Helo, Welliver & McVary'),
 };
 
 const flexibleUrs: Procedure = {
@@ -312,6 +586,56 @@ const flexibleUrs: Procedure = {
     url: 'https://www.auanet.org/guidelines-and-quality/guidelines/surgical-management-of-kidney-and-ureteral-stones',
     label: 'AUA Surgical Stones Guideline',
   },
+  preop: {
+    indications: [
+      'Renal and proximal ureteric stones (stone-specific choices per AUA in the summary above); upper-tract inspection or biopsy.',
+      'An obstructed, infected kidney is decompressed first (stent or nephrostomy) — definitive treatment comes later.',
+    ],
+    workup: [
+      'Non-contrast CT for stone size, position and collecting-system anatomy.',
+      'Urine culture, with treatment of any infection before the procedure.',
+      'Ask about previous ureteric surgery, pelvic radiation or a long-impacted stone — all raise the stricture risk.',
+    ],
+    setup: [
+      'Antibiotic prophylaxis for all (ureteroscopy). ' + PROPHYLAXIS_NOTE,
+      'Two wires for intrarenal work: a safety wire, and a working wire for the scope (monorail).',
+      'Saline irrigation; pressurised irrigation when an instrument fills the working channel — but keep pressures controlled.',
+      'Head-down with the ipsilateral flank raised helps find fragments, which drift upward.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 3,
+      structure: 'Ureteric wall (access sheath or dilation)',
+      risk: 'A forced access sheath or a balloon dilation can split the ureter — perforation in 0–4% of modern series.',
+      bailout: 'Stop, stent across the injury for about 4 weeks (nephrostomy if extravasation is severe), drain any urinoma, give antibiotics, and image after the stent comes out.',
+    },
+    {
+      step: 5,
+      structure: 'Proximal ureter — avulsion',
+      risk: 'Forcefully basketing a large or impacted stone (or withdrawing an oversized rigid scope) can avulse the ureter, the proximal third being weakest — rare (0.06–0.5%) but catastrophic.',
+      bailout: 'Never basket blind; basket only stones that fit the lumen, under vision; fragment larger ones; release an entrapped stone or dismantle the basket and laser it in situ. If avulsion happens: nephrostomy now, delayed reconstruction (psoas hitch or Boari flap distally; ileal ureter or autotransplant for long defects — not transureteroureterostomy in stone formers).',
+    },
+    {
+      step: 5,
+      structure: 'Calyces and collecting system',
+      risk: 'High irrigation pressure can rupture a calyx; dust from a large stone hides fragments and the wall, inviting perforation.',
+      bailout: 'Aspirate the irrigant through the scope to clear the view, or stent and stage the procedure.',
+    },
+    {
+      step: 5,
+      structure: 'Ureteric submucosa (submucosal or lost stone)',
+      risk: 'A fragment pushed into the wall, or out through a perforation, raises later stricture risk.',
+      bailout: 'Submucosal stone: laser it out and stent. Extruded stone: leave it, stop, stent, give antibiotics, image later — and tell the patient so it is not mistaken for a new stone.',
+    },
+  ],
+  postop: [
+    'Stent if there is oedema or injury; an uncomplicated case can safely go without one (meta-analyses).',
+    'Image every patient after ureteroscopy: strictures (3–6%) can be silent.',
+    'After a perforation: stent for about 4 weeks, then imaging to confirm healing and drainage.',
+    'Most complications settle with simple drainage by a stent or ureteric catheter.',
+  ],
+  extrasSource: cww('Ch 94, Surgical Management for Upper Urinary Tract Calculi (ureteroscopy)', 'Matlaga & Krambeck'),
 };
 
 const semiRigidUrs: Procedure = {
@@ -357,6 +681,49 @@ const semiRigidUrs: Procedure = {
     url: 'https://www.auanet.org/guidelines-and-quality/guidelines/surgical-management-of-kidney-and-ureteral-stones',
     label: 'AUA Surgical Stones Guideline',
   },
+  preop: {
+    indications: [
+      'Distal and mid-ureteric stones; ureteric inspection or biopsy.',
+      'The whole ureter is usually reachable with a rigid scope in women; in men it may not pass above the iliac vessels — plan for a flexible scope.',
+      'An obstructed, infected kidney is decompressed first.',
+    ],
+    workup: [
+      'Non-contrast CT for stone size and position.',
+      'Urine culture, with treatment of any infection before the procedure.',
+      'Previous ureteric surgery, pelvic radiation or a long-impacted stone raise the stricture risk.',
+    ],
+    setup: [
+      'Antibiotic prophylaxis for all (ureteroscopy). ' + PROPHYLAXIS_NOTE,
+      'Safety wire throughout; saline irrigation.',
+      'Have an anti-retropulsion device and a flexible ureteroscope available in case fragments migrate to the kidney.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 3,
+      structure: 'Ureter at the iliac vessels',
+      risk: 'Forcing a rigid scope that will not pass (often in men) perforates the ureter or creates a scabbard effect that can avulse it on withdrawal.',
+      bailout: 'Do not force it: switch to a flexible scope over the wire, or leave a stent to dilate the ureter passively and return later.',
+    },
+    {
+      step: 4,
+      structure: 'Proximal ureter — avulsion',
+      risk: 'Pulling a stone too large for the lumen in a basket can avulse the ureter (0.06–0.5%).',
+      bailout: 'Basket only small stones under direct vision; fragment larger ones; release or dismantle the basket if trapped. After avulsion: nephrostomy and delayed reconstruction (psoas hitch or Boari flap distally).',
+    },
+    {
+      step: 4,
+      structure: 'Ureteric wall (lithotrite or basket)',
+      risk: 'The laser, a lithotrite or a basket snaring the wall can cause full-thickness injury; long, bloody, tiring cases raise the risk.',
+      bailout: 'If the case is not progressing, stop, stent and stage. For a perforation: stent about 4 weeks, nephrostomy if extravasation is severe, antibiotics, imaging after removal.',
+    },
+  ],
+  postop: [
+    'Stent if there is oedema or injury; an uncomplicated case can safely go without one.',
+    'Image every patient afterwards: post-ureteroscopy strictures (3–6%) can be silent.',
+    'Most complications settle with simple drainage by a stent or ureteric catheter.',
+  ],
+  extrasSource: cww('Ch 94, Surgical Management for Upper Urinary Tract Calculi (ureteroscopy)', 'Matlaga & Krambeck'),
 };
 
 const pcnl: Procedure = {
@@ -405,6 +772,58 @@ const pcnl: Procedure = {
     url: 'https://www.auanet.org/guidelines-and-quality/guidelines/surgical-management-of-kidney-and-ureteral-stones',
     label: 'AUA Surgical Stones Guideline',
   },
+  preop: {
+    indications: [
+      'Large or complex renal stones, including staghorn calculi (size thresholds per AUA in the summary above).',
+      'Absolute contraindications: uncorrected coagulopathy and active untreated urinary infection.',
+      'An obstructed, septic kidney gets a nephrostomy drain only — no stone manipulation until the infection is treated.',
+    ],
+    workup: [
+      'CT for stone burden and the access path: retrorenal colon, liver or spleen in the track; cross-sectional imaging is essential for ectopic or transplanted kidneys and abnormal habitus.',
+      'Nuclear renography for differential function with a large burden or an atrophic kidney.',
+      'Blood count, electrolytes, renal function and urine culture; group and screen (cross-match usually unnecessary).',
+      'Stop aspirin, antiplatelets and anticoagulants if medically feasible; bridge patients at high thrombotic risk.',
+    ],
+    setup: [
+      'Antibiotic prophylaxis for all (percutaneous renal surgery); a preoperative broad-spectrum course if struvite or infection is suspected, and a course before instrumenting an indwelling stent. ' + PROPHYLAXIS_NOTE,
+      'General anaesthesia is preferred, and needed for upper-pole access to control breathing; the anaesthetist watches airway pressure, end-tidal CO₂ and saturation for a pleural injury.',
+      'Physiological (saline) irrigation only, not hung excessively high, through an Amplatz-type sheath to keep intrarenal pressure low; warm fluids and the patient against hypothermia.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 2,
+      structure: 'Pleura and lung',
+      risk: 'Supracostal (upper-pole) puncture: pneumothorax or hydrothorax needing drainage in 1.8–8%.',
+      bailout: 'Screen the chest with fluoroscopy at the end (chest X-ray if suspicious). Aspiration usually suffices as lung injury is rare; place a chest tube if it recurs.',
+    },
+    {
+      step: 2,
+      structure: 'Retrorenal colon',
+      risk: 'The colon lies in the track — signs are gas or faeces in the tract, intraoperative diarrhoea, rectal bleeding; often found only on the postoperative nephrostogram or CT.',
+      bailout: 'If extraperitoneal: decompress the kidney with a JJ stent or ureteric catheter and pull the nephrostomy back into the colon as a colostomy tube for at least 7 days, until contrast shows no colon–kidney communication.',
+    },
+    {
+      step: 4,
+      structure: 'Renal parenchymal and tract vessels',
+      risk: 'Bleeding rises with stone burden and operating time; significant bleeding obscures vision and usually means stopping.',
+      bailout: 'Stop, place a nephrostomy tube (most bleeding is venous), clamp it for a period; if it persists, a Kaye tamponade balloon; then immediate angiography — an AV fistula or pseudoaneurysm (under 1%) is embolised; partial nephrectomy is the last resort.',
+    },
+    {
+      step: 4,
+      structure: 'Collecting system wall',
+      risk: 'Perforation lets irrigant extravasate; intraperitoneal spread is the dangerous kind and is hard to see in a prone patient.',
+      bailout: 'Minor perforations are common — continue with a low-pressure sheath. A significant one: stop and leave a nephrostomy. Suspect intraperitoneal fluid if diastolic pressure and CVP rise, pulse pressure narrows or ventilation gets harder; treat with diuresis, peritoneal drainage or laparotomy.',
+    },
+  ],
+  postop: [
+    'The nephrostomy tube helps the tract heal, aids haemostasis, prevents extravasation, drains infection and allows re-entry; tubeless (stent only) or totally tubeless options suit selected cases.',
+    'Fever above 38.5 °C follows almost a quarter of PCNLs — watch closely for sepsis.',
+    'Chest X-ray after supracostal access if there is any suspicion of pneumothorax or hydrothorax.',
+    'Major complications in up to 7% and minor in up to 25%; mortality 0.03–0.8%.',
+    'Image for residual fragments and plan a second-look procedure where needed.',
+  ],
+  extrasSource: cww('Ch 94, Surgical Management for Upper Urinary Tract Calculi (PCNL)', 'Matlaga & Krambeck'),
 };
 
 const cystoscopy: Procedure = {
@@ -435,6 +854,51 @@ const cystoscopy: Procedure = {
     'Failure to pass the scope, needing a change of technique.',
     'If a stent is placed: stent symptoms, migration, or a retained/forgotten stent that encrusts.',
   ],
+  preop: {
+    indications: [
+      'Haematuria; urothelial cancer surveillance; abnormal bladder imaging.',
+      'Lower urinary tract symptoms, recurrent infection, incontinence or chronic pelvic pain needing assessment.',
+      'Urethral stricture, small bladder stones and foreign bodies — some treatable in clinic.',
+      'Ureteric obstruction needing a retrograde stent (indications mirror those for a nephrostomy).',
+    ],
+    workup: [
+      'Urinalysis, with culture if indicated; treat any infection first — instrumenting infected urine risks bacteraemia and sepsis.',
+      'Continent diversion: obtain the operative note (bowel segment, ureteric anastomoses, continence mechanism) before scoping.',
+      'Suprapubic catheter: avoid scoping through the tract until it matures (several weeks).',
+    ],
+    setup: [
+      'Diagnostic cystoscopy: no antibiotic prophylaxis unless risk factors (older age, urinary tract anomalies, poor nutrition, smoking, steroids, immunodeficiency, catheters or colonisation, distant infection, diabetes, previous UTI or instrumentation, long admission). Stent placement or other manipulation: prophylaxis for all. ' + PROPHYLAXIS_NOTE,
+      'Prepare the genitalia with an aqueous iodophor — chlorhexidine and alcohol solutions damage mucous membranes.',
+      'Use the smallest scope that will do the job; lidocaine gel is optional (its benefit is uncertain).',
+      'Squeezing the irrigation bag as the flexible scope passes the membranous urethra cuts pain; letting men watch the screen also helps.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 1,
+      structure: 'Membranous urethra',
+      risk: 'The tightest, most painful point for men; forcing a scope here traumatises the urethra.',
+      bailout: 'Advance only with the lumen in view and the irrigation pressure up; if the scope will not pass, stop rather than force it and switch to a smaller scope or another route.',
+    },
+    {
+      step: 3,
+      structure: 'Ureter beside an impacted stone',
+      risk: 'Pushing a wire around an impacted stone easily perforates the ureter.',
+      bailout: 'Use an angled hydrophilic wire or torquable catheter, or pass the wire under direct vision with a rigid ureteroscope; once past, exchange it for a standard wire.',
+    },
+    {
+      step: 3,
+      structure: 'Infected obstructed collecting system',
+      risk: 'Instrumenting an obstructed, infected kidney under pressure can provoke sepsis.',
+      bailout: 'Aspirate the renal pelvis through an open-ended catheter; if the urine is turbid, place a stent and postpone any definitive treatment until the infection is treated.',
+    },
+  ],
+  postop: [
+    'Before withdrawing the scope, leave the bladder partly full if a catheter is to be placed.',
+    'Stent symptoms are common (urinary symptoms in 78%, pain limiting activity in 80%): alpha-blockers and antimuscarinics both help; stent material, design and diameter make little difference.',
+    'Record every stent with a planned removal or exchange date so none is forgotten.',
+  ],
+  extrasSource: cww('Ch 13, Principles of Urologic Endoscopy; ch 12 for stent tolerance', 'Duty & Conlin'),
   citation: {
     authors: 'BAUS',
     journal: 'Patient information — flexible/rigid cystoscopy',
@@ -498,6 +962,59 @@ const turbt: Procedure = {
     url: 'https://www.auanet.org/guidelines-and-quality/guidelines/bladder-cancer-non-muscle-invasive-guideline',
     label: 'AUA NMIBC Guideline',
   },
+  preop: {
+    indications: [
+      'A bladder tumour seen at flexible cystoscopy — tissue is needed for grade and stage even when it looks low grade.',
+      'Suspected recurrence on surveillance.',
+      'Restaging resection after a first TURBT (see the last step).',
+    ],
+    workup: [
+      'Antithrombotics: the authors continue aspirin; plan stopping or bridging of warfarin, heparin and P2Y12 inhibitors with the relevant team.',
+      'Examination including DRE in men (prostatic involvement) and bimanual examination in women (anterior vaginal wall).',
+      'Blood count, renal function, coagulation, and urine culture — treat infection and delay resection until it clears.',
+      'Upper tract imaging: CT urogram if GFR > 60, MRI if GFR > 30, or ultrasound with retrograde pyelography; full staging of chest, abdomen and pelvis if invasion is suspected.',
+      'Tumour over a ureteric orifice: be ready for ureteroscopy, a stent and fluoroscopy.',
+    ],
+    setup: [
+      'Dorsal lithotomy; rigid cystoscope with a visual obturator; 30° then 70° lens (bladder neck, dome, anterior wall).',
+      'Antibiotic prophylaxis for all patients within 1 hour (AUA); the chapter authors prefer a non-fluoroquinolone where possible. ' + PROPHYLAXIS_NOTE,
+      'Irrigant: water or 1.5% glycine for monopolar, saline for bipolar — bipolar also lowers electrolyte risk and may damp the obturator reflex.',
+      'Narrow-band imaging or blue-light cystoscopy whenever available.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 3,
+      structure: 'Obturator nerve',
+      risk: 'Diathermy on the lateral wall stimulates the nerve; the leg adducts and the loop is driven through the bladder wall.',
+      bailout: 'Minimise bladder distension, use bipolar current if available, and ask for a muscle relaxant under general anaesthesia. Manage any perforation as below.',
+    },
+    {
+      step: 3,
+      structure: 'Ureteric orifice',
+      risk: 'Coagulating over the orifice can seal it, causing obstruction.',
+      bailout: 'Use pure cutting current with quick strokes. Routine stenting is not needed (hydronephrosis in about 4%), but a short-term stent is reasonable after a large resection or heavy cautery.',
+    },
+    {
+      step: 3,
+      structure: 'Bladder dome and adjacent bowel',
+      risk: 'Dome and posterior tumours risk intraperitoneal perforation (about 0.36%); prolonged cautery can injure bowel even without perforation.',
+      bailout: 'Suspect it with loss of distension, a visible defect or a distending abdomen; confirm with an on-table cystogram; treat by laparotomy, bowel inspection, repair, catheter and drain.',
+    },
+    {
+      step: 5,
+      structure: 'Bladder wall — extraperitoneal perforation',
+      risk: 'A deep resection elsewhere in the bladder perforates outside the peritoneum — sometimes the natural result of an adequate resection of an advanced tumour.',
+      bailout: 'Catheter drainage and observation; do not give the immediate intravesical instillation.',
+    },
+  ],
+  postop: [
+    'Single intravesical chemotherapy instillation within 24 hours if there is no perforation: in a meta-analysis it cut recurrence from 50% to 37% (number needed to treat about 7).',
+    'BCG for high-grade disease is never given immediately — wait 2–4 weeks and confirm there is no visible haematuria.',
+    'Extraperitoneal perforation: catheter drainage until healed; intraperitoneal: managed surgically as above.',
+    'Check the pathology report for detrusor muscle and plan restaging resection where indicated.',
+  ],
+  extrasSource: cww('Ch 138, Surgical Management of Bladder Cancer (transurethral resection)', 'Navai & Dinney'),
 };
 
 const eswl: Procedure = {
@@ -531,6 +1048,49 @@ const eswl: Procedure = {
     'Urinary infection or sepsis, particularly with an infected stone.',
     'Failure to fragment — denser stones and a long skin-to-stone distance predict this.',
   ],
+  preop: {
+    indications: [
+      'Selected renal and ureteric stones (size and location thresholds per AUA in the summary above); lower stone-free rates than endoscopy for some sizes and sites must be weighed.',
+      'Not with untreated bacteriuria, pregnancy or uncorrected coagulopathy.',
+    ],
+    workup: [
+      'Urine culture; pregnancy test where relevant; stop or manage anticoagulants and antiplatelets.',
+      'Haematoma risk factors: older age (risk 2.2-fold per decade), obesity or low BMI (>30 or <21.5), coagulopathy, low platelets, diabetes, coronary disease and hypertension — control blood pressure first.',
+    ],
+    setup: [
+      'Antibiotic prophylaxis for all (SWL). ' + PROPHYLAXIS_NOTE,
+      'General anaesthesia gives the best results (stone-free 78–87% vs 51–55% with sedation) by limiting respiratory movement — the kidney can move up to 50 mm.',
+      'Good coupling: water-soluble lubricant applied by hand.',
+      'Plan a slow to intermediate rate (60–90 shocks/min), ramping up from low power, with frequent imaging — stop once fragmented rather than giving a preset number of shocks.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 2,
+      structure: 'Renal parenchyma and vessels',
+      risk: 'Shockwaves injure vessels: clinically significant haematomas in 3–12% with high-pressure machines, rarely needing transfusion or embolisation.',
+      bailout: 'Prevent it — control blood pressure, start at low power and ramp, treat slowly. Most haematomas resolve within weeks; severe bleeding may need transfusion or angiographic embolisation.',
+    },
+    {
+      step: 3,
+      structure: 'Stone off the focal point',
+      risk: 'With breathing, as few as 60% of shocks may hit the stone — wasted energy still reaches the kidney.',
+      bailout: 'Re-image often, re-target, and favour general anaesthesia (or jet ventilation) to limit movement.',
+    },
+    {
+      step: 4,
+      structure: 'Ureter — steinstrasse',
+      risk: 'A column of fragments can obstruct the ureter after treatment of a large burden.',
+      bailout: 'AUA does not advise routine stents with SWL (no better clearance, more morbidity); treat an obstructing steinstrasse with a stent or ureteroscopy.',
+    },
+  ],
+  postop: [
+    'An alpha-blocker after SWL improves stone-free rates (70.8% vs 33.3% in one trial) and pain control.',
+    'Percussion, diuresis and inversion helps clear lower-pole fragments.',
+    'Image to confirm clearance; residual fragments raise later stone recurrence.',
+    'Long-term data show no convincing link to hypertension, chronic kidney disease or diabetes; sperm quality dips after distal ureteric treatment but recovers by 3 months.',
+  ],
+  extrasSource: cww('Ch 94, Surgical Management for Upper Urinary Tract Calculi (SWL); ch 8 for prophylaxis', 'Matlaga & Krambeck'),
   citation: {
     authors: 'BAUS',
     journal: 'Patient information — shockwave lithotripsy',
@@ -579,6 +1139,55 @@ const opticalUrethrotomy: Procedure = {
     'Erectile dysfunction (uncommon).',
     'Progression to needing formal urethroplasty.',
   ],
+  preop: {
+    indications: [
+      'Best case: a bulbar stricture under 1.5 cm without dense, deep spongiofibrosis (about 74% long-term success). Outside the bulbar urethra, long-term cures are rare.',
+      'Overall curative success is only about 20–35%, and a second urethrotomy adds virtually nothing.',
+      'Palliation is acceptable if that is the agreed goal; repeated dilations and urethrotomies make later reconstruction less successful.',
+    ],
+    workup: [
+      'Define location, length, depth and density of the scar: dynamic retrograde and voiding urethrograms in a steep oblique position (otherwise length is underestimated), with IV-grade contrast — not jelly-thickened.',
+      'Urethroscopy (a flexible or paediatric scope to the stricture, without dilating it at the first look); ultrasound helps measure bulbar stricture length.',
+      'Retention with unknown stricture anatomy: place a suprapubic catheter — blind filiforms and dilation are condemned.',
+    ],
+    setup: [
+      'Saline irrigation (limits harm from extravasation).',
+      'Antibiotic prophylaxis for all (urethral instrumentation with manipulation). ' + PROPHYLAXIS_NOTE,
+      'Guidewire across the stricture under direct vision before any incision.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 3,
+      structure: 'Urethral wall (false passage)',
+      risk: 'Blind passage of wires, filiforms or dilators creates a false passage.',
+      bailout: 'Pass the wire only under direct vision; if it will not cross, stop and drain the bladder suprapubically, then plan definitive repair.',
+    },
+    {
+      step: 4,
+      structure: 'Thin dorsal spongiosum and triangular ligament',
+      risk: 'The spongiosum is thinnest from 10 to 2 o’clock; a deep 12 o’clock cut in the bulbar urethra can pass into the triangular ligament or intracrural space.',
+      bailout: 'Incise only through the scar to healthy tissue. If spongiofibrosis is deep, urethrotomy cannot cure it — stop and offer urethroplasty.',
+    },
+    {
+      step: 4,
+      structure: 'Corpora cavernosa',
+      risk: 'Deep incisions in the distal anterior (penile) urethra, or vigorous 10 and 2 o’clock cuts, enter the corpora — spongiosal–cavernosal fistula and veno-occlusive erectile dysfunction.',
+      bailout: 'Avoid deep distal incisions altogether; penile strictures belong to urethroplasty.',
+    },
+    {
+      step: 4,
+      structure: 'Perispongiosal tissue',
+      risk: 'Irrigant extravasates into the tissues around the spongiosum; bleeding is usually with erections soon after surgery.',
+      bailout: 'Use saline, keep pressure low and finish promptly; leave a catheter.',
+    },
+  ],
+  postop: [
+    'Catheter for about 3–5 days — leaving it 6 weeks gives no better results than 3–7 days.',
+    'A tapering self-catheterisation (obturation) regimen over 3–6 months can manage a motivated patient, but the stricture tends to return once it stops.',
+    'Recurrence is the rule rather than the exception: offer urethroplasty rather than repeating the urethrotomy.',
+  ],
+  extrasSource: cww('Ch 82, Surgery for Benign Disorders of the Penis and Urethra', 'Virasoro, Jordan & McCammon'),
   citation: {
     authors: 'BAUS',
     journal: 'Patient information — optical urethrotomy',
@@ -622,6 +1231,83 @@ const bladderUreteralTrauma: Procedure = {
     'Missed injury — haematuria is absent in up to ~30% of penetrating ureteric injuries.',
     'Reduced bladder capacity after extensive tissue loss.',
   ],
+  preop: {
+    indications: [
+      'Repair the bladder immediately for: intraperitoneal injury from external trauma; penetrating or iatrogenic non-urological injury; poor catheter drainage or clots; bladder neck injury; rectal or vaginal injury; open pelvic fracture; pelvic fracture needing internal fixation; bone fragments projecting into the bladder; and selected stable patients already at laparotomy.',
+      'Uncomplicated extraperitoneal rupture: a large-bore (22 Fr) urethral catheter alone (AUA Urotrauma statement 16).',
+      'Ureter: repair at the first laparotomy when the patient is stable; in the unstable, complex polytrauma patient choose damage control and stage the repair.',
+    ],
+    workup: [
+      'Cystography: absolute indication is gross haematuria with a pelvic fracture (about 29% have a rupture). Relative: gross haematuria without a fracture, or microhaematuria with one (0.6%). Penetrating buttock, pelvic or lower-abdominal wounds with any haematuria warrant cystography.',
+      'Fill retrogradely to discomfort or 350 mL — 250 mL gives false negatives. A plain-film study needs a drainage film; a CT cystogram needs contrast diluted to 2–4% (6:1 with saline). Clamping the catheter after IV contrast is not adequate.',
+      'Blood at the meatus or a catheter that will not pass: retrograde urethrogram first — urethral injury accompanies 10–29% of bladder ruptures.',
+      'Ureter: 25–45% have no haematuria at all. CT urography with delayed images (about 10 minutes after contrast); look for extravasation, a delayed nephrogram, hydronephrosis, no contrast in the distal ureter or a urinoma, and trace both ureters along their whole course.',
+    ],
+    setup: [
+      'Antibiotics: extraperitoneal rupture from the day of injury for at least 1 week; intraperitoneal rupture for 3 days peri-operatively.',
+      'Exploration without prior imaging: be ready to check orifice efflux with IV indigo carmine or a retrograde ureteric catheter. Avoid IV methylene blue in pregnancy, with SSRIs, SNRIs or MAOIs (serotonin toxicity) and in G6PD deficiency; it also lowers pulse-oximetry readings.',
+      'Ureteric stents, a retroperitoneal drain and long silk or polypropylene ties (for damage-control ligation) available.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Rectum or vagina',
+      risk: 'An associated rectal or vaginal injury left with overlapping suture lines fistulates.',
+      bailout: 'Separate the organ walls, avoid overlapping suture lines and interpose viable tissue; fibrin sealant over the bladder closure can help when no tissue is available.',
+    },
+    {
+      step: 1,
+      structure: 'Perivesical pelvic haematoma',
+      risk: 'Disturbing the haematoma around an extraperitoneal rupture risks major bleeding.',
+      bailout: 'Open the anterior bladder wall in the midline and close the tear from inside with absorbable suture; leave the haematoma alone.',
+    },
+    {
+      step: 1,
+      structure: 'Bladder neck',
+      risk: 'An unrecognised bladder neck injury leads to incontinence, fistula or stricture and a difficult delayed reconstruction.',
+      bailout: 'Inspect the bladder neck through the cystotomy; a bladder neck injury is an indication for immediate repair.',
+    },
+    {
+      step: 2,
+      structure: 'Ureteric orifices and intramural ureter',
+      risk: 'Penetrating injuries explored without imaging can involve an orifice and be missed.',
+      bailout: 'Look for clear efflux from both orifices (IV indigo carmine or a retrograde ureteric catheter). An orifice or intramural injury needs closure with a stented reimplant and a perivesical drain.',
+    },
+    {
+      step: 3,
+      structure: 'Ureteric adventitial blood supply',
+      risk: 'The ureteric supply is tenuous; stripping it during exploration gives leak, stricture, and sometimes nephrectomy.',
+      bailout: 'Mobilise with a wide cuff of adventitia, debride until the edges bleed, then a spatulated, tension-free, stented, watertight repair with a drain. Close peritoneum over it; consider omentum after blast injury or vascular repair.',
+    },
+    {
+      step: 3,
+      structure: 'Unstable patient',
+      risk: 'A formal ureteric repair is too long for a patient in shock, with uncontrolled bleeding or a major colon injury.',
+      bailout: 'Damage control: tie the proximal ureter with long silk or polypropylene and place a percutaneous nephrostomy once stable, or bring a single-J stent or 5 Fr feeding tube out to the skin; reconstruct later.',
+    },
+    {
+      step: 4,
+      structure: 'Genitofemoral nerve',
+      risk: 'The nerve on psoas can be injured or caught in the hitch sutures.',
+      bailout: 'Place hitch sutures in psoas and the psoas minor tendon clear of the nerve; divide the contralateral superior vesical pedicle if more reach is needed.',
+    },
+    {
+      step: 4,
+      structure: 'Reimplant tunnel',
+      risk: 'A tunnelled reimplant in trauma carries a higher risk of obstruction than of clinically important reflux.',
+      bailout: 'Use a long, non-tunnelled, widely spatulated, stented anastomosis.',
+    },
+  ],
+  postop: [
+    'Extraperitoneal rupture on catheter drainage: cystogram before catheter removal at 14 days; if it still leaks, keep draining for several weeks and re-image.',
+    'Bladder repaired at laparotomy or internal fixation: large-bore urethral catheter alone; cystogram about 1 week after repair (7–10 days after intraperitoneal repair). A suprapubic tube adds nothing (AUA Urotrauma statement 18).',
+    'Missed bladder injury shows as acidosis, azotaemia, fever or sepsis, low urine output, peritonitis, ileus or urinary ascites.',
+    'Missed ureteric injury: fever, leucocytosis and local peritoneal irritation should prompt CT; retrograde ureterogram with a stent attempt, or nephrostomy and an antegrade stent for 6 weeks if that fails (83–88% success).',
+    'Delayed recognition: repair if found within 1 week; otherwise stent or nephrostomy and definitive repair at 6 weeks or later.',
+    'After ureteric repair: diuretic renogram or ultrasound at 4–12 weeks and at 1 year — late stenosis is often silent.',
+  ],
+  extrasSource: cww('Ch 133, Genital and Lower Urinary Tract Trauma; ch 90, Upper Urinary Tract Trauma', 'Morey & Simhan; Brandes & Eswara'),
   citation: {
     authors: 'Coburn',
     journal: 'Oper Tech Gen Surg',
@@ -664,6 +1350,69 @@ const ureteralReconstruction: Procedure = {
     'Genitofemoral / femoral nerve injury with a psoas hitch.',
     'Reduced bladder capacity after a Boari flap / psoas hitch.',
   ],
+  preop: {
+    indications: [
+      'Choose by level and length. Uretero-ureterostomy only for short upper or mid defects — tension almost always ends in stricture, and whether the ends will meet is often clear only at surgery, so be ready to switch.',
+      'Ureteroneocystostomy for the distal 3–4 cm; a psoas hitch adds up to 5 cm (a defect above the pelvic brim usually needs more); a Boari flap bridges 10–15 cm; renal descensus gains up to 8 cm.',
+      'Contraindications: small contracted bladder (hitch or flap); for TUU, a diseased recipient ureter or a donor too short to reach without tension. TUU is relatively contraindicated with stones, retroperitoneal fibrosis, urothelial cancer, chronic pyelonephritis or pelvic radiation.',
+      'Endoscopic incision is an alternative only for strictures under 2 cm without active infection, and needs about 25% function in that kidney.',
+    ],
+    workup: [
+      'IVP or antegrade nephrostogram plus retrograde pyelogram for location and length; diuretic renogram for function; ureteroscopy, barbotage or brushings to exclude carcinoma when indicated.',
+      'Before a hitch or flap: urodynamics for capacity and compliance; treat outlet obstruction or neurogenic dysfunction first.',
+      'Before TUU: voiding cystogram — reflux into the recipient ureter must be corrected at the same time.',
+    ],
+    setup: [
+      'Incision by level: flank for the upper ureter; Gibson or lower midline for the mid and lower ureter. After an injury at Pfannenstiel surgery, reuse it with a hockey-stick extension. Extraperitoneal unless the injury was transperitoneal; TUU is midline transperitoneal.',
+      'Vessel loop or Penrose sling for the ureter, fine absorbable sutures, double-J stents and a drain. Methylene blue in the bladder irrigant confirms the distal coil is in the bladder.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Ureteric adventitia',
+      risk: 'Forceps handling and stripping the adventitia devascularise the ends — leak and stricture.',
+      bailout: 'Handle the ureter with a sling, keep its adventitia, and trim to healthy tissue (after a gunshot wound, take an extra segment of normal-looking ureter too).',
+    },
+    {
+      step: 0,
+      structure: 'Anastomotic tension',
+      risk: 'An end-to-end repair under tension almost always strictures.',
+      bailout: 'If the spatulated ends do not meet freely, change plan: reimplant with a psoas hitch or Boari flap, TUU, or renal descensus.',
+    },
+    {
+      step: 1,
+      structure: 'Inferior mesenteric artery',
+      risk: 'A donor ureter passed below the IMA is tethered and kinks; revisions for this are reported.',
+      bailout: 'Tunnel under the sigmoid mesentery above the IMA.',
+    },
+    {
+      step: 1,
+      structure: 'Recipient ureter',
+      risk: 'Surgery on the healthy contralateral ureter can turn a one-sided problem into a bilateral one.',
+      bailout: 'Expose only the length needed (about 5 cm), make an anteromedial ureterotomy and stent across the anastomosis.',
+    },
+    {
+      step: 3,
+      structure: 'Genitofemoral nerve and iliac vein',
+      risk: 'Hitch sutures can catch the genitofemoral nerve; nerve, bowel and iliac vein injuries are reported.',
+      bailout: 'Place sutures in psoas and the psoas minor tendon under vision, clear of the nerve; divide the contralateral superior vesical pedicle rather than pull harder.',
+    },
+    {
+      step: 4,
+      structure: 'Flap blood supply',
+      risk: 'Recurrent stricture from ischaemia or tension is the commonest complication of a Boari flap.',
+      bailout: 'Raise a well-vascularised flap without tension; with a small bladder, plan an alternative (TUU, ileal ureter) rather than a short flap.',
+    },
+  ],
+  postop: [
+    'Drain plus urethral catheter for 1–2 days; remove the drain after 24–48 hours of minimal output (check drain fluid creatinine if the peritoneum was opened).',
+    'Double-J stent out endoscopically at 4–6 weeks. Uretero-ureterostomy succeeds in over 90% and a psoas hitch reimplant in over 85%.',
+    'Leak: plain film for stent position, move the drain off the anastomosis and stop suction; catheter and an anticholinergic for reflux or spasm; nephrostomy if it persists.',
+    'Counsel on function: in one reimplant series (most with a hitch ± Boari flap) eGFR fell in 44% over 2 years even though hydronephrosis resolved.',
+    'After repair of a traumatic injury: diuretic renogram or ultrasound at 4–12 weeks and at 1 year, because late stenosis is often silent.',
+  ],
+  extrasSource: cww('Ch 89, Management of Upper Urinary Tract Obstruction; ch 90, Upper Urinary Tract Trauma', 'Nakada & Best; Brandes & Eswara'),
   citation: {
     authors: 'LaFontaine',
     journal: 'Oper Tech Gen Surg',
@@ -708,6 +1457,61 @@ const retroperitonealExposure: Procedure = {
     'Positioning-related pressure/stretch injury (brachial plexus, axilla).',
     'Haemorrhage from the aorta or renal-vein branches.',
   ],
+  preop: {
+    indications: [
+      'Open flank access is now mostly kept for large or complex oncological resections, though still used for benign work such as donor nephrectomy or simple nephrectomy for XGP.',
+      'Going in posteriorly through the retroperitoneum lowers the risk of bowel complications but raises the risk of thoracic ones, chiefly pleural injury.',
+      'Thoracoabdominal extension (9th–10th rib, extendable to the midline) gives early great-vessel control for level III caval thrombus, T4 renal tumours, large upper-pole or adrenal tumours and retroperitoneal masses.',
+      'Supracostal 12th-rib or 11th–12th interspace incisions avoid rib resection and its pain yet still expose the kidney and hilum; resecting rib tips as high as the 11th brings marked pain and a risk of flank bulge.',
+    ],
+    workup: [
+      'Choose the incision from the imaging: the location and size of the target decide between supracostal, transcostal, subcostal and thoracoabdominal access.',
+      'Plan for the chest if a thoracoabdominal incision is likely — the pleura will be opened and a chest drain placed.',
+    ],
+    setup: [
+      'Flank position: lateral, lower leg flexed and upper leg extended, incision over the table break. Thoracoabdominal: exaggerated flank with the ipsilateral arm raised on a Mayo stand or trapeze.',
+      'Arms: ipsilateral arm on a raised rest or gel pad, abducted no more than 90° without shoulder stretch; contralateral arm on an armboard with ulnar padding. Front and back support. Rotate the table fully before draping to prove the patient is secure.',
+      'Rib cutter, periosteal elevator, Doyen rib stripper, bone wax; a red rubber catheter and chest drain for pleural repair.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Contralateral brachial plexus',
+      risk: 'An axillary roll placed in the axilla compresses the dependent brachial plexus; over-abduction stretches the upper one.',
+      bailout: 'Put the roll just caudal to the axilla, not in it, and keep the upper arm at or below 90° of abduction.',
+    },
+    {
+      step: 2,
+      structure: 'Rib neurovascular bundle',
+      risk: 'The bundle runs between the second and third muscle layers and is easily divided as they are opened.',
+      bailout: 'Identify it between those layers and dissect it free where possible before placing retractors.',
+    },
+    {
+      step: 2,
+      structure: 'Peritoneum',
+      risk: 'Opening the muscle layers too far anteriorly enters the peritoneal cavity and exposes bowel.',
+      bailout: 'Enter the retroperitoneum as far posteriorly as possible and push the peritoneum bluntly medially as the remaining layers are opened.',
+    },
+    {
+      step: 3,
+      structure: 'Pleura',
+      risk: 'Rib resection and supracostal incisions put the pleura at risk.',
+      bailout: 'Ask the anaesthetist for large breaths to show the pleura. If torn: close it with a running absorbable suture around a red rubber catheter, put the catheter end under water, give large breaths until the bubbles stop, then withdraw it. Use a chest drain for a larger tear.',
+    },
+    {
+      step: 5,
+      structure: 'Spleen or liver',
+      risk: 'Self-retaining retractor blades can injure the spleen (left) or liver (right).',
+      bailout: 'Use padded blades and keep them clear of the spleen and liver.',
+    },
+  ],
+  postop: [
+    'Close in two layers with running absorbable suture. After a thoracoabdominal incision, close the diaphragm in two layers, re-approximate the costal cartilage and leave a chest drain (it may be omitted if the parietal pleura is intact).',
+    'Chest X-ray only if a pleural tear was recognised and repaired — routine films after open renal surgery have a very low yield.',
+    'A wound drain is seldom needed unless findings demand it, for example after partial nephrectomy or simple nephrectomy for XGP.',
+  ],
+  extrasSource: cww('Ch 9, Incisions and Access; ch 10, Intraoperative Technical Decisions', 'Mikhail & Hall; Vira & Hartman'),
   citation: {
     authors: 'Radtka & Han',
     journal: 'Oper Tech Gen Surg',
