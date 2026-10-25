@@ -116,7 +116,7 @@ export function DrugsScreen() {
         {/* Prominent clinical-judgment disclaimer (required) */}
         <div className="rounded-[14px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
           <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
-            ⚠ Decision support only
+            Decision support only
           </div>
           <p className="text-[13px] leading-relaxed text-muted">
             This is a curated, guideline-grounded reference — <strong>not</strong> a comprehensive

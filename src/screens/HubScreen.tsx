@@ -58,7 +58,7 @@ const CLINICAL_ITEMS: HubItem[] = [
   { id: 'mdt', label: 'MDT case sheets', note: 'Tumour board' },
   { id: 'drugs', label: 'Drug interactions', note: 'Pharmacology' },
   { id: 'surveillance', label: 'Surveillance schedule', note: 'Follow-up' },
-  { id: 'pediatrics', label: 'Pediatrics', note: 'Dosing · fluids' },
+  { id: 'pediatrics', label: 'Pediatrics', note: 'UTD · enuresis · scrotum' },
 ];
 
 const ACADEMIC_ITEMS: HubItem[] = [

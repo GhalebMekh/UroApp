@@ -1315,10 +1315,10 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
 
       <div className="mt-4 flex gap-2">
         <button type="button" onClick={print} className="min-h-[44px] flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep">
-          🖨 Print
+          Print
         </button>
         <button type="button" onClick={save} className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal">
-          ⬇ Save file
+          Save file
         </button>
       </div>
 

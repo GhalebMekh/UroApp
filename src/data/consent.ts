@@ -559,4 +559,113 @@ export const CONSENT_PROCEDURES: ConsentProcedure[] = [
     anaesthesia: GA_SPINAL,
     source: { label: 'BAUS patient information (optical urethrotomy)', url: 'https://www.baus.org.uk/patients/information_leaflets/' },
   },
+
+  // ── Pediatric, added 2026-10. Complications and frequencies summarised from
+  //    Campbell-Walsh-Wein 12th ed (ch 44, 45, 42); written for parents.
+  {
+    id: 'circumcision',
+    name: {
+      en: 'Circumcision — Removal of the foreskin',
+      ar: 'الختان — إزالة القلفة (جلدة رأس القضيب)',
+    },
+    description: {
+      en: 'The foreskin covering the head of the penis is removed and the skin edges are closed. It is postponed if the child has hypospadias, a curved, buried or webbed penis, or a bleeding disorder, because the foreskin may be needed for a later repair.',
+      ar: 'تُزال الجلدة التي تغطي رأس القضيب وتُخاط حواف الجلد. ويُؤجَّل الختان إذا كان لدى الطفل إحليل تحتي أو انحناء في القضيب أو قضيب مدفون أو ملتصق بالصفن أو اضطراب في تخثّر الدم، لأن القلفة قد تلزم لعملية إصلاح لاحقة.',
+    },
+    benefits: [
+      { en: 'Treats a tight foreskin (phimosis), repeated foreskin infections or lichen sclerosus (BXO).', ar: 'علاج ضيق القلفة، أو التهاباتها المتكررة، أو التصلّب الحزازي (BXO).' },
+      { en: 'Lowers the risk of urinary infection in infancy and of balanitis.', ar: 'تقليل خطر التهاب المسالك البولية في سن الرضاعة والتهاب الحشفة.' },
+      { en: 'Lowers the lifetime risk of penile cancer and of some sexually transmitted infections.', ar: 'تقليل خطر الإصابة بسرطان القضيب وببعض الأمراض المنقولة جنسياً على مدى الحياة.' },
+    ],
+    alternatives: [
+      { en: 'Leaving the foreskin and keeping it clean — most tight foreskins loosen on their own with age.', ar: 'ترك القلفة مع العناية بنظافتها — فمعظم حالات ضيق القلفة تتحسّن تلقائياً مع العمر.' },
+      { en: 'Steroid cream for a tight foreskin (works in about 70–80%).', ar: 'كريم الكورتيزون لضيق القلفة (ينجح في نحو 70–80% من الحالات).' },
+      { en: 'Foreskin-preserving surgery (preputioplasty) in selected cases.', ar: 'جراحة توسيع القلفة مع الحفاظ عليها في حالات مختارة.' },
+    ],
+    complications: [
+      { en: 'Overall, complications follow 0.2–5% of circumcisions.', ar: 'تحدث المضاعفات إجمالاً في 0.2–5% من عمليات الختان.' },
+      { en: 'Bleeding — the most common (about 1 in 1000); usually stops with pressure, occasionally needs a stitch or cautery.', ar: 'النزيف — الأكثر شيوعاً (نحو حالة من كل 1000)؛ يتوقف عادةً بالضغط، وقد يحتاج أحياناً إلى غرزة أو كيّ.' },
+      { en: 'Wound infection (rare).', ar: 'التهاب الجرح (نادر).' },
+      { en: 'Too much or too little skin removed, or an uneven result, which may need a revision under general anaesthesia.', ar: 'إزالة جلد أكثر أو أقل من اللازم أو نتيجة غير متناسقة، وقد يستدعي ذلك عملية تصحيح تحت التخدير العام.' },
+      { en: 'Adhesions or skin bridges between the head and the shaft of the penis.', ar: 'التصاقات أو جسور جلدية بين رأس القضيب وجسمه.' },
+      { en: 'Narrowing of the urinary opening (meatal stenosis): a thin or upward stream or pain on passing urine; may need a small procedure.', ar: 'تضيّق فتحة البول: تيّار بول رفيع أو متّجه للأعلى أو ألم عند التبول، وقد يحتاج إلى إجراء بسيط.' },
+      { en: 'A penis "trapped" in scar tissue, mostly after excess skin removal.', ar: 'انحباس القضيب داخل نسيج ندبي، غالباً بعد إزالة جلد زائد.' },
+      { en: 'Injury to the head of the penis or the urethra (very rare but serious).', ar: 'إصابة رأس القضيب أو مجرى البول (نادرة جداً لكنها خطيرة).' },
+    ],
+    anaesthesia: {
+      en: 'Newborns: local anaesthetic (injection or cream). Older children: general anaesthesia, whose risks the anaesthetist discusses with the parents separately.',
+      ar: 'حديثو الولادة: تخدير موضعي (حقنة أو كريم). الأطفال الأكبر: تخدير عام، ويناقش طبيب التخدير مخاطره مع الوالدين بشكل منفصل.',
+    },
+    source: { label: 'Campbell-Walsh-Wein Urology 12th ed, ch 44 (Palmer & Palmer)', url: 'https://search.worldcat.org/search?q=ti%3ACampbell-Walsh-Wein+urology+twelfth+edition' },
+  },
+
+  {
+    id: 'hypospadias-repair',
+    name: {
+      en: 'Hypospadias repair — Reconstruction of the urinary channel',
+      ar: 'إصلاح الإحليل التحتي (المبال التحتاني) — إعادة بناء مجرى البول',
+    },
+    description: {
+      en: 'An operation to bring the urinary opening to the tip of the penis, straighten any bend, and reshape the head of the penis and the skin. Severe forms may be repaired in two stages. A catheter or stent is usually left in for some days afterwards.',
+      ar: 'عملية لنقل فتحة البول إلى رأس القضيب، وتصحيح أي انحناء، وإعادة تشكيل رأس القضيب والجلد. وقد تُجرى الحالات الشديدة على مرحلتين. وتُترك عادةً قسطرة أو دعامة لبضعة أيام بعد العملية.',
+    },
+    benefits: [
+      { en: 'A straight, forward urinary stream, allowing him to pass urine standing.', ar: 'تيّار بول مستقيم إلى الأمام، يُمكّنه من التبول واقفاً.' },
+      { en: 'A straight penis for future sexual function.', ar: 'قضيب مستقيم من أجل الوظيفة الجنسية مستقبلاً.' },
+      { en: 'A more typical appearance of the penis.', ar: 'مظهر أقرب للطبيعي للقضيب.' },
+    ],
+    alternatives: [
+      { en: 'One-stage or two-stage repair, chosen according to the severity.', ar: 'إصلاح على مرحلة واحدة أو على مرحلتين بحسب شدة الحالة.' },
+      { en: 'No surgery, accepting a stream that may spray or point downward and any remaining bend.', ar: 'عدم إجراء الجراحة، مع قبول تيّار بول قد يتناثر أو يتّجه للأسفل وبقاء أي انحناء.' },
+    ],
+    complications: [
+      { en: 'A fistula — a second hole where urine leaks — the most common (just under 1 in 10); usually repaired at least 6–12 months later, and can recur (about 1 in 5).', ar: 'الناسور — فتحة ثانية يتسرّب منها البول — وهو الأكثر شيوعاً (أقل بقليل من حالة من كل 10)؛ ويُصلَح عادةً بعد 6–12 شهراً على الأقل، وقد يتكرر (نحو حالة من كل 5).' },
+      { en: 'Breakdown of the head-of-penis repair, so the opening falls back.', ar: 'انفتاح ترميم رأس القضيب فتعود الفتحة إلى الخلف.' },
+      { en: 'Narrowing of the new opening or the new channel (meatal stenosis or stricture), causing straining or a weak stream.', ar: 'تضيّق الفتحة الجديدة أو القناة الجديدة، مما يسبب الحزق أو ضعف التيّار.' },
+      { en: 'A pouch in the new channel (diverticulum) causing ballooning, dribbling or infection.', ar: 'جيب في القناة الجديدة (رتج) يسبب انتفاخاً أو تقطيراً أو التهاباً.' },
+      { en: 'Some bend remaining or returning, or skin excess or twisting.', ar: 'بقاء جزء من الانحناء أو عودته، أو زيادة في الجلد أو التواء.' },
+      { en: 'Bleeding, swelling or infection of the wound.', ar: 'نزيف أو تورّم أو التهاب في الجرح.' },
+      { en: 'Further operations may be needed; the more severe the hypospadias, the higher the risk of complications.', ar: 'قد تلزم عمليات إضافية؛ وكلما كانت الحالة أشد زادت احتمالية المضاعفات.' },
+    ],
+    anaesthesia: {
+      en: 'General anaesthesia. The anaesthetist discusses its risks with the parents separately.',
+      ar: 'تخدير عام. يناقش طبيب التخدير مخاطره مع الوالدين بشكل منفصل.',
+    },
+    source: { label: 'Campbell-Walsh-Wein Urology 12th ed, ch 45 (Long, Zaontz & Canning)', url: 'https://search.worldcat.org/search?q=ti%3ACampbell-Walsh-Wein+urology+twelfth+edition' },
+  },
+
+  {
+    id: 'pyeloplasty',
+    name: {
+      en: 'Pyeloplasty — Repair of a blocked kidney outlet (PUJ obstruction)',
+      ar: 'رأب الحويضة — إصلاح انسداد مخرج الكلية (تضيّق الوصل الحويضي الحالبي)',
+    },
+    description: {
+      en: 'The narrowed junction between the kidney’s collecting area (pelvis) and the ureter is removed and the two ends are rejoined so urine drains freely. It can be done through a small incision or by keyhole (laparoscopic or robotic) surgery. A stent or drain is usually left temporarily to protect the join.',
+      ar: 'يُستأصل الجزء المتضيّق عند اتصال حوض الكلية بالحالب ويُعاد وصل الطرفين ليتصرّف البول بحرّية. ويمكن إجراؤها عبر شقّ صغير أو بالمنظار (جراحة منظارية أو روبوتية). وتُترك عادةً دعامة أو أنبوب تصريف مؤقت لحماية مكان الوصل.',
+    },
+    benefits: [
+      { en: 'Relieves the blockage and protects the kidney’s function.', ar: 'تخفيف الانسداد وحماية وظيفة الكلية.' },
+      { en: 'Relieves pain and reduces infections caused by the blockage.', ar: 'تخفيف الألم وتقليل الالتهابات الناتجة عن الانسداد.' },
+      { en: 'High success — between 90% and 100% in published series.', ar: 'نسبة نجاح عالية — بين 90% و100% في الدراسات المنشورة.' },
+    ],
+    alternatives: [
+      { en: 'Continued monitoring with ultrasound and kidney scans — many dilated kidneys improve without surgery.', ar: 'الاستمرار في المتابعة بالأشعة الصوتية والمسح الذري للكلى — فكثير من حالات توسّع الكلية تتحسّن دون جراحة.' },
+      { en: 'Temporary drainage through the skin (nephrostomy) when urgent drainage is needed.', ar: 'تصريف مؤقت عبر الجلد (فغر الكلية) عند الحاجة إلى تصريف عاجل.' },
+      { en: 'Endoscopic widening (balloon or incision) — less successful, mainly used if a repair narrows again.', ar: 'التوسيع بالمنظار (بالبالون أو الشقّ) — نجاحه أقل، ويُستخدم غالباً إذا عاد التضيّق بعد الإصلاح.' },
+    ],
+    complications: [
+      { en: 'Bleeding during or after surgery.', ar: 'نزيف أثناء العملية أو بعدها.' },
+      { en: 'Urine leaking from the join (the stent is used to reduce this).', ar: 'تسرّب البول من مكان الوصل (تُستخدم الدعامة لتقليل ذلك).' },
+      { en: 'Infection, pain, or temporary blockage from swelling or clots, sometimes needing a temporary drain into the kidney.', ar: 'التهاب أو ألم أو انسداد مؤقت بسبب التورّم أو الجلطات، وقد يستدعي أحياناً أنبوب تصريف مؤقت في الكلية.' },
+      { en: 'An internal (double-J) stent needs a second anaesthetic to remove; an external stent is usually pulled out on the ward after 7–14 days.', ar: 'الدعامة الداخلية (Double-J) تحتاج إلى تخدير آخر لإزالتها؛ أما الدعامة الخارجية فتُسحب عادةً في الجناح بعد 7–14 يوماً.' },
+      { en: 'Conversion from keyhole to open surgery, most often because of bleeding.', ar: 'التحوّل من الجراحة بالمنظار إلى الجراحة المفتوحة، وغالباً بسبب النزيف.' },
+      { en: 'The narrowing coming back or kidney function not improving, which may need a further procedure or a repeat operation.', ar: 'عودة التضيّق أو عدم تحسّن وظيفة الكلية، مما قد يستدعي إجراءً إضافياً أو إعادة العملية.' },
+    ],
+    anaesthesia: {
+      en: 'General anaesthesia. The anaesthetist discusses its risks with the parents separately.',
+      ar: 'تخدير عام. يناقش طبيب التخدير مخاطره مع الوالدين بشكل منفصل.',
+    },
+    source: { label: 'Campbell-Walsh-Wein Urology 12th ed, ch 42 (Olsen & Rawashdeh)', url: 'https://search.worldcat.org/search?q=ti%3ACampbell-Walsh-Wein+urology+twelfth+edition' },
+  },
 ];

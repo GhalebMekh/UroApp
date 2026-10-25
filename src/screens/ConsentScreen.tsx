@@ -237,7 +237,7 @@ export function ConsentScreen() {
             }}
             className="flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           >
-            🖨 Print consent (EN + AR)
+            Print consent (EN + AR)
           </button>
           <button
             type="button"
@@ -247,7 +247,7 @@ export function ConsentScreen() {
             }}
             className="flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal"
           >
-            ⬇ Save file
+            Save file
           </button>
         </div>
 
@@ -313,7 +313,7 @@ export function ConsentScreen() {
         {/* Disclaimer */}
         <div className="rounded-[12px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
           <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
-            ⚠ Template — verify before use
+            Template — verify before use
           </div>
           <p className="text-[12px] leading-relaxed text-muted">
             {B.disclaimer.en}

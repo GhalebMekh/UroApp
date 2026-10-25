@@ -218,6 +218,39 @@ export function ScalpelIcon({ className }: IconProps) {
   );
 }
 
+/** Calendar — surveillance schedules. */
+export function CalendarIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+      <path d="M8 14h.01M12 14h.01M16 14h.01M8 17h.01M12 17h.01" />
+    </svg>
+  );
+}
+
+/** Signed form — consent. */
+export function ConsentIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M6 3h9l4 4v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1Z" />
+      <path d="M9 9h6M9 12.5h4" />
+      <path d="M8.5 17.5c1-.9 1.6-.9 2.1 0s1.2.9 2.1 0 1.4-.9 2.3 0" />
+    </svg>
+  );
+}
+
+/** Graduation cap — training. */
+export function TrainingIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M2.5 9 12 4.5 21.5 9 12 13.5Z" />
+      <path d="M6.5 11v4.5c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3V11" />
+      <path d="M21.5 9v5" />
+    </svg>
+  );
+}
+
 /** External link — arrow pointing out. */
 export function ExternalLinkIcon({ className }: IconProps) {
   return (

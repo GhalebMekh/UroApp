@@ -2,23 +2,35 @@
 
 export type FeatureTag = 'pro' | 'elite' | null;
 
+export type FeatureIcon =
+  | 'calculator'
+  | 'guideline'
+  | 'calendar'
+  | 'scalpel'
+  | 'consent'
+  | 'drug'
+  | 'oncall'
+  | 'imaging'
+  | 'training';
+
 export interface Feature {
-  icon: string;
+  /** Key into the inline SVG icon set — never an emoji (CLAUDE.md). */
+  icon: FeatureIcon;
   title: string;
   blurb: string;
   tag: FeatureTag;
 }
 
 export const FEATURES: Feature[] = [
-  { icon: '🧮', tag: null, title: 'Validated calculators', blurb: 'IPSS, PSA toolkit, UCSF-CAPRA, EORTC, IGCCCG, R.E.N.A.L., stone scores, eGFR and more — every formula traceable to its source.' },
-  { icon: '🗺️', tag: null, title: 'Guideline summaries', blurb: 'AUA and EAU algorithms for 27 conditions, oncological and non-oncological — each linking to the official guideline.' },
-  { icon: '📅', tag: null, title: 'Surveillance schedules', blurb: 'Risk-stratified follow-up calendars for NMIBC, prostate, renal, UTUC, testis, cystectomy, stones and testosterone — printable.' },
-  { icon: '🔪', tag: null, title: 'Operative reference', blurb: 'Anatomy, steps and complications for 15 procedures, dual-sourced to the operative literature and the society guideline.' },
-  { icon: '📝', tag: null, title: 'Bilingual consent', blurb: 'English / العربية surgical consent for common operations with procedure-specific complications — printable at the bedside.' },
-  { icon: '💊', tag: null, title: 'Drug interactions', blurb: 'Urology-relevant drug pairs with severity, effect and management — decision support, each entry sourced.' },
-  { icon: '🚨', tag: null, title: 'On-call pathways', blurb: "First-30-minutes management for torsion (+ TWIST), priapism, Fournier's and the obstructed infected kidney." },
-  { icon: '🩻', tag: null, title: 'Imaging references', blurb: 'PI-RADS, Bosniak and VI-RADS criteria summarised with the management each category implies.' },
-  { icon: '🎓', tag: null, title: 'OR training', blurb: 'Rehearse the steps of an operation against the clock, and work branching intra-operative decision cases.' },
+  { icon: 'calculator', tag: null, title: 'Validated calculators', blurb: 'IPSS, PSA toolkit, UCSF-CAPRA, EORTC, IGCCCG, R.E.N.A.L., stone scores, eGFR and more — every formula traceable to its source.' },
+  { icon: 'guideline', tag: null, title: 'Guideline summaries', blurb: 'AUA and EAU algorithms for 27 conditions, oncological and non-oncological — each linking to the official guideline.' },
+  { icon: 'calendar', tag: 'pro', title: 'Surveillance schedules', blurb: 'Risk-stratified follow-up calendars for NMIBC, prostate, renal, UTUC, testis, cystectomy, stones and testosterone — printable.' },
+  { icon: 'scalpel', tag: null, title: 'Operative reference', blurb: 'Anatomy, steps and complications for 15 procedures, dual-sourced to the operative literature and the society guideline.' },
+  { icon: 'consent', tag: 'pro', title: 'Bilingual consent', blurb: 'English / العربية surgical consent for common operations with procedure-specific complications — printable at the bedside.' },
+  { icon: 'drug', tag: null, title: 'Drug interactions', blurb: 'Urology-relevant drug pairs with severity, effect and management — decision support, each entry sourced.' },
+  { icon: 'oncall', tag: null, title: 'On-call pathways', blurb: "First-30-minutes management for torsion (+ TWIST), priapism, Fournier's and the obstructed infected kidney." },
+  { icon: 'imaging', tag: null, title: 'Imaging references', blurb: 'PI-RADS, Bosniak and VI-RADS criteria summarised with the management each category implies.' },
+  { icon: 'training', tag: 'pro', title: 'OR training', blurb: 'Rehearse the steps of an operation against the clock, and work branching intra-operative decision cases.' },
 ];
 
 export interface Faq {

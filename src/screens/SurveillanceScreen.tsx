@@ -137,14 +137,14 @@ export function SurveillanceScreen() {
             onClick={print}
             className="flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           >
-            🖨 Print schedule
+            Print schedule
           </button>
           <button
             type="button"
             onClick={save}
             className="flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal"
           >
-            ⬇ Save file
+            Save file
           </button>
         </div>
 
@@ -217,7 +217,7 @@ export function SurveillanceScreen() {
         {/* Disclaimer */}
         <div className="rounded-[12px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
           <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
-            ⚠ Decision support only
+            Decision support only
           </div>
           <p className="text-[12px] leading-relaxed text-muted">
             Generated dates are a planning aid, not a prescription. The treating clinician sets the

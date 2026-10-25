@@ -78,7 +78,7 @@ export function ConferencesScreen() {
             onClick={addAll}
             className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           >
-            📅 Add all {upcoming.length} to calendar (.ics)
+            Add all {upcoming.length} to calendar (.ics)
           </button>
         )}
 
@@ -146,7 +146,7 @@ export function ConferencesScreen() {
                     onClick={() => addOne(c)}
                     className="inline-flex min-h-[44px] items-center rounded-[8px] border border-line bg-navy px-3 py-1.5 text-[12px] font-semibold text-teal transition-colors hover:border-teal"
                   >
-                    📅 Add to calendar
+                    Add to calendar
                   </button>
                 </div>
               </div>
