@@ -1,6 +1,7 @@
 /** Static content for the marketing Home screen (ported from uroapp-site.html). */
 
 import type { ScreenLink } from '@/navigation';
+import { PROCEDURES } from './procedures';
 
 export type FeatureTag = 'pro' | 'elite' | null;
 
@@ -29,7 +30,7 @@ export const FEATURES: Feature[] = [
   { icon: 'calculator', link: { screen: 'calculators' }, tag: null, title: 'Validated calculators', blurb: 'IPSS, PSA toolkit, UCSF-CAPRA, EORTC, IGCCCG, R.E.N.A.L., stone scores, eGFR and more — every formula traceable to its source.' },
   { icon: 'guideline', link: { screen: 'guidelines' }, tag: null, title: 'Guideline summaries', blurb: 'AUA and EAU algorithms for 27 conditions, oncological and non-oncological — each linking to the official guideline.' },
   { icon: 'calendar', link: { screen: 'surveillance' }, tag: 'pro', title: 'Surveillance schedules', blurb: 'Risk-stratified follow-up calendars for NMIBC, prostate, renal, UTUC, testis, cystectomy, stones and testosterone — printable.' },
-  { icon: 'scalpel', link: { residency: { section: 'or', orTab: 'procedures' } }, tag: null, title: 'Operative reference', blurb: 'Anatomy, steps and complications for 15 procedures, dual-sourced to the operative literature and the society guideline.' },
+  { icon: 'scalpel', link: { residency: { section: 'or', orTab: 'procedures' } }, tag: null, title: 'Operative reference', blurb: `Anatomy, steps, danger zones and pre- and post-op care for ${PROCEDURES.length} procedures, each cited to its operative source.` },
   { icon: 'consent', link: { residency: { section: 'or', orTab: 'consent' } }, tag: 'pro', title: 'Bilingual consent', blurb: 'English / العربية surgical consent for common operations with procedure-specific complications — printable at the bedside.' },
   { icon: 'drug', link: { screen: 'drugs' }, tag: null, title: 'Drug interactions', blurb: 'Urology-relevant drug pairs with severity, effect and management — decision support, each entry sourced.' },
   { icon: 'oncall', link: { residency: { section: 'oncall' } }, tag: null, title: 'On-call pathways', blurb: "First-30-minutes management for torsion (+ TWIST), priapism, Fournier's and the obstructed infected kidney." },

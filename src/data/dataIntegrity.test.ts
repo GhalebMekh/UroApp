@@ -29,7 +29,9 @@ function isSupportedSourceUrl(url: string): boolean {
     EAU_PATTERN.test(url) ||
     url.startsWith('https://pubmed.ncbi.nlm.nih.gov/') ||
     url.startsWith('https://doi.org/') ||
-    url.startsWith('https://www.baus.org.uk/')
+    url.startsWith('https://www.baus.org.uk/') ||
+    // Textbook chapters (Campbell-Walsh-Wein) resolve to their WorldCat catalogue record.
+    url.startsWith('https://search.worldcat.org/search?q=')
   );
 }
 

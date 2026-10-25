@@ -150,6 +150,473 @@ const orchidopexy: Procedure = {
   },
 };
 
+const EAU_PAEDIATRIC: Citation = {
+  authors: 'EAU',
+  journal: 'Paediatric Urology Guideline',
+  year: 2025,
+  url: 'https://uroweb.org/guidelines/paediatric-urology',
+  label: 'EAU Paediatric Urology Guideline',
+};
+
+const CWW_EXT_GENITALIA = cww('Ch 44, Management of Abnormalities of the External Genitalia in Boys', 'Palmer & Palmer');
+
+const circumcision: Procedure = {
+  id: 'circumcision',
+  name: 'Circumcision (child, sleeve technique)',
+  category: 'Pediatric',
+  summary:
+    'Removal of the prepuce. Primary phimosis usually resolves (fewer than 1% of 17-year-olds have a phimotic prepuce) and topical steroid relaxes the ring in 70–80%, so surgery is for persistent or secondary phimosis, BXO, recurrent balanitis or posthitis, UTI, or a family’s choice. Beyond the neonatal period it is done under general anaesthesia with a freehand technique; the sleeve technique is shown.',
+  anatomy: [
+    'Prepuce — outer penile skin and inner preputial mucosa, held to the glans by physiological adhesions that separate with age.',
+    'Frenulum — the usual source of bleeding after circumcision.',
+    'Glans, corona and meatus — inspected before any skin is removed, to exclude hypospadias.',
+    'Dorsal penile nerves — the target of a dorsal penile nerve block.',
+    'Buck fascia — the sleeve is freed from the shaft superficial to it.',
+  ],
+  steps: [
+    'General anaesthesia with a penile block; free the preputial adhesions completely and inspect the meatus and corona.',
+    'Mark the outer skin incision circumferentially, and the inner mucosal incision separately.',
+    'Incise the outer skin circumferentially.',
+    'Incise the inner mucosa circumferentially.',
+    'Separate the subcutaneous attachments superficial to Buck fascia and excise the sleeve of skin and mucosa with scissors.',
+    'Haemostasis with bipolar diathermy.',
+    'Approximate mucosa to skin with 5-0 absorbable sutures.',
+  ],
+  complications: [
+    'Bleeding — the commonest complication (overall complication rate 0.2–5%), usually from the frenulum.',
+    'Wound infection (rare).',
+    'Too much or too little skin removed: denuded shaft, asymmetry, curvature, torsion or a trapped penis.',
+    'Glanular adhesions and skin bridges.',
+    'Meatal stenosis — seen almost only after circumcision.',
+    'Glans or urethral injury, and penile necrosis from thermal injury (rare and serious).',
+  ],
+  preop: {
+    indications: [
+      'Persistent primary phimosis despite topical steroid, secondary phimosis, BXO (circumcision is preferred, with meatotomy or meatoplasty if the meatus is involved), recurrent balanitis or posthitis, and UTI.',
+      'Paraphimosis that will not reduce with glans compression and distal traction on the oedematous foreskin needs a dorsal slit or circumcision — untreated it can cause gangrene.',
+      'Defer for hypospadias, penile curvature, dorsal hood, buried or webbed penis (the skin may be needed for repair), a large hydrocele or hernia (risk of secondary phimosis and a buried or trapped penis), and a known coagulopathy.',
+    ],
+    workup: [
+      'Examine for hypospadias, curvature, a buried or webbed penis, and any hydrocele or hernia pushing the penile skin forward.',
+      'Ask about bleeding disorders.',
+    ],
+    setup: [
+      'General anaesthesia beyond the neonatal period; office devices (Gomco, Mogen, Plastibell) are for neonates under local anaesthesia.',
+      'Dorsal penile nerve block — better than EMLA cream in trials; the prilocaine in EMLA carries a small risk of methaemoglobinaemia.',
+      'Bipolar diathermy. Never let monopolar current touch a metal clamp or ring — thermal injury can cause penile necrosis.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Hypospadias or deficient ventral skin',
+      risk: 'Circumcising a penis with hypospadias, curvature or a buried or webbed penis removes skin needed for the repair.',
+      bailout: 'Free all adhesions and inspect the meatus and corona before cutting; if an anomaly is found, stop and refer for repair.',
+    },
+    {
+      step: 1,
+      structure: 'Penile shaft skin',
+      risk: 'Excessive excision leaves a denuded shaft and can cause curvature, torsion or a trapped penis.',
+      bailout: 'Mark conservatively. A denuded shaft usually re-epithelialises with antibiotic ointment and warm baths — do not suture the edges together or graft it immediately.',
+    },
+    {
+      step: 4,
+      structure: 'Glans and urethra',
+      risk: 'The glans or urethra can be cut with the prepuce.',
+      bailout: 'Suture an amputated glans back in place — results are good within 8 hours, often without microsurgery. A urethral injury needs urethroplasty.',
+    },
+    {
+      step: 5,
+      structure: 'Frenular vessels',
+      risk: 'Bleeding, usually from the frenulum, is the commonest complication.',
+      bailout: 'Pressure first; then fine cautery, silver nitrate or a suture.',
+    },
+  ],
+  postop: [
+    'Antibiotic ointment (e.g., bacitracin) to the wound; infection is rare.',
+    'Glanular adhesions are common and separate with age (71% of infants, 2% over 9 years). Persistent ones can be released in clinic with a topical anaesthetic — steroid creams do not help. Skin bridges may need excision.',
+    'Meatal stenosis: an upward-deflected, narrow, forceful stream or pain at the start of voiding. Normal calibre is 10 Fr before age 4, 12 Fr at 4–10 and 14 Fr after 10. Treat by meatotomy or meatoplasty.',
+    'BXO with meatal involvement: keep under review — about 20% need further meatal surgery.',
+    'Trapped penis from a cicatrix: 0.05% betamethasone with manual retraction softened it in 79% in one series.',
+  ],
+  extrasSource: CWW_EXT_GENITALIA,
+  citation: {
+    authors: 'Kılıç',
+    journal: 'BMC Urol',
+    year: 2024,
+    doi: '10.1186/s12894-024-01513-9',
+    url: 'https://doi.org/10.1186/s12894-024-01513-9',
+  },
+  guideline: EAU_PAEDIATRIC,
+};
+
+const herniotomy: Procedure = {
+  id: 'paediatric-herniotomy',
+  name: 'Inguinal herniotomy & hydrocele repair (child)',
+  category: 'Pediatric',
+  summary:
+    'High ligation of a patent processus vaginalis at the internal ring — the operation for an indirect inguinal hernia or communicating hydrocele in a child. Hernias are repaired soon after diagnosis because of the risk of incarceration; infant hydroceles are observed because many resolve. The open inguinal approach has the highest success, with 0.5–1% recurrence after uncomplicated repair.',
+  anatomy: [
+    'Processus vaginalis — the peritoneal outpouching that should close after testicular descent; its persistence underlies hernias and communicating and cord hydroceles.',
+    'External oblique aponeurosis, with the ilioinguinal nerve beneath it.',
+    'In young infants the internal and external rings almost overlie each other, so the sac can be reached without opening the external oblique (Mitchell-Banks).',
+    'Hernia sac — lies anteromedially in the cord within the cremaster fibres.',
+    'Vas deferens and testicular vessels — separated from the sac; more easily injured in young infants and after incarceration.',
+  ],
+  steps: [
+    'Small skin-crease incision superolateral to the pubic tubercle; open Scarpa fascia and clear the external oblique down to the external ring.',
+    'Open the external oblique along its fibres (often unnecessary in young infants).',
+    'Separate the cremaster fibres perpendicular to the cord to expose the sac anteromedially.',
+    'Lift the sac, separate it atraumatically from the vas and vessels, and divide it between clamps.',
+    'Free the proximal sac up to the internal ring and ligate it there; open it first if it is large, thick or may contain bowel, omentum, gonad or a sliding component.',
+    'Tighten a widened internal ring medially without compressing the cord. Leave a short distal sac; excise the front of a long one; excise a hydrocele and remove appendages.',
+    'Confirm the testis lies in the scrotum before closing; do an orchidopexy at the same time if it is undescended or retractile.',
+  ],
+  complications: [
+    'Recurrence — 0.5–1% after uncomplicated open repair, 2% in premature infants and 3–6% after an incarcerated hernia.',
+    'Testicular atrophy — 0.3% in one large series and 4–12% in others; higher after an irreducible hernia, with infarction in 30–33% of infants under 2–3 months.',
+    'Iatrogenic cryptorchidism.',
+    'Vas injury — vas is found in 0.13–0.3% of excised sacs; obstruction can cause infertility later.',
+    'Persistent hydrocele (0.1%).',
+    'Bleeding and infection (rare).',
+  ],
+  preop: {
+    indications: [
+      'Inguinal hernia: repair within a few weeks if easily reducible, sooner if hard to reduce, and immediately if irreducible.',
+      'Premature infants: repair before discharge, but delay in those under 1500 g or with cardiac, pulmonary, septic or metabolic illness; some wait until 50–52 weeks postconception.',
+      'Infant hydrocele: observe; operate if it persists beyond 1 year, enlarges or starts to fluctuate (communicating). Cord hydroceles rarely resolve but can wait until after 1 year.',
+      'Peripubertal boys: most hydroceles over age 10–12 are non-communicating (82–86%) — trans-scrotal repair as in adults, unless the history suggests communication.',
+    ],
+    workup: [
+      'Clinical diagnosis: an intermittent groin bulge with crying or straining that reduces when supine; parents’ photographs are reliable if it is not seen in clinic.',
+      'Palpate from the internal ring down: hernias and communicating hydroceles start at the internal ring; a scrotal hydrocele has normal cord above it and transilluminates (neonatal bowel can too).',
+      'Ultrasound only when needed: an obese child, suspected incarceration, a tense cord hydrocele versus a mass, or a testis that cannot be felt.',
+      'Teach the signs of incarceration: an inconsolable child, a persistent larger bulge, vomiting, distension, no stool.',
+    ],
+    setup: [
+      'Day-case surgery for a reducible hernia.',
+      'Open inguinal approach. Laparoscopy reduces metachronous contralateral hernias but has a higher recurrence (up to 4%) and a learning curve of about 20 cases; most European paediatric surgeons surveyed still prefer open repair.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 1,
+      structure: 'Ilioinguinal nerve',
+      risk: 'The nerve lies under the external oblique and is injured when the aponeurosis is opened.',
+      bailout: 'Open the external oblique along its fibres with the nerve in view.',
+    },
+    {
+      step: 3,
+      structure: 'Vas deferens and testicular vessels',
+      risk: 'Separating the sac can injure the vas or vessels, especially in young infants or after incarceration; a crushed but intact vas can block and cause infertility later.',
+      bailout: 'Separate the sac atraumatically, handling the vas and vessels as little as possible.',
+    },
+    {
+      step: 4,
+      structure: 'Sac contents',
+      risk: 'Ligating a sac that holds bowel, omentum, a gonad or a sliding component injures it.',
+      bailout: 'Open a large, thick or possibly occupied sac before ligation and reduce the contents.',
+    },
+    {
+      step: 4,
+      structure: 'Incomplete sac ligation',
+      risk: 'Recurrence follows a sac that was not found or not ligated high, a tear leaving a strip of peritoneum on the cord, a damaged floor, or a missed direct hernia.',
+      bailout: 'Ligate at the internal ring, repair any tear in the sac, and check the floor before closing.',
+    },
+    {
+      step: 6,
+      structure: 'Testis position',
+      risk: 'The testis can be pulled up and trapped above the scrotum (iatrogenic cryptorchidism).',
+      bailout: 'Confirm the testis is in the scrotum before closing.',
+    },
+  ],
+  postop: [
+    'Half of recurrences appear within 1 year and over 75% by 2 years.',
+    'A hydrocele after hernia repair is rare: observe for at least 1 year, then repair it trans-scrotally if it persists, or re-explore if it fluctuates (recurrent hernia).',
+    'Recurrent hernia: usually re-repaired inguinally, with high ligation of an indirect sac and/or repair of the floor for a direct one.',
+    'Check testicular size and position at follow-up.',
+  ],
+  citation: CWW_EXT_GENITALIA,
+  guideline: EAU_PAEDIATRIC,
+};
+
+const scrotalExploration: Procedure = {
+  id: 'scrotal-exploration',
+  name: 'Scrotal exploration for testicular torsion',
+  category: 'Pediatric',
+  summary:
+    'Emergency exploration when spermatic cord torsion is suspected: untwist, judge viability, and fix both testes. Testis loss rises with time — orchiectomy in about 5% at 0–6 hours, 20% at 7–12, 40% at 13–18, 60% at 19–24, 80% after 24 and 90% after 48 hours. Do not delay surgery for imaging when the clinical picture fits.',
+  anatomy: [
+    'Bell-clapper deformity — the tunica vaginalis attaches high on the cord, letting the testis twist inside it (intravaginal torsion); found in 12% of males at autopsy.',
+    'Spermatic cord — twisted 180–1080°; median 540° in testes removed and 360° in testes saved.',
+    'Tunica vaginalis — opened to inspect the testis; can be raised as a vascularised flap.',
+    'Dartos — the layer the testis is fixed to (dartos pouch or direct suture).',
+    'Appendix testis (76–83%) and appendix epididymis (22–28%) — appendage torsion is the commonest cause of an acute scrotum before puberty.',
+  ],
+  steps: [
+    'Hemiscrotal transverse (dartos pouch) or midline raphe incision; affected side first.',
+    'Deliver the testis and open the tunica vaginalis; note the colour, the number of twists and the anatomy of the tunica.',
+    'Untwist; wrap the testis in warm soaked gauze and watch for colour to return.',
+    'Meanwhile fix the opposite testis with non-absorbable suture.',
+    'Re-examine the affected testis and decide whether to keep it. If it is tensely congested, incise the tunica albuginea and patch the defect with a vascularised tunica vaginalis flap.',
+    'Keep: fix in a dartos pouch or directly to the dartos with non-absorbable suture. Remove: divide the cord in segments, each ligated with non-absorbable suture.',
+  ],
+  complications: [
+    'Orchiectomy — 30–70% in large series and 32–42% in database reviews.',
+    'Later atrophy of a retained testis — under 10%, 40% and 75% after under 12, 12–24 and over 24 hours of pain; partial atrophy even after 4 hours.',
+    'Retorsion despite fixation, from suture failure.',
+    'Subtly reduced semen quality; lower inhibin B in the long term.',
+  ],
+  preop: {
+    indications: [
+      'Suspected spermatic cord torsion: emergency exploration without delay.',
+      'Confirmed or strongly suspected intermittent torsion: elective bilateral orchidopexy (confirmation may be impossible and symptoms may persist).',
+      'Appendage torsion is self-limiting — explore only if testicular torsion cannot be excluded, or for prolonged severe or recurrent pain.',
+      'Perinatal (extravaginal) torsion has no consensus; torsion after a documented normal postnatal examination is explored promptly, as for intravaginal torsion.',
+    ],
+    workup: [
+      'Typical: sudden severe pain at rest or with activity, nausea or vomiting (10–60%), a high-riding horizontal testis and an absent cremasteric reflex — though the reflex is present in up to 10% of proven torsion (see Pediatrics → Scrotal pain for the risk scores).',
+      'Doppler ultrasound: absent or reduced intratesticular flow or a heterogeneous testis. Sensitivity was only 63–90% in some series, so normal flow does not exclude torsion when the story fits; a cord twist on high-resolution imaging was seen in 96% of proven cases.',
+      'Manual detorsion may relieve pain but is incomplete in about a third (the twist was lateral rather than medial in 33%) — it does not replace surgery.',
+    ],
+    setup: [
+      'Consent for possible orchiectomy and for fixing the other testis — the decision is made at surgery.',
+      'Warm saline-soaked gauze; non-absorbable sutures for fixation and for ligating the cord.',
+      'Avoid avoidable delay: inter-hospital transfer added 75 minutes in one study.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Possible testicular tumour (neonate)',
+      risk: 'A neonatal scrotal mass may be a tumour rather than torsion, and trans-scrotal surgery would breach the scrotum.',
+      bailout: 'Some surgeons explore neonates inguinally, which also allows ligation of a patent processus vaginalis.',
+    },
+    {
+      step: 2,
+      structure: 'Ischaemic testis',
+      risk: 'Viability judged straight after untwisting is unreliable.',
+      bailout: 'Wrap it in warm gauze and fix the other side first, then re-examine. Doppler probe or tunica albuginea incision to look for bleeding are not validated.',
+    },
+    {
+      step: 3,
+      structure: 'Contralateral testis',
+      risk: 'The other testis can twist later (metachronous torsion).',
+      bailout: 'Fix it with non-absorbable sutures at the same operation.',
+    },
+    {
+      step: 4,
+      structure: 'Intratesticular pressure',
+      risk: 'A tense, congested testis after untwisting may stay ischaemic (compartment syndrome).',
+      bailout: 'Incise the tunica albuginea and cover the defect with a vascularised tunica vaginalis flap — 55% of testes judged unsalvageable recovered in one series; long-term data are lacking.',
+    },
+    {
+      step: 5,
+      structure: 'Fixation',
+      risk: 'Torsion can recur after orchidopexy when the sutures fail.',
+      bailout: 'Fix with non-absorbable suture in a dartos pouch or directly to the dartos.',
+    },
+  ],
+  postop: [
+    'Follow testicular size: in one series 54% of testes judged viable lost over half their volume; pain over 1 day and a heterogeneous testis on ultrasound predicted atrophy.',
+    'After orchiectomy, offer a prosthesis once healed or later in puberty (placement at the same operation is feasible).',
+    'Fertility: semen quality is often subtly reduced; FSH, LH and testosterone stay normal but inhibin B is lower.',
+  ],
+  citation: CWW_EXT_GENITALIA,
+  guideline: EAU_PAEDIATRIC,
+};
+
+const hypospadiasTip: Procedure = {
+  id: 'hypospadias-tip',
+  name: 'Hypospadias repair — TIP (distal)',
+  category: 'Pediatric',
+  summary:
+    'Tubularised incised plate (TIP, Snodgrass) urethroplasty — used in over 90% of distal and 80% of midshaft repairs in one survey. The urethral plate is incised deeply in the midline and tubularised, covered with a dartos flap, and the glans is closed over it. Goals: a straight penis, a slit-like meatus at the tip and a normal appearance. Elective repair at 6–12 months.',
+  anatomy: [
+    'Urethral plate — the strip of mucosa from the ectopic meatus to the glans; its width and depth decide whether it can be tubularised.',
+    'Glans wings — mobilised off the plate to close over the neourethra; a glans narrower than 14–15 mm worries many surgeons.',
+    'Corpus spongiosum — divergent beside the plate; brought together over the repair (spongioplasty) in more proximal cases.',
+    'Corpora cavernosa — the midline plate incision stops just above them.',
+    'Dartos (preputial) tissue — the vascularised barrier layer over the urethroplasty.',
+    'Ventral curvature — from short ventral skin, a short urethra or corporal disproportion.',
+  ],
+  steps: [
+    'With the child asleep, free the preputial adhesions and assess meatal position, ventral shaft tissue and curvature; a bougie shows the quality of the tissue over the urethra.',
+    'Circumscribing incision preserving a mucosal collar; deglove to the penoscrotal junction, excising dysplastic dartos.',
+    'Artificial erection (tourniquet at the base and saline injection); measure curvature — dorsal plication if under 30°.',
+    'Incise along the junction of the glans wings and the plate, then make a deep midline incision of the plate down to just above the corpora.',
+    'Tubularise the plate from distal to proximal in two layers of fine subepithelial suture under magnification, starting 2–3 mm short of the end of the plate to leave an oval meatus.',
+    'Cover the neourethra with a dartos flap.',
+    'Glansplasty in two layers (spongiosum, then epithelium) to form the meatus; close the mucosal collar and skin; stent and dressing.',
+  ],
+  complications: [
+    'Urethrocutaneous fistula — the commonest, just under 10% in short-term follow-up, most at the original meatus or the corona.',
+    'Glans dehiscence.',
+    'Meatal stenosis and meatal retrusion.',
+    'Urethral stricture — usually at the junction of native and new urethra.',
+    'Urethral diverticulum (more after flap, staged and proximal repairs).',
+    'Recurrent curvature over 30°.',
+    'Skin problems: excess or deficient skin, penile torsion, lichen sclerosus.',
+  ],
+  preop: {
+    indications: [
+      'Repair when the meatus deflects the stream or there is curvature; a straight erect penis with a meatus that allows voiding standing may gain little.',
+      'Timing: 6–12 months (AAP 1996). Genital awareness starts around 18 months, and earlier repair is linked with less anxiety and possibly fewer complications. A single anaesthetic for hernia repair showed no neurodevelopmental delay at 2 years.',
+      'TIP suits distal and midshaft hypospadias with an adequate plate and curvature corrected by degloving or plication; with curvature over 30° after degloving most surgeons now stage the repair.',
+    ],
+    workup: [
+      'History: earlier surgery, UTIs, curvature on erection (parents’ photographs help) and bleeding disorders. Do not circumcise.',
+      'Examine penile length, glans, meatus, plate, skin and both testes. One or both testes undescended, perineal hypospadias or ambiguous genitalia: work up for a disorder of sex development first.',
+      'No routine VCUG or renal ultrasound; ultrasound only if there are other systemic anomalies.',
+      'Small glans (under 15 mm): some give preoperative testosterone (e.g., IM 5 and 2 weeks before surgery). Its effect on complications is disputed; side effects resolve within 6 months.',
+    ],
+    setup: [
+      'Regional block — caudal or penile (pudendal is an alternative). Whether a caudal raises the fistula rate is unresolved.',
+      'IV antibiotics after skin preparation.',
+      'Cystoscopy only for severe proximal or redo cases (a utricle can block catheter passage).',
+      'Optical magnification, fine absorbable sutures, a tourniquet and saline for artificial erection, and a goniometer — eyeballing underestimates curvature.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Proximal hypospadias in disguise',
+      risk: 'A proximal hypospadias can look distal when there is severe curvature and thin ventral skin.',
+      bailout: 'Recognise it before incising and change the plan, often to a staged repair.',
+    },
+    {
+      step: 2,
+      structure: 'Basal curvature',
+      risk: 'Curvature at the base of the penis can be hidden by the tourniquet.',
+      bailout: 'Compress the corpora at the base or use a prostaglandin erection instead, and measure the angle with a goniometer.',
+    },
+    {
+      step: 3,
+      structure: 'Narrow urethral plate',
+      risk: 'A narrow plate raises the risk of meatal or urethral stenosis; incised plates vary in width and contract.',
+      bailout: 'Incise the plate first, measure it, and aim for a total width of about 12 mm; consider an inner preputial graft or an onlay flap.',
+    },
+    {
+      step: 4,
+      structure: 'Neomeatus',
+      risk: 'Closing the urethroplasty too far distally causes meatal stenosis.',
+      bailout: 'Stop the closure 2–3 mm short of the intended meatus.',
+    },
+    {
+      step: 5,
+      structure: 'Urethroplasty suture line',
+      risk: 'Overlapping suture lines, poor epithelial inversion, ischaemia and haematoma lead to fistula.',
+      bailout: 'Cover with a well-vascularised barrier layer and keep the layers tension-free and non-overlapping.',
+    },
+    {
+      step: 6,
+      structure: 'Glans closure',
+      risk: 'Tension on the glans or a catheter pulling on the repair causes dehiscence and meatal retraction.',
+      bailout: 'Mobilise the glans wings deeply and widely; use a soft stent, and secure any Foley catheter to the abdominal wall in the midline.',
+    },
+  ],
+  postop: [
+    'Compressive dressing for 48–72 hours, then petroleum jelly.',
+    'Urinary diversion for 3–21 days depending on the repair; short distal repairs can go without a stent, and UTI risk rises with each day of diversion.',
+    'Oxybutynin for bladder spasm until the stent is out.',
+    'Regular paracetamol and ibuprofen, tapered within 48–72 hours.',
+    'The meatus should calibrate to at least 8 Fr; routine dilation is not needed.',
+    'Fistulas usually show within 2 years, often at toilet training. Small early ones rarely close; repair no sooner than 6–12 months after surgery (about 20% recur).',
+  ],
+  citation: cww('Ch 45, Hypospadias', 'Long, Zaontz & Canning'),
+  guideline: EAU_PAEDIATRIC,
+};
+
+const pyeloplasty: Procedure = {
+  id: 'pyeloplasty',
+  name: 'Pyeloplasty (Anderson-Hynes, child)',
+  category: 'Pediatric',
+  summary:
+    'Dismembered pyeloplasty for pelvi-ureteric junction obstruction — the gold standard by open, laparoscopic or robotic access, with success of 90–100%. Only about a third of children with this hydronephrosis need surgery.',
+  anatomy: [
+    'Intrinsic PUJ narrowing (interrupted circular muscle) — the usual cause in infants.',
+    'Lower-pole crossing vessel — a common cause in older children, with the ureter kinking over it; it is preserved and the new junction placed in front of it.',
+    'Renal pelvis — redundant pelvis can be excised; the dependent part forms the new junction.',
+    'Proximal ureter — spatulated laterally into healthy ureter; its blood supply is protected by minimal handling and bipolar diathermy.',
+    'Associated anomalies: contralateral PUJ obstruction (10–40%), VUR (up to 40%), duplex lower-moiety obstruction and horseshoe kidney.',
+  ],
+  steps: [
+    'Open Gerota fascia and dissect the PUJ from in front or behind (depending on access); free the lower pole so a crossing vessel is not missed.',
+    'Place stay sutures in the pelvis above the planned line of division and in the ureter at the stenosis; decompress a tense pelvis with a 21G needle.',
+    'Divide the PUJ and reduce the pelvis if it is redundant.',
+    'Spatulate the ureter laterally beyond the stenosis into healthy ureter, keeping the stenotic end as a handle.',
+    'Anastomose with 6-0 or 5-0 absorbable suture, placing the apex of the V precisely and without tension on the stay sutures.',
+    'Before completing it, excise the stenotic segment and irrigate the pelvis to clear clot; place a stent (internal double-J or externalised transanastomotic).',
+    'Return the kidney to its position and cover the anastomosis with perinephric fat; a drain is usually not needed.',
+  ],
+  complications: [
+    'Bleeding from ureteric or pelvic vessels — the commonest reason for conversion in minimally invasive cases.',
+    'Urine leak or urinoma; ileus from urinary ascites after transperitoneal access.',
+    'Early obstruction from clot or oedema — usually settles; may need a temporary nephrostomy.',
+    'Failure: persistent or worsening dilation and falling function.',
+    'A second anaesthetic to remove a double-J stent.',
+  ],
+  preop: {
+    indications: [
+      'Increasing AP diameter, low or falling differential function, breakthrough UTI on prophylaxis, or symptoms (pain; in infants failure to thrive, feeding problems).',
+      'Duplex lower-moiety obstruction: a moiety with 5–10% or less of total function is better removed (partial nephrectomy) than repaired.',
+      'Vascular hitch only for an anterior lower-pole vessel without intrinsic obstruction (normal ureter and peristalsis at surgery).',
+      'High-grade VUR with secondary PUJ kinking: avoid a simultaneous reimplant and pyeloplasty — observe or stage.',
+    ],
+    workup: [
+      'Ultrasound for AP diameter and serial diuretic renography for differential function. Read infant washout curves cautiously — hydration, posture, pelvic volume and diuretic timing all affect them (false positives up to 44%).',
+      'Look for contralateral obstruction, VUR, dysplasia, multicystic kidney and duplication.',
+      'If urgent drainage is needed close to surgery, prefer a nephrostomy — a retrograde stent inflames the PUJ and makes the anastomosis harder.',
+    ],
+    setup: [
+      'Open in infants (the incision is no bigger than laparoscopic access needs); laparoscopic or robotic in older children. Retroperitoneal access avoids intra-abdominal organs, but not for a horseshoe kidney or retrocaval ureter.',
+      'Retroperitoneoscopic: 80–90° flank, gel roll under the opposite iliac crest, table not flexed (flexing narrows the space). Transperitoneal: 45–60° flank; transmesenteric approach on the left.',
+      'Bipolar diathermy; 6-0 or 5-0 absorbable sutures; stent of choice (methylene blue in the bladder confirms a double-J is in place).',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Lower-pole crossing vessel',
+      risk: 'A missed crossing vessel leaves the obstruction in place, especially with retroperitoneoscopic access.',
+      bailout: 'Free the lower pole to look for it; keep the vessel and bring the anastomosis in front of it.',
+    },
+    {
+      step: 0,
+      structure: 'Pelvic and ureteric blood supply',
+      risk: 'Diathermy and handling damage the blood supply of the pelvis and ureter.',
+      bailout: 'Use bipolar diathermy sparingly and handle the ureter by its stenotic stump.',
+    },
+    {
+      step: 1,
+      structure: 'Renal pelvis',
+      risk: 'A tensely distended pelvis tempts excessive reduction.',
+      bailout: 'Decompress it with a 21G needle before dividing the PUJ.',
+    },
+    {
+      step: 4,
+      structure: 'Apex of the anastomosis',
+      risk: 'An imprecise or tense apex stenoses, and traction on stay sutures hides a kink that appears when released.',
+      bailout: 'Place the apex precisely and relax the stay sutures while aligning. If length is short, mobilise the kidney or add a horizontal incision low in the pelvis.',
+    },
+    {
+      step: 5,
+      structure: 'Clot in the pelvis',
+      risk: 'Clot left in the pelvis can block the new junction.',
+      bailout: 'Irrigate the pelvis with saline before the last sutures.',
+    },
+  ],
+  postop: [
+    'Double-J stent: bladder catheter for 24–48 hours, because reflux up the stent transmits bladder pressure. Not needed with an externalised stent.',
+    'Externalised transanastomotic stent: open for 12–48 hours, then knotted; removed at 7–14 days without anaesthesia. Untie it to drain if there is obstruction, infection or pain.',
+    'Stenting for 1–4 weeks does not seem to change the outcome.',
+    'Early pain, infection or more dilation can mean failure, but clot and oedema usually settle within days — use a temporary nephrostomy if needed.',
+    'Late failure: balloon dilation or incision with 4–6 weeks of stenting, or redo pyeloplasty (transperitoneal preferred); ureterocalicostomy if the ureter is too short.',
+  ],
+  citation: cww('Ch 42, Surgery of the Ureter in Children', 'Olsen & Rawashdeh'),
+  guideline: EAU_PAEDIATRIC,
+};
+
 const vasectomy: Procedure = {
   id: 'vasectomy',
   name: 'Vasectomy',
@@ -1523,6 +1990,11 @@ const retroperitonealExposure: Procedure = {
 
 export const PROCEDURES: Procedure[] = [
   orchidopexy,
+  circumcision,
+  herniotomy,
+  scrotalExploration,
+  hypospadiasTip,
+  pyeloplasty,
   turp,
   turbt,
   flexibleUrs,
