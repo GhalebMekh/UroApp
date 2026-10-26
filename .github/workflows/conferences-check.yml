@@ -1,0 +1,55 @@
+# Checks the conference list once a month and whenever it is edited.
+# Opens (or comments on) a "Conference list needs attention" issue when fewer
+# than 3 congresses are upcoming or an official site stops loading, and closes
+# it again once the list is healthy. It never edits the list itself — dates are
+# added by a person after checking the official site (docs/CONFERENCES.md).
+name: Conference list check
+
+on:
+  schedule:
+    - cron: '0 3 1 * *' # 03:00 UTC on the 1st of every month
+  workflow_dispatch: {} # allow a manual run from the Actions tab
+  push:
+    branches: [main]
+    paths: ['src/data/conferences.json']
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Check the list
+        id: check
+        # A malformed file exits 1; still let the issue step report it.
+        continue-on-error: true
+        run: node scripts/check-conferences.mjs
+
+      - name: Open, update or close the reminder issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ATTENTION: ${{ steps.check.outputs.attention }}
+        run: |
+          title="Conference list needs attention"
+          num=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq '.[0].number // empty')
+          if [ "$ATTENTION" = "true" ]; then
+            if [ -n "$num" ]; then
+              gh issue comment "$num" --body-file conference-report.md
+            else
+              gh issue create --title "$title" --body-file conference-report.md
+            fi
+          elif [ -n "$num" ]; then
+            gh issue close "$num" --comment "The conference list looks healthy again — closing."
+          fi
+
+      - name: Fail the run if the file is malformed
+        if: steps.check.outcome == 'failure'
+        run: exit 1

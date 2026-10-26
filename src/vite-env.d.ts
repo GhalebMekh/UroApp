@@ -14,4 +14,6 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_URL?: string;
   /** Supabase publishable (anon) key — safe in the app; never the service-role key. */
   readonly VITE_SUPABASE_PUBLISHABLE_KEY?: string;
+  /** Override where the live conference list is fetched from (defaults to the GitHub copy). */
+  readonly VITE_CONFERENCES_FEED_URL?: string;
 }

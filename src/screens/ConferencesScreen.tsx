@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
-import { CONFERENCES, type Conference } from '@/data/conferences';
+import type { Conference } from '@/data/conferences';
+import { useConferenceFeed } from '@/lib/conferencesFeed';
 import { saveICS, type CalendarEvent } from '@/lib/ics';
 import { todayISO } from '@/lib/date';
 import { daysUntil, formatSpan, upcomingConferences } from '@/lib/conferenceDates';
@@ -19,8 +20,9 @@ function toEvent(c: Conference): CalendarEvent {
 export function ConferencesScreen() {
   const [exportError, setExportError] = useState(false);
 
+  const feed = useConferenceFeed();
   const today = useMemo(() => todayISO(), []);
-  const upcoming = useMemo(() => upcomingConferences(CONFERENCES, today), [today]);
+  const upcoming = useMemo(() => upcomingConferences(feed.conferences, today), [feed, today]);
 
   function addOne(c: Conference) {
     setExportError(false);
@@ -45,7 +47,17 @@ export function ConferencesScreen() {
             your calendar, or add them all at once. Always confirm on the official site before
             booking; dates can change.
           </p>
+          <p className="mt-2 text-[12px] text-muted-2">
+            List updated{' '}
+            {new Date(feed.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+          </p>
         </header>
+
+        {upcoming.length === 0 && (
+          <p className="rounded-[16px] border border-line bg-navy-2 p-5 text-[13px] text-muted">
+            No upcoming congresses are listed yet — new dates are added once each society confirms them.
+          </p>
+        )}
 
         {upcoming.length > 1 && (
           <button

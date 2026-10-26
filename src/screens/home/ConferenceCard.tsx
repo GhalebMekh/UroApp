@@ -1,13 +1,14 @@
 import { useMemo } from 'react';
-import { CONFERENCES } from '@/data/conferences';
 import { daysUntil, formatSpan, upcomingConferences } from '@/lib/conferenceDates';
+import { useConferenceFeed } from '@/lib/conferencesFeed';
 import { todayISO } from '@/lib/date';
 import { DashCard } from './DashCard';
 
 /** The next congress on the calendar. Hidden when none are listed. */
 export function ConferenceCard({ onOpen }: { onOpen: () => void }) {
+  const feed = useConferenceFeed();
   const today = useMemo(() => todayISO(), []);
-  const next = useMemo(() => upcomingConferences(CONFERENCES, today)[0], [today]);
+  const next = useMemo(() => upcomingConferences(feed.conferences, today)[0], [feed, today]);
   if (!next) return null;
   const days = daysUntil(next.startDate, today);
 
