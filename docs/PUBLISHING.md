@@ -51,8 +51,9 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 | ✅ | Optional account: sign-up with emailed code, profile, backup & sync, sign-out, **in-app account deletion** | Supabase settings to switch it on |
 | ⏳ | **Paywall + RevenueCat**: plan cards with price, length and what's included; free-trial wording; working **Restore Purchases**; links to Terms and Privacy (guideline 3.1.2) | RevenueCat key + products created |
 | ⏳ | Publish privacy / terms / support pages (drafts in `docs/legal/`) | Support email, Supabase region |
-| ⬜ | Store text: description, keywords, review notes | — |
-| ⬜ | Screenshots (iPhone, iPad) | — |
+| ⏳ | Store text: description, keywords, review notes — drafted in [APP_STORE_LISTING.md](APP_STORE_LISTING.md) | Your approval; subscription paragraph needs the final plans |
+| ✅ | Phone / iPad / iPhone Duo layout: Home dashboard; Calculators and Pediatrics as lists with each tool on its own screen; collapsible drug interactions; no sideways scrolling at 320 px | — |
+| ⬜ | Screenshots (iPhone, iPad) — plan in APP_STORE_LISTING.md | Layout freeze |
 | ⬜ | Version 1.0.0 (currently 0.1.0) | Just before the first submission |
 
 ## E. Test on TestFlight before submitting (You + colleagues)
@@ -77,15 +78,10 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
   RevenueCat is added.
 - Not collected: location, health records about the user, browsing, diagnostics, ads data.
 
-## G. Review notes (draft for App Store Connect → App Review Information)
+## G. Review notes
 
-> UroApp is a reference and training tool for urologists and urology residents. All clinical
-> scores cite and link their primary publications; guideline content is summarised in our own
-> words with links to the official AUA/EAU pages. No patient-identifiable data is collected:
-> the ward list and MDT sheets never leave the device. An account is optional and only backs up
-> the user's own logbook and CME record. Account deletion: More → Account → Delete account.
-> Demo account: (email / password: provide one). Subscriptions: More → (paywall), with
-> Restore Purchases in More.
+Current draft: [APP_STORE_LISTING.md → App Review notes](APP_STORE_LISTING.md#app-review-notes-app-store-connect--app-review-information).
+No demo account is needed — every feature works without signing in.
 
 ## H. Known review risks (decided, kept on record)
 

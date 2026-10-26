@@ -16,6 +16,7 @@ const OPEN: ReadonlySet<Screen> = new Set<Screen>([
   'clinical',
   'academic',
   'calculators',
+  'calculator',
   'guidelines',
   'more',
 ]);
@@ -42,6 +43,10 @@ const COPY: Partial<Record<Screen, { title: string; blurb: string }>> = {
   mdt: { title: 'MDT', blurb: 'Prepare and present cases for the multidisciplinary meeting.' },
   cme: { title: 'CME tracker', blurb: 'Log and total your continuing education credits.' },
   pediatrics: {
+    title: 'Pediatrics',
+    blurb: 'Weight-based fluids, antibiotic dosing and the paediatric urology essentials.',
+  },
+  pediatricTool: {
     title: 'Pediatrics',
     blurb: 'Weight-based fluids, antibiotic dosing and the paediatric urology essentials.',
   },

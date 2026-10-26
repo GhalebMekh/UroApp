@@ -1,18 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { SEARCH_INDEX, type SearchItem } from '@/data/searchIndex';
-import type { Screen } from '@/navigation';
+import type { Screen, ScreenLink } from '@/navigation';
 import { SearchIcon } from './icons';
 
 interface SearchOverlayProps {
   open: boolean;
   onClose: () => void;
   onNavigate: (screen: Screen) => void;
-  /** Opens one calculator directly (right tab, scrolled to it). */
+  /** Opens one calculator on its own screen. */
   onOpenCalculator: (id: string) => void;
+  /** Opens one pediatric tool on its own screen. */
+  onOpenPediatricTool: (id: string) => void;
+  /** Follows a deeper link, e.g. one procedure or on-call pathway. */
+  onOpenLink: (link: ScreenLink) => void;
 }
 
-/** App-wide quick search — jumps to the workspace that holds a matching item. */
-export function SearchOverlay({ open, onClose, onNavigate, onOpenCalculator }: SearchOverlayProps) {
+/** App-wide quick search — jumps straight to the matching tool, page or pathway. */
+export function SearchOverlay({
+  open,
+  onClose,
+  onNavigate,
+  onOpenCalculator,
+  onOpenPediatricTool,
+  onOpenLink,
+}: SearchOverlayProps) {
   const [q, setQ] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -41,6 +52,8 @@ export function SearchOverlay({ open, onClose, onNavigate, onOpenCalculator }: S
 
   function go(item: SearchItem) {
     if (item.calcId) onOpenCalculator(item.calcId);
+    else if (item.pedsId) onOpenPediatricTool(item.pedsId);
+    else if (item.link) onOpenLink(item.link);
     else onNavigate(item.screen);
     onClose();
   }

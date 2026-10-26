@@ -10,15 +10,17 @@ import { AccountProvider } from '@/components/AccountProvider';
 import { SyncBoundary } from '@/components/SyncBoundary';
 import { LockGate } from '@/components/LockGate';
 import { EntitlementsContext, type Tier } from '@/lib/entitlements';
-import { NAV_ITEMS, type ResidencyTarget, type Screen, type ScreenLink } from '@/navigation';
+import { NAV_ITEMS, NAV_PARENT, type ResidencyTarget, type Screen, type ScreenLink } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { ClinicalHubScreen, AcademicHubScreen } from '@/screens/HubScreen';
 import { CalculatorsScreen } from '@/screens/CalculatorsScreen';
+import { CalculatorScreen } from '@/screens/CalculatorScreen';
 import { ImagingScreen } from '@/screens/ImagingScreen';
 import { InstrumentsScreen } from '@/screens/InstrumentsScreen';
 import { MdtScreen } from '@/screens/MdtScreen';
 import { CmeScreen } from '@/screens/CmeScreen';
 import { PediatricsScreen } from '@/screens/PediatricsScreen';
+import { PediatricToolScreen } from '@/screens/PediatricToolScreen';
 import { ResidencyScreen } from '@/screens/ResidencyScreen';
 import { GuidelinesScreen } from '@/screens/GuidelinesScreen';
 import { SurveillanceScreen } from '@/screens/SurveillanceScreen';
@@ -44,12 +46,14 @@ export default function App() {
   const [history, setHistory] = useState<Screen[]>([]);
   const [tier, setTier] = useState<Tier>('resident');
   const [searchOpen, setSearchOpen] = useState(false);
-  /** A calculator the Calculators screen should open (set by search, Home pins and recents). */
-  const [calcFocus, setCalcFocus] = useState<string | null>(null);
-  // Stable identity: CalculatorsScreen lists it as an effect dependency.
-  const clearCalcFocus = useCallback(() => setCalcFocus(null), []);
+  /** The calculator shown on the single-calculator screen. */
+  const [calcId, setCalcId] = useState<string | null>(null);
+  /** The pediatric tool shown on the single-tool screen. */
+  const [pedsToolId, setPedsToolId] = useState<string | null>(null);
   /** A Residency tab to open on arrival (set by Home cards); cleared once used. */
   const [residencyTarget, setResidencyTarget] = useState<ResidencyTarget | null>(null);
+  /** Bumped per link so Residency re-opens on the target even when it is already showing. */
+  const [residencyVisit, setResidencyVisit] = useState(0);
   const clearResidencyTarget = useCallback(() => setResidencyTarget(null), []);
   /** An operation the rehearsal screen should preselect (set by the Home "due" list). */
   const [rehearsalFocus, setRehearsalFocus] = useState<string | null>(null);
@@ -63,16 +67,26 @@ export default function App() {
     window.scrollTo({ top: 0 });
   }
 
-  /** Open one calculator: its tab, scrolled into view. Works from any screen, including Calculators. */
+  /** Open one calculator on its own screen, from anywhere (search, Home, MDT, the list). */
   function openCalculator(id: string) {
-    setCalcFocus(id);
-    navigate('calculators');
+    setCalcId(id);
+    // Already on a calculator (e.g. an "Also in" link): swap it in place, from the top.
+    if (currentScreen === 'calculator') window.scrollTo({ top: 0 });
+    navigate('calculator');
+  }
+
+  /** Open one pediatric tool on its own screen. */
+  function openPediatricTool(id: string) {
+    setPedsToolId(id);
+    if (currentScreen === 'pediatricTool') window.scrollTo({ top: 0 });
+    navigate('pediatricTool');
   }
 
   /** Follow a link to a screen, or into a specific Residency tab. */
   function openLink(link: ScreenLink) {
     if ('residency' in link) {
       setResidencyTarget(link.residency);
+      setResidencyVisit((n) => n + 1);
       navigate('residency');
     } else {
       navigate(link.screen);
@@ -111,6 +125,8 @@ export default function App() {
             onClose={() => setSearchOpen(false)}
             onNavigate={navigate}
             onOpenCalculator={openCalculator}
+            onOpenPediatricTool={openPediatricTool}
+            onOpenLink={openLink}
           />
 
         {/* pb leaves room for the fixed bottom nav (~64px + safe area) */}
@@ -133,10 +149,13 @@ export default function App() {
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
           {currentScreen === 'calculators' && (
-            <CalculatorsScreen focusId={calcFocus} onFocusHandled={clearCalcFocus} />
+            <CalculatorsScreen onOpen={openCalculator} />
+          )}
+          {currentScreen === 'calculator' && calcId && (
+            <CalculatorScreen id={calcId} onOpen={openCalculator} onAll={() => navigate('calculators')} />
           )}
           {currentScreen === 'residency' && (
-            <ResidencyScreen initial={residencyTarget} onInitialHandled={clearResidencyTarget} />
+            <ResidencyScreen key={residencyVisit} initial={residencyTarget} onInitialHandled={clearResidencyTarget} />
           )}
           {currentScreen === 'imaging' && <ImagingScreen />}
           {currentScreen === 'instruments' && <InstrumentsScreen />}
@@ -154,7 +173,10 @@ export default function App() {
               </LockGate>
             </ProGate>
           )}
-          {currentScreen === 'pediatrics' && <PediatricsScreen />}
+          {currentScreen === 'pediatrics' && <PediatricsScreen onOpen={openPediatricTool} />}
+          {currentScreen === 'pediatricTool' && pedsToolId && (
+            <PediatricToolScreen id={pedsToolId} onOpen={openPediatricTool} onAll={() => navigate('pediatrics')} />
+          )}
           {currentScreen === 'guidelines' && <GuidelinesScreen />}
           {currentScreen === 'surveillance' && (
             <ProGate feature="surveillance">
@@ -185,7 +207,7 @@ export default function App() {
 
           <BottomNav
             items={NAV_ITEMS}
-            current={currentScreen}
+            current={NAV_PARENT[currentScreen] ?? currentScreen}
             onNavigate={navigate}
           />
         </div>

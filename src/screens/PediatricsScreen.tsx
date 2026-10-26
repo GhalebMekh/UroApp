@@ -1,64 +1,33 @@
-import type { ReactNode } from 'react';
-import { PediatricFluids } from '@/components/calculators/PediatricFluids';
-import { PediatricAntibiotics } from '@/components/pediatrics/PediatricAntibiotics';
-import { SfuHydronephrosis } from '@/components/pediatrics/SfuHydronephrosis';
-import { UtiWorkup } from '@/components/pediatrics/UtiWorkup';
-import { VurGrading } from '@/components/pediatrics/VurGrading';
-import { UtdClassification } from '@/components/pediatrics/UtdClassification';
-import { HydroUpjPuv } from '@/components/pediatrics/HydroUpjPuv';
-import { VoidingDysfunctionKit } from '@/components/pediatrics/VoidingDysfunctionKit';
-import { EnuresisPathway } from '@/components/pediatrics/EnuresisPathway';
-import { UdtPathway } from '@/components/pediatrics/UdtPathway';
-import { GmsScore } from '@/components/pediatrics/GmsScore';
-import { ScrotalPain } from '@/components/pediatrics/ScrotalPain';
+import { PEDIATRIC_SECTIONS, PEDIATRIC_TOOLS } from '@/components/pediatrics/registry';
+import { ToolGroupCard, ToolRow } from '@/components/ToolList';
 
-function Section({ title, children }: { title: string; children: ReactNode }) {
+/**
+ * Pediatric urology — grading, pathways and ward essentials, as a short list;
+ * each tool opens on its own screen (PediatricToolScreen).
+ * Sections flow into two columns from 640 px and three from 1024 px.
+ */
+export function PediatricsScreen({ onOpen }: { onOpen: (id: string) => void }) {
   return (
-    <section className="mt-12">
-      <h3 className="mb-4 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-muted">{title}</h3>
-      <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">{children}</div>
-    </section>
-  );
-}
-
-/** Pediatric urology — grading, pathways and ward essentials. */
-export function PediatricsScreen() {
-  return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-        Pediatrics
-      </div>
-      <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
-        Pediatric urology.
-      </h2>
-      <p className="max-w-xl text-[16.5px] text-muted">
+    <div className="mx-auto max-w-wrap px-4 py-6 sm:px-6 md:py-8">
+      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">Pediatrics</div>
+      <h2 className="font-display text-[28px] font-semibold leading-tight md:text-[32px]">Pediatric urology</h2>
+      <p className="mt-2 max-w-xl text-[14px] text-muted">
         Hydronephrosis and reflux grading, bladder and bowel dysfunction, the undescended testis,
         hypospadias, the acute scrotum, and weight-based ward essentials.
       </p>
 
-      <Section title="Hydronephrosis & reflux">
-        <UtdClassification />
-        <HydroUpjPuv />
-        <SfuHydronephrosis />
-        <VurGrading />
-      </Section>
-
-      <Section title="Bladder, bowel & infection">
-        <VoidingDysfunctionKit />
-        <EnuresisPathway />
-        <UtiWorkup />
-      </Section>
-
-      <Section title="Genitalia">
-        <ScrotalPain />
-        <UdtPathway />
-        <GmsScore />
-      </Section>
-
-      <Section title="Ward essentials">
-        <PediatricFluids />
-        <PediatricAntibiotics />
-      </Section>
+      <div className="mt-6 gap-4 sm:columns-2 lg:columns-3">
+        {PEDIATRIC_SECTIONS.map(({ section, label }) => {
+          const tools = PEDIATRIC_TOOLS.filter((t) => t.section === section);
+          return (
+            <ToolGroupCard key={section} title={label} count={tools.length}>
+              {tools.map((t) => (
+                <ToolRow key={t.id} title={t.title} onOpen={() => onOpen(t.id)} />
+              ))}
+            </ToolGroupCard>
+          );
+        })}
+      </div>
     </div>
   );
 }

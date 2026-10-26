@@ -251,6 +251,16 @@ export function TrainingIcon({ className }: IconProps) {
   );
 }
 
+/** Faceted stone — calculi. */
+export function StoneIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M8 4.5 15.5 3l5 6-2 8.5L11 21l-6.5-4L3 9.5Z" />
+      <path d="m8 4.5 2.5 6.5 8 -2M10.5 11 11 21M10.5 11 3 9.5" />
+    </svg>
+  );
+}
+
 /** Clock — time-critical. */
 export function ClockIcon({ className }: IconProps) {
   return (

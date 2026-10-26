@@ -30,12 +30,17 @@ export type CalcCategory = 'oncological' | 'non-oncological';
 /** Organ system for oncology calculators (groups under Oncological category). */
 export type OncologyOrgan = 'prostate' | 'bladder' | 'kidney' | 'adrenal' | 'testis' | 'general';
 
+/** Topic for benign/functional calculators (groups under Non-oncological). */
+export type BenignTopic = 'luts' | 'stones' | 'andrology' | 'kidney-function' | 'periop';
+
 export interface CalcEntry {
   id: string;
   title: string;
   category: CalcCategory;
   /** Organ system (oncology calculators only). */
   organ?: OncologyOrgan;
+  /** Topic (non-oncology calculators only). */
+  topic?: BenignTopic;
   Component: ComponentType;
 }
 
@@ -58,19 +63,19 @@ export const CALCULATORS: CalcEntry[] = [
   { id: 'igcccg', title: 'IGCCCG germ cell prognosis', category: 'oncological', organ: 'testis', Component: IgcccgClassifier },
   // General/multi-organ
   { id: 'tnm', title: 'TNM quick staging', category: 'oncological', organ: 'general', Component: TnmStaging },
-  { id: 'renal-function', title: 'Renal function (eGFR / CrCl)', category: 'non-oncological', Component: RenalFunction },
-  { id: 'guys-stone', title: "Guy's Stone Score", category: 'non-oncological', Component: GuysStoneScore },
-  { id: 'stone-passage', title: 'Ureteral stone passage', category: 'non-oncological', Component: StonePassage },
-  { id: 'stone', title: 'STONE score (ER prediction)', category: 'non-oncological', Component: StoneScore },
-  { id: 'oabss', title: 'OABSS', category: 'non-oncological', Component: OabssCalculator },
-  { id: 'pvr', title: 'PVR Interpretation', category: 'non-oncological', Component: PvrInterpretation },
-  { id: 'prostate-volume', title: 'Prostate volume → BPH treatment', category: 'non-oncological', Component: ProstateTreatmentEligibility },
-  { id: 'ipss', title: 'IPSS + QoL', category: 'non-oncological', Component: IpssCalculator },
-  { id: 'shim', title: 'IIEF-5 (SHIM)', category: 'non-oncological', Component: ShimCalculator },
-  { id: 'semen-analysis', title: 'Semen analysis (WHO 2021)', category: 'non-oncological', Component: SemenAnalysisInterpreter },
-  { id: 'free-testosterone', title: 'Free & bioavailable testosterone', category: 'non-oncological', Component: FreeTestosterone },
-  { id: 'clavien-dindo', title: 'Clavien–Dindo complication grade', category: 'non-oncological', Component: ClavienDindo },
-  { id: 'charlson', title: 'Charlson Comorbidity Index', category: 'non-oncological', Component: CharlsonIndex },
+  { id: 'renal-function', title: 'Renal function (eGFR / CrCl)', category: 'non-oncological', topic: 'kidney-function', Component: RenalFunction },
+  { id: 'guys-stone', title: "Guy's Stone Score", category: 'non-oncological', topic: 'stones', Component: GuysStoneScore },
+  { id: 'stone-passage', title: 'Ureteral stone passage', category: 'non-oncological', topic: 'stones', Component: StonePassage },
+  { id: 'stone', title: 'STONE score (ER prediction)', category: 'non-oncological', topic: 'stones', Component: StoneScore },
+  { id: 'oabss', title: 'OABSS', category: 'non-oncological', topic: 'luts', Component: OabssCalculator },
+  { id: 'pvr', title: 'PVR Interpretation', category: 'non-oncological', topic: 'luts', Component: PvrInterpretation },
+  { id: 'prostate-volume', title: 'Prostate volume → BPH treatment', category: 'non-oncological', topic: 'luts', Component: ProstateTreatmentEligibility },
+  { id: 'ipss', title: 'IPSS + QoL', category: 'non-oncological', topic: 'luts', Component: IpssCalculator },
+  { id: 'shim', title: 'IIEF-5 (SHIM)', category: 'non-oncological', topic: 'andrology', Component: ShimCalculator },
+  { id: 'semen-analysis', title: 'Semen analysis (WHO 2021)', category: 'non-oncological', topic: 'andrology', Component: SemenAnalysisInterpreter },
+  { id: 'free-testosterone', title: 'Free & bioavailable testosterone', category: 'non-oncological', topic: 'andrology', Component: FreeTestosterone },
+  { id: 'clavien-dindo', title: 'Clavien–Dindo complication grade', category: 'non-oncological', topic: 'periop', Component: ClavienDindo },
+  { id: 'charlson', title: 'Charlson Comorbidity Index', category: 'non-oncological', topic: 'periop', Component: CharlsonIndex },
 ];
 
 export interface CalcGroup {
@@ -84,8 +89,36 @@ export interface CalcGroup {
 export interface OncologyOrganGroup {
   organ: OncologyOrgan;
   label: string;
-  /** Icon key, mapped to an SVG component in CalculatorsScreen. */
+  /** Icon key, mapped to an SVG component in calculators/groupIcons. */
   icon: OncologyOrgan;
+}
+
+export interface BenignTopicGroup {
+  topic: BenignTopic;
+  label: string;
+}
+
+/** Non-oncology topic headers, in display order. */
+export const BENIGN_TOPICS: BenignTopicGroup[] = [
+  { topic: 'luts', label: 'LUTS & BPH' },
+  { topic: 'stones', label: 'Stones' },
+  { topic: 'andrology', label: 'Andrology' },
+  { topic: 'kidney-function', label: 'Kidney function' },
+  { topic: 'periop', label: 'Peri-operative' },
+];
+
+/** The organ or topic heading a calculator sits under, e.g. "Prostate" or "Stones". */
+export function groupLabel(entry: CalcEntry): string {
+  if (entry.organ) return ONCOLOGY_ORGANS.find((o) => o.organ === entry.organ)?.label ?? '';
+  if (entry.topic) return BENIGN_TOPICS.find((t) => t.topic === entry.topic)?.label ?? '';
+  return '';
+}
+
+/** Calculators sharing a heading with this one (for "Also in …" links). */
+export function siblingsOf(entry: CalcEntry): CalcEntry[] {
+  return CALCULATORS.filter(
+    (c) => c.id !== entry.id && (entry.organ ? c.organ === entry.organ : c.topic === entry.topic),
+  );
 }
 
 /** Oncology organ system headers, in display order. */

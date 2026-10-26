@@ -7,6 +7,7 @@ import {
   type InteractionSeverity,
 } from '@/data/drugInteractions';
 import { cn } from '@/lib/cn';
+import { ChevronRightIcon } from '@/components/icons';
 
 const BAND_STYLES: Record<'high' | 'moderate' | 'low', string> = {
   high: 'border-crimson/50 bg-crimson/[0.12] text-crimson',
@@ -36,48 +37,70 @@ function SeverityBadge({ severity }: { severity: InteractionSeverity }) {
   );
 }
 
-function InteractionCard({ item }: { item: DrugInteraction }) {
+/**
+ * One interaction. Collapsed it shows the pair and the severity — the severity
+ * is never hidden — and tapping reveals effect, management and source.
+ */
+function InteractionCard({ item, defaultOpen }: { item: DrugInteraction; defaultOpen: boolean }) {
+  const [open, setOpen] = useState(defaultOpen);
   return (
-    <div className="rounded-[14px] border border-line bg-navy-2 p-5">
+    <div className="rounded-[14px] border border-line bg-navy-2">
       {/* min-w-0 lets the drug names wrap instead of forcing the badge off-screen
           on a phone (flex children default to min-width:auto). */}
-      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
-        <div className="min-w-0 flex-1 break-words text-[14px] font-semibold leading-snug">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="flex min-h-[52px] w-full flex-wrap items-center justify-between gap-2 rounded-[14px] px-4 py-3 text-left transition-colors hover:bg-steel"
+      >
+        <span className="min-w-0 flex-1 break-words text-[14px] font-semibold leading-snug">
           {item.drugA}
           <span className="mx-1.5 text-violet-soft">⟷</span>
           {item.drugB}
-        </div>
-        <SeverityBadge severity={item.severity} />
-      </div>
+        </span>
+        <span className="flex items-center gap-2">
+          <SeverityBadge severity={item.severity} />
+          <ChevronRightIcon
+            className={cn('text-[16px] text-muted-2 transition-transform', open && 'rotate-90')}
+          />
+        </span>
+      </button>
 
-      <dl className="space-y-2 text-[13px]">
-        <div>
-          <dt className="font-semibold text-ink">Effect</dt>
-          <dd className="text-muted">{item.effect}</dd>
-        </div>
-        <div>
-          <dt className="font-semibold text-ink">Management</dt>
-          <dd className="text-muted">{item.management}</dd>
-        </div>
-      </dl>
+      {open && (
+        <div className="px-4 pb-4">
+          <dl className="space-y-2 text-[13px]">
+            <div>
+              <dt className="font-semibold text-ink">Effect</dt>
+              <dd className="text-muted">{item.effect}</dd>
+            </div>
+            <div>
+              <dt className="font-semibold text-ink">Management</dt>
+              <dd className="text-muted">{item.management}</dd>
+            </div>
+          </dl>
 
-      <div className="mt-3 text-[12px] text-muted-2">
-        {item.source.url ? (
-          <a
-            href={item.source.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="font-semibold text-violet transition-colors hover:text-violet-soft"
-          >
-            {item.source.label} ↗
-          </a>
-        ) : (
-          <span>Source: {item.source.label}</span>
-        )}
-      </div>
+          <div className="mt-3 text-[12px] text-muted-2">
+            {item.source.url ? (
+              <a
+                href={item.source.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-violet transition-colors hover:text-violet-soft"
+              >
+                {item.source.label} ↗
+              </a>
+            ) : (
+              <span>Source: {item.source.label}</span>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
+/** Open the matches automatically once a search has narrowed the list this far. */
+const AUTO_OPEN_AT = 3;
 
 export function DrugsScreen() {
   const [query, setQuery] = useState('');
@@ -98,6 +121,7 @@ export function DrugsScreen() {
       items: filtered.filter((d) => d.category === category),
     }))
     .filter((g) => g.items.length > 0);
+  const autoOpen = query.trim() !== '' && filtered.length <= AUTO_OPEN_AT;
 
   return (
     <div className="mx-auto max-w-wrap px-6 py-12">
@@ -109,7 +133,7 @@ export function DrugsScreen() {
           <h2 className="font-display text-[28px] font-semibold">Drug interactions</h2>
           <p className="mt-3 text-[14px] text-muted">
             High-yield drug–drug interactions relevant to urology practice, grouped by
-            drug class and sorted by severity.
+            drug class and sorted by severity. Tap one for its effect and management.
           </p>
         </header>
 
@@ -158,7 +182,12 @@ export function DrugsScreen() {
                 </h3>
                 <div className="space-y-3">
                   {group.items.map((item) => (
-                    <InteractionCard key={item.id} item={item} />
+                    <InteractionCard
+                      // Re-key on the query so a narrowing search can open the matches.
+                      key={`${item.id}:${autoOpen}`}
+                      item={item}
+                      defaultOpen={autoOpen}
+                    />
                   ))}
                 </div>
               </div>

@@ -9,8 +9,11 @@ function byCategory(list: Procedure[]): [string, Procedure[]][] {
   return [...groups.entries()];
 }
 
-export function ProceduresScreen() {
-  const [id, setId] = useState(PROCEDURES[0]!.id);
+/** `initialId` opens one procedure directly, e.g. from search. */
+export function ProceduresScreen({ initialId }: { initialId?: string }) {
+  const [id, setId] = useState(
+    PROCEDURES.some((p) => p.id === initialId) ? initialId! : PROCEDURES[0]!.id,
+  );
   const proc = PROCEDURES.find((p) => p.id === id)!;
   const groups = useMemo(() => byCategory(PROCEDURES), []);
 

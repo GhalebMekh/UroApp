@@ -104,7 +104,7 @@ export function ResidencyScreen({
                 </LockGate>
               </ProGate>
             )}
-            {orTab === 'procedures' && <ProceduresScreen />}
+            {orTab === 'procedures' && <ProceduresScreen initialId={initial?.procedure} />}
             {orTab === 'consent' && (
               <ProGate feature="consent">
                 <ConsentScreen />
