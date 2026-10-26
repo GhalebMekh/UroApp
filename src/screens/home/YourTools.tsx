@@ -1,21 +1,8 @@
-import { CALCULATORS } from '@/components/calculators/registry';
 import { StarIcon } from '@/components/icons';
 import { useToolPrefs } from '@/lib/toolPrefs';
 import { Wrap } from './section';
-
-const TITLE = new Map(CALCULATORS.map((c) => [c.id, c.title]));
-
-function Chip({ id, onOpen }: { id: string; onOpen: (id: string) => void }) {
-  return (
-    <button
-      type="button"
-      onClick={() => onOpen(id)}
-      className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-3.5 py-2 text-left text-[13px] font-semibold text-ink transition-colors hover:border-violet"
-    >
-      {TITLE.get(id)}
-    </button>
-  );
-}
+import { ToolChip } from './ToolChip';
+import { isKnownCalculator } from './calculatorTitles';
 
 /**
  * Pinned and recently used calculators. Renders nothing until there is
@@ -24,8 +11,8 @@ function Chip({ id, onOpen }: { id: string; onOpen: (id: string) => void }) {
 export function YourTools({ onOpenCalculator }: { onOpenCalculator: (id: string) => void }) {
   const { favourites, recents } = useToolPrefs();
   // Ignore ids for calculators that no longer exist, and don't repeat pins under Recent.
-  const pinned = favourites.filter((id) => TITLE.has(id));
-  const recent = recents.filter((id) => TITLE.has(id) && !pinned.includes(id));
+  const pinned = favourites.filter(isKnownCalculator);
+  const recent = recents.filter((id) => isKnownCalculator(id) && !pinned.includes(id));
   if (pinned.length === 0 && recent.length === 0) return null;
 
   return (
@@ -40,7 +27,7 @@ export function YourTools({ onOpenCalculator }: { onOpenCalculator: (id: string)
             </div>
             <div className="flex flex-wrap gap-2">
               {pinned.map((id) => (
-                <Chip key={id} id={id} onOpen={onOpenCalculator} />
+                <ToolChip key={id} id={id} onOpen={onOpenCalculator} />
               ))}
             </div>
           </div>
@@ -53,7 +40,7 @@ export function YourTools({ onOpenCalculator }: { onOpenCalculator: (id: string)
             </div>
             <div className="flex flex-wrap gap-2">
               {recent.map((id) => (
-                <Chip key={id} id={id} onOpen={onOpenCalculator} />
+                <ToolChip key={id} id={id} onOpen={onOpenCalculator} />
               ))}
             </div>
           </div>

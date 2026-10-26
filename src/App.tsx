@@ -51,6 +51,9 @@ export default function App() {
   /** A Residency tab to open on arrival (set by Home cards); cleared once used. */
   const [residencyTarget, setResidencyTarget] = useState<ResidencyTarget | null>(null);
   const clearResidencyTarget = useCallback(() => setResidencyTarget(null), []);
+  /** An operation the rehearsal screen should preselect (set by the Home "due" list). */
+  const [rehearsalFocus, setRehearsalFocus] = useState<string | null>(null);
+  const clearRehearsalFocus = useCallback(() => setRehearsalFocus(null), []);
 
   function navigate(screen: Screen) {
     if (screen === currentScreen) return;
@@ -74,6 +77,12 @@ export default function App() {
     } else {
       navigate(link.screen);
     }
+  }
+
+  /** Open operative rehearsal, optionally on one operation. */
+  function openRehearsal(procedureId?: string) {
+    setRehearsalFocus(procedureId ?? null);
+    navigate('rehearsal');
   }
 
   function goBack() {
@@ -113,7 +122,13 @@ export default function App() {
           ) : (
             <SyncBoundary>
           {currentScreen === 'home' && (
-            <HomeScreen onNavigate={navigate} onOpenCalculator={openCalculator} onOpenLink={openLink} />
+            <HomeScreen
+              onNavigate={navigate}
+              onOpenCalculator={openCalculator}
+              onOpenLink={openLink}
+              onOpenSearch={() => setSearchOpen(true)}
+              onOpenRehearsal={openRehearsal}
+            />
           )}
           {currentScreen === 'clinical' && <ClinicalHubScreen onNavigate={navigate} />}
           {currentScreen === 'academic' && <AcademicHubScreen onNavigate={navigate} />}
@@ -149,7 +164,7 @@ export default function App() {
           {currentScreen === 'conferences' && <ConferencesScreen />}
           {currentScreen === 'rehearsal' && (
             <ProGate feature="rehearsal">
-              <OperativeRehearsalScreen />
+              <OperativeRehearsalScreen initialProcedureId={rehearsalFocus} onInitialHandled={clearRehearsalFocus} />
             </ProGate>
           )}
           {currentScreen === 'scenarios' && (

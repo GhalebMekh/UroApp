@@ -6,6 +6,9 @@
 
 export type RehearsalMode = 'order' | 'next' | 'danger';
 
+/** Where attempts are stored (a synced collection — see lib/sync). */
+export const REHEARSAL_STORAGE_KEY = 'uroapp.rehearsal.v1';
+
 export interface Attempt {
   id: string;
   procedureId: string;
@@ -139,6 +142,29 @@ export function isDue(p: ProcedureProgress, now: Date): boolean {
   if (!p.lastAt || p.lastPct === null) return true;
   const days = (now.getTime() - new Date(p.lastAt).getTime()) / 86_400_000;
   return days >= REFRESH_AFTER_DAYS || p.lastPct < REFRESH_BELOW_PCT;
+}
+
+export interface DueEntry {
+  procedureId: string;
+  progress: ProcedureProgress;
+  /** Whole days since the last attempt. */
+  daysSince: number;
+}
+
+/**
+ * Practised procedures that are due for a refresh, longest since practice
+ * first (then lowest last score). Never-practised procedures are left out —
+ * this is a reminder list, not a syllabus.
+ */
+export function dueForRefresh(attempts: readonly Attempt[], procedureIds: readonly string[], now: Date): DueEntry[] {
+  const due: DueEntry[] = [];
+  for (const procedureId of procedureIds) {
+    const progress = progressFor(attempts, procedureId);
+    if (progress.attempts === 0 || !isDue(progress, now)) continue;
+    const daysSince = Math.max(0, Math.floor((now.getTime() - new Date(progress.lastAt!).getTime()) / 86_400_000));
+    due.push({ procedureId, progress, daysSince });
+  }
+  return due.sort((a, b) => b.daysSince - a.daysSince || (a.progress.lastPct ?? 0) - (b.progress.lastPct ?? 0));
 }
 
 export function recordAttempt(history: readonly Attempt[], attempt: Attempt): Attempt[] {

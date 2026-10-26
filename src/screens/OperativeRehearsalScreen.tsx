@@ -3,7 +3,9 @@ import { PROCEDURES, type Procedure } from '@/data/procedures';
 import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import {
+  REHEARSAL_STORAGE_KEY,
   dangerQuestions,
+  dueForRefresh,
   isDue,
   nextStepQuestions,
   normalizeAttempts,
@@ -14,7 +16,7 @@ import {
   type RehearsalMode,
 } from '@/lib/rehearsal';
 
-const STORAGE_KEY = 'uroapp.rehearsal.v1';
+const STORAGE_KEY = REHEARSAL_STORAGE_KEY;
 
 /** Fisher–Yates shuffle of [0..n-1], guaranteed not to equal the identity for n>1. */
 function makeShuffle(n: number): number[] {
@@ -51,8 +53,22 @@ const MODES: { id: RehearsalMode; label: string }[] = [
   { id: 'danger', label: 'Danger zones' },
 ];
 
-export function OperativeRehearsalScreen() {
-  const [procedureId, setProcedureId] = useState(PROCEDURES[0]?.id ?? '');
+/** `initialProcedureId` preselects an operation, e.g. from the Home "due" list; read once on mount. */
+export function OperativeRehearsalScreen({
+  initialProcedureId,
+  onInitialHandled,
+}: {
+  initialProcedureId?: string | null;
+  onInitialHandled?: () => void;
+}) {
+  const [procedureId, setProcedureId] = useState(
+    PROCEDURES.find((p) => p.id === initialProcedureId)?.id ?? PROCEDURES[0]?.id ?? '',
+  );
+
+  // Consume the link so a later visit opens the default operation.
+  useEffect(() => {
+    if (initialProcedureId) onInitialHandled?.();
+  }, [initialProcedureId, onInitialHandled]);
   const proc = PROCEDURES.find((p) => p.id === procedureId) ?? PROCEDURES[0];
   const [mode, setMode] = useState<RehearsalMode>('order');
   const [history, setHistory] = useState<Attempt[]>([]);
@@ -83,9 +99,9 @@ export function OperativeRehearsalScreen() {
   const now = new Date();
   const practised = useMemo(() => new Set(history.map((a) => a.procedureId)), [history]);
   const dueList = useMemo(() => {
-    const at = new Date();
-    return PROCEDURES.filter((p) => practised.has(p.id) && isDue(progressFor(history, p.id), at));
-  }, [history, practised]);
+    const due = new Set(dueForRefresh(history, PROCEDURES.map((p) => p.id), new Date()).map((d) => d.procedureId));
+    return PROCEDURES.filter((p) => due.has(p.id));
+  }, [history]);
 
   if (!proc) return null;
   const progress = progressFor(history, proc.id);

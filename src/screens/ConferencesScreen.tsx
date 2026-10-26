@@ -2,28 +2,7 @@ import { useMemo, useState } from 'react';
 import { CONFERENCES, type Conference } from '@/data/conferences';
 import { saveICS, type CalendarEvent } from '@/lib/ics';
 import { todayISO } from '@/lib/date';
-
-/** Format a conference's span, collapsing same-month ranges (e.g. "4–7 Nov 2026"). */
-function formatSpan(start: string, end: string): string {
-  const s = new Date(`${start}T00:00:00`);
-  const e = new Date(`${end}T00:00:00`);
-  const mon = (d: Date) => d.toLocaleDateString('en-GB', { month: 'short' });
-  const yr = (d: Date) => d.getFullYear();
-  if (s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear()) {
-    return `${s.getDate()}–${e.getDate()} ${mon(s)} ${yr(s)}`;
-  }
-  if (s.getFullYear() === e.getFullYear()) {
-    return `${s.getDate()} ${mon(s)} – ${e.getDate()} ${mon(e)} ${yr(s)}`;
-  }
-  return `${s.getDate()} ${mon(s)} ${yr(s)} – ${e.getDate()} ${mon(e)} ${yr(e)}`;
-}
-
-/** Whole days from today until the start date (0 if already started). */
-function daysUntil(start: string): number {
-  const t = new Date(`${todayISO()}T00:00:00`).getTime();
-  const s = new Date(`${start}T00:00:00`).getTime();
-  return Math.max(0, Math.round((s - t) / 86_400_000));
-}
+import { daysUntil, formatSpan, upcomingConferences } from '@/lib/conferenceDates';
 
 function toEvent(c: Conference): CalendarEvent {
   return {
@@ -40,12 +19,8 @@ function toEvent(c: Conference): CalendarEvent {
 export function ConferencesScreen() {
   const [exportError, setExportError] = useState(false);
 
-  const upcoming = useMemo(() => {
-    const today = todayISO();
-    return CONFERENCES.filter((c) => c.endDate >= today).sort((a, b) =>
-      a.startDate.localeCompare(b.startDate),
-    );
-  }, []);
+  const today = useMemo(() => todayISO(), []);
+  const upcoming = useMemo(() => upcomingConferences(CONFERENCES, today), [today]);
 
   function addOne(c: Conference) {
     setExportError(false);
@@ -91,7 +66,7 @@ export function ConferencesScreen() {
 
         <div className="space-y-4">
           {upcoming.map((c) => {
-            const days = daysUntil(c.startDate);
+            const days = daysUntil(c.startDate, today);
             return (
               <div key={c.id} className="rounded-[16px] border border-line bg-navy-2 p-5">
                 <div className="mb-2 flex flex-wrap items-start justify-between gap-2">

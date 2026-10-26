@@ -73,7 +73,7 @@ export function ResidencyScreen({
             </LockGate>
           </ProGate>
         )}
-        {section === 'oncall' && <OnCallScreen />}
+        {section === 'oncall' && <OnCallScreen initialId={initial?.emergency} />}
         {section === 'or' && (
           <div>
             {/* OR sub-tabs */}

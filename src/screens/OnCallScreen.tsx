@@ -5,9 +5,13 @@ import { TwistScore } from '@/components/oncall/TwistScore';
 import { AastTraumaGrading } from '@/components/oncall/AastTraumaGrading';
 import { UrosepsisFirstHour } from '@/components/oncall/UrosepsisFirstHour';
 import { EMERGENCIES } from '@/data/oncall';
+import { ClockIcon } from '@/components/icons';
 
-export function OnCallScreen() {
-  const [id, setId] = useState(EMERGENCIES[0]!.id);
+/** `initialId` opens one pathway directly, e.g. from the Home on-call card. */
+export function OnCallScreen({ initialId }: { initialId?: string }) {
+  const [id, setId] = useState(
+    EMERGENCIES.some((e) => e.id === initialId) ? initialId! : EMERGENCIES[0]!.id,
+  );
   const em = EMERGENCIES.find((e) => e.id === id)!;
 
   return (
@@ -47,7 +51,7 @@ export function OnCallScreen() {
         <p className="mt-2 text-[14px] text-muted">{em.oneLiner}</p>
 
         <div className="mt-4 flex items-start gap-2 rounded-[12px] border border-crimson/40 bg-crimson/[0.08] px-4 py-3 text-[13px] text-crimson">
-          <span aria-hidden="true">⏱</span>
+          <ClockIcon className="mt-0.5 shrink-0 text-[15px]" />
           <span>{em.clock}</span>
         </div>
 

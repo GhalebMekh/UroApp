@@ -34,6 +34,8 @@ export type OrTab = 'logbook' | 'procedures' | 'consent';
 export interface ResidencyTarget {
   section: ResidencySection;
   orTab?: OrTab;
+  /** On-call pathway to open (an EMERGENCIES id). */
+  emergency?: string;
 }
 
 /** A link from one screen to another, optionally into a Residency tab. */

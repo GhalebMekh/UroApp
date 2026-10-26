@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import {
   MAX_ATTEMPTS,
   dangerQuestions,
+  dueForRefresh,
   isDue,
   nextStepQuestions,
   normalizeAttempts,
@@ -106,6 +107,19 @@ describe('progress', () => {
     expect(isDue(progressFor([a({ at: '2026-10-19T10:00:00Z', correct: 10 })], 'turp'), now)).toBe(false);
     expect(isDue(progressFor([a({ at: '2026-10-01T10:00:00Z', correct: 10 })], 'turp'), now)).toBe(true);
     expect(isDue(progressFor([a({ at: '2026-10-19T10:00:00Z', correct: 7 })], 'turp'), now)).toBe(true);
+  });
+
+  it('lists only practised procedures that are due, most overdue first', () => {
+    const now = new Date('2026-10-20T10:00:00Z');
+    const history = [
+      a({ procedureId: 'turp', at: '2026-10-19T10:00:00Z', correct: 10 }), // fresh and perfect
+      a({ procedureId: 'pcnl', at: '2026-10-18T10:00:00Z', correct: 6 }), // recent but low
+      a({ procedureId: 'urs', at: '2026-09-20T10:00:00Z', correct: 10 }), // stale
+    ];
+    const due = dueForRefresh(history, ['turp', 'pcnl', 'urs', 'never'], now);
+    expect(due.map((d) => d.procedureId)).toEqual(['urs', 'pcnl']);
+    expect(due[0]!.daysSince).toBe(30);
+    expect(due[1]!.progress.lastPct).toBe(60);
   });
 
   it('caps stored history and drops malformed records', () => {
