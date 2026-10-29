@@ -1,4 +1,6 @@
 import type { Screen } from '@/navigation';
+import { PageBody, PageHero } from '@/components/PageHero';
+import { ChevronRightIcon } from '@/components/icons';
 
 interface HubItem {
   id: Screen;
@@ -6,7 +8,7 @@ interface HubItem {
   note: string;
 }
 
-/** A grouping screen that lists its member workspaces as tappable cards. */
+/** A grouping screen that lists its member workspaces as tappable rows. */
 function Hub({
   eyebrow,
   title,
@@ -21,33 +23,25 @@ function Hub({
   onNavigate: (s: Screen) => void;
 }) {
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            {eyebrow}
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">{title}</h2>
-          <p className="mt-3 text-[14px] text-muted">{blurb}</p>
-        </header>
-
-        <section className="rounded-[16px] border border-line bg-navy-2 p-2">
+    <>
+      <PageHero eyebrow={eyebrow} title={title} lede={blurb} />
+      <PageBody narrow>
+        <section className="rounded-card border border-line bg-navy-2 p-1.5">
           {items.map((w) => (
             <button
               key={w.id}
               type="button"
               onClick={() => onNavigate(w.id)}
-              className="flex min-h-[44px] w-full items-center justify-between rounded-[12px] px-3 py-3 text-left transition-colors hover:bg-steel"
+              className="flex min-h-[52px] w-full items-center gap-3 rounded-[12px] px-3 py-3 text-left transition-colors hover:bg-steel"
             >
-              <span className="text-[14px] font-semibold">{w.label}</span>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">
-                {w.note}
-              </span>
+              <span className="flex-1 text-[14.5px] font-semibold">{w.label}</span>
+              <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">{w.note}</span>
+              <ChevronRightIcon className="shrink-0 text-[16px] text-muted-2" />
             </button>
           ))}
         </section>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }
 

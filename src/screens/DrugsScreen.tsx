@@ -8,6 +8,7 @@ import {
 } from '@/data/drugInteractions';
 import { cn } from '@/lib/cn';
 import { ChevronRightIcon } from '@/components/icons';
+import { HeroSearch, PageBody, PageHero } from '@/components/PageHero';
 
 const BAND_STYLES: Record<'high' | 'moderate' | 'low', string> = {
   high: 'border-crimson/50 bg-crimson/[0.12] text-crimson',
@@ -124,18 +125,21 @@ export function DrugsScreen() {
   const autoOpen = query.trim() !== '' && filtered.length <= AUTO_OPEN_AT;
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            Pharmacology
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Drug interactions</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            High-yield drug–drug interactions relevant to urology practice, grouped by
-            drug class and sorted by severity. Tap one for its effect and management.
-          </p>
-        </header>
+    <>
+      <PageHero
+        eyebrow="Pharmacology"
+        title="Drug interactions"
+        lede="High-yield drug–drug interactions relevant to urology practice, grouped by drug class and sorted by severity. Tap one for its effect and management."
+      >
+        <HeroSearch
+          value={query}
+          onChange={setQuery}
+          placeholder="Search a drug or class (e.g. tamsulosin, warfarin)…"
+          label="Search drug interactions"
+        />
+      </PageHero>
+
+      <PageBody narrow>
 
         {/* Prominent clinical-judgment disclaimer (required) */}
         <div className="rounded-[14px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
@@ -150,15 +154,6 @@ export function DrugsScreen() {
             rests with the treating clinician.
           </p>
         </div>
-
-        {/* Search */}
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search a drug or class (e.g. tamsulosin, warfarin, ciprofloxacin)…"
-          className="w-full rounded-[11px] border border-line bg-navy px-4 py-3 text-[14px] text-ink placeholder:text-muted-2 focus:border-violet focus:outline-none"
-        />
 
         {/* Severity legend */}
         <div className="flex flex-wrap gap-2">
@@ -194,7 +189,7 @@ export function DrugsScreen() {
             ))}
           </div>
         )}
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

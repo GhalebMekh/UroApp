@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import type { Conference } from '@/data/conferences';
 import { useConferenceFeed } from '@/lib/conferencesFeed';
+import { PageBody, PageHero } from '@/components/PageHero';
 import { saveICS, type CalendarEvent } from '@/lib/ics';
 import { todayISO } from '@/lib/date';
 import { daysUntil, formatSpan, upcomingConferences } from '@/lib/conferenceDates';
@@ -35,23 +36,18 @@ export function ConferencesScreen() {
   }
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            Calendar
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Conferences</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            Upcoming urology congresses — dates, venue and the official website. Add any one to
-            your calendar, or add them all at once. Always confirm on the official site before
-            booking; dates can change.
-          </p>
-          <p className="mt-2 text-[12px] text-muted-2">
-            List updated{' '}
-            {new Date(feed.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
-          </p>
-        </header>
+    <>
+      <PageHero
+        eyebrow="Calendar"
+        title="Conferences"
+        lede="Upcoming urology congresses — dates, venue and the official website. Add any one to your calendar, or add them all at once. Always confirm on the official site before booking; dates can change."
+      >
+        <p className="text-[12px] text-white/70">
+          List updated{' '}
+          {new Date(feed.updatedAt).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+        </p>
+      </PageHero>
+      <PageBody narrow>
 
         {upcoming.length === 0 && (
           <p className="rounded-[16px] border border-line bg-navy-2 p-5 text-[13px] text-muted">
@@ -145,7 +141,7 @@ export function ConferencesScreen() {
           Dates and venues were verified against each congress’s official source when this list was
           compiled. On iOS, opening the downloaded .ics file offers “Add to Calendar”.
         </p>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

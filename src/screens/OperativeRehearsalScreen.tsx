@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PROCEDURES, type Procedure } from '@/data/procedures';
 import { cn } from '@/lib/cn';
+import { PageBody, PageHero } from '@/components/PageHero';
 import { getJSON, setJSON } from '@/lib/storage';
 import {
   REHEARSAL_STORAGE_KEY,
@@ -111,18 +112,13 @@ export function OperativeRehearsalScreen({
     'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[14px] text-ink outline-none focus:border-violet';
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            OR rehearsal
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Operative rehearsal</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            Rebuild the operation, quick-fire the next step, or test yourself on what is at risk. Steps,
-            anatomy and danger zones come from each procedure’s cited source.
-          </p>
-        </header>
+    <>
+      <PageHero
+        eyebrow="OR rehearsal"
+        title="Operative rehearsal"
+        lede="Rebuild the operation, quick-fire the next step, or test yourself on what is at risk. Steps, anatomy and danger zones come from each procedure’s cited source."
+      />
+      <PageBody narrow>
 
         <label className="block">
           <span className="mb-[7px] block text-[13px] font-semibold text-muted">Procedure</span>
@@ -228,8 +224,8 @@ export function OperativeRehearsalScreen({
           procedure’s cited operative source; confirm technique with the operating surgeon. Progress
           is kept on this device.
         </p>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }
 

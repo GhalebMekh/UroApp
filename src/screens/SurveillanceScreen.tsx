@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { SURVEILLANCE, type SurveillanceProtocol } from '@/data/surveillance';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { addMonths, todayISO } from '@/lib/date';
+import { PageBody, PageHero } from '@/components/PageHero';
 
 function monthLabel(month: number): string {
   if (month === 0) return 'Baseline';
@@ -81,20 +82,13 @@ export function SurveillanceScreen() {
   if (!diagnosis || !protocol) return null;
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-3xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            Follow-up planning
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Surveillance schedule</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            Pick a diagnosis and risk group to generate a dated follow-up calendar from the
-            AUA/EAU guideline intervals. Where a guideline gives a range, the schedule uses the
-            shorter interval so it is never laxer than the guideline. Each protocol shows its
-            own source below.
-          </p>
-        </header>
+    <>
+      <PageHero
+        eyebrow="Follow-up planning"
+        title="Surveillance schedule"
+        lede="Pick a diagnosis and risk group to generate a dated follow-up calendar from the AUA/EAU guideline intervals. Where a guideline gives a range, the schedule uses the shorter interval so it is never laxer than the guideline. Each protocol shows its own source below."
+      />
+      <PageBody narrow="wide">
 
         {/* Inputs */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -225,7 +219,7 @@ export function SurveillanceScreen() {
             preference. Verify intervals against the primary guideline before use.
           </p>
         </div>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

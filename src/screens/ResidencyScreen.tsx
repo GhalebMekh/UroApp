@@ -1,14 +1,52 @@
-import { useEffect, useState, type ComponentType } from 'react';
+import { useEffect, useState, type ComponentType, type ReactNode } from 'react';
 import type { OrTab, ResidencySection, ResidencyTarget } from '@/navigation';
-import { cn } from '@/lib/cn';
 import { ProGate } from '@/components/ProGate';
 import { LockGate } from '@/components/LockGate';
+import { HeroTabs, PageHero, PageSheet, type HeroTone } from '@/components/PageHero';
 import { InpatientIcon, OnCallIcon, ScalpelIcon } from '@/components/icons';
 import { RoundingScreen } from './RoundingScreen';
 import { OnCallScreen } from './OnCallScreen';
 import { OperativeLogScreen } from './OperativeLogScreen';
 import { ProceduresScreen } from './ProceduresScreen';
 import { ConsentScreen } from './ConsentScreen';
+
+/** The header copy for each Residency page — its sub-heading lives here, not in the page. */
+const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: string; lede: ReactNode; tone?: HeroTone }> = {
+  inpatient: {
+    eyebrow: 'Rounding',
+    title: 'Ward round list.',
+    lede: (
+      <>
+        A working list for your patients, stored only on this device.{' '}
+        <b className="font-semibold text-white">
+          De-identified — a first name or initials and a bed/ward, never a full name or MRN.
+        </b>{' '}
+        A personal aide-mémoire, not a medical record.
+      </>
+    ),
+  },
+  oncall: {
+    eyebrow: 'On-call',
+    title: 'The next 30 minutes.',
+    lede: 'Immediate management of the commonest urological emergencies. Decision-support only — escalate to your senior and follow local protocol.',
+    tone: 'emergency',
+  },
+  logbook: {
+    eyebrow: 'Operative log',
+    title: 'Surgical logbook.',
+    lede: 'Your case log, stored on this device. De-identified by design — no names or medical-record numbers, only date, patient gender, procedure, your role and any complication.',
+  },
+  procedures: {
+    eyebrow: 'Procedures',
+    title: 'Anatomy, steps & complications.',
+    lede: 'Operative reference for the OR and viva — the relevant anatomy, the steps of the procedure, and the complications to watch for. Summarised from the cited source.',
+  },
+  consent: {
+    eyebrow: 'Operative reference',
+    title: 'Consent generator',
+    lede: 'Bilingual (English / العربية) surgical-consent templates with procedure-specific complications. Pick a procedure, optionally fill the case details, and print.',
+  },
+};
 
 export function ResidencyScreen({
   initial,
@@ -38,34 +76,30 @@ export function ResidencyScreen({
     { id: 'consent', label: 'Consent' },
   ];
 
-  return (
-    <div className="min-h-[100dvh] flex flex-col">
-      {/* Section tabs */}
-      <div className="sticky top-16 z-40 border-b border-line bg-navy/[0.95] backdrop-blur-[8px]">
-        <div className="mx-auto max-w-wrap px-6 py-3">
-          <div className="flex gap-2">
-            {sections.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                onClick={() => setSection(s.id)}
-                className={cn(
-                  'flex min-h-[44px] flex-1 items-center justify-center gap-2 rounded-[10px] py-2.5 px-3 text-center text-sm font-semibold transition-colors',
-                  section === s.id
-                    ? 'bg-violet text-white'
-                    : 'border border-line bg-navy text-muted hover:border-violet hover:text-violet-soft',
-                )}
-              >
-                <s.Icon className="text-[17px]" />
-                {s.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      </div>
+  const copy = COPY[section === 'or' ? orTab : section];
 
-      {/* Content */}
-      <div className="flex-1">
+  return (
+    <>
+      <PageHero tone={copy.tone} eyebrow={`Residency · ${copy.eyebrow}`} title={copy.title} lede={copy.lede}>
+        <div className="space-y-2.5 sm:max-w-xl">
+          <HeroTabs
+            value={section}
+            onChange={setSection}
+            items={sections.map((s) => ({
+              id: s.id,
+              label: (
+                <>
+                  <s.Icon className="text-[17px]" />
+                  {s.label}
+                </>
+              ),
+            }))}
+          />
+          {section === 'or' && <HeroTabs value={orTab} onChange={setOrTab} items={orTabs} />}
+        </div>
+      </PageHero>
+
+      <PageSheet>
         {section === 'inpatient' && (
           <ProGate feature="inpatient">
             <LockGate>
@@ -74,45 +108,20 @@ export function ResidencyScreen({
           </ProGate>
         )}
         {section === 'oncall' && <OnCallScreen initialId={initial?.emergency} />}
-        {section === 'or' && (
-          <div>
-            {/* OR sub-tabs */}
-            <div className="mx-auto max-w-wrap px-6 pt-4">
-              <div className="flex gap-1.5 rounded-[11px] border border-line bg-navy p-1">
-                {orTabs.map((t) => (
-                  <button
-                    key={t.id}
-                    type="button"
-                    onClick={() => setOrTab(t.id)}
-                    className={cn(
-                      'min-h-[44px] flex-1 rounded-[8px] px-3 py-2 text-[13px] font-semibold transition-colors',
-                      orTab === t.id
-                        ? 'bg-violet/[0.18] text-violet-soft'
-                        : 'text-muted hover:text-ink',
-                    )}
-                  >
-                    {t.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            {orTab === 'logbook' && (
-              <ProGate feature="logbook">
-                <LockGate>
-                  <OperativeLogScreen />
-                </LockGate>
-              </ProGate>
-            )}
-            {orTab === 'procedures' && <ProceduresScreen initialId={initial?.procedure} />}
-            {orTab === 'consent' && (
-              <ProGate feature="consent">
-                <ConsentScreen />
-              </ProGate>
-            )}
-          </div>
+        {section === 'or' && orTab === 'logbook' && (
+          <ProGate feature="logbook">
+            <LockGate>
+              <OperativeLogScreen />
+            </LockGate>
+          </ProGate>
         )}
-      </div>
-    </div>
+        {section === 'or' && orTab === 'procedures' && <ProceduresScreen initialId={initial?.procedure} />}
+        {section === 'or' && orTab === 'consent' && (
+          <ProGate feature="consent">
+            <ConsentScreen />
+          </ProGate>
+        )}
+      </PageSheet>
+    </>
   );
 }

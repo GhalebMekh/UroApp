@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { SCENARIOS, type Scenario } from '@/data/scenarios';
 import { cn } from '@/lib/cn';
+import { PageBody, PageHero } from '@/components/PageHero';
 
 type Status = 'playing' | 'failed' | 'complete';
 
@@ -57,19 +58,13 @@ export function IntraopScenariosScreen() {
   const chosen = selected !== null && node ? node.choices[selected] : null;
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            OR decisions
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Intra-op scenarios</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            Work a case decision by decision. Each turn shows the situation; choose the next move and
-            see the consequence. The preferred action is drawn from the cited guideline — a poor
-            choice can end the case.
-          </p>
-        </header>
+    <>
+      <PageHero
+        eyebrow="OR decisions"
+        title="Intra-op scenarios"
+        lede="Work a case decision by decision. Each turn shows the situation; choose the next move and see the consequence. The preferred action is drawn from the cited guideline — a poor choice can end the case."
+      />
+      <PageBody narrow>
 
         {SCENARIOS.length > 1 && (
           <label className="block">
@@ -196,8 +191,8 @@ export function IntraopScenariosScreen() {
           operating or the treating team’s judgment. Guideline-preferred actions are summarised from
           the cited source.
         </p>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }
 

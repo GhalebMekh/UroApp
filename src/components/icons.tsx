@@ -251,6 +251,16 @@ export function TrainingIcon({ className }: IconProps) {
   );
 }
 
+/** Person — profile / account. */
+export function PersonIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4.5 20.5c1.4-3.6 4.3-5.5 7.5-5.5s6.1 1.9 7.5 5.5" />
+    </svg>
+  );
+}
+
 /** Faceted stone — calculi. */
 export function StoneIcon({ className }: IconProps) {
   return (

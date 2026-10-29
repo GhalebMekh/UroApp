@@ -10,14 +10,18 @@ import {
   type CalcEntry,
 } from '@/components/calculators/registry';
 import { ORGAN_ICON, TOPIC_ICON } from '@/components/calculators/groupIcons';
-import { SearchIcon, StarIcon } from '@/components/icons';
+import { StarIcon } from '@/components/icons';
+import { HeroSearch, HeroTabs, PageBody, PageHero } from '@/components/PageHero';
 import { ToolGroupCard, ToolRow } from '@/components/ToolList';
 import { toggleFavouriteTool, useToolPrefs } from '@/lib/toolPrefs';
+import { SPECIALTY } from '@/lib/specialty';
 
 interface Group {
   key: string;
   label: string;
   Icon?: ComponentType<{ className?: string }>;
+  /** Heading colour for the group's specialty. */
+  accent: string;
   items: CalcEntry[];
 }
 
@@ -87,12 +91,14 @@ export function CalculatorsScreen({ onOpen }: { onOpen: (id: string) => void }) 
             key: o.organ,
             label: o.label,
             Icon: ORGAN_ICON[o.icon],
+            accent: SPECIALTY.oncology.text,
             items: CALCULATORS.filter((c) => c.organ === o.organ),
           }))
         : BENIGN_TOPICS.map((t) => ({
             key: t.topic,
             label: t.label,
             Icon: TOPIC_ICON[t.topic],
+            accent: SPECIALTY[t.specialty].text,
             items: CALCULATORS.filter((c) => c.topic === t.topic),
           })),
     [category],
@@ -101,91 +107,75 @@ export function CalculatorsScreen({ onOpen }: { onOpen: (id: string) => void }) 
   const results = q ? CALCULATORS.filter((c) => matches(c, q)) : [];
 
   return (
-    <div className="mx-auto max-w-wrap px-4 py-6 sm:px-6 md:py-8">
-      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">Calculators</div>
-      <h2 className="font-display text-[28px] font-semibold leading-tight md:text-[32px]">Validated instruments</h2>
-      <p className="mt-2 max-w-xl text-[14px] text-muted">
-        Each score runs on your device and links to its primary publication. Inputs are never stored.
-      </p>
-
-      <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:items-center">
-        <label className="flex min-h-[48px] flex-1 items-center gap-3 rounded-[14px] border border-line bg-navy-2 px-4 focus-within:border-violet sm:max-w-md">
-          <SearchIcon className="shrink-0 text-[18px] text-muted-2" />
-          <input
-            type="search"
+    <>
+      <PageHero
+        eyebrow="Calculators"
+        title="Validated instruments"
+        lede="Each score runs on your device and links to its primary publication. Inputs are never stored."
+      >
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+          <HeroSearch
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
+            onChange={setQuery}
             placeholder={`Find one of ${CALCULATORS.length} calculators`}
-            aria-label="Find a calculator"
-            className="min-w-0 flex-1 bg-transparent text-[15px] text-ink placeholder:text-muted-2 focus:outline-none"
+            label="Find a calculator"
           />
-        </label>
-
-        {!q && (
-          <div className="grid grid-cols-2 gap-1.5 rounded-[12px] border border-line bg-navy p-1 sm:w-[340px]">
-            {CALC_GROUPS.map((g) => {
-              const active = g.category === category;
-              return (
-                <button
-                  key={g.category}
-                  type="button"
-                  onClick={() => setCategory(g.category)}
-                  aria-pressed={active}
-                  className={cn(
-                    'min-h-[44px] rounded-[9px] px-3 py-2 text-[13px] font-semibold transition-colors',
-                    active ? cn('bg-violet/[0.18]', g.accent) : 'text-muted hover:text-ink',
-                  )}
-                >
-                  {g.label}
-                  <span className="ml-1.5 text-[11px] opacity-70">
-                    {CALCULATORS.filter((c) => c.category === g.category).length}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {q ? (
-        <section className="mt-6 rounded-card border border-line bg-navy-2 p-1.5 sm:max-w-2xl">
-          {results.length === 0 ? (
-            <p className="px-3 py-4 text-[14px] text-muted">No calculator matches “{query.trim()}”.</p>
-          ) : (
-            <ul>
-              {results.map((c) => (
-                <CalcRow key={c.id} entry={c} onOpen={onOpen} showGroup />
-              ))}
-            </ul>
+          {!q && (
+            <HeroTabs
+              className="sm:w-[340px]"
+              value={category}
+              onChange={setCategory}
+              items={CALC_GROUPS.map((g) => ({
+                id: g.category,
+                label: g.label,
+                count: CALCULATORS.filter((c) => c.category === g.category).length,
+              }))}
+            />
           )}
-        </section>
-      ) : (
-        <>
-          {pinned.length > 0 && (
-            <section className="mt-6 rounded-card border border-line bg-navy-2 p-1.5 sm:max-w-2xl">
-              <h3 className="flex items-center gap-2 px-3 pb-1 pt-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber">
-                <StarIcon filled className="text-[13px]" /> Pinned
-              </h3>
+        </div>
+      </PageHero>
+
+      <PageBody className="pt-0">
+        {q ? (
+          <section className="mt-6 rounded-card border border-line bg-navy-2 p-1.5 sm:max-w-2xl">
+            {results.length === 0 ? (
+              <p className="px-3 py-4 text-[14px] text-muted">No calculator matches “{query.trim()}”.</p>
+            ) : (
               <ul>
-                {pinned.map((c) => (
+                {results.map((c) => (
                   <CalcRow key={c.id} entry={c} onOpen={onOpen} showGroup />
                 ))}
               </ul>
-            </section>
-          )}
+            )}
+          </section>
+        ) : (
+          <>
+            {pinned.length > 0 && (
+              <section className="mt-6 rounded-card border border-line bg-navy-2 p-1.5 sm:max-w-2xl">
+                <h3 className="flex items-center gap-2 px-3 pb-1 pt-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber">
+                  <StarIcon filled className="text-[13px]" /> Pinned
+                </h3>
+                <ul>
+                  {pinned.map((c) => (
+                    <CalcRow key={c.id} entry={c} onOpen={onOpen} showGroup />
+                  ))}
+                </ul>
+              </section>
+            )}
 
-          <p className="mb-3 mt-6 text-[13px] text-muted-2">{meta.blurb}</p>
-          <div className="gap-4 sm:columns-2 lg:columns-3">
-            {groups.map((g) => (
-              <ToolGroupCard key={g.key} title={g.label} Icon={g.Icon} count={g.items.length} accent={meta.accent}>
-                {g.items.map((c) => (
-                  <CalcRow key={c.id} entry={c} onOpen={onOpen} />
-                ))}
-              </ToolGroupCard>
-            ))}
-          </div>
-        </>
-      )}
-    </div>
+            <p className="mb-3 mt-6 text-[13px] text-muted-2">{meta.blurb}</p>
+            <div className="gap-4 sm:columns-2 lg:columns-3">
+              {groups.map((g) => (
+                <ToolGroupCard key={g.key} title={g.label} Icon={g.Icon} count={g.items.length} accent={g.accent}>
+                  {g.items.map((c) => (
+                    <CalcRow key={c.id} entry={c} onOpen={onOpen} />
+                  ))}
+                </ToolGroupCard>
+              ))}
+            </div>
+          </>
+        )}
+      </PageBody>
+    </>
   );
 }

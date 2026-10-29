@@ -31,7 +31,7 @@ import { DrugsScreen } from '@/screens/DrugsScreen';
 import { ArticlesScreen } from '@/screens/ArticlesScreen';
 import { MoreScreen } from '@/screens/MoreScreen';
 import { AppStoreLockScreen } from '@/screens/AppStoreLockScreen';
-import { isLocked, lockCopy } from '@/lib/preview';
+import { isLocked, lockCopy, previewMode } from '@/lib/preview';
 
 /**
  * Master state-machine router (CLAUDE.md): a single `currentScreen` drives
@@ -119,6 +119,8 @@ export default function App() {
             onOpenSearch={() => setSearchOpen(true)}
             canGoBack={history.length > 0}
             onBack={goBack}
+            // Every screen opens on a gradient header (PageHero) except the web preview's landing page.
+            overHero={!(previewMode && currentScreen === 'home')}
           />
           <SearchOverlay
             open={searchOpen}

@@ -6,6 +6,7 @@ import {
   type GuidelineCategory,
 } from '@/data/guidelines';
 import { cn } from '@/lib/cn';
+import { HeroTabs, PageBody, PageHero } from '@/components/PageHero';
 
 const GROUPS: { category: GuidelineCategory; label: string; blurb: string; accent: string }[] = [
   {
@@ -137,42 +138,26 @@ export function GuidelinesScreen() {
   const entries = GUIDELINES.filter((g) => guidelineCategory(g) === category);
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            Clinical algorithms
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">Guidelines</h2>
-          <p className="mt-3 text-[14px] text-muted">
-            Diagnostic and management algorithms summarized from AUA and EAU guidelines.
-            Quick algorithms for rapid review; tap to expand for detailed workup steps.
-          </p>
-        </header>
-
+    <>
+      <PageHero
+        eyebrow="Clinical algorithms"
+        title="Guidelines"
+        lede="Diagnostic and management algorithms summarized from AUA and EAU guidelines. Quick algorithms for rapid review; tap to expand for detailed workup steps."
+      >
         {/* Category toggle — both on one line; tap to reveal that group's guidelines. */}
-        <div className="grid max-w-md grid-cols-2 gap-1.5 rounded-[12px] border border-line bg-navy p-1">
-          {GROUPS.map((g) => {
-            const active = g.category === category;
-            const count = GUIDELINES.filter((x) => guidelineCategory(x) === g.category).length;
-            return (
-              <button
-                key={g.category}
-                type="button"
-                onClick={() => setCategory(g.category)}
-                aria-pressed={active}
-                className={cn(
-                  'min-h-[44px] rounded-[9px] px-3 py-2.5 text-[13px] font-semibold transition-colors',
-                  active ? cn('bg-violet/[0.18]', g.accent) : 'text-muted hover:text-ink',
-                )}
-              >
-                {g.label}
-                <span className="ml-1.5 text-[11px] opacity-70">{count}</span>
-              </button>
-            );
-          })}
-        </div>
+        <HeroTabs
+          className="max-w-md"
+          value={category}
+          onChange={setCategory}
+          items={GROUPS.map((g) => ({
+            id: g.category,
+            label: g.label,
+            count: GUIDELINES.filter((x) => guidelineCategory(x) === g.category).length,
+          }))}
+        />
+      </PageHero>
 
+      <PageBody narrow>
         <p className="text-[13px] text-muted-2">{group.blurb}</p>
 
         <div className="space-y-4">
@@ -194,7 +179,7 @@ export function GuidelinesScreen() {
             preference always guide decision-making.
           </p>
         </div>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

@@ -179,19 +179,9 @@ export function ConsentScreen() {
     'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-2 text-[13px] text-ink placeholder:text-muted-2 focus:border-violet focus:outline-none';
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-8">
+    // The heading lives in the Residency header (ResidencyScreen).
+    <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
       <div className="mx-auto max-w-3xl space-y-5">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            Operative reference
-          </div>
-          <h2 className="font-display text-[26px] font-semibold">Consent generator</h2>
-          <p className="mt-2 text-[13px] text-muted">
-            Bilingual (English / العربية) surgical-consent templates with procedure-specific
-            complications. Pick a procedure, optionally fill the case details, and print.
-          </p>
-        </header>
-
         {/* Procedure picker */}
         <div>
           <label className="mb-1.5 block text-[12px] font-semibold text-ink">Procedure</label>

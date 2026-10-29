@@ -214,19 +214,9 @@ export function OperativeLogScreen() {
   }
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-        Operative log
-      </div>
-      <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
-        Surgical logbook.
-      </h2>
-      <p className="max-w-xl text-[16.5px] text-muted">
-        Your case log, stored on this device. De-identified by design — no names or medical-record
-        numbers, only date, patient gender, procedure, your role and any complication.
-      </p>
-
-      <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-[360px_1fr]">
+    // The heading lives in the Residency header (ResidencyScreen).
+    <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
+      <div className="grid grid-cols-1 gap-5 lg:grid-cols-[360px_1fr]">
         {/* Entry form */}
         <section className="rounded-[20px] border border-line bg-navy-2 p-6">
           <h3 className="mb-4 font-display text-[19px] font-semibold">Add a case</h3>

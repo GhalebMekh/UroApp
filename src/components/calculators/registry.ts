@@ -1,4 +1,5 @@
 import type { ComponentType } from 'react';
+import type { Specialty } from '@/lib/specialty';
 import { PsaToolkit } from './PsaToolkit';
 import { CapraScore } from './CapraScore';
 import { CapraSScore } from './CapraSScore';
@@ -96,15 +97,17 @@ export interface OncologyOrganGroup {
 export interface BenignTopicGroup {
   topic: BenignTopic;
   label: string;
+  /** Colours the group heading (lib/specialty). */
+  specialty: Specialty;
 }
 
 /** Non-oncology topic headers, in display order. */
 export const BENIGN_TOPICS: BenignTopicGroup[] = [
-  { topic: 'luts', label: 'LUTS & BPH' },
-  { topic: 'stones', label: 'Stones' },
-  { topic: 'andrology', label: 'Andrology' },
-  { topic: 'kidney-function', label: 'Kidney function' },
-  { topic: 'periop', label: 'Peri-operative' },
+  { topic: 'luts', label: 'LUTS & BPH', specialty: 'functional' },
+  { topic: 'stones', label: 'Stones', specialty: 'endourology' },
+  { topic: 'andrology', label: 'Andrology', specialty: 'andrology' },
+  { topic: 'kidney-function', label: 'Kidney function', specialty: 'general' },
+  { topic: 'periop', label: 'Peri-operative', specialty: 'general' },
 ];
 
 /** The organ or topic heading a calculator sits under, e.g. "Prostate" or "Stones". */
@@ -142,7 +145,8 @@ export const CALC_GROUPS: CalcGroup[] = [
   {
     category: 'non-oncological',
     label: 'Non-oncological',
-    blurb: 'Benign and functional urology scores.',
-    accent: 'text-teal',
+    blurb: 'Benign and functional urology scores, by topic.',
+    // Not teal: teal is reserved for low risk (CLAUDE.md).
+    accent: 'text-spec-func',
   },
 ];

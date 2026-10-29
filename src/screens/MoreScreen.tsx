@@ -4,6 +4,7 @@ import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
 import { AccountSettings } from '@/components/AccountSettings';
 import { previewMode } from '@/lib/preview';
+import { PageBody, PageHero } from '@/components/PageHero';
 
 /** e.g. "24 Oct 2026, 10:30" — readable without a timezone lookup. */
 const builtAt = new Date(__BUILD_TIME__).toLocaleString('en-GB', {
@@ -22,14 +23,15 @@ export function MoreScreen() {
   const { tier, setTier } = useEntitlements();
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mx-auto max-w-2xl space-y-6">
-        <header>
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            UroApp
-          </div>
-          <h2 className="font-display text-[28px] font-semibold">More</h2>
-        </header>
+    <>
+      <PageHero
+        eyebrow="UroApp"
+        title="More"
+        lede="Your account and backup, app lock, purchases and the medical disclaimer."
+      />
+      <PageBody narrow>
+        {/* First, so the profile button on Home lands on it. */}
+        <AccountSettings />
 
         {/* Medical disclaimer — required visible (CLAUDE.md) */}
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
@@ -42,8 +44,6 @@ export function MoreScreen() {
             Clinical responsibility remains with the treating physician.
           </p>
         </section>
-
-        <AccountSettings />
 
         <AppLockSettings />
 
@@ -109,7 +109,7 @@ export function MoreScreen() {
         <p className="text-center font-mono text-[11px] text-muted-2">
           {previewMode ? 'Web preview' : 'Build'} {__BUILD_COMMIT__} · {builtAt}
         </p>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

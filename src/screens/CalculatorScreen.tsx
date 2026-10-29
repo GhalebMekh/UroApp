@@ -13,15 +13,14 @@ export function CalculatorScreen({
   onAll: () => void;
 }) {
   const entry = CALCULATORS.find((c) => c.id === id);
-  if (!entry) return <ToolMissing allLabel="All calculators" onAll={onAll} />;
-  const group = groupLabel(entry);
+  if (!entry) return <ToolMissing eyebrow="Calculators" allLabel="All calculators" onAll={onAll} />;
 
   return (
     <ToolDetail
-      eyebrow={group ? `Calculators · ${group}` : 'Calculators'}
+      eyebrow="Calculators"
       allLabel="All calculators"
       onAll={onAll}
-      group={group}
+      group={groupLabel(entry)}
       siblings={siblingsOf(entry)}
       onOpen={onOpen}
     >

@@ -24,9 +24,14 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Arabic text gets a dedicated Arabic face. Times New Roman's Arabic (where it
-     exists at all) is poor, so force RTL content to IBM Plex Sans Arabic — this
-     covers the bilingual consent forms and any future Arabic UI. */
+  /* Headings use the system face (SF Pro on iPhone/iPad), slightly tightened as
+     Apple does at display sizes; a tracking-* utility still overrides this. */
+  .font-display {
+    letter-spacing: -0.015em;
+  }
+
+  /* Arabic text gets a dedicated Arabic face, so the bilingual consent forms and
+     any future Arabic UI render consistently whatever the Latin font is. */
   [dir='rtl'],
   :lang(ar) {
     font-family: theme('fontFamily.arabic');

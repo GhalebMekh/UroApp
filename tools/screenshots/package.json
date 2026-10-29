@@ -1,0 +1,12 @@
+{
+  "name": "uroapp-store-screenshots",
+  "private": true,
+  "type": "module",
+  "description": "Takes the App Store screenshots from a local production build. Kept apart from the app so Playwright never enters the iOS build.",
+  "scripts": {
+    "shoot": "node shoot.mjs"
+  },
+  "dependencies": {
+    "playwright": "1.49.1"
+  }
+}

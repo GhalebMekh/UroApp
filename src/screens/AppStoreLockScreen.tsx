@@ -1,4 +1,5 @@
 import { BrandMark } from '@/components/BrandMark';
+import { PageBody, PageHero } from '@/components/PageHero';
 
 /**
  * Shown in a preview build in place of a workspace that ships in the App Store
@@ -7,21 +8,19 @@ import { BrandMark } from '@/components/BrandMark';
  */
 export function AppStoreLockScreen({ title, blurb }: { title: string; blurb: string }) {
   return (
-    <div className="mx-auto max-w-wrap px-6 py-16">
-      <div className="mx-auto max-w-lg rounded-[20px] border border-line bg-navy-2 p-8 text-center">
-        <div className="mb-4 flex justify-center">
-          <BrandMark className="h-10 w-10 text-[22px]" />
+    <>
+      <PageHero eyebrow="In the full app" title={title} lede={blurb} />
+      <PageBody narrow>
+        <div className="rounded-[20px] border border-line bg-navy-2 p-8 text-center">
+          <div className="mb-4 flex justify-center">
+            <BrandMark className="h-10 w-10 text-[22px]" />
+          </div>
+          <p className="text-[14px] text-muted">
+            This preview includes the calculators and guideline summaries. {title} arrives with the
+            iOS release.
+          </p>
         </div>
-        <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-          In the full app
-        </div>
-        <h2 className="mb-3 font-display text-[28px] font-semibold">{title}</h2>
-        <p className="text-[15px] text-muted">{blurb}</p>
-        <p className="mt-6 text-[13px] text-muted-2">
-          This preview includes the calculators and guideline summaries. {title} arrives with the
-          iOS release.
-        </p>
-      </div>
-    </div>
+      </PageBody>
+    </>
   );
 }

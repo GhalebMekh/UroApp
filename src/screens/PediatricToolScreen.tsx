@@ -12,13 +12,14 @@ export function PediatricToolScreen({
   onAll: () => void;
 }) {
   const tool = PEDIATRIC_TOOLS.find((t) => t.id === id);
-  if (!tool) return <ToolMissing allLabel="All pediatric tools" onAll={onAll} />;
+  if (!tool) return <ToolMissing eyebrow="Pediatrics" allLabel="All pediatric tools" onAll={onAll} />;
   const group = sectionLabel(tool.section);
   const { Component } = tool;
 
   return (
     <ToolDetail
-      eyebrow={`Pediatrics · ${group}`}
+      tone="pediatric"
+      eyebrow="Pediatrics"
       allLabel="All pediatric tools"
       onAll={onAll}
       group={group}

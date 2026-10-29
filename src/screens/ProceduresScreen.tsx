@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { CitationNote } from '@/components/CitationNote';
 import { PROCEDURES, type Procedure } from '@/data/procedures';
+import { cn } from '@/lib/cn';
+import { SPECIALTY, specialtyOfProcedureCategory } from '@/lib/specialty';
 
 /** Procedures grouped by category, keeping the order they first appear in. */
 function byCategory(list: Procedure[]): [string, Procedure[]][] {
@@ -18,19 +20,9 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
   const groups = useMemo(() => byCategory(PROCEDURES), []);
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-        Procedures
-      </div>
-      <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
-        Anatomy, steps & complications.
-      </h2>
-      <p className="max-w-xl text-[16.5px] text-muted">
-        Operative reference for the OR and viva — the relevant anatomy, the steps of the procedure,
-        and the complications to watch for. Summarised from the cited source.
-      </p>
-
-      <div className="mt-8 max-w-md">
+    // The heading lives in the Residency header (ResidencyScreen).
+    <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
+      <div className="max-w-md">
         <label className="mb-[7px] block text-[13px] font-semibold text-muted">Procedure</label>
         <select
           value={id}
@@ -50,6 +42,14 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
       </div>
 
       <div className="mt-6 rounded-[20px] border border-line bg-navy-2 p-6">
+        <span
+          className={cn(
+            'mb-2 inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.06em]',
+            SPECIALTY[specialtyOfProcedureCategory(proc.category)].chip,
+          )}
+        >
+          {proc.category}
+        </span>
         <h3 className="font-display text-[22px] font-semibold">{proc.name}</h3>
         <p className="mt-2 text-[14px] text-muted">{proc.summary}</p>
 

@@ -26,12 +26,24 @@ export default {
         crimson: '#DC2626',
         teal: '#14B8A6',
         amber: '#F59E0B',
+        // Specialty colours (owner request, 2026-10-27) — identify a specialty in
+        // navigation and headings only, never a result. Hues chosen clear of the
+        // risk colours above. Oncology keeps the signature violet. See lib/specialty.
+        spec: {
+          endo: '#3B82F6', // endourology & stones — blue
+          func: '#38BDF8', // functional, LUTS & BPH — sky
+          andro: '#A3E635', // andrology & infertility — lime
+          peds: '#F472B6', // paediatric — pink
+          recon: '#E879F9', // reconstruction & trauma — fuchsia
+          general: '#94A3B8', // general, access, peri-operative — slate
+        },
       },
       fontFamily: {
-        // Times New Roman = serif display/headings (owner request, 2026-07),
-        // Inter = UI/body, JetBrains Mono = numerics. Arabic text is forced to a
-        // dedicated Arabic face via the [dir="rtl"] rule in index.css.
-        display: ['"Times New Roman"', 'Times', 'serif'],
+        // System sans (SF Pro on iPhone/iPad) = display/headings (owner request,
+        // 2026-10-27, replacing Times New Roman), Inter = UI/body, JetBrains Mono =
+        // numerics. Arabic text is forced to a dedicated Arabic face via the
+        // [dir="rtl"] rule in index.css.
+        display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'Inter', 'system-ui', 'sans-serif'],
         sans: ['Inter', 'system-ui', 'sans-serif'],
         mono: ['"JetBrains Mono"', 'monospace'],
         arabic: ['"IBM Plex Sans Arabic"', '"Geeza Pro"', 'sans-serif'],
@@ -47,6 +59,12 @@ export default {
       },
       backgroundImage: {
         'violet-mark': 'linear-gradient(135deg, #8B7CF6, #6D5BE0)',
+        // Page headers (components/PageHero): signature violet into a deep blue.
+        'violet-hero': 'linear-gradient(135deg, #8B7CF6 0%, #6D5BE0 48%, #3B4FD8 100%)',
+        // On-call: crimson is the emergency colour (CLAUDE.md), easing into violet.
+        'emergency-hero': 'linear-gradient(135deg, #E5484D 0%, #B4234A 50%, #5B2BB5 100%)',
+        // Pediatrics: its specialty pink into violet.
+        'peds-hero': 'linear-gradient(135deg, #F472B6 0%, #C35BD8 50%, #6D5BE0 100%)',
         'ai-soft':
           'linear-gradient(135deg, rgba(139,124,246,.16), rgba(109,91,224,.06))',
       },

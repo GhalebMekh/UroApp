@@ -15,20 +15,10 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
   const em = EMERGENCIES.find((e) => e.id === id)!;
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-crimson">
-        On-call
-      </div>
-      <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
-        The next 30 minutes.
-      </h2>
-      <p className="max-w-xl text-[16.5px] text-muted">
-        Immediate management of the commonest urological emergencies. Decision-support only —
-        escalate to your senior and follow local protocol.
-      </p>
-
+    // The heading lives in the Residency header (ResidencyScreen).
+    <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
       {/* Emergency selector */}
-      <div className="mt-8 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2">
         {EMERGENCIES.map((e) => (
           <button
             key={e.id}

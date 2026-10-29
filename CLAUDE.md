@@ -39,9 +39,21 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 - Ground: dark navy `#0A1628`; cards `#0F1F38`; steel `#1B2B45`; lines `#26384f`
 - Signature accent: violet `#8B7CF6` (oncology). Crimson `#E5556B` reserved for risk/calculus
   cues only. Teal `#3FB6A8` = board prep / low-risk. Amber `#E5A23F` = moderate.
-- Type (owner change 2026-07): Times New Roman (serif display/headings, `font-display`) +
-  Inter (UI/body) + JetBrains Mono (numerics). Arabic/RTL text is forced to IBM Plex Sans
-  Arabic (`font-arabic`) via the `[dir="rtl"]` rule in index.css — Times has no usable Arabic.
+- Type (owner change 2026-10-27, replacing Times New Roman): system sans — SF Pro on
+  iPhone/iPad — for display/headings (`font-display`) + Inter (UI/body) + JetBrains Mono
+  (numerics). Arabic/RTL text is forced to IBM Plex Sans Arabic (`font-arabic`) via the
+  `[dir="rtl"]` rule in index.css.
+- Specialty colours (owner 2026-10-27, `lib/specialty.ts`, `spec-*` tokens): oncology violet,
+  endourology/stones blue, functional/LUTS sky, andrology lime, paediatric pink,
+  reconstruction/trauma fuchsia, general slate. For navigation/headings/category chips only —
+  never on a result; teal/amber/crimson stay reserved for risk.
+- Every screen opens on a gradient header (owner 2026-10-27): `components/PageHero.tsx` —
+  `PageHero` (eyebrow, title, lede, plus controls such as `HeroSearch`/`HeroTabs`/`HeroChips`)
+  and `PageBody`/`PageSheet` (content on a navy sheet with rounded top corners overlapping the
+  header). Tones: `violet` default, `emergency` (on-call), `pediatric`. Home uses `HeroShell`
+  directly with greeting, profile button and search, and its cards overlap the band. The top
+  bar is clear over the header until the page scrolls. New screens must use PageHero, not their
+  own eyebrow/h2. Navy stays the app background (owner kept it).
 - Icons: inline stroke SVGs in `src/components/icons.tsx` (1em, currentColor, 1.8 stroke).
   Do NOT use emoji as UI icons.
 - Risk categories are always color-coded low=teal / moderate=amber / high=crimson

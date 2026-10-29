@@ -238,20 +238,8 @@ export function RoundingScreen() {
   }
 
   return (
-    <div className="mx-auto max-w-wrap px-6 py-12">
-      <div className="mb-3 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-        Rounding
-      </div>
-      <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
-        Ward round list.
-      </h2>
-      <p className="max-w-2xl text-[15px] text-muted">
-        A working list for your patients, stored only on this device.{' '}
-        <b className="text-ink">De-identified — a first name or initials and a bed/ward, never a full
-        name or MRN.</b>{' '}
-        A personal aide-mémoire, not a medical record.
-      </p>
-
+    // The heading lives in the Residency header (ResidencyScreen).
+    <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
       {selected ? (
         <PatientDetail
           patient={selected}
