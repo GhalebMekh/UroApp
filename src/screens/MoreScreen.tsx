@@ -4,6 +4,7 @@ import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
 import { AccountSettings } from '@/components/AccountSettings';
 import { previewMode } from '@/lib/preview';
+import { PAYWALL_ENABLED } from '@/lib/featureTiers';
 import { PageBody, PageHero } from '@/components/PageHero';
 
 /** e.g. "24 Oct 2026, 10:30" — readable without a timezone lookup. */
@@ -65,14 +66,18 @@ export function MoreScreen() {
           </section>
         )}
 
-        {/* Restore Purchases — must stay visible (CLAUDE.md). Wired to
-            RevenueCat in Sprint 4; inert in the web preview. */}
-        <button
-          type="button"
-          className="w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
-        >
-          Restore Purchases
-        </button>
+        {/* Restore Purchases — must be visible whenever something can be bought
+            (CLAUDE.md, guideline 3.1.1). Shown with the paywall (VITE_PAYWALL=on):
+            until RevenueCat is wired there is nothing to restore, and a button
+            that does nothing reads as a bug in review (guideline 2.1). */}
+        {PAYWALL_ENABLED && (
+          <button
+            type="button"
+            className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+          >
+            Restore Purchases
+          </button>
+        )}
 
         {/* Development-only tier switcher, so gated screens can be previewed.
             Stripped from production builds: in the App Store build it would

@@ -69,7 +69,8 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 - The Evidence AI must: cite every claim, state when evidence is conflicting or absent,
   and never give patient-specific directives — only evidence summaries for clinician judgment.
 - Store NO patient-identifiable data anywhere. Calculator inputs stay on-device.
-- Show a medical disclaimer at first launch; keep a visible Restore Purchases action.
+- Show a medical disclaimer at first launch; keep a visible Restore Purchases action whenever
+  anything can be bought (it ships with the paywall, `VITE_PAYWALL=on` — never as a dead button).
 
 ## Build order (see /docs/PRD_v2.md for full detail)
 Sprint 1 (P0, offline, no backend): IPSS ✓, PSA toolkit, PI-RADS/Bosniak/VI-RADS,

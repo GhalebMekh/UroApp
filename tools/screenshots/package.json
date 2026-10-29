@@ -2,9 +2,10 @@
   "name": "uroapp-store-screenshots",
   "private": true,
   "type": "module",
-  "description": "Takes the App Store screenshots from a local production build. Kept apart from the app so Playwright never enters the iOS build.",
+  "description": "Store assets: App Store screenshots from a local production build, and the app icon / launch image from brand/icon.svg. Kept apart from the app so Playwright never enters the iOS build.",
   "scripts": {
-    "shoot": "node shoot.mjs"
+    "shoot": "node shoot.mjs",
+    "icons": "node icons.mjs"
   },
   "dependencies": {
     "playwright": "1.49.1"

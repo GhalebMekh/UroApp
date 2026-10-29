@@ -14,8 +14,13 @@ const config: CapacitorConfig = {
   appName: 'UroApp',
   webDir: 'dist',
   ios: {
-    // Respect the safe-area insets the UI already accounts for.
-    contentInset: 'always',
+    // Edge to edge: the page headers run under the status bar, and the CSS
+    // handles the insets itself (viewport-fit=cover + env(safe-area-inset-*)
+    // on the top bar, bottom nav and headers). 'always' would inset the web
+    // view as well and zero those env() values.
+    contentInset: 'never',
+    // Navy behind the web view, so loading and overscroll never flash white.
+    backgroundColor: '#0A1628',
   },
 };
 

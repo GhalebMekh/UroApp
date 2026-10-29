@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <!-- UroApp app icon: the in-app "U" mark on the violet-hero gradient (tailwind.config.js).
+       Full-bleed square, no transparency: iOS applies its own corner mask. -->
+  <defs>
+    <linearGradient id="hero" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8B7CF6" />
+      <stop offset="0.48" stop-color="#6D5BE0" />
+      <stop offset="1" stop-color="#3B4FD8" />
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#hero)" />
+  <!-- The same soft light shapes as the page headers. -->
+  <circle cx="880" cy="140" r="340" fill="#FFFFFF" fill-opacity="0.09" />
+  <circle cx="400" cy="1030" r="220" fill="#FFFFFF" fill-opacity="0.06" />
+  <!-- The "U", drawn as a stroke so it never depends on an installed font. -->
+  <path d="M 332 262 V 552 A 180 180 0 0 0 692 552 V 262" fill="none" stroke="#FFFFFF" stroke-width="132" stroke-linecap="round" />
+</svg>

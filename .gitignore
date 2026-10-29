@@ -32,8 +32,9 @@ dist-ssr
 ios/App/App/public
 .capacitor
 
-# App Store screenshots (regenerate with tools/screenshots)
+# App Store screenshots and rendered icons (regenerate with tools/screenshots)
 store/screenshots/
+tools/screenshots/out/
 
 # Database / runtime state
 *.db

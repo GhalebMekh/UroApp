@@ -37,6 +37,9 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 | | Step | Notes |
 |---|---|---|
 | ✅ | iOS project, shared scheme, privacy manifest, Face ID text, export-compliance flag | In `ios/`. |
+| ✅ | **App icon** (white "U" on the violet header gradient, 1024 px, no alpha) and **navy launch screen** — replaced Capacitor's placeholders | Source `tools/screenshots/brand/icon.svg`; to change: `npm run icons` in `tools/screenshots`, flatten to RGB, copy into `ios/App/App/Assets.xcassets` (`AppIcon-1024.png`, the three `splash-2732x2732*.png`). |
+| ✅ | Native settings: light status-bar text app-wide, `arm64` device requirement, edge-to-edge web view (`contentInset: 'never'`) on a navy background | `Info.plist`, `capacitor.config.ts`. Confirm on the first TestFlight build (list E). |
+| ✅ | Fonts bundled in the app (Fontsource, OFL) — no Google Fonts request, fully offline | `src/main.tsx`. |
 | ✅ | `codemagic.yaml` (cloud Mac build → TestFlight) | Builds on a pushed tag such as `v1.0.0-b1`. |
 | ⬜ | **You:** App Store Connect API key → Codemagic integration named **UroApp ASC key** | See the header of `codemagic.yaml`. |
 | ⬜ | **You:** Codemagic environment group **`uroapp_app`** | Holds the `VITE_*` settings (Supabase now, RevenueCat later). It must exist even if empty. |
@@ -49,12 +52,13 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 | ✅ | Pro / Elite gating (off until purchases work) | — |
 | ✅ | App lock (PIN / Face ID) | — |
 | ✅ | Optional account: sign-up with emailed code, profile, backup & sync, sign-out, **in-app account deletion** | Supabase settings to switch it on |
-| ⏳ | **Paywall + RevenueCat**: plan cards with price, length and what's included; free-trial wording; working **Restore Purchases**; links to Terms and Privacy (guideline 3.1.2) | RevenueCat key + products created |
+| ⏳ | **Paywall + RevenueCat**: plan cards with price, length and what's included; free-trial wording; working **Restore Purchases** (hidden in More until then — a dead button fails review); links to Terms and Privacy (guideline 3.1.2) | RevenueCat key + products created |
 | ⏳ | Publish privacy / terms / support pages (drafts in `docs/legal/`) | Support email, Supabase region |
 | ⏳ | Store text: description, keywords, review notes — drafted in [APP_STORE_LISTING.md](APP_STORE_LISTING.md) | Your approval; subscription paragraph needs the final plans |
 | ✅ | Phone / iPad / iPhone Duo layout: Home dashboard; Calculators and Pediatrics as lists with each tool on its own screen; collapsible drug interactions; no sideways scrolling at 320 px | — |
-| ⬜ | Screenshots (iPhone, iPad) — plan in APP_STORE_LISTING.md | Layout freeze |
-| ⬜ | Version 1.0.0 (currently 0.1.0) | Just before the first submission |
+| ✅ | New look: gradient header on every screen, system font, specialty colours | — |
+| ✅ | Screenshots — 8 screens × iPhone 6.3", iPhone 6.9", iPad 13" (landscape) in `store/screenshots/` (git-ignored); regenerate with `npm run shoot` in `tools/screenshots` | Taken in Edge, so headings show Segoe UI; optionally retake on an iOS simulator for SF Pro |
+| ✅ | Version **1.0** (`MARKETING_VERSION`); build numbers set by Codemagic | — |
 
 ## E. Test on TestFlight before submitting (You + colleagues)
 
@@ -64,6 +68,10 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 - [ ] iPad layout; **iPhone Duo** folded and unfolded if anyone has one.
 - [ ] Print / Save file from the logbook, consent forms, MDT, CME and handover.
 - [ ] Offline: airplane mode, then calculators, guidelines and Weekly reads (offline copy).
+- [ ] Launch: navy launch screen, no white flash; the new icon on the home screen.
+- [ ] Headers run under the status bar / Dynamic Island with readable white clock and battery;
+      the top bar clears the notch and the bottom nav clears the home indicator.
+- [ ] Links (sources, PubMed, congress sites) open in Safari and return to the app.
 
 ## F. App Privacy answers (must match `ios/App/App/PrivacyInfo.xcprivacy`)
 
