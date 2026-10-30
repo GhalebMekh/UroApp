@@ -1,12 +1,4 @@
 <!doctype html>
-<!--
-  DRAFT — not yet published. Before publishing (copy to public/privacy.html):
-    {{SUPPORT_EMAIL}}   the dedicated UroApp support mailbox
-    {{SUPABASE_REGION}} the region chosen when creating the Supabase project
-    {{EFFECTIVE_DATE}}  the date this version goes live
-  Keep it in step with ios/App/App/PrivacyInfo.xcprivacy and the App Store
-  "App Privacy" answers in docs/PUBLISHING.md.
--->
 <html lang="en">
 <head>
 <meta charset="utf-8" />
@@ -16,8 +8,8 @@
   :root { color-scheme: dark; }
   body { margin: 0; background: #0A1628; color: #E8EDF5; font: 16px/1.6 Inter, system-ui, sans-serif; }
   main { max-width: 760px; margin: 0 auto; padding: 40px 16px 64px; }
-  h1 { font-family: "Times New Roman", serif; font-size: 32px; margin: 0 0 4px; }
-  h2 { font-family: "Times New Roman", serif; font-size: 22px; margin: 32px 0 8px; }
+  h1 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, system-ui, sans-serif; letter-spacing: -0.015em; font-size: 32px; margin: 0 0 4px; }
+  h2 { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Inter, system-ui, sans-serif; letter-spacing: -0.015em; font-size: 22px; margin: 32px 0 8px; }
   p, li { color: #C9D3E1; }
   .muted { color: #8A9AB3; font-size: 14px; }
   a { color: #A99DF9; }
@@ -28,7 +20,7 @@
 <body>
 <main>
 <h1>Privacy Policy</h1>
-<p class="muted">UroApp · effective {{EFFECTIVE_DATE}}</p>
+<p class="muted">UroApp · effective 30 October 2026</p>
 
 <p>UroApp is a clinical reference and training app for urologists and urology residents, published
 by Dr Ghaleb Al-Mekhlafi (Jeddah, Saudi Arabia) as an individual developer ("we"). This policy
@@ -43,9 +35,9 @@ must never be entered.</strong></p>
   <li>Your ward list, logbook, MDT case sheets, CME record, app-lock settings, favourites and rehearsal progress are
   stored only on your device.</li>
   <li>We use no analytics, no advertising and no tracking of any kind.</li>
-  <li><strong>Weekly reads</strong> downloads a list of published articles from GitHub
-  (raw.githubusercontent.com). Like any website, GitHub receives your device's IP address when it
-  serves that file. Links to guidelines, journals and conferences open those organisations'
+  <li><strong>Weekly reads</strong> and the <strong>conference list</strong> are downloaded as
+  data files from GitHub (raw.githubusercontent.com). Like any website, GitHub receives your
+  device's IP address when it serves those files. Links to guidelines, journals and conferences open those organisations'
   websites, which have their own privacy policies.</li>
 </ul>
 
@@ -62,8 +54,9 @@ must never be entered.</strong></p>
 </table>
 <p><strong>Never uploaded:</strong> your ward list and MDT case sheets. They stay on your device
 even when you are signed in, and our database is configured to refuse them.</p>
-<p>Account data is stored by our hosting provider, Supabase, in the {{SUPABASE_REGION}} region, and
-sign-up and reset emails are sent through an email delivery provider. These providers process the
+<p>Account data is stored by our hosting provider, Supabase, in the European Union (Frankfurt, Germany) region, and
+sign-up and reset emails are sent from our support mailbox through Google (Gmail), so Google
+handles your email address and the code we send. These providers process the
 data only on our behalf. Each signed-in user can access only their own data; this is enforced by
 the database itself.</p>
 
@@ -93,7 +86,7 @@ subscription also unlocks your other devices. It does not receive your name or e
 <h2>Your rights</h2>
 <p>Under Saudi Arabia's Personal Data Protection Law and similar laws, you can ask to see, correct
 or delete your personal data, or withdraw consent, which you can also do yourself by deleting
-your account. Contact <a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a>.</p>
+your account. Contact <a href="mailto:support.uroapp@gmail.com">support.uroapp@gmail.com</a>.</p>
 
 <h2>Security</h2>
 <p>Data is encrypted in transit (HTTPS). The optional app lock (PIN or Face ID) protects your ward
@@ -108,7 +101,7 @@ perfectly secure, so please use a strong, unique password.</p>
 the app.</p>
 
 <h2>Contact</h2>
-<p><a href="mailto:{{SUPPORT_EMAIL}}">{{SUPPORT_EMAIL}}</a></p>
+<p><a href="mailto:support.uroapp@gmail.com">support.uroapp@gmail.com</a></p>
 </main>
 </body>
 </html>

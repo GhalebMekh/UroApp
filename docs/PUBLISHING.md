@@ -15,8 +15,8 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 | ⬜ | **Enrol in the Apple Developer Program** as an *individual* | developer.apple.com/programs. Annual fee; Apple verifies your identity. The App Store will show your personal name as the seller. |
 | ⬜ | **App Store Connect → Business**: accept the **Paid Apps** agreement, add **tax** and **bank** details | Subscriptions can't be sold or tested in TestFlight until this is active. |
 | ⬜ | Join the **App Store Small Business Program** | Lower commission for small developers. Apply once enrolled. |
-| ⬜ | Create the **dedicated support mailbox** | Used on the privacy policy, support page and App Store listing, and as the sender for account emails. |
-| ⬜ | **Supabase project** | Follow [ACCOUNTS_SETUP.md](ACCOUNTS_SETUP.md); send Claude the Project URL + publishable key. |
+| ✅ | **Dedicated support mailbox**: `support.uroapp@gmail.com` | On the legal pages; sender of account emails (Gmail SMTP). |
+| ✅ | **Supabase project** `zwyjaejykltkxrcctwho`, Central EU (Frankfurt) | Set up and tested 2026-10-30 (sign-up code, sync, ward list kept local, delete account). Still to add the URL + publishable key to Codemagic `uroapp_app`. |
 | ⬜ | **RevenueCat project** (free tier) | Step-by-step in section **I** below. The app is ready for it; only the key and products are missing. |
 
 ## B. The app record (You, with Claude's text)
@@ -53,7 +53,7 @@ Status key: ✅ done · ⏳ waiting on something · ⬜ not started
 | ✅ | App lock (PIN / Face ID) | — |
 | ✅ | Optional account: sign-up with emailed code, profile, backup & sync, sign-out, **in-app account deletion** | Supabase settings to switch it on |
 | ✅ | **Paywall + RevenueCat** (plugin 13.7.4): **Plans** screen — Pro/Elite cards, monthly/yearly, App Store prices (billed amount largest), length, free-trial wording when eligible, what's included, renewal terms, Terms (EULA) + Privacy links; **See plans** on every locked feature; More → **Subscription** with Restore Purchases and Manage; tier read from RevenueCat entitlements; follows the signed-in account | Goes live with the key, the products and `VITE_PAYWALL=on` (section I). Never run against the real App Store yet. |
-| ⏳ | Publish privacy / terms / support pages (drafts in `docs/legal/`) | Support email, Supabase region |
+| ✅ | Privacy / terms / support pages live on GitHub Pages (`gh-pages` branch, source `docs/legal/`): [support](https://ghalebmekh.github.io/UroApp/support.html) · [privacy](https://ghalebmekh.github.io/UroApp/privacy.html) · [terms](https://ghalebmekh.github.io/UroApp/terms.html). To update: edit `docs/legal/`, then copy the files to the `gh-pages` branch. Use these as the App Store URLs and as `VITE_PRIVACY_URL` / `VITE_TERMS_URL`. | — |
 | ⏳ | Store text: description, keywords, review notes — drafted in [APP_STORE_LISTING.md](APP_STORE_LISTING.md) | Your approval; subscription paragraph needs the final plans |
 | ✅ | Phone / iPad / iPhone Duo layout: Home dashboard; Calculators and Pediatrics as lists with each tool on its own screen; collapsible drug interactions; no sideways scrolling at 320 px | — |
 | ✅ | New look: gradient header on every screen, system font, specialty colours | — |
