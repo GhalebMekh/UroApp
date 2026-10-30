@@ -1,8 +1,8 @@
 /**
  * Subscription tiers. Per CLAUDE.md, the real entitlement is owned by
- * RevenueCat (wired in Sprint 4) — never local feature flags. This module
- * is the single source of truth the rest of the app reads from, so swapping
- * the stub below for the RevenueCat SDK is a one-file change.
+ * RevenueCat — never local feature flags. components/PurchasesProvider
+ * reads it from the SDK and provides it here; the rest of the app reads
+ * the tier from this context only.
  */
 import { createContext, useContext } from 'react';
 
@@ -24,7 +24,7 @@ export const TIER_LABEL: Record<Tier, string> = {
 export interface Entitlements {
   /** The user's current tier. Defaults to the free Resident tier. */
   tier: Tier;
-  /** Dev/preview affordance only — RevenueCat replaces this in Sprint 4. */
+  /** Development builds only (the tier switcher in More); a no-op in production. */
   setTier: (tier: Tier) => void;
 }
 

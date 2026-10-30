@@ -78,17 +78,20 @@ indexes those anyway. Society names (AUA, EAU) are kept out of keywords on purpo
 > An account is optional — it only backs up your own logbook, CME record and preferences.
 >
 > SUBSCRIPTIONS
-> [Finalise once RevenueCat and the App Store products exist.] Calculators, guidelines, on-call,
-> imaging, drug interactions and pediatrics are free. UroApp Pro adds [Pro features]; UroApp Elite
-> adds [Elite features]. Payment is charged to your Apple ID; subscriptions renew automatically
-> unless cancelled at least 24 hours before the end of the period, and can be managed in your
-> App Store account settings.
+> Calculators, guidelines, on-call, imaging, drug interactions and pediatrics are free. UroApp Pro
+> (monthly or yearly) adds the inpatient tracker, operative logbook, bilingual consent generator,
+> surveillance schedules, operative rehearsal, intra-op scenarios and weekly reads. UroApp Elite
+> (monthly or yearly) adds MDT case sheets, the CME / CPD tracker and your surgical audit.
+> [If a free trial is set up: "The yearly plans start with a [length] free trial."] Payment is
+> charged to your Apple ID at confirmation; subscriptions renew automatically unless cancelled at
+> least 24 hours before the end of the period, and can be managed in your App Store account
+> settings.
 > Terms of Use: [link] · Privacy Policy: [link]
 >
 > UroApp supports clinical decision-making by licensed healthcare professionals. It does not
 > replace clinical judgement, local protocols or the full guideline and prescribing information.
 
-(About 3,000 characters with the placeholders filled — within the 4,000 limit.)
+(About 3,500 characters with the placeholders filled — within the 4,000 limit.)
 
 ## What's New (1.0)
 
@@ -117,8 +120,10 @@ Primary **Medical**. Secondary (optional): **Education** or **Reference**.
 > The app downloads two content files (this week's PubMed article list and a list of urology
 > congresses) as JSON data; no code is downloaded.
 >
-> [Once subscriptions exist:] Paid features show a plan screen with Restore Purchases; Restore
-> Purchases is also under More.
+> Subscriptions: bedside and on-call tools are free. Pro and Elite features show a "See plans"
+> button that opens the Plans screen (also More → Subscription → See plans), with prices, terms,
+> Restore Purchases and links to the Terms of Use and Privacy Policy. Restore Purchases is also in
+> More → Subscription. Purchases use the sandbox environment during review as usual.
 
 ## Screenshots — plan
 

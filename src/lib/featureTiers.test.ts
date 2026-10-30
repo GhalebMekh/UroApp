@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { FEATURE_LABEL, FEATURE_TIER, PAYWALL_ENABLED } from './featureTiers';
+import { FEATURE_LABEL, FEATURE_TIER, PAYWALL_ENABLED, featureName, featuresOf } from './featureTiers';
 
 describe('tier map', () => {
   it('matches the agreed split', () => {
@@ -27,6 +27,14 @@ describe('tier map', () => {
 
   it('labels every gated feature', () => {
     expect(Object.keys(FEATURE_LABEL).sort()).toEqual(Object.keys(FEATURE_TIER).sort());
+  });
+
+  it('names features for the plan cards', () => {
+    expect(featureName('inpatient')).toBe('Inpatient tracker');
+    expect(featureName('audit')).toBe('Surgical audit');
+    expect(featureName('mdt')).toBe('MDT case sheets');
+    expect(featuresOf('elite')).toEqual(['mdt', 'cme', 'audit']);
+    expect([...featuresOf('pro'), ...featuresOf('elite')].sort()).toEqual(Object.keys(FEATURE_TIER).sort());
   });
 
   it('is off unless explicitly enabled — no locks before purchases exist', () => {

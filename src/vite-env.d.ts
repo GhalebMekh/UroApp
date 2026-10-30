@@ -16,4 +16,12 @@ interface ImportMetaEnv {
   readonly VITE_SUPABASE_PUBLISHABLE_KEY?: string;
   /** Override where the live conference list is fetched from (defaults to the GitHub copy). */
   readonly VITE_CONFERENCES_FEED_URL?: string;
+  /** `on` turns on Pro/Elite gating — only together with the RevenueCat key. */
+  readonly VITE_PAYWALL?: string;
+  /** RevenueCat public iOS SDK key (starts `appl_`). Safe in the app; purchases stay off when unset. */
+  readonly VITE_REVENUECAT_IOS_KEY?: string;
+  /** Published privacy policy, linked from the plans screen (guideline 3.1.2). */
+  readonly VITE_PRIVACY_URL?: string;
+  /** Published terms of use; defaults to Apple's Standard EULA. */
+  readonly VITE_TERMS_URL?: string;
 }

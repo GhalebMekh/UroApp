@@ -11,6 +11,8 @@ export interface SyncState {
 
 export interface AccountState {
   status: AccountStatus;
+  /** Supabase user id while signed in; also the RevenueCat app user id. */
+  userId: string | null;
   email: string | null;
   profile: Profile;
   sync: SyncState;
@@ -35,6 +37,7 @@ const off = async () => {
 
 export const AccountContext = createContext<AccountState>({
   status: 'disabled',
+  userId: null,
   email: null,
   profile: EMPTY_PROFILE,
   sync: { phase: 'idle', lastSyncedAt: null, error: null },

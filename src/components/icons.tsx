@@ -290,6 +290,15 @@ export function ChevronRightIcon({ className }: IconProps) {
   );
 }
 
+/** Check mark — "included". */
+export function CheckIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="m5 12.5 4.5 4.5L19 7.5" />
+    </svg>
+  );
+}
+
 /** External link — arrow pointing out. */
 export function ExternalLinkIcon({ className }: IconProps) {
   return (

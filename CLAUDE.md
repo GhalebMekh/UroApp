@@ -22,7 +22,10 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 - `src/App.tsx` — master state-machine router (`currentScreen`); persistent top bar + bottom nav
 - `src/screens/` — one file per workspace (Dashboard, ProTools, Calculators, Guidelines, Drugs, etc.)
 - `src/components/` — shared UI; `ProGate.tsx` gates Pro/Elite features
-- `src/lib/` — `storage.ts` (Capacitor Preferences), `entitlements.ts` (RevenueCat tiers)
+- `src/lib/` — `storage.ts` (Capacitor Preferences), `entitlements.ts` (tier context),
+  `plans.ts` / `purchases.ts` (RevenueCat: product IDs, entitlements `pro`/`elite`, SDK calls)
+- `components/PurchasesProvider.tsx` — the only place the tier is set; `screens/PlansScreen.tsx`
+  is the paywall (prices only ever from the App Store, never hard-coded)
 - `src/data/` — clinical datasets (modules, drugs, questions) bundled for offline use
 - `server/` — separate deploy: AI evidence proxy (key stays server-side)
 - Tiers: resident (free) / pro / elite — gated via RevenueCat entitlements, never local flags
@@ -70,7 +73,9 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
   and never give patient-specific directives — only evidence summaries for clinician judgment.
 - Store NO patient-identifiable data anywhere. Calculator inputs stay on-device.
 - Show a medical disclaimer at first launch; keep a visible Restore Purchases action whenever
-  anything can be bought (it ships with the paywall, `VITE_PAYWALL=on` — never as a dead button).
+  anything can be bought (it ships with the paywall, `VITE_PAYWALL=on` + `VITE_REVENUECAT_IOS_KEY`
+  — never as a dead button). The Plans screen must keep the 3.1.2 items: plan name, length,
+  billed price as the largest figure, trial terms, auto-renew wording, Terms + Privacy links.
 
 ## Build order (see /docs/PRD_v2.md for full detail)
 Sprint 1 (P0, offline, no backend): IPSS ✓, PSA toolkit, PI-RADS/Bosniak/VI-RADS,

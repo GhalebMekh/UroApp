@@ -11,6 +11,9 @@
 #   4. Codemagic → this app → Environment variables → create the group "uroapp_app"
 #      with VITE_SUPABASE_URL and VITE_SUPABASE_PUBLISHABLE_KEY (from Supabase →
 #      Project Settings → API). The group must exist even while it is empty.
+#      Subscriptions, once the products are live (docs/PUBLISHING.md): add
+#      VITE_REVENUECAT_IOS_KEY (public key, appl_…), VITE_PRIVACY_URL, and
+#      VITE_PAYWALL=on. The build stops if the paywall is on without the other two.
 #   5. Connect the GitHub repo in Codemagic and start the "ios-testflight" workflow.
 #
 # Notes on deviations from Codemagic's own Capacitor example, which assumes
@@ -37,7 +40,7 @@ workflows:
         distribution_type: app_store
         bundle_identifier: com.uroapp.clinical
       groups:
-        - uroapp_app # build-time VITE_* settings (accounts); see step 4 above
+        - uroapp_app # build-time VITE_* settings (accounts, subscriptions); see step 4 above
       vars:
         APP_STORE_APPLE_ID: 0000000000 # ← numeric Apple ID of the app record
       node: 24.16.0 # matches the local toolchain
@@ -48,6 +51,16 @@ workflows:
     scripts:
       - name: Install dependencies
         script: npm ci
+
+      - name: Check subscription settings
+        script: |
+          # Guideline 3.1.2: a build that sells subscriptions must link the privacy policy,
+          # and without the RevenueCat key nothing could be bought or restored.
+          if [ "${VITE_PAYWALL:-}" = "on" ]; then
+            [ -n "${VITE_REVENUECAT_IOS_KEY:-}" ] || { echo "VITE_PAYWALL=on needs VITE_REVENUECAT_IOS_KEY"; exit 1; }
+            [ -n "${VITE_PRIVACY_URL:-}" ] || { echo "VITE_PAYWALL=on needs VITE_PRIVACY_URL"; exit 1; }
+            case "$VITE_REVENUECAT_IOS_KEY" in appl_*) ;; *) echo "VITE_REVENUECAT_IOS_KEY must be the public iOS key (appl_…)"; exit 1 ;; esac
+          fi
 
       - name: Typecheck, lint and test
         script: |

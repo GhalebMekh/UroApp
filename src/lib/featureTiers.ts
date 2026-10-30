@@ -53,4 +53,20 @@ export const FEATURE_LABEL: Record<GatedFeature, string> = {
   audit: 'Your surgical audit',
 };
 
-export const PAYWALL_ENABLED = import.meta.env.VITE_PAYWALL === 'on';
+/** "The inpatient tracker" → "Inpatient tracker", for the plan cards' lists. */
+export function featureName(feature: GatedFeature): string {
+  const s = FEATURE_LABEL[feature].replace(/^(The|Your) /, '');
+  return s.charAt(0).toUpperCase() + s.slice(1);
+}
+
+/** Bought features in display order, per tier. */
+export function featuresOf(tier: Exclude<Tier, 'resident'>): GatedFeature[] {
+  return (Object.keys(FEATURE_TIER) as GatedFeature[]).filter((f) => FEATURE_TIER[f] === tier);
+}
+
+/**
+ * Also needs the RevenueCat key: a build with the flag but no key would lock
+ * paid features with nothing to buy.
+ */
+export const PAYWALL_ENABLED =
+  import.meta.env.VITE_PAYWALL === 'on' && Boolean(import.meta.env.VITE_REVENUECAT_IOS_KEY?.trim());

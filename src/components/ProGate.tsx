@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { LockIcon } from './icons';
 import { TIER_LABEL, hasAccess, useEntitlements } from '@/lib/entitlements';
 import { FEATURE_LABEL, FEATURE_TIER, PAYWALL_ENABLED, type GatedFeature } from '@/lib/featureTiers';
+import { usePurchases } from '@/lib/purchasesContext';
 
 interface ProGateProps {
   /** Which feature this is; its tier comes from lib/featureTiers. */
@@ -19,6 +20,7 @@ interface ProGateProps {
  */
 export function ProGate({ feature, inline = false, children }: ProGateProps) {
   const { tier } = useEntitlements();
+  const { openPlans } = usePurchases();
   const required = FEATURE_TIER[feature];
 
   if (!PAYWALL_ENABLED || hasAccess(tier, required)) return <>{children}</>;
@@ -34,6 +36,13 @@ export function ProGate({ feature, inline = false, children }: ProGateProps) {
           {FEATURE_LABEL[feature]} is part of UroApp {TIER_LABEL[required]}. Subscriptions are
           managed through Apple.
         </p>
+        <button
+          type="button"
+          onClick={() => openPlans(feature)}
+          className="mt-5 min-h-[44px] rounded-[11px] bg-violet px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+        >
+          See plans
+        </button>
       </div>
     </div>
   );

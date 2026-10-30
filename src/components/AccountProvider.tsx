@@ -139,6 +139,7 @@ export function AccountProvider({ children }: { children: ReactNode }) {
     };
     return {
       status,
+      userId,
       email: session?.user.email ?? null,
       profile,
       sync,

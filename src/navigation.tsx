@@ -27,6 +27,7 @@ export type Screen =
   | 'scenarios'
   | 'drugs'
   | 'articles'
+  | 'plans'
   | 'more';
 
 export type ResidencySection = 'inpatient' | 'oncall' | 'or';
@@ -76,4 +77,5 @@ export const NAV_PARENT: Partial<Record<Screen, Screen>> = {
   cme: 'academic',
   rehearsal: 'academic',
   scenarios: 'academic',
+  plans: 'more',
 };

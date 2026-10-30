@@ -6,6 +6,12 @@
       "runtimeExecutable": "npm",
       "runtimeArgs": ["run", "dev"],
       "port": 5173
+    },
+    {
+      "name": "uroapp-paywall",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vite", "--mode", "paywall", "--port", "5174"],
+      "port": 5174
     }
   ]
 }

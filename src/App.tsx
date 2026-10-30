@@ -9,7 +9,8 @@ import { AppLockProvider } from '@/components/AppLockProvider';
 import { AccountProvider } from '@/components/AccountProvider';
 import { SyncBoundary } from '@/components/SyncBoundary';
 import { LockGate } from '@/components/LockGate';
-import { EntitlementsContext, type Tier } from '@/lib/entitlements';
+import { PurchasesProvider } from '@/components/PurchasesProvider';
+import type { GatedFeature } from '@/lib/featureTiers';
 import { NAV_ITEMS, NAV_PARENT, type ResidencyTarget, type Screen, type ScreenLink } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
 import { ClinicalHubScreen, AcademicHubScreen } from '@/screens/HubScreen';
@@ -30,6 +31,7 @@ import { IntraopScenariosScreen } from '@/screens/IntraopScenariosScreen';
 import { DrugsScreen } from '@/screens/DrugsScreen';
 import { ArticlesScreen } from '@/screens/ArticlesScreen';
 import { MoreScreen } from '@/screens/MoreScreen';
+import { PlansScreen } from '@/screens/PlansScreen';
 import { AppStoreLockScreen } from '@/screens/AppStoreLockScreen';
 import { isLocked, lockCopy, previewMode } from '@/lib/preview';
 
@@ -44,8 +46,9 @@ const ROOT_SCREENS = new Set<Screen>(NAV_ITEMS.map((i) => i.id));
 export default function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('home');
   const [history, setHistory] = useState<Screen[]>([]);
-  const [tier, setTier] = useState<Tier>('resident');
   const [searchOpen, setSearchOpen] = useState(false);
+  /** The locked feature that opened the plans screen, if any. */
+  const [plansFeature, setPlansFeature] = useState<GatedFeature | null>(null);
   /** The calculator shown on the single-calculator screen. */
   const [calcId, setCalcId] = useState<string | null>(null);
   /** The pediatric tool shown on the single-tool screen. */
@@ -99,6 +102,12 @@ export default function App() {
     navigate('rehearsal');
   }
 
+  /** The plans screen, from a locked feature (which it then names) or from More. */
+  function openPlans(feature?: GatedFeature) {
+    setPlansFeature(feature ?? null);
+    navigate('plans');
+  }
+
   function goBack() {
     if (history.length === 0) return;
     setCurrentScreen(history[history.length - 1]!);
@@ -107,9 +116,9 @@ export default function App() {
   }
 
   return (
-    <EntitlementsContext.Provider value={{ tier, setTier }}>
     <AppLockProvider>
     <AccountProvider>
+    <PurchasesProvider onOpenPlans={openPlans}>
       {/* Access first, then the medical disclaimer — no reason to show clinical
           terms to someone who cannot get in. */}
       <PasscodeGate>
@@ -202,6 +211,7 @@ export default function App() {
               <ArticlesScreen />
             </ProGate>
           )}
+          {currentScreen === 'plans' && <PlansScreen feature={plansFeature} onDone={goBack} />}
           {currentScreen === 'more' && <MoreScreen />}
             </SyncBoundary>
           )}
@@ -215,8 +225,8 @@ export default function App() {
         </div>
       </DisclaimerGate>
       </PasscodeGate>
+    </PurchasesProvider>
     </AccountProvider>
     </AppLockProvider>
-    </EntitlementsContext.Provider>
   );
 }

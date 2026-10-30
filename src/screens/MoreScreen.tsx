@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn';
 import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
 import { AccountSettings } from '@/components/AccountSettings';
+import { SubscriptionSettings } from '@/components/SubscriptionSettings';
 import { previewMode } from '@/lib/preview';
 import { PAYWALL_ENABLED } from '@/lib/featureTiers';
 import { PageBody, PageHero } from '@/components/PageHero';
@@ -33,6 +34,11 @@ export function MoreScreen() {
       <PageBody narrow>
         {/* First, so the profile button on Home lands on it. */}
         <AccountSettings />
+
+        {/* Plan + Restore Purchases — Restore must be visible whenever something can
+            be bought (CLAUDE.md, guideline 3.1.1). Shown with the paywall: without
+            it there is nothing to buy or restore, and a dead button fails review (2.1). */}
+        {PAYWALL_ENABLED && <SubscriptionSettings />}
 
         {/* Medical disclaimer — required visible (CLAUDE.md) */}
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
@@ -66,19 +72,6 @@ export function MoreScreen() {
           </section>
         )}
 
-        {/* Restore Purchases — must be visible whenever something can be bought
-            (CLAUDE.md, guideline 3.1.1). Shown with the paywall (VITE_PAYWALL=on):
-            until RevenueCat is wired there is nothing to restore, and a button
-            that does nothing reads as a bug in review (guideline 2.1). */}
-        {PAYWALL_ENABLED && (
-          <button
-            type="button"
-            className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
-          >
-            Restore Purchases
-          </button>
-        )}
-
         {/* Development-only tier switcher, so gated screens can be previewed.
             Stripped from production builds: in the App Store build it would
             unlock paid tiers without in-app purchase (guideline 3.1.1).
@@ -87,7 +80,7 @@ export function MoreScreen() {
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
           <h3 className="text-[15px] font-semibold">Subscription tier</h3>
           <p className="mb-3 text-[12px] text-muted-2">
-            Preview only — the live entitlement comes from RevenueCat (Sprint 4).
+            Development only — overrides the RevenueCat entitlement on this device.
           </p>
           <div className="flex gap-2">
             {TIERS.map((t) => (
