@@ -42,7 +42,7 @@ workflows:
       groups:
         - uroapp_app # build-time VITE_* settings (accounts, subscriptions); see step 4 above
       vars:
-        APP_STORE_APPLE_ID: 0000000000 # ← numeric Apple ID of the app record
+        APP_STORE_APPLE_ID: 6829262342 # numeric Apple ID of the app record ("UroApp – Urology Guide")
       node: 24.16.0 # matches the local toolchain
       xcode: latest
     triggering:
