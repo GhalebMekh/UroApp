@@ -101,3 +101,33 @@ export function summarise(activities: CmeActivity[], t: CmeTarget): CmeSummary {
   const remaining = t.hours > 0 ? r1(Math.max(0, t.hours - total)) : null;
   return { total, accredited, byType, percent, remaining };
 }
+
+/** One CSV field: quoted when needed, and a leading = + - @ neutralised so Excel won't run it as a formula. */
+function csvField(v: string | number): string {
+  let s = String(v);
+  if (typeof v === 'string' && /^[=+\-@]/.test(s)) s = `'${s}`;
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+/**
+ * The cycle's activities as a CSV spreadsheet (opens in Excel / Numbers), for
+ * copying into a licensing body's CPD portal. Starts with a BOM so Excel reads
+ * Arabic titles as UTF-8.
+ */
+export function toCsv(activities: CmeActivity[], t: CmeTarget, hasCertificate: (id: string) => boolean): string {
+  const head = ['Date', 'Activity', 'Provider', 'Type', 'Hours', 'Accredited', 'Reference', 'Certificate'];
+  const rows = activities
+    .filter((a) => inCycle(a, t))
+    .sort((x, y) => x.date.localeCompare(y.date))
+    .map((a) => [
+      a.date,
+      a.title,
+      a.provider,
+      CME_TYPE_LABEL[a.type],
+      a.hours,
+      a.accredited ? 'Yes' : 'No',
+      a.reference,
+      hasCertificate(a.id) ? 'Attached' : '',
+    ]);
+  return '﻿' + [head, ...rows].map((r) => r.map(csvField).join(',')).join('\r\n') + '\r\n';
+}

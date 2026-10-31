@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { inCycle, normalizeActivity, normalizeTarget, summarise, type CmeActivity, type CmeTarget } from './cme';
+import { inCycle, normalizeActivity, normalizeTarget, summarise, toCsv, type CmeActivity, type CmeTarget } from './cme';
 
 const act = (over: Partial<CmeActivity>): CmeActivity => ({
   id: Math.random().toString(36).slice(2),
@@ -77,5 +77,32 @@ describe('normalize', () => {
 
   it('gives an empty target for missing storage', () => {
     expect(normalizeTarget(undefined)).toEqual({ hours: 0, cycleStart: '', cycleEnd: '' });
+  });
+});
+
+describe('toCsv', () => {
+  const t: CmeTarget = { hours: 0, cycleStart: '2026-01-01', cycleEnd: '' };
+  const rows = [
+    act({ id: 'a', date: '2026-06-01', title: 'SUA, "annual" meeting', hours: 6 }),
+    act({ id: 'b', date: '2026-02-01', title: '=HYPERLINK("x")', accredited: false }),
+    act({ id: 'c', date: '2025-12-31', title: 'old' }),
+  ];
+  const csv = toCsv(rows, t, (id) => id === 'a');
+  const lines = csv.slice(1).trim().split('\r\n');
+
+  it('starts with a BOM, keeps only the cycle, oldest first', () => {
+    expect(csv.charCodeAt(0)).toBe(0xfeff);
+    expect(lines).toHaveLength(3);
+    expect(lines[0]).toBe('Date,Activity,Provider,Type,Hours,Accredited,Reference,Certificate');
+    expect(lines[1]!.startsWith('2026-02-01')).toBe(true);
+  });
+
+  it('quotes commas and quotes, and marks certificates', () => {
+    expect(lines[2]).toContain('"SUA, ""annual"" meeting"');
+    expect(lines[2]!.endsWith('Attached')).toBe(true);
+  });
+
+  it('neutralises spreadsheet formulas', () => {
+    expect(lines[1]).toContain(`"'=HYPERLINK(""x"")"`);
   });
 });

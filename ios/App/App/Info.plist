@@ -49,6 +49,8 @@
 	<false/>
 	<key>UIStatusBarStyle</key>
 	<string>UIStatusBarStyleLightContent</string>
+	<key>NSCameraUsageDescription</key>
+	<string>UroApp uses the camera only when you photograph a CME certificate. The photo stays on this device.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>UroApp uses Face ID to unlock your ward list, logbook, MDT sheets and CME record.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
