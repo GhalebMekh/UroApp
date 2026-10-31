@@ -40,11 +40,12 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 
 ## Design system (match exactly — do not redesign without being asked)
 - Ground: dark navy `#0A1628`; cards `#0F1F38`; steel `#1B2B45`; lines `#26384f`
-- Signature accent: violet `#8B7CF6` (oncology). Crimson `#E5556B` reserved for risk/calculus
-  cues only. Teal `#3FB6A8` = board prep / low-risk. Amber `#E5A23F` = moderate.
-- Type (owner change 2026-10-27, replacing Times New Roman): system sans — SF Pro on
-  iPhone/iPad — for display/headings (`font-display`) + Inter (UI/body) + JetBrains Mono
-  (numerics). Arabic/RTL text is forced to IBM Plex Sans Arabic (`font-arabic`) via the
+- Signature accent: violet `#8B7CF6` (oncology). Risk colours are muted clinical tones (owner
+  2026-10-31, replacing saturated red/teal as "looking AI-generated"): `crimson` token = brick
+  `#C2655A` (risk/emergency only), `teal` token = sage `#7FA88A` (low), `amber` token = ochre
+  `#C9A35A` (moderate). Change them in tailwind.config.js only — never hard-code hexes.
+- Type (owner change 2026-10-31): **Geist** for headings and UI, **Geist Mono** for numerics,
+  bundled via Fontsource (replaced SF Pro + Inter + JetBrains Mono). Arabic/RTL text is forced to IBM Plex Sans Arabic (`font-arabic`) via the
   `[dir="rtl"]` rule in index.css.
 - Specialty colours (owner 2026-10-27, `lib/specialty.ts`, `spec-*` tokens): oncology violet,
   endourology/stones blue, functional/LUTS sky, andrology lime, paediatric pink,

@@ -24,10 +24,10 @@
     -webkit-tap-highlight-color: transparent;
   }
 
-  /* Headings use the system face (SF Pro on iPhone/iPad), slightly tightened as
-     Apple does at display sizes; a tracking-* utility still overrides this. */
+  /* Headings use Geist, tightened a little at display sizes as Geist's own
+     specimens do; a tracking-* utility still overrides this. */
   .font-display {
-    letter-spacing: -0.015em;
+    letter-spacing: -0.02em;
   }
 
   /* Arabic text gets a dedicated Arabic face, so the bilingual consent forms and

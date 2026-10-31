@@ -22,10 +22,12 @@ export default {
         muted: { DEFAULT: '#92A4BD', 2: '#62748d' },
         // Signature accent: violet = oncology
         violet: { DEFAULT: '#8B7CF6', deep: '#6D5BE0', soft: '#b4a9fa' },
-        // Risk colour-coding: crimson = risk/emergency, amber = moderate, teal = low/normal
-        crimson: '#DC2626',
-        teal: '#14B8A6',
-        amber: '#F59E0B',
+        // Risk colour-coding: crimson = risk/emergency, amber = moderate, teal = low/normal.
+        // Muted clinical tones (owner, 2026-10-31): brick, ochre and sage replace the
+        // saturated red/amber/teal. Token names are kept so every screen follows.
+        crimson: '#C2655A',
+        teal: '#7FA88A',
+        amber: '#C9A35A',
         // Specialty colours (owner request, 2026-10-27) — identify a specialty in
         // navigation and headings only, never a result. Hues chosen clear of the
         // risk colours above. Oncology keeps the signature violet. See lib/specialty.
@@ -39,13 +41,13 @@ export default {
         },
       },
       fontFamily: {
-        // System sans (SF Pro on iPhone/iPad) = display/headings (owner request,
-        // 2026-10-27, replacing Times New Roman), Inter = UI/body, JetBrains Mono =
-        // numerics. Arabic text is forced to a dedicated Arabic face via the
+        // Geist for headings and UI, Geist Mono for numerics (owner, 2026-10-31,
+        // replacing SF Pro + Inter + JetBrains Mono); bundled via Fontsource (OFL).
+        // Arabic text is forced to a dedicated Arabic face via the
         // [dir="rtl"] rule in index.css.
-        display: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"Segoe UI"', 'Inter', 'system-ui', 'sans-serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        display: ['"Geist Variable"', 'system-ui', 'sans-serif'],
+        sans: ['"Geist Variable"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono Variable"', 'ui-monospace', 'monospace'],
         arabic: ['"IBM Plex Sans Arabic"', '"Geeza Pro"', 'sans-serif'],
       },
       borderRadius: {
@@ -62,7 +64,7 @@ export default {
         // Page headers (components/PageHero): signature violet into a deep blue.
         'violet-hero': 'linear-gradient(135deg, #8B7CF6 0%, #6D5BE0 48%, #3B4FD8 100%)',
         // On-call: crimson is the emergency colour (CLAUDE.md), easing into violet.
-        'emergency-hero': 'linear-gradient(135deg, #E5484D 0%, #B4234A 50%, #5B2BB5 100%)',
+        'emergency-hero': 'linear-gradient(135deg, #C2655A 0%, #9A4252 50%, #5B2BB5 100%)',
         // Pediatrics: its specialty pink into violet.
         'peds-hero': 'linear-gradient(135deg, #F472B6 0%, #C35BD8 50%, #6D5BE0 100%)',
         'ai-soft':

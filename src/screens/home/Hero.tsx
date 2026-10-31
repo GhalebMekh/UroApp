@@ -8,7 +8,7 @@ export function Hero({ onNavigate }: { onNavigate: (s: Screen) => void }) {
       <Wrap className="grid grid-cols-1 items-center gap-11 md:grid-cols-[1.05fr_0.95fr]">
         <div>
           <span className="mb-[22px] inline-flex items-center gap-2 rounded-full border border-line bg-navy-2 px-3.5 py-1.5 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
-            <span className="h-1.5 w-1.5 rounded-full bg-teal shadow-[0_0_8px_#14B8A6]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-teal shadow-[0_0_8px_#7FA88A]" />
             Built by a urology resident, for the OR
           </span>
           <h1 className="mb-[22px] font-display text-[clamp(38px,6vw,62px)] font-semibold leading-[1.04] tracking-[-0.02em]">
