@@ -1268,6 +1268,260 @@ const pyeloplasty: Scenario = {
   source: PEDS_PYELO_SRC,
 };
 
+const CYST_SRC = {
+  label: 'AUA MIBC Guideline · Campbell-Walsh-Wein 12th ed, ch 138 (open and robotic cystectomy)',
+  url: 'https://www.auanet.org/guidelines-and-quality/guidelines/bladder-cancer-non-metastatic-muscle-invasive-guideline',
+};
+
+const cystectomy: Scenario = {
+  id: 'radical-cystectomy-advanced',
+  level: 'advanced',
+  title: 'Radical cystectomy after radiation — a frozen pelvis, the rectum and the urethral margin',
+  procedureId: 'radical-cystectomy',
+  vignette:
+    'A 66-year-old man with muscle-invasive bladder cancer had pelvic radiotherapy for prostate cancer years ago. Staging CT shows localised disease. He wants an orthotopic neobladder if possible and has good erections. You are performing an open radical cystoprostatectomy.',
+  nodes: [
+    {
+      id: 'prep',
+      situation: 'On the ward the day before, the nurse asks about bowel preparation and stoma marking.',
+      question: 'What do you order?',
+      choices: [
+        {
+          text: 'No routine mechanical bowel prep; stoma marking anyway (sitting and standing); alvimopan before surgery; antibiotics within 1 hour of incision; thromboprophylaxis.',
+          correct: true,
+          outcome:
+            'Correct. Routine bowel prep is not advised (especially with ileum only). Mark a stoma even when a neobladder is planned — he may end up with a conduit. Alvimopan speeds bowel recovery.',
+        },
+        {
+          text: 'Three-day mechanical bowel prep; no stoma marking, since he is having a neobladder.',
+          correct: false,
+          outcome:
+            'Bowel prep gave no benefit (and more prolonged ileus in one trial), and skipping stoma marking leaves you stuck if a neobladder becomes unsafe at surgery.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+    {
+      id: 'rectal-plane',
+      situation: 'Posteriorly, the plane between the prostate and rectum is obliterated by radiation fibrosis.',
+      question: 'How do you develop it?',
+      choices: [
+        {
+          text: 'Sharp dissection under direct vision, staying on the specimen, and shielding the rectum with a finger if you use a sealing device.',
+          correct: true,
+          outcome:
+            'Correct. After radiation, blunt dissection can tear the rectum. Sharp dissection under vision maintains rectal integrity; heat from sealing devices can injure the rectum too.',
+        },
+        {
+          text: 'Develop it bluntly with a finger, as in a non-irradiated pelvis.',
+          correct: false,
+          terminal: true,
+          outcome: 'Blunt dissection in a fibrotic, irradiated plane is how rectal injuries happen. — Case ends here for review.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+    {
+      id: 'rectal-injury',
+      situation: 'Despite care, a small hole opens in the anterior rectal wall.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Repair it primarily, consider flap cover and/or a diverting stoma — especially in an irradiated field.',
+          correct: true,
+          outcome:
+            'Correct. Rectal injury is treated with primary repair, with or without flap coverage and/or bowel diversion.',
+        },
+        {
+          text: 'Leave it — it is small and will seal.',
+          correct: false,
+          terminal: true,
+          outcome: 'A recognised rectal injury must be dealt with now: primary repair, with or without flap cover and/or diversion. — Case ends here for review.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+    {
+      id: 'nerve-sparing',
+      situation: 'Before the apical dissection, the trainee asks whether to spare the neurovascular bundles.',
+      question: 'What do you weigh?',
+      choices: [
+        {
+          text: 'Weigh his good erections against disease burden — results are modest (38% potent in one series), and non-nerve sparing is preferred for advanced disease.',
+          correct: true,
+          outcome:
+            'Correct. Nerve sparing is done as in radical prostatectomy but function after cystectomy is worse; decide on preoperative function and disease burden.',
+        },
+        {
+          text: 'Always nerve-spare — potency outcomes match prostatectomy.',
+          correct: false,
+          outcome:
+            'They do not: only 38% were potent after nerve sparing in one series, and it is not chosen for advanced disease.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+    {
+      id: 'urethral-margin',
+      situation: 'You divide the urethra. The frozen section of the urethral margin shows carcinoma.',
+      question: 'What diversion do you make?',
+      choices: [
+        {
+          text: 'No neobladder: a cutaneous diversion (ileal conduit), as he was counselled.',
+          correct: true,
+          outcome:
+            'Correct. A positive urethral margin rules out an orthotopic neobladder; this is why the possibility is raised before surgery and the stoma is marked.',
+        },
+        {
+          text: 'Build the neobladder as planned — he wanted it.',
+          correct: false,
+          terminal: true,
+          outcome: 'An orthotopic neobladder onto a urethra with cancer at the margin is contraindicated. — Case ends here for review.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+    {
+      id: 'recovery',
+      situation: 'On day 3 he is bloated with no flatus. He is on regular morphine.',
+      question: 'How do you help his bowel recover?',
+      choices: [
+        {
+          text: 'Cut opioids (paracetamol and ketorolac if allowed), continue alvimopan, anti-emetics, early feeding when not nauseated, keep walking — neostigmine with telemetry if needed.',
+          correct: true,
+          outcome:
+            'Correct. Delayed bowel recovery is the commonest reason for a long stay. Opioid avoidance, alvimopan and early feeding are the core of enhanced recovery. No routine nasogastric tube.',
+        },
+        {
+          text: 'Routine nasogastric tube on suction and keep him nil by mouth until he passes flatus.',
+          correct: false,
+          outcome:
+            'Routine nasogastric suction is not needed unless consciousness or airway protection is a concern; reduce opioids and use the recovery measures instead.',
+        },
+      ],
+      source: CYST_SRC,
+    },
+  ],
+  source: CYST_SRC,
+};
+
+const PN_SRC = {
+  label: 'AUA Renal Mass Guideline · Campbell-Walsh-Wein 12th ed, ch 101–102 (partial nephrectomy)',
+  url: NEPH_SRC.url,
+};
+
+const partialNephrectomy: Scenario = {
+  id: 'partial-nephrectomy-advanced',
+  level: 'advanced',
+  title: 'Partial nephrectomy in a solitary kidney — ischaemia, the collecting system and late bleeding',
+  procedureId: 'partial-nephrectomy',
+  vignette:
+    'A 58-year-old woman has a solitary right kidney (the left was removed years ago) and a 5 cm central tumour near the hilum, abutting the collecting system. There is no venous thrombus or nodal disease. You plan an open partial nephrectomy.',
+  nodes: [
+    {
+      id: 'ischaemia',
+      situation: 'The tumour is too central for compression alone; you will need to clamp the hilum.',
+      question: 'How do you protect the kidney?',
+      choices: [
+        {
+          text: 'Mannitol and furosemide 15 minutes before clamping, then cool in ice slush to 20 °C (about 15 minutes) — aiming for under 35 minutes cold.',
+          correct: true,
+          outcome:
+            'Correct. For a large or hilar tumour, cold ischaemia protects function: allow ~15 minutes to reach 20 °C, and aim for ~20 minutes warm or ~35 minutes cold at most. Expected cold ischaemia over 45 minutes would favour an extracorporeal approach.',
+        },
+        {
+          text: 'Clamp warm and work as fast as possible — cooling just wastes time.',
+          correct: false,
+          outcome:
+            'A complex central resection in a solitary kidney is unlikely to fit in 20 minutes of warm ischaemia; prolonged ischaemia is a key cause of acute renal failure after partial nephrectomy.',
+        },
+      ],
+      source: PN_SRC,
+    },
+    {
+      id: 'collecting',
+      situation: 'The tumour is out. The base looks wet and you are not sure whether the collecting system has been opened.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Occlude the ureter and inject dilute indigo carmine into the pelvis; close any defect with 4-0 absorbable suture.',
+          correct: true,
+          outcome:
+            'Correct. 10–20 mL of dilute indigo carmine with the ureter occluded shows any leak, which is closed separately before the parenchyma.',
+        },
+        {
+          text: 'Close the parenchyma over bolsters — that will seal any small leak.',
+          correct: false,
+          outcome:
+            'An unrecognised collecting-system opening is the classic cause of a urinary fistula. Find it and close it first.',
+        },
+      ],
+      source: PN_SRC,
+    },
+    {
+      id: 'unclamp',
+      situation: 'The defect is closed over bolsters with pledgeted mattress sutures. Both artery and vein are clamped.',
+      question: 'How do you unclamp?',
+      choices: [
+        {
+          text: 'Vein first, then the artery — then check for bleeding, ischaemia and urine leak.',
+          correct: true,
+          outcome: 'Correct. When both are clamped, the vein is released before the artery.',
+        },
+        {
+          text: 'Artery first, then the vein.',
+          correct: false,
+          outcome: 'The recommended order is the reverse: vein first, then artery.',
+        },
+      ],
+      source: PN_SRC,
+    },
+    {
+      id: 'leak',
+      situation:
+        'On day 7 the drain output rises. Drain fluid creatinine is many times the serum level. She is well otherwise.',
+      question: 'What is it, and how do you treat it?',
+      choices: [
+        {
+          text: 'A urinary fistula: keep the drain, place a double-J stent after retrograde pyelography, and a urethral catheter.',
+          correct: true,
+          outcome:
+            'Correct. Most fistulas present at about 1 week. "Three tubes" — drain, stent, catheter — keep the system at low pressure; most heal in 4–6 weeks without reoperation.',
+        },
+        {
+          text: 'Take her back to theatre to re-suture the collecting system.',
+          correct: false,
+          outcome: 'Reoperation is rarely needed; conservative drainage heals most fistulas within 4–6 weeks.',
+        },
+      ],
+      source: PN_SRC,
+    },
+    {
+      id: 'haematuria',
+      situation:
+        'Three weeks after discharge she returns with heavy visible haematuria and a falling haemoglobin.',
+      question: 'What do you suspect, and what do you do?',
+      choices: [
+        {
+          text: 'A renal artery pseudoaneurysm: angiography and selective embolisation.',
+          correct: true,
+          outcome:
+            'Correct. Pseudoaneurysm occurs in about 2% after partial nephrectomy, usually with visible haematuria within 30 days; almost all are treated by angiography and embolisation, saving the kidney.',
+        },
+        {
+          text: 'Re-explore and convert to nephrectomy.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'In a solitary kidney this means dialysis — and selective embolisation almost always works. — Case ends here for review.',
+        },
+      ],
+      source: PN_SRC,
+    },
+  ],
+  source: PN_SRC,
+};
+
 export const SCENARIOS: Scenario[] = [
   turbt,
   turp,
@@ -1280,4 +1534,6 @@ export const SCENARIOS: Scenario[] = [
   turbtAdvanced,
   ureteralRepair,
   pyeloplasty,
+  cystectomy,
+  partialNephrectomy,
 ];

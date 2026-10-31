@@ -1988,6 +1988,208 @@ const retroperitonealExposure: Procedure = {
   },
 };
 
+const CWW_BLADDER_SURGERY = cww('Ch 138, Surgical Management of Bladder Cancer: Transurethral, Open, and Robotic', 'Navai & Dinney');
+
+const radicalCystectomy: Procedure = {
+  id: 'radical-cystectomy',
+  name: 'Radical cystectomy + pelvic lymph node dissection (open)',
+  category: 'Oncology',
+  summary:
+    'Removal of the bladder (with the prostate in men; classically with the uterus, cervix and anterior vagina in women) plus a bilateral pelvic lymph node dissection, followed by urinary diversion. Excellent survival for organ-confined disease. Major complications are infrequent (13%) but any complication is common (64%), mostly gastrointestinal (29%) or infectious (25%).',
+  anatomy: [
+    'Space of Retzius — entered first; the bladder is released bluntly from the pelvic sidewalls up to the vas (men) or round ligament (women).',
+    'Ureters — dissected from a few centimetres above the iliac crossing down to the detrusor hiatus, keeping their adventitia.',
+    'Standard node template: genitofemoral nerve laterally, internal iliac artery medially, Cooper ligament inferiorly, and the ureter crossing the common iliac artery superiorly. The obturator nerve runs through it.',
+    'Bladder pedicles — anterior (superior, middle, inferior vesical arteries) and posterior; in women the lateral pedicles run sinusoidally over the lateral vaginal wall.',
+    'Rectum and Denonvilliers fascia behind the bladder and prostate; the dorsal venous complex in front of the urethra.',
+  ],
+  steps: [
+    'Lower midline incision; enter the space of Retzius; release the bladder from the sidewalls; divide the urachus and the vas or round ligaments.',
+    'Mobilise the right colon and small-bowel mesentery and the sigmoid, creating a window under the sigmoid mesentery for the left ureter; place a self-retaining retractor.',
+    'Dissect both ureters to the detrusor hiatus, ligate the obliterated umbilical artery first to gain length, then divide them (frozen section of the margin is optional).',
+    'Pelvic lymph node dissection (standard or extended), clipping lymphatics at both ends and avoiding the obturator nerve.',
+    'Control the anterior bladder pedicles with clips, a vascular stapler or a sealing device.',
+    'Men: open the peritoneum over the seminal vesicles, free the rectum in the midline down to Denonvilliers fascia, then divide the posterior pedicles. Women: open the posterior vaginal fornix and remove the bladder with the uterus, cervix and anterior vaginal cuff.',
+    'Men: incise the endopelvic fascia, ligate and divide the dorsal venous complex and divide the urethra (frozen section of the urethral margin if a neobladder is planned). Women: close the vagina watertight and pack it.',
+  ],
+  complications: [
+    'Any complication in about two-thirds (64%); major complications in 13%.',
+    'Gastrointestinal (29%): delayed return of bowel function and ileus frequently prolong the stay.',
+    'Infection (25%).',
+    'Rectal injury, particularly after radiation, advanced disease or fibrosis.',
+    'Bleeding, especially from the dorsal venous complex and, in women, the vaginal-wall pedicles.',
+    'Venous thromboembolism.',
+    'Erectile dysfunction — only 38% potent after nerve sparing in one series.',
+    'Urethral recurrence (7.9% at 5 years in one series; lower with orthotopic diversion).',
+    'Peritoneal fistula or prolonged vaginal leakage if the vaginal closure is not watertight.',
+  ],
+  citation: CWW_BLADDER_SURGERY,
+  guideline: {
+    authors: 'AUA/ASCO/ASTRO/SUO',
+    journal: 'Non-Metastatic Muscle-Invasive Bladder Cancer Guideline',
+    year: 2020,
+    url: 'https://www.auanet.org/guidelines-and-quality/guidelines/bladder-cancer-non-metastatic-muscle-invasive-guideline',
+    label: 'AUA MIBC Guideline',
+  },
+  preop: {
+    indications: [
+      'Muscle-invasive bladder cancer confirmed as localised on staging.',
+      'Women: anterior pelvic exenteration remains the gold standard; vaginal and urethral sparing only for low-stage disease (cT1–cT2) without bladder-neck involvement when a neobladder is planned.',
+      'Subtotal prostate-sparing techniques only in highly selected men — occult prostate cancer is found in up to 41% of cystectomy specimens.',
+    ],
+    workup: [
+      'CT of chest, abdomen and pelvis (MRI if renal function is impaired); this also guides neoadjuvant chemotherapy.',
+      'Medical optimisation — coronary, smoking-related lung and peripheral vascular disease are common.',
+      'Stoma marking by enterostomal therapy, sitting and standing, even when a continent diversion is planned.',
+      'Counsel that a positive urethral frozen section rules out an orthotopic neobladder.',
+    ],
+    setup: [
+      'No routine mechanical bowel preparation, especially when only ileum is used; alvimopan 30–90 minutes before surgery speeds bowel recovery.',
+      'IV antibiotics within 1 hour of incision covering skin flora and bowel Gram-negatives and anaerobes (e.g. cefoxitin), chosen by local susceptibility.',
+      'High-risk patients: mechanical plus pharmacological thromboprophylaxis before induction; extended prophylaxis for 4 weeks cut major VTE (0.8% vs 4.6%).',
+      'Men supine with the table flexed about 15° at the anterior superior iliac spine; women in low lithotomy with the vagina prepped. Povidone-iodine rather than chlorhexidine on genital skin.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 1,
+      structure: 'Inferior vena cava under the retractor',
+      risk: 'Retractor blades placed for exposure can compress the cava.',
+      bailout: 'Tell the anaesthetist as the bowel is packed cephalad, check for haemodynamic change, and protect the bowel with moist packs behind the blades.',
+    },
+    {
+      step: 3,
+      structure: 'Obturator nerve and lymphatics',
+      risk: 'The nerve runs through the node packet; unsecured lymphatics at either end leak.',
+      bailout: 'Identify the nerve before clearing the obturator fossa; clip lymphatics at the cephalad and caudal ends and confirm no residual nodal tissue remains.',
+    },
+    {
+      step: 5,
+      structure: 'Rectum',
+      risk: 'After radiation, advanced disease or fibrosis from earlier resection or intravesical therapy, the rectovesical plane is obliterated and blunt dissection tears the rectum. Sealing devices near the rectum can injure it by heat spread.',
+      bailout: 'Switch to sharp dissection under direct vision; shield the rectum with a gloved finger when using a sealing device. If injured: primary repair, with or without flap cover and/or a diverting stoma.',
+    },
+    {
+      step: 6,
+      structure: 'Urethral margin',
+      risk: 'Cancer at the urethral margin makes an orthotopic neobladder unsafe.',
+      bailout: 'Keep enough urethral length and send a frozen section of the margin; if positive, do not create a neobladder (the patient should have been counselled for this).',
+    },
+    {
+      step: 6,
+      structure: 'Vaginal closure (women)',
+      risk: 'A closure that is not watertight causes a peritoneal fistula and prolonged vaginal leakage.',
+      bailout: 'Interrupted, mucosa-to-mucosa closure (clamshell to keep girth), then a vaginal pack to tamponade and reveal defects, removed on day 2.',
+    },
+  ],
+  postop: [
+    'Check blood count, electrolytes and renal function; monitor fluids, often in a step-down or intensive care unit.',
+    'No routine nasogastric tube unless consciousness or airway protection is a concern.',
+    'Continue thromboprophylaxis if there is no bleeding; early walking and incentive spirometry.',
+    'Bowel recovery: alvimopan, avoid opioids (paracetamol and ketorolac unless contraindicated), early feeding when not nauseated, anti-emetics and stress-ulcer prophylaxis; neostigmine with telemetry is an option.',
+    'Women: remove the vaginal pack on day 2.',
+  ],
+  extrasSource: CWW_BLADDER_SURGERY,
+};
+
+const CWW_OPEN_KIDNEY = cww('Ch 101, Open Surgery of the Kidney (partial nephrectomy)', 'Olumi & Blute');
+
+const partialNephrectomy: Procedure = {
+  id: 'partial-nephrectomy',
+  name: 'Partial nephrectomy (open)',
+  category: 'Oncology',
+  summary:
+    'Excision of a renal tumour with a rim of normal parenchyma, preserving the rest of the kidney. When technically feasible it is the preferred treatment for most renal masses, whatever their size, as long as the tumour can be removed safely and completely. Enucleation, wedge resection or segmental (polar) nephrectomy depending on size and position.',
+  anatomy: [
+    'Renal artery and vein — looped individually so a clamp can be applied quickly if needed; segmental arteries for polar tumours (avoid injuring the posterior segmental artery).',
+    'Tumour pseudocapsule — enucleation runs in the plane just outside it, within normal parenchyma.',
+    'Collecting system — opened by deep or central resections and closed separately.',
+    'Ureter — at risk while freeing perirenal fat from the lower pole.',
+  ],
+  steps: [
+    'Anterior subcostal or flank approach; free the kidney of perirenal fat except over the tumour, protecting the ureter at the lower pole.',
+    'IV mannitol and furosemide about 15 minutes before clamping; loop the renal artery and vein individually.',
+    'Clamp as needed: manual or parenchymal compression where possible; for large or hilar tumours clamp the artery (± the vein) and cool the kidney in ice slush to 20 °C, which takes about 15 minutes.',
+    'Score the capsule 5–10 mm around the tumour and excise it with a rim of normal parenchyma; inspect the margin and send the deep margin for frozen section.',
+    'Control bleeding vessels with figure-of-eight sutures, argon beam or bipolar; check the collecting system (dilute indigo carmine into the pelvis with the ureter occluded if in doubt) and close it with 4-0 absorbable suture.',
+    'Close the defect over bolsters with pledgeted 2-0 horizontal mattress sutures; fibrin glue; unclamp the vein before the artery; check for bleeding, ischaemia and urine leak.',
+    'Replace perirenal fat and Gerota fascia; closed suction drain; stent only for a large collecting-system defect.',
+  ],
+  complications: [
+    'Urinary fistula — more likely when the collecting system is opened; most present about 1 week after surgery.',
+    'Delayed bleeding, especially in patients needing anticoagulation; renal artery pseudoaneurysm in about 2%, usually presenting with visible haematuria within 30 days.',
+    'Acute renal failure, mostly in a solitary kidney (large tumour, excessive parenchymal loss, long ischaemia); most is mild and temporary, some needs dialysis.',
+    'Long-term hyperfiltration injury when more than 80% of total nephron mass is lost: proteinuria and progressive renal decline.',
+    'Positive surgical margin; unexpected multifocal tumours (about 2% clear cell and chromophobe, 10% papillary).',
+  ],
+  citation: CWW_OPEN_KIDNEY,
+  guideline: {
+    authors: 'AUA',
+    journal: 'Renal Mass & Localized Renal Cancer Guideline',
+    year: 2021,
+    url: 'https://www.auanet.org/guidelines-and-quality/guidelines/renal-mass-and-localized-renal-cancer-evaluation-management-and-follow-up',
+    label: 'AUA Renal Mass Guideline',
+  },
+  preop: {
+    indications: [
+      'Most renal masses that can be removed safely and completely, regardless of size.',
+      'Relative contraindications — technical: expected cold ischaemia over 45 minutes (consider extracorporeal), or less than 20% of global nephron mass left.',
+      'Relative contraindications — cancer: tumour encasing the renal pedicle, diffuse invasion of the collecting system, tumour thrombus in the major renal veins, adjacent-organ invasion (cT4) or regional nodes (N1).',
+      'Hereditary syndromes: most can be observed until tumours reach 3 cm (except hereditary leiomyomatosis RCC, which needs wide excision).',
+    ],
+    workup: [
+      'Contrast CT with 3-D reconstruction for the tumour’s relation to the collecting system and the segmental arteries.',
+      'Global renal function — hyperfiltration injury is most common when total nephron mass falls by more than 80%.',
+    ],
+    setup: [
+      'Ice slush and a bag or sheet available whenever clamping may be needed; vascular bulldog and Satinsky clamps.',
+      'Absorbable haemostatic bolsters and pledgets prepared beforehand; intraoperative ultrasound for subcortical or multifocal tumours.',
+      'Aim to limit warm ischaemia to about 20 minutes and cold ischaemia to about 35 minutes.',
+    ],
+  },
+  dangerZones: [
+    {
+      step: 0,
+      structure: 'Ureter (lower-pole tumours)',
+      risk: 'Clearing perirenal fat from the lower pole can injure the ureter.',
+      bailout: 'Identify and protect the ureter before freeing the lower pole.',
+    },
+    {
+      step: 2,
+      structure: 'Renal function under ischaemia',
+      risk: 'Prolonged warm or cold ischaemia harms the remaining kidney, especially a solitary one.',
+      bailout: 'Use compression rather than hilar clamping where possible; if clamping, give mannitol and furosemide first and cool to 20 °C for 15 minutes; aim for under 20 minutes warm and 35 minutes cold.',
+    },
+    {
+      step: 3,
+      structure: 'Posterior segmental artery',
+      risk: 'Injury during segmental dissection for a polar tumour devascularises the posterior kidney.',
+      bailout: 'Dissect the segmental branches fully and identify the apical or basilar branch before clamping; mark the line of ischaemia (indigo carmine into the clamped branch helps).',
+    },
+    {
+      step: 4,
+      structure: 'Collecting system',
+      risk: 'An unrecognised opening leaks urine and forms a fistula.',
+      bailout: 'Inject dilute indigo carmine into the pelvis with the ureter occluded; close any defect with 4-0 absorbable suture; stent over a wire for a large defect.',
+    },
+    {
+      step: 5,
+      structure: 'Renal capsule',
+      risk: 'Sutures through the capsule alone tear it.',
+      bailout: 'Pledgets along both borders and bites 1–2 cm into the parenchyma spread the tension.',
+    },
+  ],
+  postop: [
+    'Closed suction drain to watch for bleeding and urine; out at 2–5 days when output is minimal — keep it 7–10 days after deep resections, because most fistulas present at about 1 week.',
+    'Suspected leak: drain fluid creatinine many times the serum level (or IV indigo carmine appearing in the drain). Treat with three tubes: retroperitoneal drain, double-J stent after retrograde pyelography, and a urethral catheter. Most heal in 4–6 weeks without reoperation.',
+    'If the drain output rises after the catheter comes out, reinsert the catheter to lower pelvic pressure.',
+    'Delayed bleeding: bed rest, fluids and serial blood counts if a drain is in; angioembolisation if more than 1–2 units are needed; complete angioinfarction or re-exploration for life-threatening bleeding.',
+    'Visible haematuria in the first month suggests a pseudoaneurysm — almost all are treated by angiography and embolisation.',
+    'Stent, if used, stays 4–6 weeks.',
+  ],
+  extrasSource: cww('Ch 101, Open Surgery of the Kidney; ch 102, Laparoscopic and Robotic Surgery of the Kidney', 'Olumi & Blute; Moreira & Kavoussi'),
+};
+
 export const PROCEDURES: Procedure[] = [
   orchidopexy,
   circumcision,
@@ -2006,6 +2208,8 @@ export const PROCEDURES: Procedure[] = [
   vasectomy,
   rplnd,
   lapNephrectomy,
+  partialNephrectomy,
+  radicalCystectomy,
   bladderUreteralTrauma,
   ureteralReconstruction,
   retroperitonealExposure,
