@@ -917,4 +917,367 @@ const flexUrs: Scenario = {
   source: URS_SRC,
 };
 
-export const SCENARIOS: Scenario[] = [turbt, turp, urs, pcnl, torsion, lapNephrectomy, rplnd, flexUrs];
+const TURBT_CWW = {
+  label: 'AUA NMIBC Guideline · Campbell-Walsh-Wein 12th ed, ch 138 (transurethral resection)',
+  url: AUA_NMIBC.url,
+};
+
+const turbtAdvanced: Scenario = {
+  id: 'turbt-advanced',
+  level: 'advanced',
+  title: 'Lateral-wall TURBT — obturator jerk, perforation and an orifice',
+  procedureId: 'turbt',
+  vignette:
+    'A 70-year-old man has a 4 cm papillary tumour on the left lateral bladder wall and a second small tumour beside the right ureteric orifice. He is booked for TURBT; the anaesthetist offers spinal or general anaesthesia.',
+  nodes: [
+    {
+      id: 'obturator-setup',
+      situation: 'You are planning how to resect the lateral-wall tumour safely.',
+      question: 'How do you set up?',
+      choices: [
+        {
+          text: 'General anaesthesia with a muscle relaxant, bipolar resection if available, and only moderate bladder filling.',
+          correct: true,
+          outcome:
+            'Correct. Diathermy on the lateral wall stimulates the obturator nerve; the leg adducts and drives the loop through the wall. A relaxant, bipolar current and limited distension all reduce the risk.',
+        },
+        {
+          text: 'Spinal anaesthesia, monopolar loop, and a full bladder to flatten the wall.',
+          correct: false,
+          outcome:
+            'Each choice raises the risk: no relaxant to block the reflex, monopolar current, and an overdistended, thinned wall that perforates more easily.',
+        },
+      ],
+      source: TURBT_CWW,
+    },
+    {
+      id: 'perforation',
+      situation:
+        'Despite this, the leg jerks during the deep resection. The bladder will no longer distend, you see a defect, and the abdomen is becoming distended.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Suspect intraperitoneal perforation: confirm with an on-table cystogram, then laparotomy — inspect the bowel, repair, catheter and drain.',
+          correct: true,
+          outcome:
+            'Correct. Loss of distension, a visible defect and a distending abdomen suggest intraperitoneal perforation. It needs laparotomy, bowel inspection, repair, a catheter and a drain.',
+        },
+        {
+          text: 'Leave a catheter on free drainage and observe overnight.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Catheter drainage is for extraperitoneal perforation. An intraperitoneal tear needs surgical repair, and the bowel may be injured. — Case ends here for review.',
+        },
+      ],
+      source: TURBT_CWW,
+    },
+    {
+      id: 'instillation',
+      situation: 'After the repair, the nurse asks whether to give the single post-operative chemotherapy instillation.',
+      question: 'What do you answer?',
+      choices: [
+        {
+          text: 'No — withhold it because of the perforation.',
+          correct: true,
+          outcome:
+            'Correct. The single instillation is withheld when perforation is suspected or the resection was extensive.',
+        },
+        {
+          text: 'Yes — it reduces recurrence, so give it within 24 hours as usual.',
+          correct: false,
+          outcome:
+            'It does reduce recurrence in suitable patients, but it is withheld when perforation is suspected or the resection was extensive.',
+        },
+      ],
+      source: TURBT_CWW,
+    },
+    {
+      id: 'orifice',
+      situation: 'At a staged second session you resect the small tumour sitting at the right ureteric orifice.',
+      question: 'How do you handle the orifice?',
+      choices: [
+        {
+          text: 'Pure cutting current with quick strokes; consider a short-term stent if the resection was large or needed heavy cautery.',
+          correct: true,
+          outcome:
+            'Correct. Coagulating over the orifice can seal it. Routine stenting is not needed (hydronephrosis in about 4%), but a short stent is reasonable after a large resection or heavy cautery.',
+        },
+        {
+          text: 'Coagulate thoroughly over the orifice to make sure the base is dry.',
+          correct: false,
+          outcome: 'Heavy coagulation over the orifice can seal it and obstruct the kidney. Use cutting current and keep cautery to a minimum.',
+        },
+      ],
+      source: TURBT_CWW,
+    },
+    {
+      id: 'pathology',
+      situation: 'Pathology from the lateral-wall tumour: high-grade T1, with no detrusor muscle in the specimen.',
+      question: 'What is the plan?',
+      choices: [
+        {
+          text: 'Repeat TURBT within 6 weeks; BCG only later — never immediately, and not with visible haematuria.',
+          correct: true,
+          outcome:
+            'Correct. High-grade T1 without muscle needs restaging within 6 weeks. BCG waits 2–4 weeks after resection, and not while there is visible haematuria.',
+        },
+        {
+          text: 'Start BCG next week — the tumour has been resected.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Without detrusor in the specimen the stage is uncertain and muscle-invasive disease may be missed. Restage first. — Case ends here for review.',
+        },
+      ],
+      source: TURBT_CWW,
+    },
+  ],
+  source: TURBT_CWW,
+};
+
+const RECON_SRC = {
+  label: 'EAU Urological Trauma Guideline · Campbell-Walsh-Wein 12th ed, ch 89–90',
+  url: 'https://uroweb.org/guidelines/urological-trauma',
+};
+
+const ureteralRepair: Scenario = {
+  id: 'ureteral-repair-advanced',
+  level: 'advanced',
+  title: 'Ureteric injury at hysterectomy — climbing the reconstructive ladder',
+  procedureId: 'ureteral-reconstruction',
+  vignette:
+    'You are called to theatre during an open hysterectomy for a large fibroid uterus. The gynaecologist has transected the left ureter low in the pelvis. The patient is stable, the bladder is of normal size, and there is no bowel injury.',
+  nodes: [
+    {
+      id: 'tension',
+      situation: 'After trimming to healthy, bleeding edges, the spatulated ends only meet if you pull them together.',
+      question: 'How do you repair it?',
+      choices: [
+        {
+          text: 'Abandon end-to-end repair: reimplant into the bladder, with a psoas hitch to bridge the gap.',
+          correct: true,
+          outcome:
+            'Correct. A uretero-ureterostomy under tension almost always strictures. For a distal injury, a reimplant (adding up to about 5 cm with a hitch) is the next rung of the ladder.',
+        },
+        {
+          text: 'Anastomose end to end anyway, over a stent — the stent will protect it.',
+          correct: false,
+          terminal: true,
+          outcome: 'A stent does not compensate for tension; this repair will almost certainly stricture. — Case ends here for review.',
+        },
+      ],
+      source: RECON_SRC,
+    },
+    {
+      id: 'hitch',
+      situation: 'The bladder dome does not quite reach the psoas above the iliac vessels.',
+      question: 'How do you gain length?',
+      choices: [
+        {
+          text: 'Divide the contralateral superior vesical pedicle, then place hitch sutures in psoas under vision, clear of the genitofemoral nerve.',
+          correct: true,
+          outcome:
+            'Correct. Releasing the opposite pedicle mobilises the bladder. Sutures go into psoas and the psoas minor tendon, avoiding the genitofemoral nerve on its surface and the femoral nerve behind it.',
+        },
+        {
+          text: 'Pull the bladder up harder and take deep bites in psoas to hold it.',
+          correct: false,
+          outcome:
+            'Deep sutures risk the femoral nerve behind psoas, and more traction just adds tension. Release the contralateral pedicle instead.',
+        },
+      ],
+      source: RECON_SRC,
+    },
+    {
+      id: 'longer-defect',
+      situation:
+        'On closer inspection the devitalised segment is longer than expected and the gap now extends above the pelvic brim. The bladder has good capacity.',
+      question: 'What do you add?',
+      choices: [
+        {
+          text: 'A well-vascularised Boari flap combined with the psoas hitch.',
+          correct: true,
+          outcome:
+            'Correct. A psoas hitch alone rarely reaches above the brim; a Boari flap bridges 10–15 cm. Raise it wide-based (≥4 cm), without tension — ischaemia or tension is the commonest cause of a recurrent stricture.',
+        },
+        {
+          text: 'Raise a long, narrow flap to save bladder capacity.',
+          correct: false,
+          outcome:
+            'A narrow flap is poorly vascularised and is the classic cause of flap stricture. The base should be at least 4 cm.',
+        },
+      ],
+      source: RECON_SRC,
+    },
+    {
+      id: 'tunnel',
+      situation: 'You are ready to join the ureter to the flap.',
+      question: 'Tunnelled or non-tunnelled?',
+      choices: [
+        {
+          text: 'A long, non-tunnelled, widely spatulated, stented anastomosis.',
+          correct: true,
+          outcome:
+            'Correct. After trauma, a tunnelled reimplant carries more risk of obstruction than a non-tunnelled one does of clinically important reflux; reflux is usually insignificant in adults.',
+        },
+        {
+          text: 'A tunnelled antireflux reimplant, as in children.',
+          correct: false,
+          outcome: 'In this setting a tunnel raises the risk of obstruction, and reflux matters little in adults.',
+        },
+      ],
+      source: RECON_SRC,
+    },
+    {
+      id: 'leak',
+      situation:
+        'On day 3 the drain output is high and its creatinine is far above serum. The stent is in a good position on a plain film.',
+      question: 'How do you manage the leak?',
+      choices: [
+        {
+          text: 'Move the drain off the anastomosis and stop suction, keep the catheter in with an anticholinergic, and add a nephrostomy if it persists.',
+          correct: true,
+          outcome:
+            'Correct. The drain comes off the anastomosis and suction stops; the catheter and an anticholinergic deal with reflux and spasm; a nephrostomy diverts urine if the leak continues.',
+        },
+        {
+          text: 'Put the drain on stronger suction and remove the catheter to reduce spasm.',
+          correct: false,
+          outcome:
+            'The opposite of what is advised: take suction off and move the drain away from the anastomosis, and keep the catheter in for reflux and spasm.',
+        },
+      ],
+      source: RECON_SRC,
+    },
+  ],
+  source: RECON_SRC,
+};
+
+const PEDS_PYELO_SRC = {
+  label: 'EAU Paediatric Urology Guideline · Campbell-Walsh-Wein 12th ed, ch 42 (surgery of the ureter in children)',
+  url: 'https://uroweb.org/guidelines/paediatric-urology',
+};
+
+const pyeloplasty: Scenario = {
+  id: 'pyeloplasty-advanced',
+  level: 'advanced',
+  title: 'Laparoscopic pyeloplasty in a child — crossing vessel, tense pelvis and a kinked apex',
+  procedureId: 'pyeloplasty',
+  vignette:
+    'A 9-year-old boy has intermittent left flank pain. Diuretic renography shows obstruction with falling differential function. He is booked for laparoscopic dismembered (Anderson-Hynes) pyeloplasty.',
+  nodes: [
+    {
+      id: 'crossing-vessel',
+      situation: 'You have exposed the PUJ. The lower pole has not been freed yet.',
+      question: 'What do you do before dividing anything?',
+      choices: [
+        {
+          text: 'Free the lower pole and look for a crossing vessel; if present, keep it and bring the new junction in front of it.',
+          correct: true,
+          outcome:
+            'Correct. A lower-pole crossing vessel is a common cause in older children; a missed one leaves the obstruction in place. The vessel is preserved and the anastomosis placed anterior to it.',
+        },
+        {
+          text: 'Divide the PUJ straight away — the stenosis is obvious.',
+          correct: false,
+          outcome: 'A missed crossing vessel can leave the obstruction in place even after a technically good anastomosis.',
+        },
+      ],
+      source: PEDS_PYELO_SRC,
+    },
+    {
+      id: 'tense-pelvis',
+      situation: 'A crossing vessel is present and preserved. The pelvis is tensely distended and hard to handle.',
+      question: 'What next?',
+      choices: [
+        {
+          text: 'Place stay sutures, then decompress the pelvis with a 21G needle before dividing the PUJ.',
+          correct: true,
+          outcome: 'Correct. Decompressing first makes the pelvis manageable and avoids the temptation to over-reduce a tense pelvis.',
+        },
+        {
+          text: 'Excise a large part of the pelvis to make it smaller.',
+          correct: false,
+          outcome: 'A tense pelvis tempts excessive reduction. Decompress it, then reduce only redundant pelvis.',
+        },
+      ],
+      source: PEDS_PYELO_SRC,
+    },
+    {
+      id: 'apex',
+      situation:
+        'While you sew the back wall, traction on the stay sutures holds everything in line. On relaxing them, the apex looks angulated.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Re-place the apex precisely with the stays relaxed; if short, mobilise the kidney or add a low horizontal pelvic incision.',
+          correct: true,
+          outcome:
+            'Correct. Traction on stay sutures hides a kink that appears when released, and an imprecise or tense apex stenoses. Align it with the stays relaxed.',
+        },
+        {
+          text: 'Accept it — the stent will keep it open.',
+          correct: false,
+          terminal: true,
+          outcome: 'A kinked or tense apex stenoses after the stent comes out. — Case ends here for review.',
+        },
+      ],
+      source: PEDS_PYELO_SRC,
+    },
+    {
+      id: 'clot',
+      situation: 'Before the last sutures, there is clot in the pelvis.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Irrigate the pelvis with saline, then place the stent and finish the anastomosis.',
+          correct: true,
+          outcome: 'Correct. Clot left in the pelvis can block the new junction in the early days.',
+        },
+        {
+          text: 'Close — the clot will pass.',
+          correct: false,
+          outcome: 'Retained clot is a cause of early obstruction. Irrigate before completing the anastomosis.',
+        },
+      ],
+      source: PEDS_PYELO_SRC,
+    },
+    {
+      id: 'early-pain',
+      situation:
+        'With a double-J stent and the catheter removed on day 2, he develops flank pain and the ultrasound shows more dilation than before.',
+      question: 'What is the most likely cause, and what do you do?',
+      choices: [
+        {
+          text: 'Reflux up the stent or early oedema/clot: replace the bladder catheter; if it persists, a temporary nephrostomy.',
+          correct: true,
+          outcome:
+            'Correct. Reflux up a double-J transmits bladder pressure (hence the catheter for 24–48 h). Early clot and oedema usually settle within days; a temporary nephrostomy helps if needed.',
+        },
+        {
+          text: 'The pyeloplasty has failed — plan a redo now.',
+          correct: false,
+          outcome:
+            'Too early to call failure: oedema and clot usually settle within days. Drain first; failure is judged later.',
+        },
+      ],
+      source: PEDS_PYELO_SRC,
+    },
+  ],
+  source: PEDS_PYELO_SRC,
+};
+
+export const SCENARIOS: Scenario[] = [
+  turbt,
+  turp,
+  urs,
+  pcnl,
+  torsion,
+  lapNephrectomy,
+  rplnd,
+  flexUrs,
+  turbtAdvanced,
+  ureteralRepair,
+  pyeloplasty,
+];
