@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T00:00:00Z",
+  "updatedAt": "2026-10-31T12:00:00Z",
   "about": "Upcoming urology congresses. Every date, venue and URL is checked against the official congress or society site before it is added - never written from memory. Edit this file to update every installed app (see docs/CONFERENCES.md), and bump updatedAt when you do.",
   "conferences": [
     {
@@ -7,13 +7,13 @@
       "name": "AAU 2026",
       "fullName": "Arab Association of Urology Annual Congress",
       "organisation": "Arab Association of Urology (AAU)",
-      "startDate": "2026-11-04",
-      "endDate": "2026-11-07",
+      "startDate": "2026-12-03",
+      "endDate": "2026-12-05",
       "city": "Jeddah",
       "country": "Saudi Arabia",
       "url": "https://www.aaucongress2026.com/",
       "regional": true,
-      "notes": "The regional flagship, hosted in Jeddah this year. Closest major congress for Gulf/MENA trainees — the AAU also runs an oncology summit separately. Society site: araburology.org."
+      "notes": "The regional flagship, hosted in Jeddah this year. Closest major congress for Gulf/MENA trainees — the AAU also runs an oncology summit separately. Society site: araburology.org. Moved from 4–7 Nov to 3–5 Dec 2026 (official site, updated 29 Oct 2026)."
     },
     {
       "id": "wcet-2026",
