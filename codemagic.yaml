@@ -44,7 +44,7 @@ workflows:
       vars:
         APP_STORE_APPLE_ID: 6829262342 # numeric Apple ID of the app record ("UroApp – Urology Guide")
       node: 24.16.0 # matches the local toolchain
-      xcode: latest
+      xcode: 27.1 # needed for full screen on iPhone Duo (Apple: Xcode 26 builds don't fill it)
     triggering:
       events:
         - tag # build on a pushed tag (e.g. v1.0.0-b3), not on every commit
@@ -108,7 +108,7 @@ workflows:
     instance_type: mac_mini_m2
     environment:
       node: 24.16.0
-      xcode: latest # the Duo simulator ships with Xcode 27.1+
+      xcode: 27.1 # "latest" still resolves to Xcode 26 here, which has no Duo simulator
     scripts:
       - name: Build web assets and sync
         script: |
