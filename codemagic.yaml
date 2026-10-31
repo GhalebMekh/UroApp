@@ -66,7 +66,8 @@ workflows:
         script: |
           npm run typecheck
           npm run lint
-          npx vitest run
+          # Tests assume the default (paywall off); the build step below still gets VITE_PAYWALL.
+          VITE_PAYWALL= npx vitest run
 
       - name: Build web assets
         script: npm run build
