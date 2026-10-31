@@ -98,3 +98,56 @@ workflows:
         auth: integration
         submit_to_testflight: true
         submit_to_app_store: false
+
+  # Runs the app in the iPhone Duo simulator and saves screenshots as artifacts —
+  # a check for the foldable without owning one. No signing, no upload; start it
+  # by hand in Codemagic. Needs only the GitHub repo connected.
+  ios-duo-simulator:
+    name: iPhone Duo simulator check
+    max_build_duration: 45
+    instance_type: mac_mini_m2
+    environment:
+      node: 24.16.0
+      xcode: latest # the Duo simulator ships with Xcode 27.1+
+    scripts:
+      - name: Build web assets and sync
+        script: |
+          npm ci
+          npm run build
+          npx cap sync ios
+
+      - name: Build for the simulator
+        script: |
+          xcodebuild build \
+            -project ios/App/App.xcodeproj -scheme App \
+            -sdk iphonesimulator -configuration Debug \
+            -derivedDataPath build/sim \
+            CODE_SIGNING_ALLOWED=NO | tail -n 20
+
+      - name: Run on iPhone Duo and take screenshots
+        script: |
+          set -e
+          mkdir -p duo-shots
+          xcrun simctl list devicetypes > duo-shots/devicetypes.txt
+          TYPE=$(xcrun simctl list devicetypes | grep -i "iPhone Duo" | head -n 1 | sed -E 's/.*\((com\.apple[^)]*)\).*/\1/')
+          [ -n "$TYPE" ] || { echo "No iPhone Duo simulator in this Xcode"; cat duo-shots/devicetypes.txt; exit 1; }
+          UDID=$(xcrun simctl create "Duo check" "$TYPE")
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          APP=$(find build/sim/Build/Products -name "App.app" -maxdepth 3 | head -n 1)
+          xcrun simctl install "$UDID" "$APP"
+          # Skip the first-launch disclaimer for the shots (Capacitor Preferences = UserDefaults).
+          xcrun simctl spawn "$UDID" defaults write com.uroapp.clinical \
+            CapacitorStorage.uroapp.disclaimer.v2 '"2026-11-01T00:00:00.000Z"'
+          xcrun simctl launch "$UDID" com.uroapp.clinical
+          sleep 12
+          # Record which displays the simulator exposes, then shoot each one.
+          xcrun simctl io "$UDID" enumerate > duo-shots/displays.txt 2>&1 || true
+          xcrun simctl io "$UDID" screenshot duo-shots/default.png
+          for D in internal external; do
+            xcrun simctl io "$UDID" screenshot --display="$D" "duo-shots/$D.png" 2>>duo-shots/errors.txt || true
+          done
+          ls -la duo-shots
+
+    artifacts:
+      - duo-shots/*
