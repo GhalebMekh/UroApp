@@ -209,6 +209,13 @@ try {
     }, seed(NOW.getTime()));
     const page = await context.newPage();
     await page.clock.setFixedTime(NOW);
+    // Show the glass as an iPhone with default settings would: Windows with
+    // "transparency effects" off reports prefers-reduced-transparency, which
+    // switches the app's glass to its solid fallback.
+    const cdp = await context.newCDPSession(page);
+    await cdp.send('Emulation.setEmulatedMedia', {
+      features: [{ name: 'prefers-reduced-transparency', value: 'no-preference' }],
+    });
 
     for (const [name, prepare] of SHOTS) {
       // Fresh app per shot, so one screen's state never leaks into the next.

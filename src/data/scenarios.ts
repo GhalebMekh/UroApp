@@ -534,4 +534,382 @@ const torsion: Scenario = {
   source: TORSION_SRC,
 };
 
-export const SCENARIOS: Scenario[] = [turbt, turp, urs, pcnl, torsion];
+/* ── Advanced: multi-step cases where one problem leads to the next ── */
+
+const NEPH_SRC = {
+  label: 'AUA Renal Mass Guideline · Campbell-Walsh-Wein 12th ed, ch 102 (laparoscopic kidney surgery)',
+  url: 'https://www.auanet.org/guidelines-and-quality/guidelines/renal-mass-and-localized-renal-cancer-evaluation-management-and-follow-up',
+};
+
+const lapNephrectomy: Scenario = {
+  id: 'lap-nephrectomy-advanced',
+  title: 'Advanced: laparoscopic radical nephrectomy — scars, a torn vein and a misfire',
+  procedureId: 'lap-nephrectomy',
+  vignette:
+    'A 61-year-old obese man has a 9 cm right renal tumour with no venous thrombus. He had a midline laparotomy for a perforated ulcer years ago. Pre-operative CT shows two right renal arteries. You plan a transperitoneal laparoscopic radical nephrectomy.',
+  nodes: [
+    {
+      id: 'access',
+      situation: 'He is in the modified flank position. The midline scar runs through the umbilicus.',
+      question: 'How do you get into the abdomen?',
+      choices: [
+        {
+          text: 'Open (Hasson) access away from the scar — or go retroperitoneal.',
+          correct: true,
+          outcome:
+            'Correct. Most life-threatening vascular injuries, and about a third of bowel injuries, happen at Veress or first-trocar insertion. After previous surgery, enter away from scars with open access, or use the retroperitoneal route.',
+        },
+        {
+          text: 'Veress needle at the umbilicus, as usual.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Blind entry through a scarred umbilicus risks bowel stuck to the wall and a great-vessel injury — the commonest moment for the worst complications of laparoscopy. — Case ends here for review.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+    {
+      id: 'gonadal-ivc',
+      situation:
+        'You lift the ureter and lower pole to work up towards the hilum. Dark blood wells up at the junction of the right gonadal vein and the IVC.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Press on it with gauze for several minutes; once a grasper controls the hole, clip or suture it.',
+          correct: true,
+          outcome:
+            'Correct. The gonadal vein–IVC junction is weak and tears with traction on the lower pole. Pressure first, then a precise clip or suture under vision — never blindly.',
+        },
+        {
+          text: 'Fire clips into the pool of blood where the bleeding seems to come from.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Blind clipping beside the cava can enlarge the tear or catch the IVC wall. Control and see before you clip. — Case ends here for review.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+    {
+      id: 'hilum',
+      situation:
+        'The bleeding is controlled. At the hilum you find both arteries and the renal vein; a plastic locking clip placed earlier sits on the vein near where you plan to staple.',
+      question: 'How do you divide the hilum?',
+      choices: [
+        {
+          text: 'Divide both arteries first, then the vein with the vascular stapler — placed clear of any clip.',
+          correct: true,
+          outcome:
+            'Correct. Artery before vein. Stapling over a clip is a preventable cause of misfire, and plastic clips alone should never be used on the renal artery.',
+        },
+        {
+          text: 'Plastic locking clips on both arteries and staple the vein across the existing clip to save time.',
+          correct: false,
+          outcome:
+            'Two errors: plastic clips alone are not safe on the renal artery, and a stapler fired over a clip can misfire and leave part of the vessel open.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+    {
+      id: 'misfire',
+      situation:
+        'At the second artery the stapler fires incompletely, and brisk bleeding obscures the view. Suction is struggling to keep up.',
+      question: 'What next?',
+      choices: [
+        {
+          text: 'Make a small lower-midline incision, put a hand in to hold pressure, then suture or convert in a controlled way.',
+          correct: true,
+          outcome:
+            'Correct. A hand through a small incision gives immediate tamponade and buys time to suture, or to convert without losing control.',
+        },
+        {
+          text: 'Keep firing clips and staplers into the field until it stops.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Blind firing in a bloody field causes more vascular injury and can catch the IVC or the other vessels. — Case ends here for review.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+    {
+      id: 'before-closing',
+      situation: 'The kidney is out in a bag. The field looks dry at the working pressure.',
+      question: 'Before closing, what do you do?',
+      choices: [
+        {
+          text: 'Lower the insufflation pressure and recheck the bed, adrenal, mesentery, gonadal vessels and ureteric stump.',
+          correct: true,
+          outcome: 'Correct. Pneumoperitoneum tamponades venous bleeding; lowering it unmasks bleeders before you leave.',
+        },
+        {
+          text: 'Close — it is dry.',
+          correct: false,
+          outcome: 'Risky. Venous bleeding is often hidden by insufflation pressure and appears only once it is released.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+    {
+      id: 'day-two',
+      situation:
+        'On day 2 he has severe pain at one port site, a distending abdomen and a low-grade fever. His white count is low.',
+      question: 'What do you suspect, and what do you do?',
+      choices: [
+        {
+          text: 'An unrecognised bowel injury: CT with oral contrast, and usually exploration.',
+          correct: true,
+          outcome:
+            'Correct. Port-site pain out of proportion, distension and a low white count are the pattern of an unrecognised bowel injury (0.1–0.8%, about 3% mortality); half are thermal injuries from energy devices out of view.',
+        },
+        {
+          text: 'Post-operative ileus — nil by mouth and wait.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Waiting on this picture lets a bowel injury progress to peritonitis and sepsis. — Case ends here for review.',
+        },
+      ],
+      source: NEPH_SRC,
+    },
+  ],
+  source: NEPH_SRC,
+};
+
+const RPLND_SRC = {
+  label: 'AUA Testicular Cancer Guideline · Campbell-Walsh-Wein 12th ed, ch 77 (surgery of testicular tumours)',
+  url: 'https://www.auanet.org/guidelines-and-quality/guidelines/testicular-cancer-guideline',
+};
+
+const rplnd: Scenario = {
+  id: 'pc-rplnd',
+  title: 'Advanced: post-chemotherapy RPLND — bleomycin, lumbars and the left hilum',
+  procedureId: 'rplnd',
+  vignette:
+    'A 27-year-old man with a left non-seminomatous germ cell tumour has finished bleomycin-based chemotherapy. His markers have normalised, but an 11 cm left para-aortic residual mass remains. He wants children in future. You plan a post-chemotherapy RPLND.',
+  nodes: [
+    {
+      id: 'anaesthesia',
+      situation: 'At the time-out the anaesthetist plans generous fluids and a high inspired oxygen for a long case.',
+      question: 'What do you say?',
+      choices: [
+        {
+          text: 'Flag the bleomycin: low inspired oxygen and conservative fluids — and confirm he banked sperm.',
+          correct: true,
+          outcome:
+            'Correct. After bleomycin, lung toxicity is a real risk (about 11% vs 1.7% without it): keep inspired oxygen low and fluids conservative. Sperm banking should be offered to anyone who may want children.',
+        },
+        {
+          text: 'Agree — a long retroperitoneal case needs plenty of fluid and oxygen.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'High oxygen and liberal fluids after bleomycin risk serious pulmonary toxicity. — Case ends here for review.',
+        },
+      ],
+      source: RPLND_SRC,
+    },
+    {
+      id: 'lumbars',
+      situation: 'You are about to roll the aorta to clear the nodes behind it. Near the IMA level the tissue is thick and fibrotic.',
+      question: 'What do you do first?',
+      choices: [
+        {
+          text: 'Find and doubly ligate each lumbar vessel before rolling — expecting a large common lumbar vein near the IMA.',
+          correct: true,
+          outcome:
+            'Correct. There are about three pairs of lumbar arteries and variable lumbar veins, including a large common lumbar vein near the IMA level; torn while rolling, they bleed heavily.',
+        },
+        {
+          text: 'Roll the aorta first and deal with lumbar bleeding if it happens.',
+          correct: false,
+          outcome:
+            'Rolling first tears lumbar vessels, which retract and bleed in a deep, fibrotic field — far harder to control than ligating them up front.',
+        },
+      ],
+      source: RPLND_SRC,
+    },
+    {
+      id: 'nerves',
+      situation: 'Left of the aorta, fine fibres run from under the left renal vein around the aorta towards the IMA.',
+      question: 'How do you handle them?',
+      choices: [
+        {
+          text: 'Identify and isolate them before splitting and rolling, then pass the node packet around them.',
+          correct: true,
+          outcome:
+            'Correct. These are the left postganglionic sympathetic fibres; cutting them causes loss of antegrade ejaculation. Isolating them first is what makes the dissection nerve-sparing.',
+        },
+        {
+          text: 'Take them with the packet — clearance matters more.',
+          correct: false,
+          outcome:
+            'He wants children. Loss of antegrade ejaculation is avoidable with a nerve-sparing technique where it does not compromise the resection.',
+        },
+      ],
+      source: RPLND_SRC,
+    },
+    {
+      id: 'hilum',
+      situation: 'The mass encases the left renal hilum. You were expecting this: a mass over 10 cm, left-sided.',
+      question: 'What is your approach?',
+      choices: [
+        {
+          text: 'Try to salvage the kidney, accepting nephrectomy only if the mass cannot be cleared — he was counselled for it.',
+          correct: true,
+          outcome:
+            'Correct. Nephrectomy is needed in 5–31% of these cases, most strongly predicted by a mass over 10 cm, mostly left-sided. Save the kidney where possible, as he may need more cisplatin.',
+        },
+        {
+          text: 'Remove the kidney routinely with the mass — it is simpler.',
+          correct: false,
+          outcome:
+            'Routine nephrectomy removes renal reserve he may need for further cisplatin. Salvage the kidney where the resection allows.',
+        },
+      ],
+      source: RPLND_SRC,
+    },
+    {
+      id: 'chyle',
+      situation:
+        'At the top of the template, around the renal veins and behind the pancreas, milky fluid is collecting in the bed.',
+      question: 'How do you prevent chylous ascites?',
+      choices: [
+        {
+          text: 'Clip or suture the leaking lymphatics, inspect the bed, and plan a low-fat diet afterwards.',
+          correct: true,
+          outcome:
+            'Correct. Unsecured lymphatics at the cephalad end and behind the duodenum and pancreas cause chyle leak (about 2%). Clip liberally at the top of the template and check the bed before closing.',
+        },
+        {
+          text: 'Leave a suction drain and start a normal diet the next day.',
+          correct: false,
+          outcome:
+            'A drain does not close the leak, and normal dietary fat increases chyle flow. Secure the lymphatics and use a low-fat diet.',
+        },
+      ],
+      source: RPLND_SRC,
+    },
+  ],
+  source: RPLND_SRC,
+};
+
+const flexUrs: Scenario = {
+  id: 'flexible-urs-advanced',
+  title: 'Advanced: flexible URS — tight ureter, dust, a trapped basket and a lost fragment',
+  procedureId: 'flexible-urs',
+  vignette:
+    'A 50-year-old woman has a 1.6 cm right renal pelvic stone. Her urine culture is negative and she has had prophylactic antibiotics. You plan flexible ureteroscopy with laser lithotripsy through an access sheath.',
+  nodes: [
+    {
+      id: 'sheath',
+      situation: 'With the safety wire in place, the access sheath meets firm resistance in the mid ureter.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Stop: leave a stent and come back in a couple of weeks.',
+          correct: true,
+          outcome:
+            'Correct. A forced sheath can split the ureter (perforation 0–4% in modern series). Pre-stenting a tight ureter and returning is the safe route.',
+        },
+        {
+          text: 'Push the sheath through with steady pressure.',
+          correct: false,
+          terminal: true,
+          outcome: 'Forcing the sheath risks ureteric perforation or worse. — Case ends here for review.',
+        },
+      ],
+      source: URS_SRC,
+    },
+    {
+      id: 'dust',
+      situation:
+        'Two weeks later the sheath passes easily. Dusting the large stone fills the pelvis with cloud and you can no longer see the stone or the wall.',
+      question: 'How do you get your view back?',
+      choices: [
+        {
+          text: 'Aspirate the irrigant through the scope to clear it — or stent and stage if it will not clear.',
+          correct: true,
+          outcome:
+            'Correct. Dust hides fragments and the collecting-system wall, which invites perforation. Aspirate to clear the view, or stage the procedure.',
+        },
+        {
+          text: 'Turn the irrigation pressure right up to wash the dust away.',
+          correct: false,
+          outcome:
+            'High irrigation pressure can rupture a calyx. Clear the view by aspirating instead.',
+        },
+      ],
+      source: URS_SRC,
+    },
+    {
+      id: 'trapped-basket',
+      situation:
+        'Bringing a fragment down in a basket, it jams in the proximal ureter; the basket will not move up or down.',
+      question: 'What do you do?',
+      choices: [
+        {
+          text: 'Release the fragment if you can; otherwise dismantle the basket and laser the fragment where it is.',
+          correct: true,
+          outcome:
+            'Correct. The proximal third is the weakest part of the ureter. Never pull a trapped basket — release it, or dismantle it and fragment the stone in situ.',
+        },
+        {
+          text: 'Pull firmly on the basket to bring it out.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Forceful traction can avulse the proximal ureter (0.06–0.5%), a catastrophic injury needing nephrostomy and delayed reconstruction. — Case ends here for review.',
+        },
+      ],
+      source: URS_SRC,
+    },
+    {
+      id: 'lost-fragment',
+      situation:
+        'Freeing the basket, you see a small perforation in the ureteric wall, and a fragment has gone out through it.',
+      question: 'What now?',
+      choices: [
+        {
+          text: 'Leave the fragment, stop the procedure, place a stent, give antibiotics, and tell her about it.',
+          correct: true,
+          outcome:
+            'Correct. An extruded fragment is left alone: stop, stent, antibiotics and later imaging. Tell her, so it is not mistaken for a new stone on a future scan.',
+        },
+        {
+          text: 'Follow the fragment through the perforation with the scope to retrieve it.',
+          correct: false,
+          terminal: true,
+          outcome:
+            'Chasing it widens the perforation and risks extravasation and a much larger injury. — Case ends here for review.',
+        },
+      ],
+      source: URS_SRC,
+    },
+    {
+      id: 'after',
+      situation: 'The stent is in. She asks how long it stays and what happens next.',
+      question: 'What is the plan?',
+      choices: [
+        {
+          text: 'Stent for about 4 weeks, then imaging to confirm healing and drainage — and a later check for a silent stricture.',
+          correct: true,
+          outcome:
+            'Correct. After a perforation, stent about 4 weeks and image afterwards. Image every patient after ureteroscopy — strictures (3–6%) can be silent.',
+        },
+        {
+          text: 'Remove the stent in 3 days; no imaging needed if she feels well.',
+          correct: false,
+          outcome:
+            'Too short after a perforation, and strictures can be silent — imaging is needed even when she feels well.',
+        },
+      ],
+      source: URS_SRC,
+    },
+  ],
+  source: URS_SRC,
+};
+
+export const SCENARIOS: Scenario[] = [turbt, turp, urs, pcnl, torsion, lapNephrectomy, rplnd, flexUrs];
