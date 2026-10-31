@@ -5,10 +5,24 @@ import { PageBody, PageHero } from '@/components/PageHero';
 
 type Status = 'playing' | 'failed' | 'complete';
 
+type Level = 'core' | 'advanced';
+const levelOf = (s: Scenario): Level => s.level ?? 'core';
+const LEVELS: { id: Level; label: string; hint: string }[] = [
+  { id: 'core', label: 'Core', hint: 'One key decision at a time' },
+  { id: 'advanced', label: 'Advanced', hint: 'Complications that lead into each other' },
+];
+
 export function IntraopScenariosScreen() {
+  const [level, setLevel] = useState<Level>('core');
+  const inLevel = SCENARIOS.filter((s) => levelOf(s) === level);
   const [scenarioId, setScenarioId] = useState(SCENARIOS[0]?.id ?? '');
   const scenario: Scenario | undefined =
-    SCENARIOS.find((s) => s.id === scenarioId) ?? SCENARIOS[0];
+    inLevel.find((s) => s.id === scenarioId) ?? inLevel[0] ?? SCENARIOS[0];
+
+  function selectLevel(l: Level) {
+    setLevel(l);
+    selectScenario(SCENARIOS.find((s) => levelOf(s) === l)?.id ?? '');
+  }
 
   const [nodeIndex, setNodeIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -66,11 +80,37 @@ export function IntraopScenariosScreen() {
       />
       <PageBody narrow>
 
-        {SCENARIOS.length > 1 && (
+        {/* Difficulty groups */}
+        <div role="tablist" aria-label="Difficulty" className="flex gap-2">
+          {LEVELS.map((l) => {
+            const count = SCENARIOS.filter((s) => levelOf(s) === l.id).length;
+            const active = level === l.id;
+            return (
+              <button
+                key={l.id}
+                type="button"
+                role="tab"
+                aria-selected={active}
+                onClick={() => selectLevel(l.id)}
+                className={cn(
+                  'min-h-[44px] flex-1 rounded-[11px] border px-3 py-2 text-left transition-colors',
+                  active ? 'border-violet bg-violet/[0.14]' : 'border-line bg-navy-2 hover:border-violet/60',
+                )}
+              >
+                <span className={cn('block text-[14px] font-semibold', active ? 'text-ink' : 'text-muted')}>
+                  {l.label} <span className="font-mono text-[12px] text-muted-2">{count}</span>
+                </span>
+                <span className="block text-[11.5px] text-muted-2">{l.hint}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {inLevel.length > 1 && (
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Scenario</span>
-            <select value={scenarioId} onChange={(e) => selectScenario(e.target.value)} className={field}>
-              {SCENARIOS.map((s) => (
+            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Case</span>
+            <select value={scenario.id} onChange={(e) => selectScenario(e.target.value)} className={field}>
+              {inLevel.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.title}
                 </option>
@@ -81,6 +121,10 @@ export function IntraopScenariosScreen() {
 
         {/* Case vignette */}
         <div className="rounded-[14px] border border-line bg-navy-2 p-5">
+          <div className="mb-2 flex flex-wrap items-center gap-2">
+            <DifficultyBadge level={levelOf(scenario)} />
+            <span className="font-mono text-[11px] text-muted-2">{scenario.nodes.length} decisions</span>
+          </div>
           <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">
             {scenario.title}
           </div>
@@ -198,6 +242,19 @@ export function IntraopScenariosScreen() {
 
 const primaryBtn =
   'min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90';
+
+/** Difficulty label — violet shades only; teal/amber/crimson stay reserved for risk (CLAUDE.md). */
+function DifficultyBadge({ level }: { level: Level }) {
+  return level === 'advanced' ? (
+    <span className="rounded-full bg-violet px-2.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-white">
+      Advanced
+    </span>
+  ) : (
+    <span className="rounded-full border border-violet/50 px-2.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-violet-soft">
+      Core
+    </span>
+  );
+}
 
 function OutcomeCard({ tone, text }: { tone: 'good' | 'warn' | 'bad'; text: string }) {
   const styles: Record<typeof tone, string> = {

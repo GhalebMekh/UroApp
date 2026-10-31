@@ -32,6 +32,8 @@ export interface Scenario {
   title: string;
   /** Links to a procedure in procedures.ts where one exists. */
   procedureId?: string;
+  /** Core = one problem at a time; advanced = complications that lead into each other. */
+  level?: 'core' | 'advanced';
   vignette: string;
   nodes: ScenarioNode[];
   source: { label: string; url: string };
@@ -543,7 +545,8 @@ const NEPH_SRC = {
 
 const lapNephrectomy: Scenario = {
   id: 'lap-nephrectomy-advanced',
-  title: 'Advanced: laparoscopic radical nephrectomy — scars, a torn vein and a misfire',
+  level: 'advanced',
+  title: 'Laparoscopic radical nephrectomy — scars, a torn vein and a misfire',
   procedureId: 'lap-nephrectomy',
   vignette:
     'A 61-year-old obese man has a 9 cm right renal tumour with no venous thrombus. He had a midline laparotomy for a perforated ulcer years ago. Pre-operative CT shows two right renal arteries. You plan a transperitoneal laparoscopic radical nephrectomy.',
@@ -685,7 +688,8 @@ const RPLND_SRC = {
 
 const rplnd: Scenario = {
   id: 'pc-rplnd',
-  title: 'Advanced: post-chemotherapy RPLND — bleomycin, lumbars and the left hilum',
+  level: 'advanced',
+  title: 'Post-chemotherapy RPLND — bleomycin, lumbars and the left hilum',
   procedureId: 'rplnd',
   vignette:
     'A 27-year-old man with a left non-seminomatous germ cell tumour has finished bleomycin-based chemotherapy. His markers have normalised, but an 11 cm left para-aortic residual mass remains. He wants children in future. You plan a post-chemotherapy RPLND.',
@@ -798,7 +802,8 @@ const rplnd: Scenario = {
 
 const flexUrs: Scenario = {
   id: 'flexible-urs-advanced',
-  title: 'Advanced: flexible URS — tight ureter, dust, a trapped basket and a lost fragment',
+  level: 'advanced',
+  title: 'Flexible URS — tight ureter, dust, a trapped basket and a lost fragment',
   procedureId: 'flexible-urs',
   vignette:
     'A 50-year-old woman has a 1.6 cm right renal pelvic stone. Her urine culture is negative and she has had prophylactic antibiotics. You plan flexible ureteroscopy with laser lithotripsy through an access sheath.',
