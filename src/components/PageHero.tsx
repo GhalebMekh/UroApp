@@ -32,8 +32,8 @@ export function HeroShell({
       )}
     >
       {/* Soft light shapes, purely decorative. */}
-      <span aria-hidden="true" className="pointer-events-none absolute -right-16 -top-10 h-72 w-72 rounded-full bg-white/[0.09]" />
-      <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 left-1/3 h-44 w-44 rounded-full bg-white/[0.06]" />
+      <span aria-hidden="true" className="pointer-events-none absolute -right-16 -top-10 h-72 w-72 rounded-full bg-white/[0.09] animate-drift-a" />
+      <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 left-1/3 h-44 w-44 rounded-full bg-white/[0.06] animate-drift-b" />
       {/* Default bottom space leaves room for the PageSheet's rounded edge to overlap. */}
       <div className={cn('relative mx-auto max-w-wrap px-4 pt-4 sm:px-6 md:pt-6', className ?? 'pb-12 md:pb-14')}>
         {children}

@@ -70,6 +70,22 @@ export default {
         'ai-soft':
           'linear-gradient(135deg, rgba(139,124,246,.16), rgba(109,91,224,.06))',
       },
+      // Header circles drift very slowly (owner, 2026-10-31). Long, offset cycles so the
+      // two never sync; stopped by the reduced-motion rule in index.css.
+      keyframes: {
+        'drift-a': {
+          '0%, 100%': { transform: 'translate(0, 0) scale(1)' },
+          '50%': { transform: 'translate(-28px, 18px) scale(1.06)' },
+        },
+        'drift-b': {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '50%': { transform: 'translate(36px, -14px)' },
+        },
+      },
+      animation: {
+        'drift-a': 'drift-a 26s ease-in-out infinite',
+        'drift-b': 'drift-b 34s ease-in-out infinite',
+      },
       maxWidth: {
         wrap: '1180px',
       },
