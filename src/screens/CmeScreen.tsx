@@ -513,7 +513,7 @@ export function CmeScreen() {
           role="dialog"
           aria-modal="true"
           aria-label={`Certificate for ${viewing.title}`}
-          className="fixed inset-0 z-[90] flex flex-col bg-navy/95 px-4 pb-safe pt-safe"
+          className="fixed inset-0 z-[90] flex flex-col bg-navy/95 px-safe-4 pb-safe pt-safe"
           onClick={() => setViewing(null)}
         >
           <div className="flex items-center gap-3 py-3" onClick={(e) => e.stopPropagation()}>

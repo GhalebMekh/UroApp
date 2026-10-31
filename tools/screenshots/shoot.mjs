@@ -21,6 +21,9 @@ const OUT = new URL('../../store/screenshots/', import.meta.url);
 const DEVICES = [
   { name: 'iphone-6.3', width: 402, height: 874, scale: 3, mobile: true }, // 1206 × 2622
   { name: 'iphone-6.9', width: 440, height: 956, scale: 3, mobile: true }, // 1320 × 2868
+  // iPhone Duo (foldable): sizes from App Store Connect's screenshot specifications.
+  { name: 'iphone-duo-outer', width: 466, height: 678, scale: 3, mobile: true }, // 1398 × 2034
+  { name: 'iphone-duo-inner', width: 669, height: 951, scale: 3, mobile: true }, // 2007 × 2853
   // Landscape: the three-column dashboard fills it; portrait left half the page empty.
   { name: 'ipad-13', width: 1376, height: 1032, scale: 2, mobile: false }, // 2752 × 2064
 ];

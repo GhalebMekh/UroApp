@@ -48,7 +48,7 @@ export function PasscodeGate({ children }: { children: ReactNode }) {
   if (unlocked) return <>{children}</>;
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-navy px-6 pb-safe pt-safe">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-navy px-safe-6 pb-safe pt-safe">
       <div className="w-full max-w-sm">
         <div className="mb-7 flex items-center gap-2.5">
           <BrandMark className="h-9 w-9 text-[20px]" />

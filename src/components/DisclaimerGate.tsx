@@ -30,7 +30,7 @@ export function DisclaimerGate({ children }: { children: ReactNode }) {
     <>
       {accepted !== false && children}
       {accepted === false && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy px-6 pb-safe pt-safe">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy px-safe-6 pb-safe pt-safe">
           <div
             role="dialog"
             aria-modal="true"
