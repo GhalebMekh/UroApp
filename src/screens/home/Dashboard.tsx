@@ -5,6 +5,7 @@ import { ToolsCard } from './ToolsCard';
 import { QuickAccess } from './QuickAccess';
 import { PracticeCard } from './PracticeCard';
 import { ConferenceCard } from './ConferenceCard';
+import { CmeCard } from './CmeCard';
 
 /**
  * The installed app's Home: a working dashboard rather than a sales page —
@@ -43,6 +44,7 @@ export function Dashboard({
           <QuickAccess onOpenLink={onOpenLink} className="sm:col-span-2" />
           <PracticeCard onOpen={onOpenRehearsal} />
           <ConferenceCard onOpen={() => onNavigate('conferences')} />
+          <CmeCard onOpen={() => onNavigate('cme')} />
         </div>
       </div>
     </>

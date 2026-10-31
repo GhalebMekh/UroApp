@@ -7,7 +7,10 @@ import { useAccount } from '@/lib/accountContext';
 import { profileByline } from '@/lib/profile';
 import { PageBody, PageHero } from '@/components/PageHero';
 import {
+  CME_ACTIVITIES_KEY as ACT_KEY,
+  CME_TARGET_KEY as TARGET_KEY,
   CME_TYPE_LABEL,
+  cmeReminder,
   inCycle,
   normalizeActivity,
   normalizeTarget,
@@ -17,10 +20,9 @@ import {
   type CmeTarget,
   type CmeType,
 } from '@/lib/cme';
+import { dueForLogging, loadAttending, saveAttending, setStatus, type AttendingConference } from '@/lib/cmeConferences';
+import { formatSpan } from '@/lib/conferenceDates';
 import { compressImage, deleteCertificate, loadCertificates, saveCertificate } from '@/lib/cmeCertificates';
-
-const ACT_KEY = 'uroapp.cme.v1';
-const TARGET_KEY = 'uroapp.cme.target.v1';
 
 const inputCls =
   'w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13px] text-ink outline-none focus:border-violet';
@@ -55,6 +57,13 @@ export function CmeScreen() {
   const rowFile = useRef<HTMLInputElement>(null);
   const rowTarget = useRef<string | null>(null);
 
+  // conferences marked "I'm attending" that have ended
+  const [attending, setAttending] = useState<AttendingConference[]>([]);
+  const [loggingConf, setLoggingConf] = useState<string | null>(null);
+  const formRef = useRef<HTMLElement>(null);
+  const hoursRef = useRef<HTMLInputElement>(null);
+  const today = useMemo(() => todayISO(), []);
+
   useEffect(() => {
     Promise.all([getJSON<unknown>(ACT_KEY, []), getJSON<unknown>(TARGET_KEY, null)]).then(([a, t]) => {
       const list = Array.isArray(a) ? a.map(normalizeActivity).filter((x): x is CmeActivity => x !== null) : [];
@@ -63,7 +72,29 @@ export function CmeScreen() {
       setLoaded(true);
       void loadCertificates(list.map((x) => x.id)).then(setCerts);
     });
+    void loadAttending().then(setAttending);
   }, []);
+
+  const dueConfs = useMemo(() => dueForLogging(attending, today), [attending, today]);
+
+  function updateConf(id: string, status: AttendingConference['status']) {
+    const next = setStatus(attending, id, status);
+    setAttending(next);
+    void saveAttending(next);
+  }
+
+  /** Fill the form from an attended conference; hours are left for the user. */
+  function startLogging(c: AttendingConference) {
+    setLoggingConf(c.id);
+    setTitle(c.fullName === c.name ? c.name : `${c.name} — ${c.fullName}`);
+    setProvider(c.organisation);
+    setDate(c.startDate <= today ? c.startDate : today);
+    setType('conference');
+    setAccredited(true);
+    setHours('');
+    formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    window.setTimeout(() => hoursRef.current?.focus(), 350);
+  }
 
   /** Compress a picked photo; null (with a message) when it can't be read. */
   async function readPhoto(input: HTMLInputElement): Promise<string | null> {
@@ -133,6 +164,11 @@ export function CmeScreen() {
     setHours('');
     setReference('');
     setPendingCert(null);
+    if (loggingConf) {
+      updateConf(loggingConf, 'logged');
+      setLoggingConf(null);
+      setDate(today);
+    }
   }
 
   function exportCsv() {
@@ -141,6 +177,7 @@ export function CmeScreen() {
   }
 
   const summary = useMemo(() => summarise(activities, target), [activities, target]);
+  const reminder = useMemo(() => cmeReminder(activities, target, today), [activities, target, today]);
   const cycleSet = Boolean(target.cycleStart || target.cycleEnd);
 
   function body(): string {
@@ -188,6 +225,54 @@ export function CmeScreen() {
         lede="Log each activity as you go, and the record is ready when your licence renewal comes round. Set the hours and cycle your licensing body requires — the app doesn't assume them."
       />
       <PageBody>
+        {reminder && (
+          <div
+            role="status"
+            className={cn(
+              'mb-5 rounded-[16px] border px-5 py-4 text-[13.5px]',
+              reminder.daysLeft < 0 ? 'border-crimson/50 bg-crimson/[0.10]' : 'border-amber/50 bg-amber/[0.10]',
+            )}
+          >
+            <div className="font-semibold text-ink">
+              {reminder.daysLeft < 0
+                ? `Your cycle ended ${-reminder.daysLeft} day${reminder.daysLeft === -1 ? '' : 's'} ago, ${reminder.remaining} h short.`
+                : reminder.daysLeft === 0
+                  ? `Your cycle ends today — ${reminder.remaining} h to go.`
+                  : `${reminder.remaining} h to go, ${reminder.daysLeft} day${reminder.daysLeft === 1 ? '' : 's'} left in this cycle.`}
+            </div>
+            <div className="mt-0.5 text-muted">
+              {reminder.perMonth !== null
+                ? `That's about ${reminder.perMonth} h a month. Check your licensing body's rules for late or carried-over hours.`
+                : "Check with your licensing body, then set the new cycle's dates and target above."}
+            </div>
+          </div>
+        )}
+
+        {dueConfs.map((c) => (
+          <div key={c.id} className="mb-5 flex flex-wrap items-center gap-3 rounded-[16px] border border-violet/50 bg-violet/[0.10] px-5 py-4">
+            <div className="min-w-0 flex-1 text-[13.5px]">
+              <div className="font-semibold text-ink">You attended {c.name}. Log it?</div>
+              <div className="mt-0.5 text-muted">
+                {formatSpan(c.startDate, c.endDate)} · {c.organisation}. Enter the hours from your certificate.
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={() => startLogging(c)}
+              className="min-h-[44px] rounded-[10px] bg-violet px-4 text-[13px] font-semibold text-white hover:bg-violet-deep"
+            >
+              Log it
+            </button>
+            <button
+              type="button"
+              onClick={() => updateConf(c.id, 'dismissed')}
+              className="min-h-[44px] rounded-[10px] border border-line px-3 text-[13px] font-semibold text-muted hover:text-ink"
+            >
+              Not now
+            </button>
+          </div>
+        ))}
+
         {/* Progress */}
         <section className="rounded-[20px] border border-line bg-navy-2 p-6">
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
@@ -243,7 +328,7 @@ export function CmeScreen() {
         </section>
 
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[360px_1fr]">
-          <section className="space-y-3.5 rounded-[20px] border border-line bg-navy-2 p-6">
+          <section ref={formRef} className="scroll-mt-24 space-y-3.5 rounded-[20px] border border-line bg-navy-2 p-6">
             <h3 className="font-display text-[19px] font-semibold">Log an activity</h3>
             <label className="block">
               <Label>Date</Label>
@@ -260,7 +345,7 @@ export function CmeScreen() {
             <div className="grid grid-cols-2 gap-3">
               <label className="block">
                 <Label>Credit hours</Label>
-                <input type="number" inputMode="decimal" min="0" step="0.5" value={hours} onChange={(e) => setHours(e.target.value)} placeholder="e.g. 6" className={inputCls} />
+                <input ref={hoursRef} type="number" inputMode="decimal" min="0" step="0.5" value={hours} onChange={(e) => setHours(e.target.value)} placeholder="e.g. 6" className={inputCls} />
               </label>
               <label className="block">
                 <Label>Type</Label>

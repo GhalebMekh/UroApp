@@ -7,6 +7,10 @@
  * measures progress against whatever target the user sets.
  */
 
+/** Storage keys (both synced with the account, see lib/sync). */
+export const CME_ACTIVITIES_KEY = 'uroapp.cme.v1';
+export const CME_TARGET_KEY = 'uroapp.cme.target.v1';
+
 export type CmeType = 'conference' | 'workshop' | 'online' | 'journal-club' | 'teaching' | 'other';
 
 export const CME_TYPE_LABEL: Record<CmeType, string> = {
@@ -100,6 +104,34 @@ export function summarise(activities: CmeActivity[], t: CmeTarget): CmeSummary {
   const percent = t.hours > 0 ? Math.min(100, Math.round((total / t.hours) * 100)) : null;
   const remaining = t.hours > 0 ? r1(Math.max(0, t.hours - total)) : null;
   return { total, accredited, byType, percent, remaining };
+}
+
+/** Show the renewal reminder this many days before the cycle ends. */
+export const REMINDER_DAYS = 120;
+
+export interface CmeReminder {
+  /** Days until the cycle end (0 = ends today; negative = already ended). */
+  daysLeft: number;
+  remaining: number;
+  /** Hours per month needed to finish on time; null once the cycle has ended. */
+  perMonth: number | null;
+}
+
+/**
+ * A reminder when the cycle ends within REMINDER_DAYS and the target is not
+ * met yet, or when the cycle ended short. Null when there is no target, no
+ * end date, the target is met, or the deadline is still far off.
+ */
+export function cmeReminder(activities: CmeActivity[], t: CmeTarget, today: string): CmeReminder | null {
+  if (!(t.hours > 0) || !t.cycleEnd) return null;
+  const { remaining } = summarise(activities, t);
+  if (!remaining) return null;
+  const daysLeft = Math.round(
+    (new Date(`${t.cycleEnd}T00:00:00`).getTime() - new Date(`${today}T00:00:00`).getTime()) / 86_400_000,
+  );
+  if (daysLeft > REMINDER_DAYS) return null;
+  const months = (daysLeft + 1) / 30.44;
+  return { daysLeft, remaining, perMonth: daysLeft >= 0 ? r1(remaining / Math.max(months, 1)) : null };
 }
 
 /** One CSV field: quoted when needed, and a leading = + - @ neutralised so Excel won't run it as a formula. */

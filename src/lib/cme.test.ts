@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { inCycle, normalizeActivity, normalizeTarget, summarise, toCsv, type CmeActivity, type CmeTarget } from './cme';
+import { cmeReminder, inCycle,normalizeActivity, normalizeTarget, summarise, toCsv, type CmeActivity, type CmeTarget } from './cme';
 
 const act = (over: Partial<CmeActivity>): CmeActivity => ({
   id: Math.random().toString(36).slice(2),
@@ -104,5 +104,33 @@ describe('toCsv', () => {
 
   it('neutralises spreadsheet formulas', () => {
     expect(lines[1]).toContain(`"'=HYPERLINK(""x"")"`);
+  });
+});
+
+describe('cmeReminder', () => {
+  const t: CmeTarget = { hours: 30, cycleStart: '2026-01-01', cycleEnd: '2026-12-31' };
+  const done = [act({ date: '2026-03-01', hours: 18 })];
+
+  it('stays quiet without a target or end date, or when far off', () => {
+    expect(cmeReminder(done, { ...t, hours: 0 }, '2026-11-01')).toBeNull();
+    expect(cmeReminder(done, { ...t, cycleEnd: '' }, '2026-11-01')).toBeNull();
+    expect(cmeReminder(done, t, '2026-06-01')).toBeNull();
+  });
+
+  it('stays quiet once the target is met', () => {
+    expect(cmeReminder([act({ date: '2026-03-01', hours: 30 })], t, '2026-12-01')).toBeNull();
+  });
+
+  it('gives days left and the monthly pace inside the window', () => {
+    const r = cmeReminder(done, t, '2026-10-31')!;
+    expect(r.daysLeft).toBe(61);
+    expect(r.remaining).toBe(12);
+    expect(r.perMonth).toBe(5.9); // 12 h over 62 days (≈2.04 months)
+  });
+
+  it('reports an ended cycle with no pace', () => {
+    const r = cmeReminder(done, t, '2027-01-05')!;
+    expect(r.daysLeft).toBeLessThan(0);
+    expect(r.perMonth).toBeNull();
   });
 });

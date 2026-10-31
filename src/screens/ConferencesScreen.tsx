@@ -1,4 +1,6 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { cn } from '@/lib/cn';
+import { loadAttending, saveAttending, toggleAttending, type AttendingConference } from '@/lib/cmeConferences';
 import type { Conference } from '@/data/conferences';
 import { useConferenceFeed } from '@/lib/conferencesFeed';
 import { PageBody, PageHero } from '@/components/PageHero';
@@ -20,6 +22,17 @@ function toEvent(c: Conference): CalendarEvent {
 
 export function ConferencesScreen() {
   const [exportError, setExportError] = useState(false);
+  const [attending, setAttending] = useState<AttendingConference[]>([]);
+
+  useEffect(() => {
+    void loadAttending().then(setAttending);
+  }, []);
+
+  function toggle(c: Conference) {
+    const next = toggleAttending(attending, c);
+    setAttending(next);
+    void saveAttending(next);
+  }
 
   const feed = useConferenceFeed();
   const today = useMemo(() => todayISO(), []);
@@ -131,7 +144,26 @@ export function ConferencesScreen() {
                   >
                     Add to calendar
                   </button>
+                  {(() => {
+                    const going = attending.some((a) => a.id === c.id);
+                    return (
+                      <button
+                        type="button"
+                        aria-pressed={going}
+                        onClick={() => toggle(c)}
+                        className={cn(
+                          'inline-flex min-h-[44px] items-center rounded-[8px] border px-3 py-1.5 text-[12px] font-semibold transition-colors',
+                          going ? 'border-violet bg-violet/[0.16] text-violet-soft' : 'border-line bg-navy text-muted hover:border-violet',
+                        )}
+                      >
+                        {going ? '✓ Attending' : "I'm attending"}
+                      </button>
+                    );
+                  })()}
                 </div>
+                {attending.some((a) => a.id === c.id) && (
+                  <p className="mt-2 text-[11.5px] text-muted-2">After it ends, the CME tracker will offer to log it.</p>
+                )}
               </div>
             );
           })}
