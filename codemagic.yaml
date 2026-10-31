@@ -139,8 +139,17 @@ workflows:
           # Skip the first-launch disclaimer for the shots (Capacitor Preferences = UserDefaults).
           xcrun simctl spawn "$UDID" defaults write com.uroapp.clinical \
             CapacitorStorage.uroapp.disclaimer.v2 '"2026-11-01T00:00:00.000Z"'
-          xcrun simctl launch "$UDID" com.uroapp.clinical
-          sleep 12
+          # Let SpringBoard settle first: an early launch landed on the home screen.
+          sleep 45
+          xcrun simctl spawn "$UDID" log stream --style compact \
+            --predicate 'process == "App"' > duo-shots/app-log.txt 2>&1 &
+          LOGPID=$!
+          xcrun simctl launch --terminate-running-process "$UDID" com.uroapp.clinical | tee duo-shots/launch.txt
+          sleep 20
+          kill $LOGPID 2>/dev/null || true
+          # Is the app still running, or did it crash?
+          xcrun simctl spawn "$UDID" launchctl list | grep -i uroapp > duo-shots/running.txt || echo "NOT RUNNING" > duo-shots/running.txt
+          cp ~/Library/Logs/DiagnosticReports/App-*.ips duo-shots/ 2>/dev/null || true
           # Record which displays the simulator exposes, then shoot each one.
           xcrun simctl io "$UDID" enumerate > duo-shots/displays.txt 2>&1 || true
           xcrun simctl io "$UDID" screenshot duo-shots/default.png
