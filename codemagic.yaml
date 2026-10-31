@@ -154,9 +154,15 @@ workflows:
           sleep 25
           kill -INT $VIDPID 2>/dev/null || true; sleep 3
           # Try every way simctl may name the Duo's two screens.
-          for D in primary primary-1 1 3 LCD LCD-1; do
-            xcrun simctl io "$UDID" screenshot --display="$D" "duo-shots/display-$D.png" >>duo-shots/errors.txt 2>&1 || true
-          done
+          # Outer screen ("primary"), then "unfold": power the outer off and the inner
+          # ("primary-1") on, give the app time to move and relayout, and shoot again.
+          xcrun simctl io "$UDID" screenshot --display=primary duo-shots/outer.png >>duo-shots/errors.txt 2>&1 || true
+          xcrun simctl io "$UDID" screenConfig --display=primary-1 power on >>duo-shots/errors.txt 2>&1 || true
+          xcrun simctl io "$UDID" screenConfig --display=primary power off >>duo-shots/errors.txt 2>&1 || true
+          sleep 12
+          xcrun simctl io "$UDID" screenshot --display=primary-1 duo-shots/inner.png >>duo-shots/errors.txt 2>&1 || true
+          xcrun simctl io "$UDID" recordVideo --display=primary-1 --codec=h264 --force duo-shots/inner.mp4 &
+          V2=$!; sleep 6; kill -INT $V2 2>/dev/null || true; sleep 2
           kill $LOGPID 2>/dev/null || true
           # Is the app still running, or did it crash?
           xcrun simctl spawn "$UDID" launchctl list | grep -i uroapp > duo-shots/running.txt || echo "NOT RUNNING" > duo-shots/running.txt

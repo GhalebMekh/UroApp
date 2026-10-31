@@ -28,6 +28,9 @@ export function HeroShell({
     <header
       className={cn(
         'relative -mt-[calc(4rem+env(safe-area-inset-top))] overflow-hidden pt-[calc(4rem+env(safe-area-inset-top))]',
+        // Bleed the background under side insets (iPhone Duo's vertical status bar, landscape
+        // camera); the padding keeps the content itself clear of them.
+        'bleed-safe-x',
         TONE_BG[tone],
       )}
     >
