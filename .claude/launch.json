@@ -12,6 +12,12 @@
       "runtimeExecutable": "npx",
       "runtimeArgs": ["vite", "--mode", "paywall", "--port", "5174"],
       "port": 5174
+    },
+    {
+      "name": "uroapp-build",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vite", "preview", "--port", "4173", "--strictPort"],
+      "port": 4173
     }
   ]
 }

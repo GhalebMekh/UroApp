@@ -10,6 +10,7 @@ import { AccountProvider } from '@/components/AccountProvider';
 import { SyncBoundary } from '@/components/SyncBoundary';
 import { LockGate } from '@/components/LockGate';
 import { PurchasesProvider } from '@/components/PurchasesProvider';
+import { NotificationsSync } from '@/components/NotificationsSync';
 import type { GatedFeature } from '@/lib/featureTiers';
 import { NAV_ITEMS, NAV_PARENT, type ResidencyTarget, type Screen, type ScreenLink } from '@/navigation';
 import { HomeScreen } from '@/screens/HomeScreen';
@@ -121,6 +122,7 @@ export default function App() {
     <PurchasesProvider onOpenPlans={openPlans}>
       {/* Access first, then the medical disclaimer — no reason to show clinical
           terms to someone who cannot get in. */}
+      <NotificationsSync onOpen={navigate} />
       <PasscodeGate>
       <DisclaimerGate>
         <div className="flex min-h-[100dvh] flex-col px-safe">

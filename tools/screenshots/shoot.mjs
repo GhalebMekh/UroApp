@@ -25,7 +25,7 @@ const DEVICES = [
   { name: 'ipad-13', width: 1376, height: 1032, scale: 2, mobile: false }, // 2752 × 2064
 ];
 
-// A Monday morning in Jeddah, two days before AAU 2026.
+// A Monday morning in Jeddah, a week before WCET 2026.
 const NOW = new Date('2026-11-02T08:30:00+03:00');
 const DAY = 86_400_000;
 
@@ -40,7 +40,7 @@ function seed(now) {
     total,
   });
   return {
-    'CapacitorStorage.uroapp.disclaimer.v1': 'true',
+    'CapacitorStorage.uroapp.disclaimer.v2': JSON.stringify(new Date(now).toISOString()),
     'CapacitorStorage.uroapp.tools.v1': JSON.stringify({
       favourites: ['capra', 'renal', 'ipss'],
       recents: ['psa', 'eortc', 'stone-passage'],

@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn';
 import { lockApp, passcodeEnabled } from '@/lib/passcode';
 import { AppLockSettings } from '@/components/AppLockSettings';
 import { AccountSettings } from '@/components/AccountSettings';
+import { NotificationSettings } from '@/components/NotificationSettings';
 import { SubscriptionSettings } from '@/components/SubscriptionSettings';
 import { previewMode } from '@/lib/preview';
 import { PAYWALL_ENABLED } from '@/lib/featureTiers';
@@ -53,6 +54,8 @@ export function MoreScreen() {
         </section>
 
         <AppLockSettings />
+
+        <NotificationSettings />
 
         {/* Lets a shared or borrowed device be handed over locked. Hidden when
             no passcode is configured, where the button would do nothing. */}
