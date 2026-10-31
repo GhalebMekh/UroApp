@@ -138,7 +138,9 @@ workflows:
           xcrun simctl install "$UDID" "$APP"
           # Skip the first-launch disclaimer for the shots (Capacitor Preferences = UserDefaults).
           xcrun simctl spawn "$UDID" defaults write com.uroapp.clinical \
-            CapacitorStorage.uroapp.disclaimer.v2 '"2026-11-01T00:00:00.000Z"'
+            CapacitorStorage.uroapp.disclaimer.v2 '\"2026-10-01T00:00:00.000Z\"' # JSON string: keep the quotes
+          # Discover how this simulator unfolds the Duo (commands differ by Xcode version).
+          { xcrun simctl help; xcrun simctl help io; xcrun simctl help ui; } > duo-shots/simctl-help.txt 2>&1 || true
           # Let SpringBoard settle first: an early launch landed on the home screen.
           sleep 45
           xcrun simctl spawn "$UDID" log stream --style compact \

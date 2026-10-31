@@ -30,12 +30,13 @@ export function DisclaimerGate({ children }: { children: ReactNode }) {
     <>
       {accepted !== false && children}
       {accepted === false && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy px-safe-6 pb-safe pt-safe">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-navy px-safe-6 py-safe-4">
+          {/* Card scrolls inside the safe area: the iPhone Duo's outer screen is short. */}
           <div
             role="dialog"
             aria-modal="true"
             aria-labelledby="disclaimer-title"
-            className="max-h-[90dvh] w-full max-w-md overflow-y-auto rounded-[20px] border border-line bg-navy-2 p-7"
+            className="max-h-full w-full max-w-md overflow-y-auto rounded-[20px] border border-line bg-navy-2 p-7"
           >
             <div className="mb-4 flex items-center gap-2.5">
               <BrandMark className="h-9 w-9 text-[20px]" />
