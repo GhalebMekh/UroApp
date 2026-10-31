@@ -32,15 +32,17 @@ export function TopBar({
   }, [overHero]);
 
   const clear = overHero && !scrolled;
-  const chip = clear
-    ? 'border-white/25 bg-white/[0.14] text-white'
-    : 'border-line bg-navy-2 text-muted hover:border-violet hover:text-violet-soft';
+  // Round buttons are glass either way: clearer over the gradient header,
+  // the navy-tinted glass once the bar sits over content.
+  const chip = clear ? 'glass-clear text-white' : 'glass text-ink hover:text-violet-soft';
 
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 border-b pt-safe transition-colors duration-200',
-        clear ? 'border-transparent bg-transparent' : 'border-line bg-navy/[0.78] backdrop-blur-[14px]',
+        'sticky top-0 z-50 pt-safe transition-[background-color,border-color] duration-200',
+        clear
+          ? 'border-b border-transparent bg-transparent'
+          : 'border-b border-white/[0.08] bg-navy/[0.45] [-webkit-backdrop-filter:blur(24px)_saturate(180%)] [backdrop-filter:blur(24px)_saturate(180%)]',
       )}
     >
       <div className="mx-auto flex h-16 max-w-wrap items-center justify-between px-6">
@@ -50,7 +52,7 @@ export function TopBar({
               type="button"
               onClick={onBack}
               aria-label="Back"
-              className={cn('grid h-11 w-11 place-items-center rounded-full border text-[20px] leading-none transition-colors', chip)}
+              className={cn('grid h-11 w-11 place-items-center rounded-full text-[20px] leading-none transition-colors', chip)}
             >
               ←
             </button>
@@ -65,14 +67,14 @@ export function TopBar({
             type="button"
             onClick={onOpenSearch}
             aria-label="Search"
-            className={cn('grid h-11 w-11 place-items-center rounded-full border text-[18px] transition-colors', chip)}
+            className={cn('grid h-11 w-11 place-items-center rounded-full text-[18px] transition-colors', chip)}
           >
             <SearchIcon />
           </button>
           <span
             className={cn(
-              'rounded-full border px-3 py-1 text-[12px] font-semibold',
-              clear ? 'border-white/25 bg-white/[0.14] text-white' : 'border-line bg-navy-2 text-violet-soft',
+              'rounded-full px-3 py-1 text-[12px] font-semibold',
+              clear ? 'glass-clear text-white' : 'glass text-violet-soft',
             )}
           >
             {TIER_LABEL[tier]}

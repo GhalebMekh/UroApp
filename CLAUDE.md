@@ -58,6 +58,9 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
   directly with greeting, profile button and search, and its cards overlap the band. The top
   bar is clear over the header until the page scrolls. New screens must use PageHero, not their
   own eyebrow/h2. Navy stays the app background (owner kept it).
+- Glass (owner 2026-10-31, after iOS 26 Liquid Glass): `.glass` / `.glass-clear` in index.css,
+  for the navigation layer only — floating pill tab bar, top bar and its buttons. Content cards
+  stay solid for contrast. Solid fallback under Reduce Transparency; keep it.
 - Icons: inline stroke SVGs in `src/components/icons.tsx` (1em, currentColor, 1.8 stroke).
   Do NOT use emoji as UI icons.
 - Risk categories are always color-coded low=teal / moderate=amber / high=crimson

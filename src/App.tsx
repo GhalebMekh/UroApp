@@ -143,7 +143,7 @@ export default function App() {
           />
 
         {/* pb leaves room for the fixed bottom nav (~64px + safe area) */}
-        <main className="flex-1 pb-24">
+        <main className="flex-1 pb-28">
           {/* A preview build withholds the workspaces that ship with the iOS
               release; the hubs still list them so the scope stays visible. */}
           {isLocked(currentScreen) ? (

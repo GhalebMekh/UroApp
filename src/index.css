@@ -49,6 +49,50 @@
   }
 }
 
+@layer components {
+  /* Glass, after iOS 26's Liquid Glass (owner, 2026-10-31): only the navigation
+     layer — tab bar, top bar, its buttons — is glass; content cards stay solid
+     so clinical text keeps its contrast. A light rim on the top edge and a soft
+     drop shadow give the lensed edge. Falls back to solid navy when the user
+     asks iOS to reduce transparency, or the browser cannot blur. */
+  .glass {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04)),
+      rgba(15, 31, 56, 0.55);
+    -webkit-backdrop-filter: blur(24px) saturate(180%);
+    backdrop-filter: blur(24px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.04),
+      0 10px 30px -12px rgba(0, 0, 0, 0.6);
+  }
+  /* A clearer variant for controls sitting on the gradient headers. */
+  .glass-clear {
+    background: rgba(255, 255, 255, 0.14);
+    -webkit-backdrop-filter: blur(16px) saturate(160%);
+    backdrop-filter: blur(16px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass {
+      background: #0f1f38;
+    }
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .glass {
+      background: #0f1f38;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .glass-clear {
+      background: rgba(255, 255, 255, 0.2);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+}
+
 @layer utilities {
   /* Safe-area insets for the persistent top bar and bottom nav (CLAUDE.md) */
   .pt-safe {
