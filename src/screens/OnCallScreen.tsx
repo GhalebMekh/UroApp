@@ -61,6 +61,20 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
           </ol>
         </div>
 
+        {em.sections?.map((s) => (
+          <div key={s.title} className="mt-5">
+            <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">{s.title}</div>
+            <ul className="space-y-2.5">
+              {s.items.map((item) => (
+                <li key={item} className="flex gap-3 text-[14px]">
+                  <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-soft" />
+                  <span className="text-muted">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+
         <div className="mt-5">
           <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-amber">
             Don't miss
@@ -75,6 +89,7 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
         </div>
 
         <CitationNote citation={em.citation} />
+        {em.alsoSee && <p className="mt-2 text-[12px] text-muted-2">{em.alsoSee}</p>}
       </section>
 
       {em.id === 'torsion' && (
