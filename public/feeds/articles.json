@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-10-25T07:09:56.212Z",
-  "week": 44,
-  "topic": "Testicular trauma and torsion emergency management",
+  "generatedAt": "2026-11-01T08:31:33.420Z",
+  "week": 45,
+  "topic": "Radical cystectomy outcomes and quality of life",
   "subspecialties": [
     "topic",
     "oncology",
@@ -11,6 +11,182 @@
   ],
   "articles": [
     {
+      "pmid": "42772020",
+      "title": "Prehabilitation for patients undergoing radical cystectomy: Patient selection and targeted interventions.",
+      "authors": "Briggs LG, Choudry MM, Nguyen MV",
+      "journal": "Urol Oncol",
+      "pubDate": "2026-09-22",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42772020/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42462153",
+      "title": "Robot-Assisted Radical Cystectomy: Recommendations from Latin American Experts Consensus on Surgical Strategy, Urinary Reconstruction, and Oncological and Func-tional Outcomes.",
+      "authors": "Faria EF, Rodriguez A, Pompeo A",
+      "journal": "Int Braz J Urol",
+      "pubDate": "2026 Nov-Dec",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42462153/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42217279",
+      "title": "Comparison of quality of life and sexual function after ileal vs. sigmoid orthotopic neobladder reconstruction following nerves, vas deferens, and seminal vesicle-sparing radical cystectomy: A prospective randomized study.",
+      "authors": "Singh V, Aggarwal A, Akhtar MR",
+      "journal": "Urol Oncol",
+      "pubDate": "2026-08-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42217279/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42028123",
+      "title": "Quality of Life After Radical Cystectomy: Meta-analysis of Neobladder and Ileal Conduit Outcomes Across Multiple Assessment Tools.",
+      "authors": "Mediana E, Hamid ARAH, Rahman F",
+      "journal": "Eur Urol Open Sci",
+      "pubDate": "2026-05-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42028123/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41992552",
+      "title": "Alternatives to radical cystectomy: a bladder-sparing approach in appropriately selected patients.",
+      "authors": "Nolazco JI, Melnick KR, Lee RJ",
+      "journal": "BJU Int",
+      "pubDate": "2026-07-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41992552/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41733191",
+      "title": "Navigating bladder preservation in Bacillus Calmette-Guérin-unresponsive disease: how much risk is too much?",
+      "authors": "Aliaga A, Ávila C, Fernández MI",
+      "journal": "Curr Opin Urol",
+      "pubDate": "2026-05-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41733191/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41390278",
+      "title": "The Influence of Urinary Diversion Type on Body Image and Decision Regret Following Radical Cystectomy: A Systematic Review.",
+      "authors": "Roessler N, Miszczyk M, Miyajima K",
+      "journal": "Eur Urol Focus",
+      "pubDate": "2026-09-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41390278/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41230159",
+      "title": "Management of prostatic necrosis and the devastated bladder outlet-a narrative review.",
+      "authors": "Holm HV, Nilsen OJ",
+      "journal": "Transl Androl Urol",
+      "pubDate": "2025-10-31",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41230159/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41111014",
+      "title": "Time to change the template: An oncologic appraisal of organ sparing cystectomy in the female patient.",
+      "authors": "Chung R, Montanaro F, Croll B",
+      "journal": "Urol Oncol",
+      "pubDate": "2025-12-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41111014/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "41049820",
+      "title": "Bladder preservation alternatives in non-metastatic muscle-invasive bladder tumor: A systematic review and meta-analysis.",
+      "authors": "Parrao D, Lizana N, Saavedra C",
+      "journal": "Asian J Urol",
+      "pubDate": "2025-07-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/41049820/",
+      "subspecialty": "topic",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42954085",
+      "title": "A Trial-Level Benefit-Toxicity Mapping Framework for Adjuvant Therapy in Renal Cell Carcinoma: A Focused Review.",
+      "authors": "Shinohara M, Narita T, Hatakeyama S",
+      "journal": "Int J Urol",
+      "pubDate": "2026-11-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42954085/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42952235",
+      "title": "Opposing roles of acid phosphatase 1 (ACP1) and ACP3 in prostate cancer progression.",
+      "authors": "Faria AVS, Ferreira-Halder CV, Peppelenbosch MP",
+      "journal": "BJU Int",
+      "pubDate": "2026-10-28",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42952235/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42952025",
+      "title": "PSMA Theranostics for Prostate Cancer: Evidence, Pitfalls, and Implementation in Japan.",
+      "authors": "Hirata K, Watanabe S, Wakabayashi H",
+      "journal": "Int J Urol",
+      "pubDate": "2026-11-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42952025/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42949831",
+      "title": "Undescended Testes in Medically Complex Children: Evaluating A Common Urologic Condition Through a Multi-Disciplinary Lens.",
+      "authors": "Chan YY, Loomba L, Ravula N",
+      "journal": "J Urol",
+      "pubDate": "2026-10-28",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42949831/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42946767",
+      "title": "Prostate cancer worldwide: updated epidemiology, disparities, and screening implications.",
+      "authors": "Bernardino RM, Nguyen DD, Carlsson SV",
+      "journal": "Prostate Cancer Prostatic Dis",
+      "pubDate": "2026-10-27",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42946767/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42934012",
+      "title": "Neoadjuvant Therapy in Patients with Upper Tract Urothelial Cancer: An Updated Systematic Review and Meta-analysis.",
+      "authors": "Di Bello F, Gallioli A, D'Andrea D",
+      "journal": "Eur Urol Oncol",
+      "pubDate": "2026-10-26",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42934012/",
+      "subspecialty": "oncology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
       "pmid": "42919974",
       "title": "Microbiome interactions in renal cell carcinoma: evidence, challenges and opportunities.",
       "authors": "Lindgaard C, Hvidt AK, Keller AK",
@@ -19,7 +195,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42919974/",
       "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
       "pmid": "42919739",
@@ -30,7 +206,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42919739/",
       "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
       "pmid": "42907259",
@@ -41,7 +217,7 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42907259/",
       "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
       "pmid": "42901957",
@@ -52,73 +228,128 @@
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42901957/",
       "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42899400",
-      "title": "Androgen driven organoids for the male urogenital system.",
-      "authors": "Liu A, Yang L, Yan X",
+      "pmid": "42965614",
+      "title": "Laser to stone interaction: how do lasers break stones ? a systematic review.",
+      "authors": "Chicaud M, Scilipoti P, Kutchukian S",
+      "journal": "Urolithiasis",
+      "pubDate": "2026-10-31",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42965614/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42934069",
+      "title": "Economic Evaluation of Surgical Management for Urolithiasis: A Systematic Review of Comparative Cost Analyses from EAU endourology.",
+      "authors": "Scilipoti P, Zorzi F, Panthier F",
+      "journal": "Eur Urol Focus",
+      "pubDate": "2026-10-26",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42934069/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42901875",
+      "title": "Does bespoke metabolic investigation reduce urinary stone recurrence? A narrative review.",
+      "authors": "Wiseman OJ, Turney BW",
       "journal": "BJU Int",
       "pubDate": "2026-10-20",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42899400/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42901875/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42897296",
-      "title": "Rare prostate cancer histologies: detection, characteristics and treatment.",
-      "authors": "Melão BVLA, Jardim DL, Li R",
-      "journal": "Nat Rev Urol",
-      "pubDate": "2026-10-19",
+      "pmid": "42898237",
+      "title": "Primary Versus Delayed Ureteroscopy for Obstructing Ureteric Calculi: A Systematic Review and Meta-analysis from the European Association of Urology Endourology.",
+      "authors": "Sugrue DD, Cullivan O, Ryan FR",
+      "journal": "Eur Urol Open Sci",
+      "pubDate": "2026-12-01",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42897296/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42898237/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42892578",
-      "title": "Restricted mean survival time-based network meta-analysis of first-line therapies for metastatic clear cell renal cell carcinoma.",
-      "authors": "McGrath J, Johnson K, Hakam N",
-      "journal": "Urol Oncol",
-      "pubDate": "2026-10-17",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42892578/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
-    },
-    {
-      "pmid": "42888115",
-      "title": "Active Surveillance for Intermediate-risk Prostate Cancer: Implications of AI-enabled Pattern Quantification.",
-      "authors": "Mittmann G, van den Bergh RCN, Fine SW",
-      "journal": "Eur Urol Focus",
+      "pmid": "42888853",
+      "title": "Flexible and navigable suction ureteric access sheath and direct-in-scope suction in endourology: a systematic evidence map of study characteristics and research trends.",
+      "authors": "Scilipoti P, Zorzi F, Gonzalez CG",
+      "journal": "BJU Int",
       "pubDate": "2026-10-16",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42888115/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42888853/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42881230",
-      "title": "Combination therapy for BCG-unresponsive non-muscle-invasive bladder cancer: biological rationale and ongoing clinical strategies.",
-      "authors": "Daneshmand S, Boorjian SA, Meeks JJ",
-      "journal": "Nat Rev Urol",
-      "pubDate": "2026-10-15",
+      "pmid": "42866845",
+      "title": "Sodium-glucose cotransporter 2 inhibitors vs. glucagon-like peptide-1 receptor agonists and dipeptidyl peptidase-4 inhibitors for incident and recurrent urolithiasis: a European Association of Urology Endourology systematic review.",
+      "authors": "Pischetola A, Esperto F, Tsaturyan A",
+      "journal": "Transl Androl Urol",
+      "pubDate": "2026-09-30",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42881230/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42866845/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42881114",
-      "title": "Prostate Cancer Incidence and Disease Characteristics in Transgender Women Receiving Gender-affirming Hormone Therapy: A Systematic Review with Meta-analysis.",
-      "authors": "Oberoi K, Trevaskis I, Hassan S",
-      "journal": "Eur Urol Oncol",
-      "pubDate": "2026-10-15",
+      "pmid": "42862368",
+      "title": "Laparoscopic and robotic management of symptomatic calyceal diverticula: a systematic review on behalf of YAU and EAU endourology.",
+      "authors": "Spinos T, Ergul R, Peteinaris A",
+      "journal": "World J Urol",
+      "pubDate": "2026-10-12",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42881114/",
-      "subspecialty": "oncology",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42862368/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42862355",
+      "title": "Experimental and clinical studies: a scoping review of intrarenal pressure in percutaneous nephrolithotomy.",
+      "authors": "Giulioni C, Castellani D, Cafarelli A",
+      "journal": "World J Urol",
+      "pubDate": "2026-10-12",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42862355/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42859243",
+      "title": "The effect of a stress ball on pain, anxiety, satisfaction, and treatment continuation during extracorporeal shock wave lithotripsy: a randomized controlled trial.",
+      "authors": "Kanat C, Bozkul G, Kettaş Dölek E",
+      "journal": "Urolithiasis",
+      "pubDate": "2026-10-10",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42859243/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42859231",
+      "title": "Bridging evidence gaps in opioid-sparing postoperative pain control for percutaneous nephrolithotomy: a network meta-analysis identifying optimal strategies.",
+      "authors": "Li P, Tao K, Jian Z",
+      "journal": "Urolithiasis",
+      "pubDate": "2026-10-10",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42859231/",
+      "subspecialty": "endourology",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42964010",
+      "title": "Urethroplasty for bulbomembranous strictures after benign prostatic hyperplasia surgery: systematic review and meta-analysis.",
+      "authors": "Scilipoti P, Zorzi F, Folcia A",
+      "journal": "BJU Int",
+      "pubDate": "2026-10-31",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42964010/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
       "pmid": "42821513",
@@ -128,107 +359,96 @@
       "pubDate": "2026-10-01",
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42821513/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42811152",
-      "title": "Observation or treatment of paediatric varicoceles: revisiting the evidence.",
-      "authors": "Buchinsky DS, Naelitz BD, Siva J",
-      "journal": "Nat Rev Urol",
-      "pubDate": "2026-09-29",
+      "pmid": "42729133",
+      "title": "Oxidative stress in bladder outlet obstruction: a narrative review.",
+      "authors": "Zhou YY, Shi B, Zhang CH",
+      "journal": "Transl Androl Urol",
+      "pubDate": "2026-08-31",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42811152/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42729133/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42791104",
-      "title": "Tumor risk in patients with differences in sex development (DSD) statements and recommendations from the first update of the German guideline for DSD.",
-      "authors": "Stein R, Krege S, Neumann U",
-      "journal": "J Pediatr Urol",
-      "pubDate": "2026-09-09",
+      "pmid": "42709214",
+      "title": "Flexible ureteroscopy with a flexible and negative suction ureteral access sheath versus traditional sheath for treatment of infectious upper urinary tract stones: A prospective, randomized controlled study.",
+      "authors": "Wang Q, Tang QL, Liu FD",
+      "journal": "Urolithiasis",
+      "pubDate": "2026-09-08",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42791104/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42709214/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42678688",
-      "title": "Oxygen-rich dressing for hypospadias repair: Systematic review and meta-analysis.",
-      "authors": "Wong M, Botelho F, Chua ME",
-      "journal": "Can Urol Assoc J",
+      "pmid": "42619656",
+      "title": "State of the Art: Single-Port Robot-Assisted Extraperitoneal Transvesical Surgery-Technique, Indications, Outcomes, and Pitfalls.",
+      "authors": "Alkassis M, Turcan A, Santodirocco L",
+      "journal": "J Endourol",
       "pubDate": "2026-08-20",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42678688/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42619656/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42667381",
-      "title": "Retrograde ureteral catheterization in percutaneous nephrolithotomy may be omitted in selected patients: a randomized controlled trial.",
-      "authors": "Wang S, Feng B, Liu H",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-08-29",
+      "pmid": "42584481",
+      "title": "Urethral calculi indications and outcomes of surgical management: a systematic review by EAU endourology.",
+      "authors": "Soytürk S, Doğan E, Ferizli AA",
+      "journal": "World J Urol",
+      "pubDate": "2026-08-12",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42667381/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42584481/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42641288",
-      "title": "Review: Posterior urethral valves (PUV) … what do we know?",
-      "authors": "Kim JK, Hains D, Whittam B",
-      "journal": "J Pediatr Urol",
-      "pubDate": "2026-08-11",
+      "pmid": "42552506",
+      "title": "The UroLume endoprosthesis and UroLume cripple syndrome: a systematic review and meta-analysis of pathophysiology, complications, surgical management, psychological burden, and epidemiology of surviving patients worldwide.",
+      "authors": "Kapos IP",
+      "journal": "World J Urol",
+      "pubDate": "2026-08-04",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42641288/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42552506/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42637569",
-      "title": "The physiology of the upper urinary tract in endourological times - a narrative review.",
-      "authors": "Lykkegaard EG, Brandt ASP, Øbro LF",
-      "journal": "BJU Int",
-      "pubDate": "2026-11-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42637569/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
-    },
-    {
-      "pmid": "42620985",
-      "title": "Abdominopelvic Preoperative Imaging in Adult Candidates for Kidney Transplant: A Systematic Review of Its Impact on Surgical Decision-making.",
-      "authors": "Costa Silva A, Di Bello F, Lopez-Abdad A",
-      "journal": "Eur Urol Open Sci",
+      "pmid": "42480724",
+      "title": "Preoperative Factors Associated With Surgical Complexity in Pelvic Fracture Urethral Injury: Systematic Review.",
+      "authors": "Yadav S, Khurana U, Yadav A",
+      "journal": "Urology",
       "pubDate": "2026-09-01",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42620985/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42480724/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42606607",
-      "title": "Pain and safety outcomes of different anesthetic techniques in hypospadias surgery: a network meta-analysis of randomized clinical trials.",
-      "authors": "Ananda NF, Taher MA, Tjandra S",
-      "journal": "World J Urol",
-      "pubDate": "2026-08-17",
+      "pmid": "42477956",
+      "title": "Consensus-Based Development of a Surgical Checklist for Transurethral Resection of Bladder Tumor: An Initiative of the Japanese Society of Urologic Oncology.",
+      "authors": "Taoka R, Hayakawa N, Kimura T",
+      "journal": "Int J Urol",
+      "pubDate": "2026-07-01",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42606607/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42477956/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42604881",
-      "title": "The optimal stent-strategy in paediatric pyeloplasty: a systematic review and network meta-analysis.",
-      "authors": "Aubert O, M'Tiri S, Kühnapfel A",
-      "journal": "BJU Int",
-      "pubDate": "2026-08-16",
+      "pmid": "42442241",
+      "title": "Hot vs cold knife for endoscopic ablation of posterior urethral valves: a systematic review by the EAU-YAU paediatric urology working group.",
+      "authors": "Madarriaga YQ, Dönmez Mİ, Gernhold C",
+      "journal": "J Pediatr Urol",
+      "pubDate": "2026-10-01",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42604881/",
-      "subspecialty": "pediatric",
-      "topic": "Testicular trauma and torsion emergency management"
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42442241/",
+      "subspecialty": "reconstructive",
+      "topic": "Radical cystectomy outcomes and quality of life"
     }
   ]
 }
