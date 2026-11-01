@@ -157,8 +157,23 @@ export function saveFile(fileStem: string, ext: string, mime: string, content: s
   return downloadInBrowser(fileStem, ext, mime, content);
 }
 
-/** Save/export a full HTML document (see saveFile for platform behaviour). */
+/** Native: render the document to a PDF and open the share sheet with it. */
+async function sharePdfOnNative(fileStem: string, fullHtml: string): Promise<void> {
+  const [{ UroNative }, { Share }] = await Promise.all([import('./native'), import('@capacitor/share')]);
+  const { uri } = await UroNative.htmlToPdf({ html: fullHtml, fileName: `${slugify(fileStem)}.pdf` });
+  await Share.share({ title: fileStem, url: uri, dialogTitle: 'Save or share' });
+}
+
+/**
+ * Save/export a full HTML document. Inside the iOS app it becomes a PDF in the
+ * share sheet (falling back to the .html file if rendering fails); on the web
+ * the .html file downloads.
+ */
 export function saveHtmlDocument(fileStem: string, fullHtml: string): boolean {
+  if (Capacitor.isNativePlatform()) {
+    void sharePdfOnNative(fileStem, fullHtml).catch(() => saveFile(fileStem, 'html', 'text/html', fullHtml));
+    return true;
+  }
   return saveFile(fileStem, 'html', 'text/html', fullHtml);
 }
 

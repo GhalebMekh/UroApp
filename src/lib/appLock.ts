@@ -22,7 +22,7 @@ export const PRIVATE_DATA_KEYS = [
 ] as const;
 
 /** Leaving the app for longer than this locks the private sections again. */
-export const RELOCK_AFTER_MS = 5 * 60_000;
+export const RELOCK_AFTER_MS = 60_000;
 
 /** Wrong PINs allowed before each further attempt is delayed. */
 export const FREE_ATTEMPTS = 5;

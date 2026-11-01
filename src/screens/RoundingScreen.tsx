@@ -3,6 +3,7 @@ import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { todayISO } from '@/lib/date';
+import { requestPermission } from '@/lib/notifications';
 import {
   ALERT_COLOURS,
   CHANNEL_LABELS,
@@ -477,6 +478,8 @@ function RemindersSection({
   function add() {
     if (!text.trim()) return;
     onChange([{ id: crypto.randomUUID(), text: text.trim(), due, done: false }, ...reminders]);
+    // A due time means an alert at that time (NotificationsSync); iOS asks once.
+    if (due) void requestPermission();
     setText('');
     setDue('');
   }

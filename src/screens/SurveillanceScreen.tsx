@@ -1,8 +1,106 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { SURVEILLANCE, type SurveillanceProtocol } from '@/data/surveillance';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { addMonths, todayISO } from '@/lib/date';
+import { getJSON, setJSON } from '@/lib/storage';
+import {
+  FOLLOWUP_KEY,
+  FOLLOWUP_LEAD_DAYS,
+  normalizeFollowUps,
+  notificationsSupported,
+  requestPermission,
+  type FollowUpPlan,
+} from '@/lib/notifications';
 import { PageBody, PageHero } from '@/components/PageHero';
+
+/**
+ * Saves the shown schedule so each visit gets a reminder a week before
+ * (NotificationsSync schedules them). iOS app only; the label must stay
+ * de-identified because it shows on the lock screen.
+ */
+function FollowUpReminders({ title, visits }: { title: string; visits: { label: string; due: string }[] }) {
+  const [plans, setPlans] = useState<FollowUpPlan[]>([]);
+  const [label, setLabel] = useState('');
+  const [denied, setDenied] = useState(false);
+
+  useEffect(() => {
+    void getJSON<unknown>(FOLLOWUP_KEY, []).then((raw) => setPlans(normalizeFollowUps(raw)));
+  }, []);
+
+  if (!notificationsSupported()) return null;
+
+  function persist(next: FollowUpPlan[]) {
+    setPlans(next);
+    void setJSON(FOLLOWUP_KEY, next);
+  }
+
+  async function add() {
+    if (!(await requestPermission())) {
+      setDenied(true);
+      return;
+    }
+    setDenied(false);
+    const upcoming = visits.filter((v) => v.due && v.due > todayISO());
+    persist([...plans, { id: crypto.randomUUID(), label: label.trim(), title, visits: upcoming }]);
+    setLabel('');
+  }
+
+  return (
+    <div className="rounded-[14px] border border-line bg-navy-2 p-5">
+      <h3 className="text-[14px] font-semibold">Visit reminders</h3>
+      <p className="mb-3 mt-1 text-[12.5px] text-muted-2">
+        A notification {FOLLOWUP_LEAD_DAYS} days before each visit in this schedule, at 9:00. Use a
+        de-identified label only (e.g. “Case A”) — it shows on the lock screen.
+      </p>
+      <div className="flex gap-2">
+        <input
+          value={label}
+          onChange={(e) => setLabel(e.target.value.slice(0, 24))}
+          placeholder="Label (optional)"
+          aria-label="Reminder label"
+          className="min-h-[44px] min-w-0 flex-1 rounded-[10px] border border-line bg-navy px-3 text-[13.5px] text-ink outline-none focus:border-violet"
+        />
+        <button
+          type="button"
+          onClick={() => void add()}
+          className="min-h-[44px] shrink-0 rounded-[10px] border border-violet bg-violet/[0.18] px-4 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+        >
+          Remind me
+        </button>
+      </div>
+      {denied && (
+        <p className="mt-3 text-[12.5px] text-amber">
+          Notifications are off for UroApp. Turn them on in Settings → Notifications → UroApp.
+        </p>
+      )}
+      {plans.length > 0 && (
+        <ul className="mt-4 space-y-2">
+          {plans.map((p) => {
+            const next = p.visits.find((v) => v.due >= todayISO());
+            return (
+              <li key={p.id} className="flex items-center gap-3 rounded-[10px] border border-line bg-navy px-3 py-2">
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-[13px] font-semibold text-ink">{p.label || p.title}</div>
+                  <div className="truncate text-[12px] text-muted-2">
+                    {p.label ? `${p.title} · ` : ''}
+                    {next ? `next ${next.due}` : 'no visits left'}
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => persist(plans.filter((x) => x.id !== p.id))}
+                  className="min-h-[44px] shrink-0 px-2 text-[12.5px] font-semibold text-muted hover:text-ink"
+                >
+                  Remove
+                </button>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 function monthLabel(month: number): string {
   if (month === 0) return 'Baseline';
@@ -148,6 +246,8 @@ export function SurveillanceScreen() {
             and choose “Save as PDF”.
           </p>
         )}
+
+        <FollowUpReminders title={`${diagnosis.name} — ${protocol.label}`} visits={rows} />
 
         {/* Schedule */}
         {/* Mobile-first: rows stack on a phone (fixed columns would squeeze the

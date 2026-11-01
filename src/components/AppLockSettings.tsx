@@ -29,8 +29,12 @@ export function AppLockSettings() {
     e.preventDefault();
     if (!isValidPin(pin)) return setError('Use 4 to 8 digits.');
     if (pin !== confirm) return setError('The two PINs don’t match.');
-    await lock.turnOn(pin, useBiometry);
-    reset();
+    try {
+      await lock.turnOn(pin, useBiometry);
+      reset();
+    } catch {
+      setError('Could not turn the lock on. Please try again.');
+    }
   }
 
   async function turnOff(e: FormEvent) {
@@ -49,7 +53,7 @@ export function AppLockSettings() {
       <p className="mb-4 mt-1 text-[12px] text-muted-2">
         Locks your ward list, logbook, MDT sheets and CME record behind your own PIN
         {lock.biometry ? ` or ${lock.biometry}` : ''}. Calculators and on-call tools stay open. It
-        locks again after 5 minutes away from the app.
+        locks when the app opens and after 1 minute away from it.
       </p>
 
       {!lock.settings.enabled && mode !== 'setup' && (
@@ -126,6 +130,9 @@ export function AppLockSettings() {
 
       {lock.settings.enabled && mode === 'idle' && (
         <div className="space-y-3">
+          <p className="rounded-[10px] border border-teal/40 bg-teal/[0.08] px-3 py-2 text-[12.5px] text-ink">
+            Lock is on{lock.unlocked ? ' — unlocked for now. Tap “Lock now” to check it.' : ' and locked.'}
+          </p>
           {lock.biometry && (
             <label className="flex min-h-[44px] items-center gap-3 text-[13px] text-ink">
               <input

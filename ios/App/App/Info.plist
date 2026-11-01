@@ -70,6 +70,10 @@
 	<string>UIStatusBarStyleLightContent</string>
 	<key>NSCameraUsageDescription</key>
 	<string>UroApp uses the camera only when you photograph a CME certificate. The photo stays on this device.</string>
+	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>
+	<string>UroApp adds the urology conferences you choose to your calendar. It does not read your calendar.</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>UroApp adds the urology conferences you choose to your calendar.</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>UroApp uses Face ID to unlock your ward list, logbook, MDT sheets and CME record.</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

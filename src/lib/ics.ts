@@ -2,6 +2,7 @@
  * Minimal RFC 5545 iCalendar (.ics) generation for all-day, multi-day events.
  * Opening the file on iOS offers "Add to Calendar".
  */
+import { Capacitor } from '@capacitor/core';
 import { saveFile } from './print';
 
 export interface CalendarEvent {
@@ -82,7 +83,28 @@ export function buildICS(events: CalendarEvent[]): string {
   ].join('\r\n');
 }
 
-/** Build and save/share an .ics file for the given events. */
+/**
+ * Add events to the calendar. Inside the iOS app this goes through the native
+ * plugin (one event: the "New Event" sheet; several: saved after permission),
+ * because the share sheet often does not offer Calendar for an .ics file. On
+ * the web, and if the plugin fails, the .ics file is saved/shared instead.
+ */
 export function saveICS(fileStem: string, events: CalendarEvent[]): boolean {
-  return saveFile(fileStem, 'ics', 'text/calendar', buildICS(events));
+  const ics = () => saveFile(fileStem, 'ics', 'text/calendar', buildICS(events));
+  if (!Capacitor.isNativePlatform()) return ics();
+  void import('./native')
+    .then(({ UroNative }) =>
+      UroNative.addEvents({
+        events: events.map((e) => ({
+          title: e.title,
+          startDate: e.startDate,
+          endDate: e.endDate,
+          location: e.location,
+          url: e.url,
+          notes: e.description,
+        })),
+      }),
+    )
+    .catch(ics);
+  return true;
 }

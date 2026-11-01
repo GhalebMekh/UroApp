@@ -89,17 +89,104 @@ export function planConferenceAlerts(
   return out.sort((a, b) => a.at.getTime() - b.at.getTime()).slice(0, MAX_PENDING - 1);
 }
 
+/** The ward list's storage key (RoundingScreen); its plan reminders become alerts. */
+export const WARD_KEY = 'uroapp.rounding.v1';
+
+/**
+ * Ward plan reminders that have a due time and are not done, fired at that
+ * time. The patient's label is left out — the text shows on the lock screen.
+ */
+export function planWardAlerts(rawPatients: unknown, now: Date): PlannedAlert[] {
+  const out: PlannedAlert[] = [];
+  if (!Array.isArray(rawPatients)) return out;
+  for (const p of rawPatients as { reminders?: unknown }[]) {
+    if (!Array.isArray(p?.reminders)) continue;
+    for (const r of p.reminders as { text?: unknown; due?: unknown; done?: unknown }[]) {
+      if (r?.done === true || typeof r?.due !== 'string' || !r.due) continue;
+      const at = new Date(r.due); // datetime-local: local wall time (lib/reminders.ts)
+      if (Number.isNaN(at.getTime()) || at <= now) continue;
+      out.push({
+        id: 3000 + out.length,
+        title: 'Ward plan reminder',
+        body: typeof r.text === 'string' && r.text.trim() ? r.text.trim() : 'A plan reminder is due.',
+        at,
+        screen: 'residency',
+      });
+    }
+  }
+  return out;
+}
+
+/** Saved surveillance schedules to remind about (SurveillanceScreen). */
+export const FOLLOWUP_KEY = 'uroapp.followups.v1';
+
+export interface FollowUpPlan {
+  id: string;
+  /** Short de-identified label the user chose, e.g. "Bed 4" or "Case A". */
+  label: string;
+  /** e.g. "NMIBC — High risk". */
+  title: string;
+  visits: { label: string; due: string }[];
+}
+
+export function normalizeFollowUps(raw: unknown): FollowUpPlan[] {
+  if (!Array.isArray(raw)) return [];
+  const s = (v: unknown) => (typeof v === 'string' ? v : '');
+  return raw
+    .filter((p): p is Record<string, unknown> => !!p && typeof p === 'object')
+    .map((p) => ({
+      id: s(p.id),
+      label: s(p.label),
+      title: s(p.title),
+      visits: (Array.isArray(p.visits) ? p.visits : [])
+        .map((v: Record<string, unknown>) => ({ label: s(v?.label), due: s(v?.due) }))
+        .filter((v) => /^\d{4}-\d{2}-\d{2}$/.test(v.due)),
+    }))
+    .filter((p) => p.id);
+}
+
+/** Days before a surveillance visit that its reminder fires, at 09:00. */
+export const FOLLOWUP_LEAD_DAYS = 7;
+
+export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): PlannedAlert[] {
+  const out: PlannedAlert[] = [];
+  for (const p of plans) {
+    for (const v of p.visits) {
+      const at = new Date(`${v.due}T09:00:00`);
+      at.setDate(at.getDate() - FOLLOWUP_LEAD_DAYS);
+      if (at <= now) continue;
+      out.push({
+        id: 5000 + out.length,
+        title: `Follow-up in 1 week${p.label ? ` · ${p.label}` : ''}`,
+        body: `${p.title}: ${v.label} visit due ${v.due}.`,
+        at,
+        screen: 'surveillance',
+      });
+    }
+  }
+  return out;
+}
+
 const WEEKLY_ID = 1000;
 
 const plugin = () => import('@capacitor/local-notifications').then((m) => m.LocalNotifications);
 
 export const notificationsSupported = () => Capacitor.isNativePlatform();
 
+const grantListeners = new Set<() => void>();
+
+/** Called after permission is granted, so the schedule can be rebuilt with it. */
+export function onPermissionGranted(listener: () => void): () => void {
+  grantListeners.add(listener);
+  return () => grantListeners.delete(listener);
+}
+
 /** Ask iOS for permission (shows the system prompt the first time). */
 export async function requestPermission(): Promise<boolean> {
   if (!notificationsSupported()) return false;
   const ln = await plugin();
   const { display } = await ln.requestPermissions();
+  if (display === 'granted') grantListeners.forEach((l) => l());
   return display === 'granted';
 }
 
@@ -109,8 +196,13 @@ export async function permissionState(): Promise<'granted' | 'denied' | 'prompt'
   return display === 'granted' ? 'granted' : display === 'denied' ? 'denied' : 'prompt';
 }
 
-/** Replace every pending UroApp notification with the current plan. */
-export async function reschedule(prefs: NotifyPrefs, conferenceAlerts: PlannedAlert[]): Promise<void> {
+/**
+ * Replace every pending UroApp notification with the current plan. `alerts`
+ * are the one-off ones (conferences, ward, follow-ups); the soonest are kept
+ * within iOS's pending limit, and later ones get scheduled on a later run.
+ */
+export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Promise<void> {
+  const oneOff = [...alerts].sort((a, b) => a.at.getTime() - b.at.getTime()).slice(0, MAX_PENDING - 1);
   if (!notificationsSupported()) return;
   const ln = await plugin();
   const pending = await ln.getPending();
@@ -131,7 +223,7 @@ export async function reschedule(prefs: NotifyPrefs, conferenceAlerts: PlannedAl
           },
         ]
       : []),
-    ...conferenceAlerts.map((a) => ({
+    ...oneOff.map((a) => ({
       id: a.id,
       title: a.title,
       body: a.body,

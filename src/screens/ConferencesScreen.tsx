@@ -74,7 +74,7 @@ export function ConferencesScreen() {
             onClick={addAll}
             className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
           >
-            Add all {upcoming.length} to calendar (.ics)
+            Add all {upcoming.length} to calendar
           </button>
         )}
 
@@ -171,7 +171,7 @@ export function ConferencesScreen() {
 
         <p className="text-[12px] text-muted-2">
           Dates and venues were verified against each congress’s official source when this list was
-          compiled. On iOS, opening the downloaded .ics file offers “Add to Calendar”.
+          compiled. In the iPhone app they go straight into your calendar; on the web you get an .ics file.
         </p>
       </PageBody>
     </>
