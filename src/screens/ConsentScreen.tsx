@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import {
   CONSENT_PROCEDURES,
   CONSENT_BOILERPLATE as B,
@@ -211,7 +212,7 @@ export function ConsentScreen() {
             <input className={input} placeholder="MRN" value={fields.mrn} onChange={(e) => set('mrn', e.target.value)} />
             <input className={input} placeholder="Age / العمر" value={fields.age} onChange={(e) => set('age', e.target.value)} />
             <input className={input} placeholder="Surgeon / الجراح" value={fields.surgeon} onChange={(e) => set('surgeon', e.target.value)} />
-            <input className={input} type="date" value={fields.date} onChange={(e) => set('date', e.target.value)} />
+            <DateInput className={input} value={fields.date} onChange={(v) => set('date', v)} />
           </div>
           <p className="mt-2 text-[11px] text-muted-2">
             These fields stay on this device for this session only and are never stored by the app.

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   GUIDELINES,
   guidelineCategory,
@@ -126,9 +126,27 @@ function GuidelineCard({
   );
 }
 
-export function GuidelinesScreen() {
-  const [category, setCategory] = useState<GuidelineCategory>('oncological');
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+/** `focusId` (from search) opens on that guideline: its tab, expanded, scrolled to. */
+export function GuidelinesScreen({
+  focusId,
+  onFocusHandled,
+}: {
+  focusId?: string | null;
+  onFocusHandled?: () => void;
+}) {
+  const focus = GUIDELINES.find((g) => g.id === focusId);
+  const [category, setCategory] = useState<GuidelineCategory>(focus ? guidelineCategory(focus) : 'oncological');
+  const [expanded, setExpanded] = useState<Record<string, boolean>>(focus ? { [focus.id]: true } : {});
+
+  useEffect(() => {
+    if (!focus) return;
+    onFocusHandled?.();
+    const t = window.setTimeout(
+      () => document.getElementById(`guideline-${focus.id}`)?.scrollIntoView({ block: 'start', behavior: 'smooth' }),
+      50,
+    );
+    return () => window.clearTimeout(t);
+  }, [focus, onFocusHandled]);
 
   function toggleGuideline(id: string) {
     setExpanded((prev) => ({ ...prev, [id]: !prev[id] }));
@@ -162,12 +180,13 @@ export function GuidelinesScreen() {
 
         <div className="space-y-4">
           {entries.map((guideline) => (
-            <GuidelineCard
-              key={guideline.id}
-              guideline={guideline}
-              expanded={!!expanded[guideline.id]}
-              onToggle={() => toggleGuideline(guideline.id)}
-            />
+            <div key={guideline.id} id={`guideline-${guideline.id}`} className="scroll-mt-24">
+              <GuidelineCard
+                guideline={guideline}
+                expanded={!!expanded[guideline.id]}
+                onToggle={() => toggleGuideline(guideline.id)}
+              />
+            </div>
           ))}
         </div>
 

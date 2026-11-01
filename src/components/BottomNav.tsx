@@ -74,8 +74,8 @@ export function BottomNav({ items, current, onNavigate }: BottomNavProps) {
                 className={cn(
                   'flex min-h-[52px] w-full flex-col items-center justify-center gap-0.5 rounded-full py-1.5 text-[10.5px] font-medium transition-colors',
                   active
-                    ? 'bg-white/[0.12] text-violet-soft shadow-[inset_0_1px_0_rgba(255,255,255,0.18)]'
-                    : 'text-muted hover:text-ink',
+                    ? 'bg-white/[0.18] text-white shadow-[inset_0_1px_0_rgba(255,255,255,0.35),0_2px_8px_-2px_rgba(0,0,0,0.35)]'
+                    : 'text-ink/75 hover:text-ink',
                   dragTab !== null && active && 'scale-105',
                 )}
               >

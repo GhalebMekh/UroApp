@@ -44,7 +44,7 @@ export interface ResidencyTarget {
 }
 
 /** A link from one screen to another, optionally into a Residency tab. */
-export type ScreenLink = { screen: Screen } | { residency: ResidencyTarget };
+export type ScreenLink = { screen: Screen } | { residency: ResidencyTarget } | { guideline: string };
 
 /**
  * Bottom-nav model. Order here is the on-screen order. Clinical and Academic are

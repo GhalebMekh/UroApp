@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import { cn } from '@/lib/cn';
 import { CITATIONS, type Citation } from '@/data/citations';
 import { CitationNote } from '@/components/CitationNote';
@@ -232,12 +233,13 @@ function ReadingsEditor({ readings, setReadings }: SeriesProps) {
       <div className="space-y-2">
         {readings.map((r, i) => (
           <div key={i} className="flex items-center gap-2">
-            <input
-              type="date"
+            <DateInput
               value={r.date}
-              onChange={(e) => update(i, { date: e.target.value })}
-              className="flex-1 rounded-[10px] border border-line bg-navy px-3 py-[10px] text-[13px] text-ink outline-none focus:border-violet"
-            />
+              onChange={(v) => update(i, { date: v })}
+              wrapperClassName="flex-1"
+              className="rounded-[10px] border border-line bg-navy px-3 py-[10px] text-[13px] text-ink outline-none focus:border-violet"
+              label="PSA date"
+              />
             <div className="flex w-[120px] items-center gap-1.5 rounded-[10px] border border-line bg-navy px-3 focus-within:border-violet">
               <input
                 type="number"

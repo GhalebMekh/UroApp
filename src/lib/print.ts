@@ -166,12 +166,16 @@ async function sharePdfOnNative(fileStem: string, fullHtml: string): Promise<voi
 
 /**
  * Save/export a full HTML document. Inside the iOS app it becomes a PDF in the
- * share sheet (falling back to the .html file if rendering fails); on the web
- * the .html file downloads.
+ * share sheet (never an .html file; a failure is reported with its reason); on
+ * the web the .html file downloads.
  */
 export function saveHtmlDocument(fileStem: string, fullHtml: string): boolean {
   if (Capacitor.isNativePlatform()) {
-    void sharePdfOnNative(fileStem, fullHtml).catch(() => saveFile(fileStem, 'html', 'text/html', fullHtml));
+    void sharePdfOnNative(fileStem, fullHtml).catch((e: unknown) => {
+      // Closing the share sheet rejects too; only a real failure is worth a message.
+      const msg = e instanceof Error ? e.message : String(e);
+      if (!/cancel/i.test(msg)) window.alert(`Could not create the PDF: ${msg}`);
+    });
     return true;
   }
   return saveFile(fileStem, 'html', 'text/html', fullHtml);

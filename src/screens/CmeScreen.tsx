@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument, saveFile } from '@/lib/print';
@@ -290,11 +291,11 @@ export function CmeScreen() {
             </label>
             <label className="block">
               <Label>Cycle start</Label>
-              <input type="date" value={target.cycleStart} onChange={(e) => saveTarget({ cycleStart: e.target.value })} className={inputCls} />
+              <DateInput value={target.cycleStart} onChange={(v) => saveTarget({ cycleStart: v })} className={inputCls} />
             </label>
             <label className="block">
               <Label>Cycle end</Label>
-              <input type="date" value={target.cycleEnd} onChange={(e) => saveTarget({ cycleEnd: e.target.value })} className={inputCls} />
+              <DateInput value={target.cycleEnd} onChange={(v) => saveTarget({ cycleEnd: v })} className={inputCls} />
             </label>
           </div>
 
@@ -332,7 +333,7 @@ export function CmeScreen() {
             <h3 className="font-display text-[19px] font-semibold">Log an activity</h3>
             <label className="block">
               <Label>Date</Label>
-              <input type="date" value={date} max={todayISO()} onChange={(e) => setDate(e.target.value)} className={inputCls} />
+              <DateInput value={date} max={todayISO()} onChange={(v) => setDate(v)} className={inputCls} />
             </label>
             <label className="block">
               <Label>Activity</Label>

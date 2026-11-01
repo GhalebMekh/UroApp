@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import { SURVEILLANCE, type SurveillanceProtocol } from '@/data/surveillance';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { addMonths, todayISO } from '@/lib/date';
@@ -216,7 +217,7 @@ export function SurveillanceScreen() {
             <span className="mb-[7px] block text-[13px] font-semibold text-muted">
               {diagnosis.indexLabel}
             </span>
-            <input type="date" value={indexDate} onChange={(e) => setIndexDate(e.target.value)} className={field} />
+            <DateInput value={indexDate} onChange={(v) => setIndexDate(v)} className={field} />
           </label>
         </div>
 

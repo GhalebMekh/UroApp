@@ -74,7 +74,8 @@ export const SEARCH_INDEX: SearchItem[] = [
     label: g.title,
     sub: `Guideline · ${g.condition}`,
     screen: 'guidelines' as Screen,
-    keywords: kw(g.title, g.condition, g.id),
+    link: { guideline: g.id } as ScreenLink,
+    keywords: kw(g.title, g.condition, g.id,...g.sections.map((s) => s.title)),
   })),
   ...PEDIATRIC_TOOLS.map((t) => ({
     label: t.title,

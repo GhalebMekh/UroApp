@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
@@ -499,15 +500,26 @@ function RemindersSection({
           onChange={setText}
           placeholder="e.g. Chase histology; repeat Hb; book stent removal"
         />
-        <label className="block">
+        <div className="block">
           <span className="mb-[7px] block text-[13px] font-semibold text-muted">Due (optional)</span>
-          <input
-            type="datetime-local"
-            value={due}
-            onChange={(e) => setDue(e.target.value)}
-            className={inputCls}
-          />
-        </label>
+          {/* Gregorian date selects + time; `due` stays "YYYY-MM-DDTHH:mm" (lib/reminders.ts). */}
+          <div className="space-y-2">
+            <DateInput
+              value={due.slice(0, 10)}
+              onChange={(d) => setDue(d ? `${d}T${due.slice(11, 16) || '09:00'}` : '')}
+              className={inputCls}
+              label="Due date"
+            />
+            <input
+              type="time"
+              value={due.slice(11, 16)}
+              disabled={!due}
+              onChange={(e) => due && setDue(`${due.slice(0, 10)}T${e.target.value || '09:00'}`)}
+              aria-label="Due time"
+              className={cn(inputCls, 'disabled:opacity-40')}
+            />
+          </div>
+        </div>
       </div>
 
       <button
@@ -631,12 +643,12 @@ function CatheterSection({
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
               <span className="mb-[7px] block text-[13px] font-semibold text-muted">Inserted</span>
-              <input
-                type="date"
+              <DateInput
                 value={c.inserted}
                 max={todayISO()}
-                onChange={(e) => onChange({ inserted: e.target.value })}
+                onChange={(v) => onChange({ inserted: v })}
                 className={inputCls}
+                label="Inserted"
               />
             </label>
             <Field label="Size (Fr)" value={c.size} onChange={(v) => onChange({ size: v })} placeholder="e.g. 18" />
@@ -991,13 +1003,24 @@ function PatientDetail({
         </div>
       </Section>
 
-      <button
-        type="button"
-        onClick={() => setView('summary')}
-        className="mt-5 min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
-      >
-        Generate summary
-      </button>
+      {/* Every field saves as it is typed; this button confirms it and returns to the list. */}
+      <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={onBack}
+          className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
+        >
+          Save patient
+        </button>
+        <button
+          type="button"
+          onClick={() => setView('summary')}
+          className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14.5px] font-semibold text-ink transition-colors hover:border-violet"
+        >
+          Generate summary
+        </button>
+      </div>
+      <p className="mt-2 text-center text-[12px] text-muted-2">Changes are saved on this phone as you type.</p>
     </div>
   );
 }

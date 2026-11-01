@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { DateInput } from '@/components/DateInput';
 import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
@@ -223,7 +224,7 @@ export function OperativeLogScreen() {
 
           <label className="mb-3.5 block">
             <span className="mb-[7px] block text-[13px] font-semibold text-muted">Date of surgery</span>
-            <input type="date" value={date} max={todayISO()} onChange={(e) => setDate(e.target.value)} className={inputCls} />
+            <DateInput value={date} max={todayISO()} onChange={(v) => setDate(v)} className={inputCls} />
           </label>
 
           <SegmentedField<Gender>

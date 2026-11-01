@@ -63,6 +63,10 @@ export default function App() {
   /** An operation the rehearsal screen should preselect (set by the Home "due" list). */
   const [rehearsalFocus, setRehearsalFocus] = useState<string | null>(null);
   const clearRehearsalFocus = useCallback(() => setRehearsalFocus(null), []);
+  /** A guideline to open on arrival (from search); the visit counter remounts the screen. */
+  const [guidelineFocus, setGuidelineFocus] = useState<string | null>(null);
+  const [guidelineVisit, setGuidelineVisit] = useState(0);
+  const clearGuidelineFocus = useCallback(() => setGuidelineFocus(null), []);
 
   function navigate(screen: Screen) {
     if (screen === currentScreen) return;
@@ -89,7 +93,11 @@ export default function App() {
 
   /** Follow a link to a screen, or into a specific Residency tab. */
   function openLink(link: ScreenLink) {
-    if ('residency' in link) {
+    if ('guideline' in link) {
+      setGuidelineFocus(link.guideline);
+      setGuidelineVisit((n) => n + 1);
+      navigate('guidelines');
+    } else if ('residency' in link) {
       setResidencyTarget(link.residency);
       setResidencyVisit((n) => n + 1);
       navigate('residency');
@@ -194,7 +202,7 @@ export default function App() {
           {currentScreen === 'pediatricTool' && pedsToolId && (
             <PediatricToolScreen id={pedsToolId} onOpen={openPediatricTool} onAll={() => navigate('pediatrics')} />
           )}
-          {currentScreen === 'guidelines' && <GuidelinesScreen />}
+          {currentScreen === 'guidelines' && <GuidelinesScreen key={guidelineVisit} focusId={guidelineFocus} onFocusHandled={clearGuidelineFocus} />}
           {currentScreen === 'surveillance' && (
             <ProGate feature="surveillance">
               <SurveillanceScreen />

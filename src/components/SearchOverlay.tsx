@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { SEARCH_INDEX, type SearchItem } from '@/data/searchIndex';
 import type { Screen, ScreenLink } from '@/navigation';
 import { SearchIcon } from './icons';
+import { searchItems } from '@/lib/search';
 
 interface SearchOverlayProps {
   open: boolean;
@@ -45,7 +46,7 @@ export function SearchOverlay({
   const results = useMemo(() => {
     const term = q.trim().toLowerCase();
     if (!term) return SEARCH_INDEX.slice(0, 8);
-    return SEARCH_INDEX.filter((i) => i.keywords.includes(term) || i.label.toLowerCase().includes(term)).slice(0, 14);
+    return searchItems(SEARCH_INDEX, term, 20);
   }, [q]);
 
   if (!open) return null;
