@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/cn';
 import {
   DEFAULT_PREFS,
@@ -106,17 +107,28 @@ export function NotificationSettings() {
 function TestAndStatus({ onDenied }: { onDenied: () => void }) {
   const [summary, setSummary] = useState<{ count: number; next: Date | null } | null>(null);
   const [sent, setSent] = useState(false);
+  // Shown on screen so a failure on the phone can be read without a Mac debugger.
+  const [error, setError] = useState<string | null>(null);
+  const pluginLoaded = Capacitor.isPluginAvailable('LocalNotifications');
 
   useEffect(() => {
-    const load = () => void pendingSummary().then(setSummary).catch(() => setSummary(null));
+    const load = () =>
+      void pendingSummary()
+        .then(setSummary)
+        .catch((e: unknown) => setError(`Status: ${errorText(e)}`));
     load();
     const t = window.setInterval(load, 5000);
     return () => window.clearInterval(t);
   }, []);
 
   async function test() {
-    if (await sendTestNotification()) setSent(true);
-    else onDenied();
+    setError(null);
+    try {
+      if (await sendTestNotification()) setSent(true);
+      else onDenied();
+    } catch (e) {
+      setError(`Test: ${errorText(e)}`);
+    }
   }
 
   return (
@@ -139,6 +151,12 @@ function TestAndStatus({ onDenied }: { onDenied: () => void }) {
       >
         {sent ? 'Sent — lock the phone and wait 5 s' : 'Send a test notification'}
       </button>
+      {!pluginLoaded && (
+        <p className="mt-2 text-[12px] text-amber">The notifications component is not loaded in this build.</p>
+      )}
+      {error && <p className="mt-2 break-words font-mono text-[11.5px] text-amber">{error}</p>}
     </div>
   );
 }
+
+const errorText = (e: unknown) => (e instanceof Error ? e.message : typeof e === 'string' ? e : JSON.stringify(e));
