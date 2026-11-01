@@ -35,6 +35,7 @@ import { MoreScreen } from '@/screens/MoreScreen';
 import { PlansScreen } from '@/screens/PlansScreen';
 import { AppStoreLockScreen } from '@/screens/AppStoreLockScreen';
 import { isLocked, lockCopy, previewMode } from '@/lib/preview';
+import { useEdgeSwipeBack } from '@/lib/useEdgeSwipeBack';
 
 /**
  * Master state-machine router (CLAUDE.md): a single `currentScreen` drives
@@ -115,6 +116,9 @@ export default function App() {
     setHistory(history.slice(0, -1));
     window.scrollTo({ top: 0 });
   }
+
+  // Swipe in from the left edge to go back, as in native iOS apps.
+  useEdgeSwipeBack(goBack, history.length > 0 && !searchOpen);
 
   return (
     <AppLockProvider>

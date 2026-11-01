@@ -16,7 +16,7 @@ function ago(t: number): string {
   const s = Math.round((Date.now() - t) / 1000);
   if (s < 60) return 'just now';
   if (s < 3600) return `${Math.round(s / 60)} min ago`;
-  return new Date(t).toLocaleString();
+  return new Date(t).toLocaleString('en-GB');
 }
 
 function Alert({ children, tone = 'amber' }: { children: ReactNode; tone?: 'amber' | 'teal' }) {

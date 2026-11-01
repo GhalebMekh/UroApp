@@ -71,7 +71,7 @@ function caseHtml(c: MdtCase): string {
 function sheetHtml(cases: MdtCase[], title: string): string {
   return (
     `<h1>${escapeHtml(title)}</h1>` +
-    `<p class="sub">${cases.length} case${cases.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString())}</p>` +
+    `<p class="sub">${cases.length} case${cases.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString('en-GB'))}</p>` +
     cases.map(caseHtml).join('') +
     `<div class="note">De-identified — initials and age only, no names or medical-record numbers. ` +
     `A working sheet for the meeting, not a medical record. Dispose of securely.</div>`

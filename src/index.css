@@ -24,6 +24,16 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  /* iOS zooms the page into any field under 16px when it is focused, and does
+     not zoom back out. Phones get 16px fields; desktop keeps the design sizes. */
+  @media (pointer: coarse) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
   /* Headings use Geist, tightened a little at display sizes as Geist's own
      specimens do; a tracking-* utility still overrides this. */
   .font-display {

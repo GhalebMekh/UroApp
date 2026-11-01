@@ -203,7 +203,7 @@ export function CmeScreen() {
     return (
       `<h1>CME / CPD record</h1>` +
       (byline ? `<p class="sub">${escapeHtml(byline)}</p>` : '') +
-      `<p class="sub">Cycle: ${escapeHtml(cycle)} · generated ${escapeHtml(new Date().toLocaleDateString())}</p>` +
+      `<p class="sub">Cycle: ${escapeHtml(cycle)} · generated ${escapeHtml(new Date().toLocaleDateString('en-GB'))}</p>` +
       `<div class="stats"><span>Total hours <b>${summary.total}</b></span><span>Accredited <b>${summary.accredited}</b></span>` +
       (target.hours > 0 ? `<span>Target <b>${target.hours}</b></span><span>Remaining <b>${summary.remaining}</b></span>` : '') +
       `</div>` +

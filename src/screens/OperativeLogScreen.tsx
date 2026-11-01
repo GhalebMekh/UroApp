@@ -178,7 +178,7 @@ export function OperativeLogScreen() {
     return `
       <h1>Operative logbook</h1>
       ${byline ? `<p class="sub">${escapeHtml(byline)}</p>` : ''}
-      <p class="sub">Generated ${new Date().toLocaleDateString()} · ${counts.total} case${counts.total === 1 ? '' : 's'}</p>
+      <p class="sub">Generated ${new Date().toLocaleDateString('en-GB')} · ${counts.total} case${counts.total === 1 ? '' : 's'}</p>
       <div class="stats">
         <span>Total <b>${counts.total}</b></span>
         <span>Lead surgeon <b>${counts.lead}</b></span>

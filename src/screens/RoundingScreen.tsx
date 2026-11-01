@@ -761,7 +761,7 @@ function CatheterSection({
                     >
                       <div className="flex items-baseline justify-between gap-3">
                         <span className="text-[11px] text-muted-2">
-                          {new Date(e.datetime).toLocaleString()}
+                          {new Date(e.datetime).toLocaleString('en-GB')}
                         </span>
                         <button
                           type="button"
@@ -976,7 +976,7 @@ function PatientDetail({
             patient.notes.map((n) => (
               <div key={n.id} className="rounded-[12px] border border-line bg-navy p-3.5">
                 <div className="mb-1.5 flex items-center justify-between">
-                  <span className="text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString()}</span>
+                  <span className="text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</span>
                   <button type="button" onClick={() => removeNote(n.id)} className="text-[11px] text-muted-2 hover:text-crimson">
                     remove
                   </button>
@@ -1077,7 +1077,7 @@ function buildHandoverHtml(patients: Patient[]): string {
 
       const latest = p.notes[0]; // notes are stored newest-first
       const plan = latest?.p.trim()
-        ? row(`Plan (${new Date(latest.date).toLocaleDateString()})`, latest.p)
+        ? row(`Plan (${new Date(latest.date).toLocaleDateString('en-GB')})`, latest.p)
         : '';
 
       return (
@@ -1094,7 +1094,7 @@ function buildHandoverHtml(patients: Patient[]): string {
 
   return (
     `<h1>Ward handover</h1>` +
-    `<p class="sub">${patients.length} patient${patients.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString())}</p>` +
+    `<p class="sub">${patients.length} patient${patients.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString('en-GB'))}</p>` +
     blocks +
     `<div class="note">De-identified working list — first name/initials and bed only, no full names or ` +
     `medical-record numbers. A personal aide-mémoire, not a medical record. Hand over through your ` +
@@ -1127,7 +1127,7 @@ function catheterHtml(c: Catheter): string {
         e.colour ? COLOUR_LABELS[e.colour] : '',
         isRetaining(e, c.cbi) ? 'more in than out — check for blockage' : '',
       ].filter(Boolean);
-      return `<div class="row"><b>${escapeHtml(new Date(e.datetime).toLocaleString())}</b> ${escapeHtml(bits.join(' · '))}</div>`;
+      return `<div class="row"><b>${escapeHtml(new Date(e.datetime).toLocaleString('en-GB'))}</b> ${escapeHtml(bits.join(' · '))}</div>`;
     })
     .join('');
   return (
@@ -1149,7 +1149,7 @@ function buildSummaryHtml(p: Patient): string {
   const soap = p.notes
     .map(
       (n) =>
-        `<div class="card"><div class="meta">${escapeHtml(new Date(n.date).toLocaleString())}</div>` +
+        `<div class="card"><div class="meta">${escapeHtml(new Date(n.date).toLocaleString('en-GB'))}</div>` +
         row('S', n.s) + row('O', n.o) + row('A', n.a) + row('P', n.p) +
         `</div>`,
     )
@@ -1274,7 +1274,7 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
               return (
                 <SummaryRow
                   key={e.id}
-                  label={new Date(e.datetime).toLocaleString()}
+                  label={new Date(e.datetime).toLocaleString('en-GB')}
                   value={[
                     net !== null ? `${net} mL${p.catheter.cbi ? ' net' : ''}` : '',
                     e.colour ? COLOUR_LABELS[e.colour] : '',
@@ -1292,7 +1292,7 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
             <div className="space-y-3">
               {p.notes.map((n) => (
                 <div key={n.id} className="rounded-[10px] border border-line bg-navy p-3">
-                  <div className="mb-1 text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString()}</div>
+                  <div className="mb-1 text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</div>
                   <SoapLines note={n} />
                 </div>
               ))}

@@ -38,7 +38,7 @@ function formatTime(ms: number): string {
 }
 
 function formatDay(iso: string): string {
-  return new Date(iso).toLocaleDateString(undefined, { day: 'numeric', month: 'short' });
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
 }
 
 /** Every at-risk structure in the app — extra distractors for the danger-zone quiz. */

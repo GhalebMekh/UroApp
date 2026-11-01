@@ -50,7 +50,7 @@ export function SurveillanceScreen() {
 
     return `
       <h1>Surveillance schedule — ${escapeHtml(diagnosis.name)}</h1>
-      <p class="sub">${escapeHtml(protocol.label)} · ${escapeHtml(diagnosis.indexLabel)}: ${escapeHtml(indexDate)} · generated ${new Date().toLocaleDateString()}</p>
+      <p class="sub">${escapeHtml(protocol.label)} · ${escapeHtml(diagnosis.indexLabel)}: ${escapeHtml(indexDate)} · generated ${new Date().toLocaleDateString('en-GB')}</p>
       <p>${escapeHtml(protocol.description)}</p>
       <table>
         <thead><tr><th>Visit</th><th>Due</th><th>Investigations</th></tr></thead>
