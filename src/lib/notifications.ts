@@ -8,6 +8,7 @@
  * conference list or the "I'm attending" list change (NotificationsSync).
  */
 import { Capacitor } from '@capacitor/core';
+import { LocalNotifications } from '@capacitor/local-notifications';
 import type { Conference } from '@/data/conferences';
 import type { Screen } from '@/navigation';
 import { formatSpan } from './conferenceDates';
@@ -170,7 +171,10 @@ export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): P
 const WEEKLY_ID = 1000;
 const TEST_ID = 999;
 
-const plugin = () => import('@capacitor/local-notifications').then((m) => m.LocalNotifications);
+// Never `await` or return this from a promise: Capacitor plugin proxies answer
+// every property, including `then`, so JS treats them as a pending promise and
+// waits forever (that is what silently blocked every reminder before build 7).
+const plugin = () => LocalNotifications;
 
 export const notificationsSupported = () => Capacitor.isNativePlatform();
 
@@ -185,7 +189,7 @@ export function onPermissionGranted(listener: () => void): () => void {
 /** Ask iOS for permission (shows the system prompt the first time). */
 export async function requestPermission(): Promise<boolean> {
   if (!notificationsSupported()) return false;
-  const ln = await plugin();
+  const ln = plugin();
   const { display } = await ln.requestPermissions();
   if (display === 'granted') grantListeners.forEach((l) => l());
   return display === 'granted';
@@ -193,7 +197,7 @@ export async function requestPermission(): Promise<boolean> {
 
 export async function permissionState(): Promise<'granted' | 'denied' | 'prompt' | 'unsupported'> {
   if (!notificationsSupported()) return 'unsupported';
-  const { display } = await (await plugin()).checkPermissions();
+  const { display } = await plugin().checkPermissions();
   return display === 'granted' ? 'granted' : display === 'denied' ? 'denied' : 'prompt';
 }
 
@@ -205,7 +209,7 @@ export async function permissionState(): Promise<'granted' | 'denied' | 'prompt'
 export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Promise<void> {
   const oneOff = [...alerts].sort((a, b) => a.at.getTime() - b.at.getTime()).slice(0, MAX_PENDING - 1);
   if (!notificationsSupported()) return;
-  const ln = await plugin();
+  const ln = plugin();
   const pending = await ln.getPending();
   const ours = pending.notifications.filter((n) => n.id !== TEST_ID); // leave a pending test alert
   if (ours.length) {
@@ -241,8 +245,7 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
   if (!notificationsSupported()) return () => {};
   let remove: (() => void) | null = null;
   let cancelled = false;
-  void plugin().then((ln) =>
-    ln
+  void plugin()
       .addListener('localNotificationActionPerformed', (e) => {
         const screen = (e.notification.extra as { screen?: Screen } | undefined)?.screen;
         if (screen) open(screen);
@@ -250,8 +253,7 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
       .then((h) => {
         if (cancelled) void h.remove();
         else remove = () => void h.remove();
-      }),
-  );
+      });
   return () => {
     cancelled = true;
     remove?.();
@@ -261,7 +263,7 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
 /** How many UroApp reminders are waiting on the phone, and when the next fires. */
 export async function pendingSummary(): Promise<{ count: number; next: Date | null }> {
   if (!notificationsSupported()) return { count: 0, next: null };
-  const { notifications } = await (await plugin()).getPending();
+  const { notifications } = await plugin().getPending();
   const times = notifications
     .map((n) => (n.schedule?.at ? new Date(n.schedule.at).getTime() : NaN))
     .filter((t) => !Number.isNaN(t))
@@ -272,7 +274,7 @@ export async function pendingSummary(): Promise<{ count: number; next: Date | nu
 /** A one-off test alert 5 seconds from now, so the user can check delivery. */
 export async function sendTestNotification(): Promise<boolean> {
   if (!(await requestPermission())) return false;
-  await (await plugin()).schedule({
+  await plugin().schedule({
     notifications: [
       {
         id: TEST_ID,
