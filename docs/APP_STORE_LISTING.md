@@ -1,7 +1,7 @@
 # App Store listing — draft for approval
 
 Paste into App Store Connect → the app → the 1.0 version page. Character limits are Apple's.
-Counts below match the app as of 27 Oct 2026 — re-check them if content is added before
+Counts below match the app as of 3 Nov 2026 (build 11) — re-check them if content is added before
 submission. Nothing here claims a feature the app does not have.
 
 ---
@@ -17,7 +17,7 @@ Alternative: **Calculators, guides & on-call** (29)
 
 ## Promotional text (170) — can be changed any time without review
 
-> 24 urology calculators, 27 guideline summaries, on-call pathways and an operative reference.
+> 24 urology calculators, 27 guideline summaries, on-call pathways and 22 operations to rehearse.
 > Every clinical value is tied to its source, and it works offline.
 
 ## Keywords (100, comma-separated, no spaces)
@@ -34,7 +34,8 @@ indexes those anyway. Society names (AUA, EAU) are kept out of keywords on purpo
 
 > UroApp is a clinical reference and training tool for urologists and urology residents. Every
 > score, threshold and summary cites its primary source with a link, and the clinical content
-> works offline — on the ward, in theatre or in the basement.
+> works offline — on the ward, in theatre or in the basement. Arrange your Home screen around the
+> tools you use most.
 >
 > CALCULATORS
 > 24 validated scores, each linked to its original publication: PSA toolkit (density, velocity,
@@ -49,14 +50,15 @@ indexes those anyway. Society names (AUA, EAU) are kept out of keywords on purpo
 >
 > ON CALL
 > The first 30 minutes for testicular torsion (with the TWIST score), ischaemic priapism,
-> Fournier's gangrene, the obstructed infected kidney and genitourinary trauma (AAST grading).
+> Fournier's gangrene, the obstructed infected kidney, genitourinary trauma (AAST grading) and
+> bladder or ureteric injury during surgery.
 >
 > OPERATIVE REFERENCE AND TRAINING
-> 20 operations, from TURP and PCNL to pyeloplasty and hypospadias repair: anatomy, steps,
+> 22 operations, from TURP and PCNL to pyeloplasty and hypospadias repair: anatomy, steps,
 > complications, pre-operative work-up and set-up, danger zones with bail-outs, and
 > post-operative care. Rehearse them by ordering the steps, choosing what comes next, and naming
 > the structure at risk — with progress tracking and reminders when a procedure is due for a
-> refresh. Plus an intra-operative decision scenario.
+> refresh. Plus 13 intra-operative decision scenarios.
 >
 > PEDIATRIC UROLOGY
 > 12 tools: UTD classification, hydronephrosis and reflux grading, UPJ obstruction, megaureter
@@ -68,9 +70,11 @@ indexes those anyway. Society names (AUA, EAU) are kept out of keywords on purpo
 > • Urology-relevant drug interactions, sorted by severity
 > • Bilingual English–Arabic surgical consent for 18 operations, printable at the bedside
 > • Weekly reads: new urology papers from PubMed, refreshed every week
-> • Upcoming urology congresses, with calendar export
-> • Operative logbook with Clavien–Dindo grading, surveillance schedules, ward list, MDT case
->   sheets and a CME / CPD tracker
+> • Upcoming urology congresses, added to your calendar in one tap
+> • Ward list with plan reminders that alert you on time, with Done and Snooze
+> • Surveillance schedules for 8 conditions, with a reminder a week before each visit
+> • Operative logbook with Clavien–Dindo grading, MDT case sheets and a CME / CPD tracker
+> • Export summaries and schedules as PDF
 >
 > PRIVATE BY DESIGN
 > No patient-identifiable data is collected. Calculator inputs never leave your phone, and the
@@ -124,17 +128,23 @@ Primary **Medical**. Secondary (optional): **Education** or **Reference**.
 > button that opens the Plans screen (also More → Subscription → See plans), with prices, terms,
 > Restore Purchases and links to the Terms of Use and Privacy Policy. Restore Purchases is also in
 > More → Subscription. Purchases use the sandbox environment during review as usual.
+>
+> Notifications are optional and scheduled on the device only (no push server): ward plan
+> reminders, surveillance visit reminders, conference alerts and a weekly reading nudge
+> (More → Notifications, which also has a "Send a test notification" button). Calendar access is
+> write-only and used only when the user adds a conference to their calendar.
 
 ## Screenshots — plan
 
 Taken from the app once the layout is final, at the sizes App Store Connect requires (currently
 **iPhone 6.9"** and **iPad 13"**), with short captions:
 
-1. Home — "Your day at a glance: on-call, pinned tools, what to practise"
+1. Home — "Your day at a glance, arranged your way"
 2. Calculator with a result — "24 validated scores, each linked to its source"
 3. On-call: torsion — "The first 30 minutes, step by step"
 4. Procedure: danger zones — "Know the structure at risk and the bail-out"
-5. Rehearsal — "Drill the steps before you scrub"
+5. Rehearsal — "Drill the steps of 22 operations before you scrub"
 6. Bilingual consent — "English–Arabic consent, printable at the bedside"
 7. Pediatrics — "Pediatric urology from UTD to the acute scrotum"
 8. Guidelines — "AUA and EAU, summarised and linked"
+9. Ward list — "Ward list and plan reminders that ring on time"
