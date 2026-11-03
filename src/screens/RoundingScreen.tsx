@@ -211,6 +211,8 @@ export function RoundingScreen() {
   const [patients, setPatients] = useState<Patient[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  // A new patient opens on the form; an existing one opens on their details (owner, 2026-11-03).
+  const [startInEdit, setStartInEdit] = useState(false);
 
   useEffect(() => {
     const load = () =>
@@ -233,6 +235,7 @@ export function RoundingScreen() {
   function addPatient() {
     const p = emptyPatient();
     persist([p, ...patients]);
+    setStartInEdit(true);
     setSelectedId(p.id);
   }
   function update(patch: Partial<Patient>) {
@@ -249,6 +252,8 @@ export function RoundingScreen() {
     <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
       {selected ? (
         <PatientDetail
+          key={selected.id}
+          initialView={startInEdit ? 'edit' : 'summary'}
           patient={selected}
           onBack={() => setSelectedId(null)}
           onChange={update}
@@ -259,7 +264,10 @@ export function RoundingScreen() {
           patients={patients}
           loaded={loaded}
           onAdd={addPatient}
-          onOpen={setSelectedId}
+          onOpen={(id) => {
+            setStartInEdit(false);
+            setSelectedId(id);
+          }}
           onDelete={remove}
         />
       )}
@@ -837,17 +845,19 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 }
 
 function PatientDetail({
+  initialView,
   patient,
   onBack,
   onChange,
   onDelete,
 }: {
+  initialView: 'edit' | 'summary';
   patient: Patient;
   onBack: () => void;
   onChange: (patch: Partial<Patient>) => void;
   onDelete: () => void;
 }) {
-  const [view, setView] = useState<'edit' | 'summary'>('edit');
+  const [view, setView] = useState<'edit' | 'summary'>(initialView);
   const [note, setNote] = useState<{ s: string; o: string; a: string; p: string }>({ s: '', o: '', a: '', p: '' });
 
   const setExam = (key: keyof Exam, v: string) => onChange({ exam: { ...patient.exam, [key]: v } });
@@ -864,7 +874,7 @@ function PatientDetail({
   }
 
   if (view === 'summary') {
-    return <PatientSummary patient={patient} onBack={() => setView('edit')} />;
+    return <PatientSummary patient={patient} onBack={onBack} onEdit={() => setView('edit')} />;
   }
 
   return (
@@ -1012,17 +1022,17 @@ function PatientDetail({
       <div className="mt-5 grid grid-cols-1 gap-2.5 sm:grid-cols-2">
         <button
           type="button"
-          onClick={onBack}
+          onClick={() => setView('summary')}
           className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
         >
           Save patient
         </button>
         <button
           type="button"
-          onClick={() => setView('summary')}
+          onClick={onBack}
           className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14.5px] font-semibold text-ink transition-colors hover:border-violet"
         >
-          Generate summary
+          Back to list
         </button>
       </div>
       <p className="mt-2 text-center text-[12px] text-muted-2">Changes are saved on this phone as you type.</p>
@@ -1221,7 +1231,8 @@ function SummaryBlock({ title, children }: { title: string; children: React.Reac
   );
 }
 
-function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () => void }) {
+function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBack: () => void; onEdit: () => void }) {
+  const openReminders = sortReminders(p.reminders).filter((r) => !r.done);
   const [exportError, setExportError] = useState(false);
   const sexAge = [p.age && `${p.age} years old`, p.sex].filter(Boolean).join(' ');
   const labs = summaryLabs(p.labs);
@@ -1238,9 +1249,18 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
 
   return (
     <div className="mt-8">
-      <button type="button" onClick={onBack} className="mb-4 text-[13px] text-violet-soft hover:underline">
-        ← Back to editing
-      </button>
+      <div className="mb-4 flex items-center justify-between">
+        <button type="button" onClick={onBack} className="min-h-[44px] text-[13px] text-violet-soft hover:underline">
+          ← Back to list
+        </button>
+        <button
+          type="button"
+          onClick={onEdit}
+          className="min-h-[44px] rounded-[11px] border border-violet bg-violet/[0.18] px-4 text-[13.5px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+        >
+          Edit patient
+        </button>
+      </div>
 
       <div className="overflow-hidden rounded-[18px] border border-line bg-navy-2">
         <div className="px-5 py-5">
@@ -1250,6 +1270,20 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
             {p.location ? ` · Bed ${p.location}` : ''} · {p.admission === 'er' ? 'Via ER' : 'Elective'}
           </p>
         </div>
+
+        {openReminders.length > 0 && (
+          <SummaryBlock title="Plan reminders">
+            <div className="space-y-1">
+              {openReminders.map((r) => (
+                <SummaryRow
+                  key={r.id}
+                  label={r.due ? new Date(r.due).toLocaleString('en-GB', { dateStyle: 'medium', timeStyle: 'short' }) : 'No time'}
+                  value={r.text}
+                />
+              ))}
+            </div>
+          </SummaryBlock>
+        )}
 
         {(p.pmh || p.psh || p.meds) && (
           <SummaryBlock title="Known case of">
@@ -1332,7 +1366,14 @@ function PatientSummary({ patient: p, onBack }: { patient: Patient; onBack: () =
         )}
       </div>
 
-      <div className="mt-4 flex gap-2">
+      <button
+        type="button"
+        onClick={onEdit}
+        className="mt-4 min-h-[44px] w-full rounded-[11px] border border-violet bg-violet/[0.18] py-3 text-[14.5px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+      >
+        Edit patient
+      </button>
+      <div className="mt-2 flex gap-2">
         <button type="button" onClick={print} className="min-h-[44px] flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep">
           Print
         </button>

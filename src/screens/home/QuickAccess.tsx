@@ -4,7 +4,7 @@ import { FEATURE_TIER, PAYWALL_ENABLED } from '@/lib/featureTiers';
 import { DashCard } from './DashCard';
 import { tileById, type Tile } from './quickTiles';
 
-/** Launcher for the user's pinned workspaces: 4 per row on a phone, one row of 8 when wide. */
+/** Launcher for the user's pinned workspaces: 4 per row on a phone, 6 when wide. */
 export function QuickAccess({
   ids,
   onOpenLink,
@@ -22,7 +22,7 @@ export function QuickAccess({
       {tiles.length === 0 ? (
         <p className="text-[13px] text-muted">No shortcuts pinned. Tap Edit Home to add some.</p>
       ) : (
-        <div className="grid grid-cols-4 gap-1 md:grid-cols-8">
+        <div className="grid grid-cols-4 gap-1 md:grid-cols-6">
           {tiles.map(({ id, label, Icon, link, feature }) => {
             const required = feature ? FEATURE_TIER[feature] : null;
             const locked = PAYWALL_ENABLED && required !== null && !hasAccess(tier, required);

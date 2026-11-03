@@ -9,7 +9,8 @@ import { getJSON, setJSON } from './storage';
 export const HOME_CARDS = ['oncall', 'tools', 'quick', 'practice', 'conference', 'cme'] as const;
 export type HomeCard = (typeof HOME_CARDS)[number];
 
-export const MAX_QUICK = 8;
+// 12 so the default 8 leave room: with every place full, new picks silently did nothing (owner, build 9).
+export const MAX_QUICK = 12;
 
 export interface HomeLayout {
   order: HomeCard[];

@@ -24,7 +24,7 @@ const CARD_LABEL: Record<HomeCard, string> = {
 const btn =
   'grid h-11 w-11 shrink-0 place-items-center rounded-[10px] border border-line text-[15px] text-muted transition-colors hover:text-ink disabled:opacity-30';
 
-/** Edit mode for Home: reorder and hide cards, choose up to eight quick-access tiles. */
+/** Edit mode for Home: reorder and hide cards, choose up to MAX_QUICK quick-access tiles. */
 export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quick: string[]; onDone: () => void }) {
   const save = updateHomeLayout;
   const pinned = (l: HomeLayout) => l.quick ?? DEFAULT_QUICK;
