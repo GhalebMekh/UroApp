@@ -39,6 +39,8 @@ export interface PlannedAlert {
   /** Local date-time to fire at. */
   at: Date;
   screen: Screen;
+  /** Ward reminders: the reminder's id, so Done / Snooze can find it. */
+  reminderId?: string;
 }
 
 export function normalizePrefs(raw: unknown): NotifyPrefs {
@@ -102,7 +104,7 @@ export function planWardAlerts(rawPatients: unknown, now: Date): PlannedAlert[] 
   if (!Array.isArray(rawPatients)) return out;
   for (const p of rawPatients as { reminders?: unknown }[]) {
     if (!Array.isArray(p?.reminders)) continue;
-    for (const r of p.reminders as { text?: unknown; due?: unknown; done?: unknown }[]) {
+    for (const r of p.reminders as { id?: unknown; text?: unknown; due?: unknown; done?: unknown }[]) {
       if (r?.done === true || typeof r?.due !== 'string' || !r.due) continue;
       const at = new Date(r.due); // datetime-local: local wall time (lib/reminders.ts)
       if (Number.isNaN(at.getTime()) || at <= now) continue;
@@ -112,10 +114,48 @@ export function planWardAlerts(rawPatients: unknown, now: Date): PlannedAlert[] 
         body: typeof r.text === 'string' && r.text.trim() ? r.text.trim() : 'A plan reminder is due.',
         at,
         screen: 'residency',
+        ...(typeof r.id === 'string' ? { reminderId: r.id } : {}),
       });
     }
   }
   return out;
+}
+
+/** Notification buttons on a ward reminder (owner, 2026-11-03). */
+export const WARD_ACTION_TYPE = 'ward-reminder';
+export const SNOOZE_MINUTES = 60;
+export type WardAction = 'done' | 'snooze';
+
+const wardActionListeners = new Set<() => void>();
+
+/** Called after Done / Snooze rewrites the ward list, so an open ward screen reloads it. */
+export function onWardActionApplied(listener: () => void): () => void {
+  wardActionListeners.add(listener);
+  return () => wardActionListeners.delete(listener);
+}
+
+/** "YYYY-MM-DDTHH:mm" in local time, the format reminders store (lib/reminders.ts). */
+function localStamp(d: Date): string {
+  const p = (n: number) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/** The ward list with one reminder marked done, or moved SNOOZE_MINUTES from now. */
+export function applyWardAction(rawPatients: unknown, reminderId: string, action: WardAction, now: Date): unknown {
+  if (!Array.isArray(rawPatients)) return rawPatients;
+  return rawPatients.map((p: { reminders?: unknown }) => {
+    if (!p || !Array.isArray(p.reminders)) return p;
+    return {
+      ...p,
+      reminders: (p.reminders as { id?: unknown }[]).map((r) =>
+        r?.id !== reminderId
+          ? r
+          : action === 'done'
+            ? { ...r, done: true }
+            : { ...r, due: localStamp(new Date(now.getTime() + SNOOZE_MINUTES * 60_000)) },
+      ),
+    };
+  });
 }
 
 /** Saved surveillance schedules to remind about (SurveillanceScreen). */
@@ -234,10 +274,24 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
       title: a.title,
       body: a.body,
       schedule: { at: a.at, allowWhileIdle: true },
-      extra: { screen: a.screen },
+      extra: { screen: a.screen, reminderId: a.reminderId },
+      ...(a.reminderId ? { actionTypeId: WARD_ACTION_TYPE } : {}),
     })),
   ];
-  if (notifications.length) await ln.schedule({ notifications });
+  if (notifications.length) {
+    await ln.registerActionTypes({
+      types: [
+        {
+          id: WARD_ACTION_TYPE,
+          actions: [
+            { id: 'done', title: 'Done' },
+            { id: 'snooze', title: `Snooze ${SNOOZE_MINUTES / 60} hour` },
+          ],
+        },
+      ],
+    });
+    await ln.schedule({ notifications });
+  }
 }
 
 /** Call `open` with the screen named by a tapped notification. Returns an unsubscribe. */
@@ -247,8 +301,16 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
   let cancelled = false;
   void plugin()
       .addListener('localNotificationActionPerformed', (e) => {
-        const screen = (e.notification.extra as { screen?: Screen } | undefined)?.screen;
-        if (screen) open(screen);
+        const extra = e.notification.extra as { screen?: Screen; reminderId?: string } | undefined;
+        if ((e.actionId === 'done' || e.actionId === 'snooze') && extra?.reminderId) {
+          const id = extra.reminderId;
+          const action: WardAction = e.actionId;
+          void getJSON<unknown>(WARD_KEY, [])
+            .then((ward) => setJSON(WARD_KEY, applyWardAction(ward, id, action, new Date())))
+            .then(() => wardActionListeners.forEach((l) => l()));
+          return;
+        }
+        if (extra?.screen) open(extra.screen);
       })
       .then((h) => {
         if (cancelled) void h.remove();

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeFollowUps, planFollowUpAlerts, planWardAlerts } from './notifications';
+import { applyWardAction, normalizeFollowUps, planFollowUpAlerts, planWardAlerts } from './notifications';
 
 const now = new Date('2026-11-01T12:00:00');
 
@@ -49,5 +49,26 @@ describe('planFollowUpAlerts', () => {
     expect(alerts[0]!.at.toDateString()).toBe(new Date('2027-01-25T09:00:00').toDateString());
     expect(alerts[0]!.at.getHours()).toBe(9);
     expect(alerts[0]!.title).toContain('Case A');
+  });
+});
+
+describe('applyWardAction', () => {
+  const ward = [{ id: 'p1', reminders: [{ id: 'r1', text: 'Bloods', due: '2026-11-03T09:00', done: false }, { id: 'r2', done: false }] }];
+
+  it('marks only the named reminder done', () => {
+    const out = applyWardAction(ward, 'r1', 'done', new Date(2026, 10, 3, 9, 0)) as typeof ward;
+    expect(out[0]!.reminders[0]!.done).toBe(true);
+    expect(out[0]!.reminders[1]!.done).toBe(false);
+  });
+
+  it('snoozes an hour from now in local time', () => {
+    const out = applyWardAction(ward, 'r1', 'snooze', new Date(2026, 10, 3, 23, 30)) as typeof ward;
+    expect(out[0]!.reminders[0]!.due).toBe('2026-11-04T00:30');
+    expect(out[0]!.reminders[0]!.done).toBe(false);
+  });
+
+  it('carries the reminder id onto the planned alert', () => {
+    const [a] = planWardAlerts(ward, new Date(2026, 10, 3, 8, 0));
+    expect(a?.reminderId).toBe('r1');
   });
 });

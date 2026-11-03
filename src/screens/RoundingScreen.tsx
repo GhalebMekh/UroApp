@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { DateInput } from '@/components/DateInput';
 import { cn } from '@/lib/cn';
 import { getJSON, setJSON } from '@/lib/storage';
+import { onWardActionApplied } from '@/lib/notifications';
 import { escapeHtml, printDocument, saveDocument } from '@/lib/print';
 import { todayISO } from '@/lib/date';
 import { requestPermission } from '@/lib/notifications';
@@ -212,10 +213,14 @@ export function RoundingScreen() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   useEffect(() => {
-    getJSON<Record<string, unknown>[]>(STORAGE_KEY, []).then((p) => {
-      setPatients(p.map(normalize));
-      setLoaded(true);
-    });
+    const load = () =>
+      getJSON<Record<string, unknown>[]>(STORAGE_KEY, []).then((p) => {
+        setPatients(p.map(normalize));
+        setLoaded(true);
+      });
+    void load();
+    // A reminder's Done / Snooze notification button edits the saved list.
+    return onWardActionApplied(() => void load());
   }, []);
 
   function persist(next: Patient[]) {
