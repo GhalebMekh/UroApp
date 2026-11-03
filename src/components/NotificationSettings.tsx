@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Capacitor } from '@capacitor/core';
 import { cn } from '@/lib/cn';
 import {
   DEFAULT_PREFS,
   loadPrefs,
   notificationsSupported,
-  pendingSummary,
   permissionState,
   requestPermission,
-  sendTestNotification,
   savePrefs,
   type ConferenceScope,
   type NotifyPrefs,
@@ -90,8 +87,6 @@ export function NotificationSettings() {
             </div>
           </div>
 
-          <TestAndStatus onDenied={() => setDenied(true)} />
-
           {denied && (
             <p className="mt-4 rounded-[10px] border border-amber/50 bg-amber/[0.10] px-4 py-3 text-[12.5px] text-muted">
               Notifications are turned off for UroApp. Turn them on in Settings → Notifications → UroApp, then try again.
@@ -102,61 +97,3 @@ export function NotificationSettings() {
     </section>
   );
 }
-
-/** What is scheduled on the phone right now, plus a 5-second test alert. */
-function TestAndStatus({ onDenied }: { onDenied: () => void }) {
-  const [summary, setSummary] = useState<{ count: number; next: Date | null } | null>(null);
-  const [sent, setSent] = useState(false);
-  // Shown on screen so a failure on the phone can be read without a Mac debugger.
-  const [error, setError] = useState<string | null>(null);
-  const pluginLoaded = Capacitor.isPluginAvailable('LocalNotifications');
-
-  useEffect(() => {
-    const load = () =>
-      void pendingSummary()
-        .then(setSummary)
-        .catch((e: unknown) => setError(`Status: ${errorText(e)}`));
-    load();
-    const t = window.setInterval(load, 5000);
-    return () => window.clearInterval(t);
-  }, []);
-
-  async function test() {
-    setError(null);
-    try {
-      if (await sendTestNotification()) setSent(true);
-      else onDenied();
-    } catch (e) {
-      setError(`Test: ${errorText(e)}`);
-    }
-  }
-
-  return (
-    <div className="mt-4 rounded-[10px] border border-line bg-navy px-3 py-3">
-      <p className="text-[12.5px] text-muted">
-        {summary === null
-          ? 'Checking scheduled reminders…'
-          : summary.count === 0
-            ? 'No reminders are scheduled on this phone.'
-            : `${summary.count} reminder${summary.count === 1 ? '' : 's'} scheduled${
-                summary.next
-                  ? ` · next ${summary.next.toLocaleString('en-GB', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}`
-                  : ''
-              }.`}
-      </p>
-      <button
-        type="button"
-        onClick={() => void test()}
-        className="mt-2 min-h-[44px] w-full rounded-[10px] border border-line bg-navy-2 text-[13px] font-semibold text-ink transition-colors hover:border-violet"
-      >
-        {sent ? 'Sent — lock the phone and wait 5 s' : 'Send a test notification'}
-      </button>
-      {!pluginLoaded && (
-        <p className="mt-2 text-[12px] text-amber">The notifications component is not loaded in this build.</p>
-      )}
-      {error && <p className="mt-2 break-words font-mono text-[11.5px] text-amber">{error}</p>}
-    </div>
-  );
-}
-
-const errorText = (e: unknown) => (e instanceof Error ? e.message : typeof e === 'string' ? e : JSON.stringify(e));

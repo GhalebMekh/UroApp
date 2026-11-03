@@ -131,7 +131,7 @@ Primary **Medical**. Secondary (optional): **Education** or **Reference**.
 >
 > Notifications are optional and scheduled on the device only (no push server): ward plan
 > reminders, surveillance visit reminders, conference alerts and a weekly reading nudge
-> (More → Notifications, which also has a "Send a test notification" button). Calendar access is
+> (More → Notifications). Calendar access is
 > write-only and used only when the user adds a conference to their calendar.
 
 ## Screenshots — plan

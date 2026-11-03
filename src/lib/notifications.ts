@@ -216,7 +216,6 @@ export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): P
 const SOUND = 'reminder.wav';
 
 const WEEKLY_ID = 1000;
-const TEST_ID = 999;
 
 // Never `await` or return this from a promise: Capacitor plugin proxies answer
 // every property, including `then`, so JS treats them as a pending promise and
@@ -258,7 +257,7 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
   if (!notificationsSupported()) return;
   const ln = plugin();
   const pending = await ln.getPending();
-  const ours = pending.notifications.filter((n) => n.id !== TEST_ID); // leave a pending test alert
+  const ours = pending.notifications;
   if (ours.length) {
     await ln.cancel({ notifications: ours.map((n) => ({ id: n.id })) });
   }
@@ -331,30 +330,3 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
   };
 }
 
-/** How many UroApp reminders are waiting on the phone, and when the next fires. */
-export async function pendingSummary(): Promise<{ count: number; next: Date | null }> {
-  if (!notificationsSupported()) return { count: 0, next: null };
-  const { notifications } = await plugin().getPending();
-  const times = notifications
-    .map((n) => (n.schedule?.at ? new Date(n.schedule.at).getTime() : NaN))
-    .filter((t) => !Number.isNaN(t))
-    .sort((a, b) => a - b);
-  return { count: notifications.length, next: times.length ? new Date(times[0]!) : null };
-}
-
-/** A one-off test alert 5 seconds from now, so the user can check delivery. */
-export async function sendTestNotification(): Promise<boolean> {
-  if (!(await requestPermission())) return false;
-  await plugin().schedule({
-    notifications: [
-      {
-        id: TEST_ID,
-        title: 'UroApp test',
-        body: 'Notifications are working.',
-        schedule: { at: new Date(Date.now() + 5000), allowWhileIdle: true },
-        sound: SOUND,
-      },
-    ],
-  });
-  return true;
-}
