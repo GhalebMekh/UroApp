@@ -37,7 +37,8 @@ export function BottomNav({ items, current, onNavigate }: BottomNavProps) {
 
   return (
     <nav
-      className="pointer-events-none fixed inset-x-0 z-50 px-safe"
+      // Taps beside the pill stop here rather than reaching a row hidden behind the bar.
+      className="fixed inset-x-0 z-50 px-safe"
       style={{ bottom: 'calc(env(safe-area-inset-bottom) + 10px)' }}
     >
       <ul

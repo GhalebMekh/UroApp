@@ -73,21 +73,24 @@ export default function App() {
     // A root tab starts a fresh stack; a secondary screen remembers where we came from.
     setHistory(ROOT_SCREENS.has(screen) ? [] : [...history, currentScreen]);
     setCurrentScreen(screen);
-    window.scrollTo({ top: 0 });
+    // Instant, never smooth (html has scroll-behavior: smooth): a tap during the
+    // slide landed on the row that slid under the finger, e.g. Weekly reads opened
+    // Operative rehearsal (owner, 2026-11-03).
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   /** Open one calculator on its own screen, from anywhere (search, Home, MDT, the list). */
   function openCalculator(id: string) {
     setCalcId(id);
     // Already on a calculator (e.g. an "Also in" link): swap it in place, from the top.
-    if (currentScreen === 'calculator') window.scrollTo({ top: 0 });
+    if (currentScreen === 'calculator') window.scrollTo({ top: 0, behavior: 'instant' });
     navigate('calculator');
   }
 
   /** Open one pediatric tool on its own screen. */
   function openPediatricTool(id: string) {
     setPedsToolId(id);
-    if (currentScreen === 'pediatricTool') window.scrollTo({ top: 0 });
+    if (currentScreen === 'pediatricTool') window.scrollTo({ top: 0, behavior: 'instant' });
     navigate('pediatricTool');
   }
 
@@ -122,7 +125,7 @@ export default function App() {
     if (history.length === 0) return;
     setCurrentScreen(history[history.length - 1]!);
     setHistory(history.slice(0, -1));
-    window.scrollTo({ top: 0 });
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }
 
   // Swipe in from the left edge to go back, as in native iOS apps.
