@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-01T08:31:33.420Z",
+  "generatedAt": "2026-11-03T01:56:22.778Z",
   "week": 45,
   "topic": "Radical cystectomy outcomes and quality of life",
   "subspecialties": [
@@ -341,17 +341,6 @@
       "topic": "Radical cystectomy outcomes and quality of life"
     },
     {
-      "pmid": "42964010",
-      "title": "Urethroplasty for bulbomembranous strictures after benign prostatic hyperplasia surgery: systematic review and meta-analysis.",
-      "authors": "Scilipoti P, Zorzi F, Folcia A",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-31",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42964010/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
       "pmid": "42821513",
       "title": "Long-term outcomes after buccal mucosa graft urethroplasty: a single-center cohort with 7-year median follow-up and systematic review of the literature.",
       "authors": "Putz J, Tosev G, Kluge V",
@@ -359,6 +348,116 @@
       "pubDate": "2026-10-01",
       "abstract": "",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42821513/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42811152",
+      "title": "Observation or treatment of paediatric varicoceles: revisiting the evidence.",
+      "authors": "Buchinsky DS, Naelitz BD, Siva J",
+      "journal": "Nat Rev Urol",
+      "pubDate": "2026-09-29",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42811152/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42791104",
+      "title": "Tumor risk in patients with differences in sex development (DSD) statements and recommendations from the first update of the German guideline for DSD.",
+      "authors": "Stein R, Krege S, Neumann U",
+      "journal": "J Pediatr Urol",
+      "pubDate": "2026-09-09",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42791104/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42678688",
+      "title": "Oxygen-rich dressing for hypospadias repair: Systematic review and meta-analysis.",
+      "authors": "Wong M, Botelho F, Chua ME",
+      "journal": "Can Urol Assoc J",
+      "pubDate": "2026-08-20",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42678688/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42667381",
+      "title": "Retrograde ureteral catheterization in percutaneous nephrolithotomy may be omitted in selected patients: a randomized controlled trial.",
+      "authors": "Wang S, Feng B, Liu H",
+      "journal": "Urolithiasis",
+      "pubDate": "2026-08-29",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42667381/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42641288",
+      "title": "Review: Posterior urethral valves (PUV) … what do we know?",
+      "authors": "Kim JK, Hains D, Whittam B",
+      "journal": "J Pediatr Urol",
+      "pubDate": "2026-08-11",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42641288/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42637569",
+      "title": "The physiology of the upper urinary tract in endourological times - a narrative review.",
+      "authors": "Lykkegaard EG, Brandt ASP, Øbro LF",
+      "journal": "BJU Int",
+      "pubDate": "2026-11-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42637569/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42620985",
+      "title": "Abdominopelvic Preoperative Imaging in Adult Candidates for Kidney Transplant: A Systematic Review of Its Impact on Surgical Decision-making.",
+      "authors": "Costa Silva A, Di Bello F, Lopez-Abdad A",
+      "journal": "Eur Urol Open Sci",
+      "pubDate": "2026-09-01",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42620985/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42606607",
+      "title": "Pain and safety outcomes of different anesthetic techniques in hypospadias surgery: a network meta-analysis of randomized clinical trials.",
+      "authors": "Ananda NF, Taher MA, Tjandra S",
+      "journal": "World J Urol",
+      "pubDate": "2026-08-17",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42606607/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42604881",
+      "title": "The optimal stent-strategy in paediatric pyeloplasty: a systematic review and network meta-analysis.",
+      "authors": "Aubert O, M'Tiri S, Kühnapfel A",
+      "journal": "BJU Int",
+      "pubDate": "2026-08-16",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42604881/",
+      "subspecialty": "pediatric",
+      "topic": "Radical cystectomy outcomes and quality of life"
+    },
+    {
+      "pmid": "42964010",
+      "title": "Urethroplasty for bulbomembranous strictures after benign prostatic hyperplasia surgery: systematic review and meta-analysis.",
+      "authors": "Scilipoti P, Zorzi F, Folcia A",
+      "journal": "BJU Int",
+      "pubDate": "2026-10-31",
+      "abstract": "",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42964010/",
       "subspecialty": "reconstructive",
       "topic": "Radical cystectomy outcomes and quality of life"
     },
