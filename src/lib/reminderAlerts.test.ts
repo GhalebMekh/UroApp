@@ -18,10 +18,10 @@ describe('planWardAlerts', () => {
     ];
     const alerts = planWardAlerts(patients, now);
     expect(alerts).toHaveLength(1);
-    expect(alerts[0]!.body).toBe('Repeat Hb');
+    expect(alerts[0]!.body).toBe('Reminder for: Repeat Hb');
     expect(alerts[0]!.at.getHours()).toBe(18);
-    // The patient label never reaches the lock screen.
-    expect(JSON.stringify(alerts)).not.toContain('AB');
+    // Owner 2026-11-03: the de-identified initials name the patient.
+    expect(alerts[0]!.title).toBe('Patient AB has a reminder');
   });
 
   it('ignores malformed storage', () => {

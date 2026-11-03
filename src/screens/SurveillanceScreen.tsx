@@ -23,6 +23,7 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
   const [plans, setPlans] = useState<FollowUpPlan[]>([]);
   const [label, setLabel] = useState('');
   const [denied, setDenied] = useState(false);
+  const [missing, setMissing] = useState(false);
 
   useEffect(() => {
     void getJSON<unknown>(FOLLOWUP_KEY, []).then((raw) => setPlans(normalizeFollowUps(raw)));
@@ -36,6 +37,11 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
   }
 
   async function add() {
+    if (!label.trim()) {
+      setMissing(true);
+      return;
+    }
+    setMissing(false);
     if (!(await requestPermission())) {
       setDenied(true);
       return;
@@ -48,17 +54,17 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
 
   return (
     <div className="rounded-[14px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[14px] font-semibold">Visit reminders</h3>
+      <h3 className="text-[14px] font-semibold">Surveillance patients</h3>
       <p className="mb-3 mt-1 text-[12.5px] text-muted-2">
-        A notification {FOLLOWUP_LEAD_DAYS} days before each visit in this schedule, at 9:00. Use a
-        de-identified label only (e.g. “Case A”) — it shows on the lock screen.
+        Add a patient on the schedule shown below. You get a notification {FOLLOWUP_LEAD_DAYS} days
+        before each visit, at 9:00. Use initials or a bed number only — it shows on the lock screen.
       </p>
       <div className="flex gap-2">
         <input
           value={label}
           onChange={(e) => setLabel(e.target.value.slice(0, 24))}
-          placeholder="Label (optional)"
-          aria-label="Reminder label"
+          placeholder="Patient initials, e.g. AK"
+          aria-label="Patient initials"
           className="min-h-[44px] min-w-0 flex-1 rounded-[10px] border border-line bg-navy px-3 text-[13.5px] text-ink outline-none focus:border-violet"
         />
         <button
@@ -66,9 +72,10 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
           onClick={() => void add()}
           className="min-h-[44px] shrink-0 rounded-[10px] border border-violet bg-violet/[0.18] px-4 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
         >
-          Remind me
+          Add patient
         </button>
       </div>
+      {missing && <p className="mt-3 text-[12.5px] text-amber">Enter the patient's initials first.</p>}
       {denied && (
         <p className="mt-3 text-[12.5px] text-amber">
           Notifications are off for UroApp. Turn them on in Settings → Notifications → UroApp.
@@ -81,7 +88,7 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
             return (
               <li key={p.id} className="flex items-center gap-3 rounded-[10px] border border-line bg-navy px-3 py-2">
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-[13px] font-semibold text-ink">{p.label || p.title}</div>
+                  <div className="truncate text-[13px] font-semibold text-ink">{p.label ? `Patient ${p.label}` : p.title}</div>
                   <div className="truncate text-[12px] text-muted-2">
                     {p.label ? `${p.title} · ` : ''}
                     {next ? `next ${next.due}` : 'no visits left'}

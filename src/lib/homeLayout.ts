@@ -82,3 +82,8 @@ export function setHomeLayout(next: HomeLayout) {
   listeners.forEach((l) => l());
   void setJSON(STORAGE_KEY, state);
 }
+
+/** Apply a change to the latest layout, so quick successive taps never undo each other. */
+export function updateHomeLayout(change: (current: HomeLayout) => Partial<HomeLayout>) {
+  setHomeLayout({ ...state, ...change(state) });
+}

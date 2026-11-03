@@ -97,12 +97,16 @@ export const WARD_KEY = 'uroapp.rounding.v1';
 
 /**
  * Ward plan reminders that have a due time and are not done, fired at that
- * time. The patient's label is left out — the text shows on the lock screen.
+ * time, named by the patient's de-identified label (owner, 2026-11-03: "Patient XX
+ * has a reminder for XX"). Names are initials only (RoundingScreen), as this
+ * text shows on the lock screen.
  */
 export function planWardAlerts(rawPatients: unknown, now: Date): PlannedAlert[] {
   const out: PlannedAlert[] = [];
   if (!Array.isArray(rawPatients)) return out;
-  for (const p of rawPatients as { reminders?: unknown }[]) {
+  for (const p of rawPatients as { name?: unknown; location?: unknown; reminders?: unknown }[]) {
+    const name = typeof p?.name === 'string' ? p.name.trim() : '';
+    const bed = typeof p?.location === 'string' ? p.location.trim() : '';
     if (!Array.isArray(p?.reminders)) continue;
     for (const r of p.reminders as { id?: unknown; text?: unknown; due?: unknown; done?: unknown }[]) {
       if (r?.done === true || typeof r?.due !== 'string' || !r.due) continue;
@@ -110,8 +114,8 @@ export function planWardAlerts(rawPatients: unknown, now: Date): PlannedAlert[] 
       if (Number.isNaN(at.getTime()) || at <= now) continue;
       out.push({
         id: 3000 + out.length,
-        title: 'Ward plan reminder',
-        body: typeof r.text === 'string' && r.text.trim() ? r.text.trim() : 'A plan reminder is due.',
+        title: name ? `Patient ${name}${bed ? ` (${bed})` : ''} has a reminder` : 'Ward plan reminder',
+        body: typeof r.text === 'string' && r.text.trim() ? `Reminder for: ${r.text.trim()}` : 'A plan reminder is due.',
         at,
         screen: 'residency',
         ...(typeof r.id === 'string' ? { reminderId: r.id } : {}),
@@ -198,7 +202,7 @@ export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): P
       if (at <= now) continue;
       out.push({
         id: 5000 + out.length,
-        title: `Follow-up in 1 week${p.label ? ` · ${p.label}` : ''}`,
+        title: p.label ? `Patient ${p.label}: follow-up in 1 week` : 'Follow-up in 1 week',
         body: `${p.title}: ${v.label} visit due ${v.due}.`,
         at,
         screen: 'surveillance',
@@ -207,6 +211,9 @@ export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): P
   }
   return out;
 }
+
+/** Bundled chime (public/reminder.wav). The plugin plays no sound unless one is named. */
+const SOUND = 'reminder.wav';
 
 const WEEKLY_ID = 1000;
 const TEST_ID = 999;
@@ -265,6 +272,7 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
             title: 'Weekly reads',
             body: "This week's urology papers are ready.",
             schedule: { on: { ...WEEKLY }, allowWhileIdle: true },
+            sound: SOUND,
             extra: { screen: 'articles' satisfies Screen },
           },
         ]
@@ -274,6 +282,7 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
       title: a.title,
       body: a.body,
       schedule: { at: a.at, allowWhileIdle: true },
+      sound: SOUND,
       extra: { screen: a.screen, reminderId: a.reminderId },
       ...(a.reminderId ? { actionTypeId: WARD_ACTION_TYPE } : {}),
     })),
@@ -343,6 +352,7 @@ export async function sendTestNotification(): Promise<boolean> {
         title: 'UroApp test',
         body: 'Notifications are working.',
         schedule: { at: new Date(Date.now() + 5000), allowWhileIdle: true },
+        sound: SOUND,
       },
     ],
   });
