@@ -137,7 +137,7 @@ export default function App() {
     <PurchasesProvider onOpenPlans={openPlans}>
       {/* Access first, then the medical disclaimer — no reason to show clinical
           terms to someone who cannot get in. */}
-      <NotificationsSync onOpen={navigate} />
+      <NotificationsSync onOpen={openLink} />
       <PasscodeGate>
       <DisclaimerGate>
         <div className="flex min-h-[100dvh] flex-col px-safe">

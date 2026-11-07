@@ -31,7 +31,7 @@ export type Screen =
   | 'more';
 
 export type ResidencySection = 'inpatient' | 'oncall' | 'or';
-export type OrTab = 'logbook' | 'procedures' | 'consent';
+export type OrTab = 'logbook' | 'stents' | 'procedures' | 'consent';
 
 /** Where to open the Residency screen when another screen links into it. */
 export interface ResidencyTarget {

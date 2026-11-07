@@ -9,6 +9,7 @@ import { OnCallScreen } from './OnCallScreen';
 import { OperativeLogScreen } from './OperativeLogScreen';
 import { ProceduresScreen } from './ProceduresScreen';
 import { ConsentScreen } from './ConsentScreen';
+import { StentsScreen } from './StentsScreen';
 
 /** The header copy for each Residency page — its sub-heading lives here, not in the page. */
 const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: string; lede: ReactNode; tone?: HeroTone }> = {
@@ -35,6 +36,11 @@ const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: str
     eyebrow: 'Operative log',
     title: 'Surgical logbook.',
     lede: 'Your case log, stored on this device. De-identified by design — no names or medical-record numbers, only date, patient gender, procedure, your role and any complication.',
+  },
+  stents: {
+    eyebrow: 'Stent register',
+    title: 'No forgotten stents.',
+    lede: 'Every ureteric stent still in, with its remove-by date and a reminder a week before. Stored only on this device, initials only.',
   },
   procedures: {
     eyebrow: 'Procedures',
@@ -72,6 +78,7 @@ export function ResidencyScreen({
 
   const orTabs: { id: OrTab; label: string }[] = [
     { id: 'logbook', label: 'Logbook' },
+    { id: 'stents', label: 'Stents' },
     { id: 'procedures', label: 'Procedures' },
     { id: 'consent', label: 'Consent' },
   ];
@@ -112,6 +119,13 @@ export function ResidencyScreen({
           <ProGate feature="logbook">
             <LockGate>
               <OperativeLogScreen />
+            </LockGate>
+          </ProGate>
+        )}
+        {section === 'or' && orTab === 'stents' && (
+          <ProGate feature="stents">
+            <LockGate>
+              <StentsScreen />
             </LockGate>
           </ProGate>
         )}

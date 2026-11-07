@@ -10,9 +10,11 @@
 import { Capacitor } from '@capacitor/core';
 import { LocalNotifications } from '@capacitor/local-notifications';
 import type { Conference } from '@/data/conferences';
-import type { Screen } from '@/navigation';
+import type { Screen, ScreenLink } from '@/navigation';
 import { formatSpan } from './conferenceDates';
 import { getJSON, setJSON } from './storage';
+import { SIDE_LABEL, STENT_LEAD_DAYS, formatDay, type Stent } from './stents';
+import { toLocalISODate } from './date';
 
 export const NOTIFY_KEY = 'uroapp.notify.v1';
 
@@ -39,6 +41,8 @@ export interface PlannedAlert {
   /** Local date-time to fire at. */
   at: Date;
   screen: Screen;
+  /** Where a tap opens when it's more specific than `screen`, e.g. a Residency tab. */
+  link?: ScreenLink;
   /** Ward reminders: the reminder's id, so Done / Snooze can find it. */
   reminderId?: string;
 }
@@ -212,6 +216,36 @@ export function planFollowUpAlerts(plans: readonly FollowUpPlan[], now: Date): P
   return out;
 }
 
+/**
+ * Stent register: one alert at 09:00 a week before the remove-by date (owner,
+ * 2026-11-06). A remove-by date set less than a week ahead would miss that, so
+ * it gets one at 09:00 on the day instead — only then, so a stent never gets
+ * two. Removed stents get none. Title uses the initials only; the free-text
+ * note never reaches the lock screen.
+ */
+export function planStentAlerts(stents: readonly Stent[], now: Date): PlannedAlert[] {
+  const out: PlannedAlert[] = [];
+  for (const s of stents) {
+    if (s.removed) continue;
+    const early = new Date(`${s.removeBy}T09:00:00`);
+    early.setDate(early.getDate() - STENT_LEAD_DAYS);
+    const onDay = new Date(`${s.removeBy}T09:00:00`);
+    const setLate = s.setOn !== '' && s.setOn >= toLocalISODate(early);
+    const at = early > now ? early : setLate && onDay > now ? onDay : null;
+    if (!at) continue;
+    const when = at === early ? 'due out in 1 week' : 'due out today';
+    out.push({
+      id: 6000 + out.length,
+      title: s.label ? `Patient ${s.label}: stent ${when}` : `Stent ${when}`,
+      body: `${SIDE_LABEL[s.side]} stent, remove by ${formatDay(s.removeBy)}. Book the removal.`,
+      at,
+      screen: 'residency',
+      link: { residency: { section: 'or', orTab: 'stents' } },
+    });
+  }
+  return out;
+}
+
 /** Bundled chime (public/reminder.wav). The plugin plays no sound unless one is named. */
 const SOUND = 'reminder.wav';
 
@@ -282,7 +316,7 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
       body: a.body,
       schedule: { at: a.at, allowWhileIdle: true },
       sound: SOUND,
-      extra: { screen: a.screen, reminderId: a.reminderId },
+      extra: { screen: a.screen, link: a.link, reminderId: a.reminderId },
       ...(a.reminderId ? { actionTypeId: WARD_ACTION_TYPE } : {}),
     })),
   ];
@@ -302,14 +336,14 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
   }
 }
 
-/** Call `open` with the screen named by a tapped notification. Returns an unsubscribe. */
-export function onNotificationTap(open: (screen: Screen) => void): () => void {
+/** Call `open` with where a tapped notification points. Returns an unsubscribe. */
+export function onNotificationTap(open: (link: ScreenLink) => void): () => void {
   if (!notificationsSupported()) return () => {};
   let remove: (() => void) | null = null;
   let cancelled = false;
   void plugin()
       .addListener('localNotificationActionPerformed', (e) => {
-        const extra = e.notification.extra as { screen?: Screen; reminderId?: string } | undefined;
+        const extra = e.notification.extra as { screen?: Screen; link?: ScreenLink; reminderId?: string } | undefined;
         if ((e.actionId === 'done' || e.actionId === 'snooze') && extra?.reminderId) {
           const id = extra.reminderId;
           const action: WardAction = e.actionId;
@@ -318,7 +352,8 @@ export function onNotificationTap(open: (screen: Screen) => void): () => void {
             .then(() => wardActionListeners.forEach((l) => l()));
           return;
         }
-        if (extra?.screen) open(extra.screen);
+        if (extra?.link) open(extra.link);
+        else if (extra?.screen) open({ screen: extra.screen });
       })
       .then((h) => {
         if (cancelled) void h.remove();

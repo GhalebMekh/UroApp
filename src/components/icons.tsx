@@ -290,6 +290,15 @@ export function ChevronRightIcon({ className }: IconProps) {
   );
 }
 
+/** Double-J ureteric stent — a tube with a pigtail curl at each end. */
+export function StentIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="M14 7.5a3 3 0 1 0-3-3v15a3 3 0 1 0 3-3" />
+    </svg>
+  );
+}
+
 /** Check mark — "included". */
 export function CheckIcon({ className }: IconProps) {
   return (

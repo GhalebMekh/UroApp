@@ -18,6 +18,7 @@ import type { Tier } from './entitlements';
 export type GatedFeature =
   | 'inpatient'
   | 'logbook'
+  | 'stents'
   | 'consent'
   | 'surveillance'
   | 'rehearsal'
@@ -30,6 +31,7 @@ export type GatedFeature =
 export const FEATURE_TIER: Record<GatedFeature, Exclude<Tier, 'resident'>> = {
   inpatient: 'pro',
   logbook: 'pro',
+  stents: 'pro',
   consent: 'pro',
   surveillance: 'pro',
   rehearsal: 'pro',
@@ -43,6 +45,7 @@ export const FEATURE_TIER: Record<GatedFeature, Exclude<Tier, 'resident'>> = {
 export const FEATURE_LABEL: Record<GatedFeature, string> = {
   inpatient: 'The inpatient tracker',
   logbook: 'The operative logbook',
+  stents: 'The stent register',
   consent: 'The bilingual consent generator',
   surveillance: 'Surveillance schedules',
   rehearsal: 'Operative rehearsal',

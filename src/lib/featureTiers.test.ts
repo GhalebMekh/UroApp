@@ -6,6 +6,7 @@ describe('tier map', () => {
     expect(FEATURE_TIER).toEqual({
       inpatient: 'pro',
       logbook: 'pro',
+      stents: 'pro',
       consent: 'pro',
       surveillance: 'pro',
       rehearsal: 'pro',

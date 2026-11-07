@@ -86,6 +86,7 @@ export const SEARCH_INDEX: SearchItem[] = [
   })),
   { label: 'TWIST score', sub: 'On-call · torsion', screen: 'residency', link: { residency: { section: 'oncall', emergency: 'torsion' } }, keywords: kw('twist testicular torsion score barbosa') },
   { label: 'Operative logbook', sub: 'OR · Logbook', screen: 'residency', link: { residency: { section: 'or', orTab: 'logbook' } }, keywords: kw('logbook surgical cases log role') },
+  { label: 'Stent register', sub: 'OR · Stents', screen: 'residency', link: { residency: { section: 'or', orTab: 'stents' } }, keywords: kw('stent register dj double j ureteric jj removal exchange forgotten reminder due overdue') },
   { label: 'Rounding list', sub: 'Inpatient', screen: 'residency', link: { residency: { section: 'inpatient' } }, keywords: kw('rounding ward round patient list progress plan') },
   { label: 'Surveillance schedule', sub: 'Follow-up calendar', screen: 'surveillance', keywords: kw('surveillance schedule follow-up calendar nmibc cystoscopy rcc renal mass stone metabolic 24-hour urine') },
   { label: 'Conferences', sub: 'Calendar', screen: 'conferences', keywords: kw('conferences congress meeting aua eau siu wcet arab association urology dates calendar ics jeddah') },

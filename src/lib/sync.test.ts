@@ -63,6 +63,8 @@ describe('what syncs', () => {
   it('never includes the ward list or MDT sheets', () => {
     expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.rounding.v1');
     expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.mdt.v1');
+    // Stent register: device only (owner, 2026-11-06).
+    expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.stents.v1');
   });
 
   it('matches the keys the database allows, and nothing else', () => {
