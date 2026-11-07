@@ -27,8 +27,8 @@ export interface NotifyPrefs {
 
 export const DEFAULT_PREFS: NotifyPrefs = { weekly: false, conferences: 'off' };
 
-/** Weekly reads refresh on Sunday (GitHub job), so the nudge goes out Monday 09:00. */
-export const WEEKLY = { weekday: 2, hour: 9, minute: 0 } as const; // 1 = Sunday (iOS)
+/** Weekly reads refresh early Saturday (GitHub job, 05:00 Jeddah), so the nudge goes out Saturday 09:00. */
+export const WEEKLY = { weekday: 7, hour: 9, minute: 0 } as const; // 1 = Sunday … 7 = Saturday (iOS)
 /** Conference alerts: two weeks before and the day before, at 09:00. */
 export const CONF_LEAD_DAYS = [14, 1] as const;
 /** iOS keeps at most 64 pending local notifications per app. */
@@ -303,7 +303,7 @@ export async function reschedule(prefs: NotifyPrefs, alerts: PlannedAlert[]): Pr
           {
             id: WEEKLY_ID,
             title: 'Weekly reads',
-            body: "This week's urology papers are ready.",
+            body: "This week's research questions are ready.",
             schedule: { on: { ...WEEKLY }, allowWhileIdle: true },
             sound: SOUND,
             extra: { screen: 'articles' satisfies Screen },

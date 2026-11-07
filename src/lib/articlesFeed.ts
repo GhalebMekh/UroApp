@@ -20,6 +20,12 @@ export interface Article {
   url: string;
   subspecialty: string;
   topic: string;
+  /** The question the paper asks, in our words; no findings (server/articles/questions.js). */
+  question?: string;
+  /** From PubMed's publication types, e.g. "Randomised controlled trial". */
+  studyType?: string;
+  /** Participants or studies, as the abstract states, e.g. "412 patients". */
+  size?: string;
 }
 
 export interface Feed {

@@ -15,7 +15,8 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { getWeeklyTopic } from './topics.js';
-import { fetchWeeklyArticles } from './pmcFetcher.js';
+import { fetchAbstracts, fetchWeeklyArticles } from './pmcFetcher.js';
+import { addQuestions } from './questions.js';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const OUT = resolve(here, '../../public/feeds/articles.json');
@@ -30,6 +31,15 @@ if (articles.length === 0) {
   console.error('No articles fetched — keeping the existing feed.');
   process.exit(1);
 }
+
+// Research question + size per paper (questions.js). Abstracts stay in memory only.
+let abstracts = new Map();
+try {
+  abstracts = await fetchAbstracts(articles.map((a) => a.pmid));
+} catch (e) {
+  console.error(`Abstracts unavailable (${e.message}) — publishing without research questions.`);
+}
+await addQuestions(articles, abstracts);
 
 const feed = {
   generatedAt: new Date().toISOString(),

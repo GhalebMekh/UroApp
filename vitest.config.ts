@@ -9,6 +9,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    // questionGuards has no dependencies, so it runs here even where server/ isn't installed (Codemagic).
+    include: ['src/**/*.test.ts', 'server/articles/questionGuards.test.js'],
   },
 });

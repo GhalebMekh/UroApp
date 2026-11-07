@@ -1,12 +1,14 @@
-# Refreshes Weekly reads every Sunday. Writes public/feeds/articles.json and
+# Refreshes Weekly reads every Saturday. Writes public/feeds/articles.json and
 # commits it; the app fetches that file from raw.githubusercontent.com when
 # online and falls back to the copy bundled in the build when offline.
-# No server to keep alive, nothing to pay for.
+# No server to keep alive. Each paper also gets its research question and size
+# (server/articles/questions.js) via the Claude API — repository secret
+# ANTHROPIC_API_KEY; without it the feed still publishes, minus the questions.
 name: Weekly articles feed
 
 on:
   schedule:
-    - cron: '0 2 * * 0' # Sundays 02:00 UTC — same slot as the old server cron
+    - cron: '0 2 * * 6' # Saturdays 02:00 UTC = 05:00 Jeddah, before the 09:00 notification
   workflow_dispatch: {} # allow a manual run from the Actions tab
 
 permissions:
@@ -28,6 +30,8 @@ jobs:
 
       - name: Fetch this week's articles
         working-directory: server/articles
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: node exportFeed.js
 
       - name: Commit the new feed

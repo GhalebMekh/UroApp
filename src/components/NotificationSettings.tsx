@@ -58,7 +58,7 @@ export function NotificationSettings() {
 
           <div className="mt-4">
             <div className="text-[13.5px] font-semibold">Weekly reads</div>
-            <p className="mb-2 text-[12.5px] text-muted-2">Monday 9:00, when the new papers are in.</p>
+            <p className="mb-2 text-[12.5px] text-muted-2">Saturday 9:00, when the new papers are in.</p>
             <div className="flex gap-2">
               <button type="button" aria-pressed={!prefs.weekly} onClick={() => void update({ weekly: false })} className={chip(!prefs.weekly)}>
                 Off

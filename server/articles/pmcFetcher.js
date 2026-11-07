@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { studyTypeOf } from './questionGuards.js';
 
 // Subspecialty keyword mappings for targeted PubMed queries
 // Phrases are quoted so PubMed matches them as phrases. Bare "lithotripsy"
@@ -47,6 +48,44 @@ function extractTag(xml, tag) {
 function extractIdList(xml) {
   const matches = xml.match(/<Id>(\d+)<\/Id>/g);
   return matches ? matches.map(m => m.replace(/<\/?Id>/g, '')) : [];
+}
+
+/** Strip PubMed XML markup (<i>, <sup>, entities) from abstract text. */
+function plainText(xml) {
+  return xml
+    .replace(/<[^>]+>/g, "")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&#x([0-9a-f]+);/gi, (_, h) => String.fromCodePoint(parseInt(h, 16)))
+    .replace(/&#(\d+);/g, (_, d) => String.fromCodePoint(Number(d)))
+    .replace(/&amp;/g, "&")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * Abstracts for a set of PMIDs (efetch XML; esummary has none). Used only to
+ * write each paper's research question — the abstract itself is the journal's
+ * text and is never published in the feed.
+ */
+export async function fetchAbstracts(pmids) {
+  const out = new Map();
+  if (pmids.length === 0) return out;
+  const url = `${BASE_URL}/efetch.fcgi?db=pubmed&id=${pmids.join(",")}&retmode=xml&tool=${TOOL}&email=${EMAIL}`;
+  const res = await axios.get(url, { timeout: 20000, responseType: "text" });
+  for (const article of String(res.data).split("</PubmedArticle>")) {
+    const pmid = article.match(/<PMID[^>]*>(\d+)<\/PMID>/)?.[1];
+    if (!pmid) continue;
+    const parts = [...article.matchAll(/<AbstractText([^>]*)>([\s\S]*?)<\/AbstractText>/g)].map(([, attrs, body]) => {
+      const label = attrs.match(/Label="([^"]*)"/)?.[1];
+      const text = plainText(body);
+      return label ? `${label}: ${text}` : text;
+    });
+    if (parts.length) out.set(pmid, parts.join("\n"));
+  }
+  return out;
 }
 
 // Query PubMed for articles using E-utilities
@@ -107,7 +146,9 @@ export async function fetchArticlesFromPMC(topic, subspecialty) {
           authors,
           journal: item.source || "PubMed",
           pubDate,
-          abstract: item.summary?.substring(0, 500) || "",
+          // esummary carries no abstract; the feed doesn't publish one (journal text).
+          abstract: "",
+          studyType: studyTypeOf(Array.isArray(item.pubtype) ? item.pubtype : []),
           url: `https://pubmed.ncbi.nlm.nih.gov/${uid}/`,
           subspecialty,
           topic

@@ -85,31 +85,36 @@ export function ArticlesScreen() {
             <p className="text-[14px] text-muted">Nothing in this subspecialty this week — check back next week.</p>
           )}
 
-          {articles.map((a) => (
-            <article key={a.pmid} className="rounded-[16px] border border-line bg-navy-2 p-5">
-              <h3 className="mb-2 text-[15px] font-semibold leading-snug text-ink">
+          {articles.map((a) => {
+            // Study type and size first: they let the reader judge the evidence before opening it.
+            const facts = [a.studyType, a.size, a.journal, a.pubDate.slice(0, 4)].filter(Boolean).join(' · ');
+            return (
+              <article key={a.pmid} className="rounded-[16px] border border-line bg-navy-2 p-5">
+                <h3 className="font-display text-[16px] font-semibold leading-snug text-ink">{a.question ?? a.title}</h3>
+                <p className="mt-1.5 text-[12.5px] font-semibold text-violet-soft">{facts}</p>
+                {a.question && <p className="mt-2 line-clamp-2 text-[12.5px] text-muted">{a.title}</p>}
+                <p className="mt-1 text-[12px] text-muted-2">
+                  {a.authors} · {formatDate(a.pubDate)} · PMID {a.pmid}
+                </p>
                 <a
                   href={a.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-start gap-2 hover:text-violet-soft"
+                  className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-semibold text-violet-soft hover:text-ink"
                 >
-                  {a.title}
-                  <ExternalLinkIcon className="mt-1 h-4 w-4 shrink-0 opacity-60" />
+                  Open in PubMed
+                  <ExternalLinkIcon className="h-3.5 w-3.5" />
                 </a>
-              </h3>
-              <p className="text-[12.5px] text-muted">{a.authors}</p>
-              <p className="mt-0.5 text-[12.5px] text-muted-2">
-                <span className="font-semibold text-muted">{a.journal}</span> · {formatDate(a.pubDate)} · PMID {a.pmid}
-              </p>
-              {a.abstract && <p className="mt-3 line-clamp-3 text-[13.5px] text-muted">{a.abstract}</p>}
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
 
         <p className="mt-8 text-[12px] text-muted-2">
-          Selected automatically from PubMed each week around a rotating topic. Links open PubMed and
-          need a connection. Always read the full paper before relying on it.
+          Selected automatically from PubMed every Saturday around a rotating topic. Each research
+          question is written automatically from the paper’s abstract and says what was studied, not
+          what was found. Links open PubMed and need a connection. Always read the full paper before
+          relying on it.
         </p>
       </PageBody>
     </>
