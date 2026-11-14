@@ -1,7 +1,7 @@
 {
-  "generatedAt": "2026-11-03T01:56:22.778Z",
-  "week": 45,
-  "topic": "Radical cystectomy outcomes and quality of life",
+  "generatedAt": "2026-11-14T08:48:01.214Z",
+  "week": 46,
+  "topic": "Ileal conduit versus continent pouch reconstruction",
   "subspecialties": [
     "topic",
     "oncology",
@@ -11,114 +11,112 @@
   ],
   "articles": [
     {
-      "pmid": "42772020",
-      "title": "Prehabilitation for patients undergoing radical cystectomy: Patient selection and targeted interventions.",
-      "authors": "Briggs LG, Choudry MM, Nguyen MV",
+      "pmid": "43015446",
+      "title": "International multidisciplinary Delphi consensus on advanced practice in non-metastatic upper tract urothelial carcinoma (IMPACT UTUC).",
+      "authors": "Pandolfo SD, Contieri R, Mir MC",
+      "journal": "Nat Rev Urol",
+      "pubDate": "2026-11-11",
+      "abstract": "",
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/43015446/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
+    },
+    {
+      "pmid": "43009428",
+      "title": "Nanoparticle delivery of phytochemicals and dietary factors for epigenetic modulation in prostate cancer.",
+      "authors": "Malik A, Ravinuthala RP, Jha AK",
       "journal": "Urol Oncol",
-      "pubDate": "2026-09-22",
+      "pubDate": "2026-11-10",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42772020/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/43009428/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
-      "pmid": "42462153",
-      "title": "Robot-Assisted Radical Cystectomy: Recommendations from Latin American Experts Consensus on Surgical Strategy, Urinary Reconstruction, and Oncological and Func-tional Outcomes.",
-      "authors": "Faria EF, Rodriguez A, Pompeo A",
-      "journal": "Int Braz J Urol",
-      "pubDate": "2026 Nov-Dec",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42462153/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42217279",
-      "title": "Comparison of quality of life and sexual function after ileal vs. sigmoid orthotopic neobladder reconstruction following nerves, vas deferens, and seminal vesicle-sparing radical cystectomy: A prospective randomized study.",
-      "authors": "Singh V, Aggarwal A, Akhtar MR",
+      "pmid": "43009426",
+      "title": "PARP inhibitor-based combinations in first-line metastatic castration-resistant prostate cancer: A meta-analysis.",
+      "authors": "Ben Kridis W, Khanfir A",
       "journal": "Urol Oncol",
-      "pubDate": "2026-08-01",
+      "pubDate": "2026-11-10",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42217279/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/43009426/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
-      "pmid": "42028123",
-      "title": "Quality of Life After Radical Cystectomy: Meta-analysis of Neobladder and Ileal Conduit Outcomes Across Multiple Assessment Tools.",
-      "authors": "Mediana E, Hamid ARAH, Rahman F",
-      "journal": "Eur Urol Open Sci",
-      "pubDate": "2026-05-01",
+      "pmid": "43007457",
+      "title": "Diagnostic yield and early outcomes of radical prostatectomy without prior histopathologic diagnosis: a single-arm systematic review and meta-analysis.",
+      "authors": "Anceno A, Loyola-Nieto F, Munoz RA",
+      "journal": "World J Urol",
+      "pubDate": "2026-11-10",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42028123/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Systematic review & meta-analysis",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/43007457/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
-      "pmid": "41992552",
-      "title": "Alternatives to radical cystectomy: a bladder-sparing approach in appropriately selected patients.",
-      "authors": "Nolazco JI, Melnick KR, Lee RJ",
-      "journal": "BJU Int",
-      "pubDate": "2026-07-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41992552/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "41733191",
-      "title": "Navigating bladder preservation in Bacillus Calmette-Guérin-unresponsive disease: how much risk is too much?",
-      "authors": "Aliaga A, Ávila C, Fernández MI",
-      "journal": "Curr Opin Urol",
-      "pubDate": "2026-05-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41733191/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "41390278",
-      "title": "The Influence of Urinary Diversion Type on Body Image and Decision Regret Following Radical Cystectomy: A Systematic Review.",
-      "authors": "Roessler N, Miszczyk M, Miyajima K",
-      "journal": "Eur Urol Focus",
-      "pubDate": "2026-09-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41390278/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "41230159",
-      "title": "Management of prostatic necrosis and the devastated bladder outlet-a narrative review.",
-      "authors": "Holm HV, Nilsen OJ",
+      "pmid": "42997216",
+      "title": "Multidisciplinary management of metastatic renal cell carcinoma: a narrative review.",
+      "authors": "Fribourg-Liendo RA, Kothari A, Yip W",
       "journal": "Transl Androl Urol",
-      "pubDate": "2025-10-31",
+      "pubDate": "2026-10-30",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41230159/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42997216/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
-      "pmid": "41111014",
-      "title": "Time to change the template: An oncologic appraisal of organ sparing cystectomy in the female patient.",
-      "authors": "Chung R, Montanaro F, Croll B",
+      "pmid": "42997210",
+      "title": "The role of the p53 signaling pathway in prostate cancer.",
+      "authors": "Shi R, Fu H, Wang X",
+      "journal": "Transl Androl Urol",
+      "pubDate": "2026-10-30",
+      "abstract": "",
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42997210/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
+    },
+    {
+      "pmid": "42995099",
+      "title": "Sex-disaggregated Outcomes and Safety Reporting in Perioperative Systemic Therapy for Muscle-invasive Bladder Cancer: A Systematic Review.",
+      "authors": "Mari A, Giudici S, Grobet-Jeandin É",
+      "journal": "Eur Urol Oncol",
+      "pubDate": "2026-11-06",
+      "abstract": "",
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42995099/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
+    },
+    {
+      "pmid": "42986441",
+      "title": "Intravesical BCG-induced granulomatous prostatitis mimicking prostate cancer in patients with non-muscle invasive bladder cancer: a systematic review.",
+      "authors": "Miyajima K, Miszczyk M, Rabil MJ",
+      "journal": "World J Urol",
+      "pubDate": "2026-11-05",
+      "abstract": "",
+      "studyType": "Systematic review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42986441/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
+    },
+    {
+      "pmid": "42971865",
+      "title": "Molecular profiling of renal mass biopsy tissue: A review of feasibility and clinical utility.",
+      "authors": "McGrath J, Willis R, Sridhar A",
       "journal": "Urol Oncol",
-      "pubDate": "2025-12-01",
+      "pubDate": "2026-11-02",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41111014/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "41049820",
-      "title": "Bladder preservation alternatives in non-metastatic muscle-invasive bladder tumor: A systematic review and meta-analysis.",
-      "authors": "Parrao D, Lizana N, Saavedra C",
-      "journal": "Asian J Urol",
-      "pubDate": "2025-07-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/41049820/",
-      "subspecialty": "topic",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42971865/",
+      "subspecialty": "oncology",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42954085",
@@ -127,218 +125,22 @@
       "journal": "Int J Urol",
       "pubDate": "2026-11-01",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42954085/",
       "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
-      "pmid": "42952235",
-      "title": "Opposing roles of acid phosphatase 1 (ACP1) and ACP3 in prostate cancer progression.",
-      "authors": "Faria AVS, Ferreira-Halder CV, Peppelenbosch MP",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-28",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42952235/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42952025",
-      "title": "PSMA Theranostics for Prostate Cancer: Evidence, Pitfalls, and Implementation in Japan.",
-      "authors": "Hirata K, Watanabe S, Wakabayashi H",
-      "journal": "Int J Urol",
-      "pubDate": "2026-11-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42952025/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42949831",
-      "title": "Undescended Testes in Medically Complex Children: Evaluating A Common Urologic Condition Through a Multi-Disciplinary Lens.",
-      "authors": "Chan YY, Loomba L, Ravula N",
-      "journal": "J Urol",
-      "pubDate": "2026-10-28",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42949831/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42946767",
-      "title": "Prostate cancer worldwide: updated epidemiology, disparities, and screening implications.",
-      "authors": "Bernardino RM, Nguyen DD, Carlsson SV",
-      "journal": "Prostate Cancer Prostatic Dis",
-      "pubDate": "2026-10-27",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42946767/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42934012",
-      "title": "Neoadjuvant Therapy in Patients with Upper Tract Urothelial Cancer: An Updated Systematic Review and Meta-analysis.",
-      "authors": "Di Bello F, Gallioli A, D'Andrea D",
-      "journal": "Eur Urol Oncol",
-      "pubDate": "2026-10-26",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42934012/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42919974",
-      "title": "Microbiome interactions in renal cell carcinoma: evidence, challenges and opportunities.",
-      "authors": "Lindgaard C, Hvidt AK, Keller AK",
-      "journal": "Nat Rev Urol",
+      "pmid": "42981863",
+      "title": "After the shockwave: Alpha-1 adrenergic blockers as adjunctive therapy for pediatric urinary stones-A systematic review and meta-analysis of randomized controlled trials.",
+      "authors": "Qasem SMS, Almomani MA, Kasem N",
+      "journal": "J Pediatr Urol",
       "pubDate": "2026-10-23",
       "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42919974/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42919739",
-      "title": "Epidemiology, Risk Factors, and Prevention of Prostate Cancer.",
-      "authors": "Gandaglia G, Weiner AB, Briganti A",
-      "journal": "Eur Urol",
-      "pubDate": "2026-10-23",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42919739/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42907259",
-      "title": "Risk-stratified Prostate Cancer Screening in 2026: Blood- and Urine-based Biomarkers.",
-      "authors": "Stangl-Kremser J, Salami SS",
-      "journal": "Eur Urol Focus",
-      "pubDate": "2026-10-21",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42907259/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42901957",
-      "title": "MRI and PSMA PET/CT: Foes or friends for the early detection of prostate cancer?",
-      "authors": "Girometti R, Giannarini G, Crestani A",
-      "journal": "Prostate Cancer Prostatic Dis",
-      "pubDate": "2026-10-20",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42901957/",
-      "subspecialty": "oncology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42965614",
-      "title": "Laser to stone interaction: how do lasers break stones ? a systematic review.",
-      "authors": "Chicaud M, Scilipoti P, Kutchukian S",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-10-31",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42965614/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42934069",
-      "title": "Economic Evaluation of Surgical Management for Urolithiasis: A Systematic Review of Comparative Cost Analyses from EAU endourology.",
-      "authors": "Scilipoti P, Zorzi F, Panthier F",
-      "journal": "Eur Urol Focus",
-      "pubDate": "2026-10-26",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42934069/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42901875",
-      "title": "Does bespoke metabolic investigation reduce urinary stone recurrence? A narrative review.",
-      "authors": "Wiseman OJ, Turney BW",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-20",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42901875/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42898237",
-      "title": "Primary Versus Delayed Ureteroscopy for Obstructing Ureteric Calculi: A Systematic Review and Meta-analysis from the European Association of Urology Endourology.",
-      "authors": "Sugrue DD, Cullivan O, Ryan FR",
-      "journal": "Eur Urol Open Sci",
-      "pubDate": "2026-12-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42898237/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42888853",
-      "title": "Flexible and navigable suction ureteric access sheath and direct-in-scope suction in endourology: a systematic evidence map of study characteristics and research trends.",
-      "authors": "Scilipoti P, Zorzi F, Gonzalez CG",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-16",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42888853/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42866845",
-      "title": "Sodium-glucose cotransporter 2 inhibitors vs. glucagon-like peptide-1 receptor agonists and dipeptidyl peptidase-4 inhibitors for incident and recurrent urolithiasis: a European Association of Urology Endourology systematic review.",
-      "authors": "Pischetola A, Esperto F, Tsaturyan A",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2026-09-30",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42866845/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42862368",
-      "title": "Laparoscopic and robotic management of symptomatic calyceal diverticula: a systematic review on behalf of YAU and EAU endourology.",
-      "authors": "Spinos T, Ergul R, Peteinaris A",
-      "journal": "World J Urol",
-      "pubDate": "2026-10-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42862368/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42862355",
-      "title": "Experimental and clinical studies: a scoping review of intrarenal pressure in percutaneous nephrolithotomy.",
-      "authors": "Giulioni C, Castellani D, Cafarelli A",
-      "journal": "World J Urol",
-      "pubDate": "2026-10-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42862355/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42859243",
-      "title": "The effect of a stress ball on pain, anxiety, satisfaction, and treatment continuation during extracorporeal shock wave lithotripsy: a randomized controlled trial.",
-      "authors": "Kanat C, Bozkul G, Kettaş Dölek E",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-10-10",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42859243/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42859231",
-      "title": "Bridging evidence gaps in opioid-sparing postoperative pain control for percutaneous nephrolithotomy: a network meta-analysis identifying optimal strategies.",
-      "authors": "Li P, Tao K, Jian Z",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-10-10",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42859231/",
-      "subspecialty": "endourology",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "studyType": "Review",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/42981863/",
+      "subspecialty": "pediatric",
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42821513",
@@ -347,9 +149,10 @@
       "journal": "Urol Int",
       "pubDate": "2026-10-01",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42821513/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42811152",
@@ -358,9 +161,10 @@
       "journal": "Nat Rev Urol",
       "pubDate": "2026-09-29",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42811152/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42791104",
@@ -369,9 +173,10 @@
       "journal": "J Pediatr Urol",
       "pubDate": "2026-09-09",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42791104/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42678688",
@@ -380,9 +185,10 @@
       "journal": "Can Urol Assoc J",
       "pubDate": "2026-08-20",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42678688/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42667381",
@@ -391,9 +197,10 @@
       "journal": "Urolithiasis",
       "pubDate": "2026-08-29",
       "abstract": "",
+      "studyType": "Randomised controlled trial",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42667381/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42641288",
@@ -402,9 +209,10 @@
       "journal": "J Pediatr Urol",
       "pubDate": "2026-08-11",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42641288/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42637569",
@@ -413,9 +221,10 @@
       "journal": "BJU Int",
       "pubDate": "2026-11-01",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42637569/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42620985",
@@ -424,9 +233,10 @@
       "journal": "Eur Urol Open Sci",
       "pubDate": "2026-09-01",
       "abstract": "",
+      "studyType": "Review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42620985/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     },
     {
       "pmid": "42606607",
@@ -435,119 +245,10 @@
       "journal": "World J Urol",
       "pubDate": "2026-08-17",
       "abstract": "",
+      "studyType": "Systematic review",
       "url": "https://pubmed.ncbi.nlm.nih.gov/42606607/",
       "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42604881",
-      "title": "The optimal stent-strategy in paediatric pyeloplasty: a systematic review and network meta-analysis.",
-      "authors": "Aubert O, M'Tiri S, Kühnapfel A",
-      "journal": "BJU Int",
-      "pubDate": "2026-08-16",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42604881/",
-      "subspecialty": "pediatric",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42964010",
-      "title": "Urethroplasty for bulbomembranous strictures after benign prostatic hyperplasia surgery: systematic review and meta-analysis.",
-      "authors": "Scilipoti P, Zorzi F, Folcia A",
-      "journal": "BJU Int",
-      "pubDate": "2026-10-31",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42964010/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42729133",
-      "title": "Oxidative stress in bladder outlet obstruction: a narrative review.",
-      "authors": "Zhou YY, Shi B, Zhang CH",
-      "journal": "Transl Androl Urol",
-      "pubDate": "2026-08-31",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42729133/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42709214",
-      "title": "Flexible ureteroscopy with a flexible and negative suction ureteral access sheath versus traditional sheath for treatment of infectious upper urinary tract stones: A prospective, randomized controlled study.",
-      "authors": "Wang Q, Tang QL, Liu FD",
-      "journal": "Urolithiasis",
-      "pubDate": "2026-09-08",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42709214/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42619656",
-      "title": "State of the Art: Single-Port Robot-Assisted Extraperitoneal Transvesical Surgery-Technique, Indications, Outcomes, and Pitfalls.",
-      "authors": "Alkassis M, Turcan A, Santodirocco L",
-      "journal": "J Endourol",
-      "pubDate": "2026-08-20",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42619656/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42584481",
-      "title": "Urethral calculi indications and outcomes of surgical management: a systematic review by EAU endourology.",
-      "authors": "Soytürk S, Doğan E, Ferizli AA",
-      "journal": "World J Urol",
-      "pubDate": "2026-08-12",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42584481/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42552506",
-      "title": "The UroLume endoprosthesis and UroLume cripple syndrome: a systematic review and meta-analysis of pathophysiology, complications, surgical management, psychological burden, and epidemiology of surviving patients worldwide.",
-      "authors": "Kapos IP",
-      "journal": "World J Urol",
-      "pubDate": "2026-08-04",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42552506/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42480724",
-      "title": "Preoperative Factors Associated With Surgical Complexity in Pelvic Fracture Urethral Injury: Systematic Review.",
-      "authors": "Yadav S, Khurana U, Yadav A",
-      "journal": "Urology",
-      "pubDate": "2026-09-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42480724/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42477956",
-      "title": "Consensus-Based Development of a Surgical Checklist for Transurethral Resection of Bladder Tumor: An Initiative of the Japanese Society of Urologic Oncology.",
-      "authors": "Taoka R, Hayakawa N, Kimura T",
-      "journal": "Int J Urol",
-      "pubDate": "2026-07-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42477956/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
-    },
-    {
-      "pmid": "42442241",
-      "title": "Hot vs cold knife for endoscopic ablation of posterior urethral valves: a systematic review by the EAU-YAU paediatric urology working group.",
-      "authors": "Madarriaga YQ, Dönmez Mİ, Gernhold C",
-      "journal": "J Pediatr Urol",
-      "pubDate": "2026-10-01",
-      "abstract": "",
-      "url": "https://pubmed.ncbi.nlm.nih.gov/42442241/",
-      "subspecialty": "reconstructive",
-      "topic": "Radical cystectomy outcomes and quality of life"
+      "topic": "Ileal conduit versus continent pouch reconstruction"
     }
   ]
 }
