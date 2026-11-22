@@ -65,6 +65,8 @@ describe('what syncs', () => {
     expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.mdt.v1');
     // Stent register: device only (owner, 2026-11-06).
     expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.stents.v1');
+    // Pre-op checklists: device only (owner, 2026-11-15).
+    expect(SYNCED.map((s) => s.key)).not.toContain('uroapp.preop.v1');
   });
 
   it('matches the keys the database allows, and nothing else', () => {

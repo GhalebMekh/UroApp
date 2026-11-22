@@ -299,6 +299,16 @@ export function StentIcon({ className }: IconProps) {
   );
 }
 
+/** Clipboard with ticks — a pre-op checklist. */
+export function ChecklistIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <rect x="5" y="4" width="14" height="17" rx="2" />
+      <path d="M9 4V3h6v1M8.5 10l1.5 1.5L12.5 9M8.5 15.5l1.5 1.5 2.5-2.5M14.5 10.5H16M14.5 16H16" />
+    </svg>
+  );
+}
+
 /** Check mark — "included". */
 export function CheckIcon({ className }: IconProps) {
   return (

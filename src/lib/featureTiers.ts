@@ -19,6 +19,7 @@ export type GatedFeature =
   | 'inpatient'
   | 'logbook'
   | 'stents'
+  | 'preop'
   | 'consent'
   | 'surveillance'
   | 'rehearsal'
@@ -32,6 +33,7 @@ export const FEATURE_TIER: Record<GatedFeature, Exclude<Tier, 'resident'>> = {
   inpatient: 'pro',
   logbook: 'pro',
   stents: 'pro',
+  preop: 'pro',
   consent: 'pro',
   surveillance: 'pro',
   rehearsal: 'pro',
@@ -46,6 +48,7 @@ export const FEATURE_LABEL: Record<GatedFeature, string> = {
   inpatient: 'The inpatient tracker',
   logbook: 'The operative logbook',
   stents: 'The stent register',
+  preop: 'Pre-op checklists',
   consent: 'The bilingual consent generator',
   surveillance: 'Surveillance schedules',
   rehearsal: 'Operative rehearsal',

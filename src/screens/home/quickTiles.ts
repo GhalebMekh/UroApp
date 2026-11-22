@@ -16,6 +16,7 @@ import {
   ScalpelIcon,
   StagingIcon,
   StentIcon,
+  ChecklistIcon,
   TrainingIcon,
 } from '@/components/icons';
 
@@ -42,6 +43,7 @@ export const TILES: Tile[] = [
   { id: 'oncall', label: 'On-call', Icon: OnCallIcon, link: { residency: { section: 'oncall' } } },
   { id: 'logbook', label: 'Logbook', Icon: ClockIcon, link: { residency: { section: 'or', orTab: 'logbook' } }, feature: 'logbook' },
   { id: 'stents', label: 'Stents', Icon: StentIcon, link: { residency: { section: 'or', orTab: 'stents' } }, feature: 'stents' },
+  { id: 'preop', label: 'Pre-op', Icon: ChecklistIcon, link: { residency: { section: 'or', orTab: 'preop' } }, feature: 'preop' },
   { id: 'mdt', label: 'MDT', Icon: StagingIcon, link: { screen: 'mdt' }, feature: 'mdt' },
   { id: 'cme', label: 'CME', Icon: AcademicIcon, link: { screen: 'cme' }, feature: 'cme' },
   { id: 'conferences', label: 'Conferences', Icon: CalendarIcon, link: { screen: 'conferences' } },

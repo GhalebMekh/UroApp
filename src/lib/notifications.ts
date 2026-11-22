@@ -14,6 +14,7 @@ import type { Screen, ScreenLink } from '@/navigation';
 import { formatSpan } from './conferenceDates';
 import { getJSON, setJSON } from './storage';
 import { SIDE_LABEL, STENT_LEAD_DAYS, formatDay, type Stent } from './stents';
+import { openCount, type PreopStore } from './preop';
 import { toLocalISODate } from './date';
 
 export const NOTIFY_KEY = 'uroapp.notify.v1';
@@ -241,6 +242,38 @@ export function planStentAlerts(stents: readonly Stent[], now: Date): PlannedAle
       at,
       screen: 'residency',
       link: { residency: { section: 'or', orTab: 'stents' } },
+    });
+  }
+  return out;
+}
+
+/** Pre-op checklists: 06:00 on the day of surgery (owner, 2026-11-15). */
+export const PREOP_HOUR = 6;
+
+/**
+ * Pre-op checklists: one alert per operating day at 06:00, only if something
+ * is still unticked. Counts only — no initials, operations or notes, as it
+ * shows on the lock screen.
+ */
+export function planPreopAlerts(store: PreopStore, now: Date): PlannedAlert[] {
+  const byDate = new Map<string, { cases: number; open: number }>();
+  for (const c of store.cases) {
+    const open = openCount(c, store);
+    if (!open) continue;
+    const day = byDate.get(c.date) ?? { cases: 0, open: 0 };
+    byDate.set(c.date, { cases: day.cases + 1, open: day.open + open });
+  }
+  const out: PlannedAlert[] = [];
+  for (const [date, { cases, open }] of [...byDate].sort(([a], [b]) => a.localeCompare(b))) {
+    const at = new Date(`${date}T${String(PREOP_HOUR).padStart(2, '0')}:00:00`);
+    if (at <= now) continue;
+    out.push({
+      id: 7000 + out.length,
+      title: 'Pre-op checklists',
+      body: `Today: ${cases} case${cases === 1 ? '' : 's'} with ${open} item${open === 1 ? '' : 's'} still open.`,
+      at,
+      screen: 'residency',
+      link: { residency: { section: 'or', orTab: 'preop' } },
     });
   }
   return out;

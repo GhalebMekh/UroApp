@@ -7,6 +7,7 @@ describe('tier map', () => {
       inpatient: 'pro',
       logbook: 'pro',
       stents: 'pro',
+      preop: 'pro',
       consent: 'pro',
       surveillance: 'pro',
       rehearsal: 'pro',

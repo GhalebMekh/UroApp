@@ -16,6 +16,7 @@ const KEY = 'uroapp.applock.v1';
 export const PRIVATE_DATA_KEYS = [
   'uroapp.rounding.v1',
   'uroapp.stents.v1',
+  'uroapp.preop.v1',
   'uroapp.oplog.v1',
   'uroapp.mdt.v1',
   'uroapp.cme.v1',

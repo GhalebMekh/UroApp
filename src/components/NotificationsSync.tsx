@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { ScreenLink } from '@/navigation';
 import { STENT_KEY, normalizeStents } from '@/lib/stents';
+import { PREOP_KEY, normalizePreop } from '@/lib/preop';
 import { useConferenceFeed } from '@/lib/conferencesFeed';
 import { ATTENDING_KEY, loadAttending } from '@/lib/cmeConferences';
 import { getJSON, onStorageChange } from '@/lib/storage';
@@ -15,17 +16,18 @@ import {
   onPermissionGranted,
   planConferenceAlerts,
   planFollowUpAlerts,
+  planPreopAlerts,
   planStentAlerts,
   planWardAlerts,
   reschedule,
 } from '@/lib/notifications';
 
-const WATCHED = new Set([NOTIFY_KEY, ATTENDING_KEY, WARD_KEY, FOLLOWUP_KEY, STENT_KEY]);
+const WATCHED = new Set([NOTIFY_KEY, ATTENDING_KEY, WARD_KEY, FOLLOWUP_KEY, STENT_KEY, PREOP_KEY]);
 
 /**
  * Keeps the phone's scheduled reminders in step with the settings, the
  * conference list, the "I'm attending" list, ward plan reminders, saved
- * surveillance schedules and the stent register, and opens the right screen
+ * surveillance schedules, the stent register and pre-op checklists, and opens the right screen
  * when a reminder is tapped. Renders nothing; inert outside the native app.
  */
 export function NotificationsSync({ onOpen }: { onOpen: (link: ScreenLink) => void }) {
@@ -48,7 +50,8 @@ export function NotificationsSync({ onOpen }: { onOpen: (link: ScreenLink) => vo
       getJSON<unknown>(WARD_KEY, []),
       getJSON<unknown>(FOLLOWUP_KEY, []),
       getJSON<unknown>(STENT_KEY, []),
-    ]).then(([prefs, attending, ward, followUps, stents]) => {
+      getJSON<unknown>(PREOP_KEY, null),
+    ]).then(([prefs, attending, ward, followUps, stents, preop]) => {
       if (stale) return;
       const now = new Date();
       const ids = new Set(attending.map((a) => a.id));
@@ -57,6 +60,7 @@ export function NotificationsSync({ onOpen }: { onOpen: (link: ScreenLink) => vo
         ...planWardAlerts(ward, now),
         ...planFollowUpAlerts(normalizeFollowUps(followUps), now),
         ...planStentAlerts(normalizeStents(stents), now),
+        ...planPreopAlerts(normalizePreop(preop), now),
       ];
       void reschedule(prefs, alerts).catch(() => {
         /* scheduling failed (e.g. permission revoked) — nothing to show */

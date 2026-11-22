@@ -10,6 +10,7 @@ import { OperativeLogScreen } from './OperativeLogScreen';
 import { ProceduresScreen } from './ProceduresScreen';
 import { ConsentScreen } from './ConsentScreen';
 import { StentsScreen } from './StentsScreen';
+import { PreopScreen } from './PreopScreen';
 
 /** The header copy for each Residency page — its sub-heading lives here, not in the page. */
 const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: string; lede: ReactNode; tone?: HeroTone }> = {
@@ -41,6 +42,11 @@ const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: str
     eyebrow: 'Stent register',
     title: 'No forgotten stents.',
     lede: 'Every ureteric stent still in, with its remove-by date and a reminder a week before. Stored only on this device, initials only.',
+  },
+  preop: {
+    eyebrow: 'Pre-op checklists',
+    title: 'Ready for theatre.',
+    lede: 'Tomorrow’s cases, each with a checklist to tick off — consent, marking, bloods, anticoagulation plan and the items for that operation. Stored only on this device, initials only.',
   },
   procedures: {
     eyebrow: 'Procedures',
@@ -79,7 +85,8 @@ export function ResidencyScreen({
   const orTabs: { id: OrTab; label: string }[] = [
     { id: 'logbook', label: 'Logbook' },
     { id: 'stents', label: 'Stents' },
-    { id: 'procedures', label: 'Procedures' },
+    { id: 'preop', label: 'Pre-op' },
+    { id: 'procedures', label: 'Steps' }, // "Procedures" doesn't fit five tabs at phone width
     { id: 'consent', label: 'Consent' },
   ];
 
@@ -102,7 +109,7 @@ export function ResidencyScreen({
               ),
             }))}
           />
-          {section === 'or' && <HeroTabs value={orTab} onChange={setOrTab} items={orTabs} />}
+          {section === 'or' && <HeroTabs value={orTab} onChange={setOrTab} items={orTabs} dense />}
         </div>
       </PageHero>
 
@@ -126,6 +133,13 @@ export function ResidencyScreen({
           <ProGate feature="stents">
             <LockGate>
               <StentsScreen />
+            </LockGate>
+          </ProGate>
+        )}
+        {section === 'or' && orTab === 'preop' && (
+          <ProGate feature="preop">
+            <LockGate>
+              <PreopScreen />
             </LockGate>
           </ProGate>
         )}

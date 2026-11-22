@@ -92,11 +92,14 @@ export function HeroTabs<T extends string>({
   value,
   onChange,
   className,
+  dense,
 }: {
   items: { id: T; label: ReactNode; count?: number }[];
   value: T;
   onChange: (id: T) => void;
   className?: string;
+  /** Tighter side padding, for five tabs at phone width. */
+  dense?: boolean;
 }) {
   return (
     <div
@@ -112,7 +115,8 @@ export function HeroTabs<T extends string>({
             onClick={() => onChange(it.id)}
             aria-pressed={active}
             className={cn(
-              'flex min-h-[44px] items-center justify-center gap-1.5 rounded-[10px] px-2 py-2 text-[13px] font-semibold transition-colors',
+              'flex min-h-[44px] items-center justify-center gap-1.5 rounded-[10px] py-2 text-[13px] font-semibold transition-colors',
+              dense ? 'px-1' : 'px-2',
               active ? 'bg-white text-violet-deep shadow-sm' : 'text-white/85 hover:bg-white/10',
             )}
           >
