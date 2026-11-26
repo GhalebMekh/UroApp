@@ -10,7 +10,7 @@ const base = {
   viewBox: '0 0 24 24',
   fill: 'none',
   stroke: 'currentColor',
-  strokeWidth: 1.8,
+  strokeWidth: 1.5,
   strokeLinecap: 'round' as const,
   strokeLinejoin: 'round' as const,
 };
@@ -282,6 +282,14 @@ export function ClockIcon({ className }: IconProps) {
 }
 
 /** Chevron right — "open". */
+export function ChevronLeftIcon({ className }: IconProps) {
+  return (
+    <svg {...base} className={className} aria-hidden="true">
+      <path d="m15 6-6 6 6 6" />
+    </svg>
+  );
+}
+
 export function ChevronRightIcon({ className }: IconProps) {
   return (
     <svg {...base} className={className} aria-hidden="true">

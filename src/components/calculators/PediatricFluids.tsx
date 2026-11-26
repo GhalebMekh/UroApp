@@ -19,7 +19,7 @@ export function PediatricFluids() {
     >
       <NumberField label="Weight" value={weight} onChange={setWeight} unit="kg" step="0.5" min="0" placeholder="e.g. 14" />
 
-      <div className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+      <div className="mt-1 text-[12px] font-medium text-muted-2">
         Maintenance
       </div>
       <ResultRow
@@ -30,7 +30,7 @@ export function PediatricFluids() {
 
       {maint && (
         <div className="mt-3 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[13px] text-muted">
-          <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+          <div className="mb-1 text-[12px] font-medium text-muted-2">
             Resuscitation bolus
           </div>
           <span className="font-mono text-ink">{Math.round(bolus10!)} mL</span> (10 mL/kg) ·{' '}

@@ -25,7 +25,7 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
             type="button"
             onClick={() => setId(e.id)}
             className={cn(
-              'rounded-[10px] border px-3.5 py-2 text-[13px] font-semibold transition-colors',
+              'rounded-[10px] border px-3.5 py-2 text-[13px] font-medium transition-colors',
               e.id === id
                 ? 'border-crimson bg-crimson/[0.16] text-crimson'
                 : 'border-line bg-navy-2 text-muted hover:border-crimson/60',
@@ -37,7 +37,7 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
       </div>
 
       <section className="mt-6 rounded-[20px] border border-line bg-navy-2 p-6">
-        <h3 className="font-display text-[22px] font-semibold">{em.name}</h3>
+        <h3 className="font-display text-[20px] font-medium">{em.name}</h3>
         <p className="mt-2 text-[14px] text-muted">{em.oneLiner}</p>
 
         <div className="mt-4 flex items-start gap-2 rounded-[12px] border border-crimson/40 bg-crimson/[0.08] px-4 py-3 text-[13px] text-crimson">
@@ -46,7 +46,7 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
         </div>
 
         <div className="mt-5">
-          <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-teal">
+          <div className="mb-3 text-[12px] font-medium text-teal">
             In the next 30 minutes
           </div>
           <ol className="space-y-2.5">
@@ -63,11 +63,11 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
 
         {em.sections?.map((s) => (
           <div key={s.title} className="mt-5">
-            <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">{s.title}</div>
+            <div className="mb-3 text-[12px] font-medium text-violet-soft">{s.title}</div>
             <ul className="space-y-2.5">
               {s.items.map((item) => (
                 <li key={item} className="flex gap-3 text-[14px]">
-                  <span className="mt-[9px] h-1.5 w-1.5 shrink-0 rounded-full bg-violet-soft" />
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-violet-soft" />
                   <span className="text-muted">{item}</span>
                 </li>
               ))}
@@ -76,7 +76,7 @@ export function OnCallScreen({ initialId }: { initialId?: string }) {
         ))}
 
         <div className="mt-5">
-          <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-amber">
+          <div className="mb-2 text-[12px] font-medium text-amber">
             Don't miss
           </div>
           <ul className="flex flex-wrap gap-2">

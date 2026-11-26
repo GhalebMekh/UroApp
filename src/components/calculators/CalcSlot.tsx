@@ -32,7 +32,7 @@ export function CalcSlot({ id, title, Component }: { id: string; title: string; 
         aria-pressed={pinned}
         aria-label={pinned ? `Unpin ${title} from Home` : `Pin ${title} to Home`}
         className={cn(
-          'absolute right-2 top-2 z-10 grid h-11 w-11 place-items-center rounded-full text-[19px] transition-colors',
+          'absolute right-2 top-2 z-10 grid h-11 w-11 place-items-center rounded-full text-[18px] transition-colors',
           pinned ? 'text-amber' : 'text-muted-2 hover:text-ink',
         )}
       >

@@ -30,7 +30,7 @@ export function RenalFunction() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">Renal function</h3>
+      <h3 className="font-display text-[20px] font-medium">Renal function</h3>
       <p className="mb-4 text-[13px] text-muted-2">
         eGFR (CKD-EPI 2021) and creatinine clearance — for staging and drug dosing
       </p>
@@ -43,7 +43,7 @@ export function RenalFunction() {
               type="button"
               onClick={() => setTab(id)}
               className={cn(
-                'min-h-[44px] rounded-[9px] px-2 py-2 text-[12px] font-semibold transition-colors',
+                'min-h-[44px] rounded-[8px] px-2 py-2 text-[12px] font-medium transition-colors',
                 tab === id ? 'bg-violet/[0.18] text-violet-soft' : 'text-muted hover:text-ink',
               )}
             >

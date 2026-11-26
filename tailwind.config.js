@@ -7,21 +7,24 @@ import { dirname, join } from 'node:path';
 const here = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('tailwindcss').Config} */
-// Design tokens per UroApp_Development_Spec_v1.md §3 (supersedes the original
-// CLAUDE.md hex values for crimson/amber/teal, updated 2026-07). Navy and violet
-// are unchanged between the two documents. Do not redesign these without being asked.
+// Design tokens. Unslop pass (owner, 2026-11-22, direction "exact, calm, on-shift"):
+// the navy ramp is greyer so surfaces stay neutral and content carries the colour;
+// violet is the one accent (selection, primary action), with button fills on
+// violet-deep so white text reaches 4.5:1. Gradients, glows and the drifting header
+// circles are gone. Do not redesign these without being asked.
 export default {
   content: [join(here, 'index.html'), join(here, 'src/**/*.{ts,tsx}')],
   theme: {
     extend: {
       colors: {
-        navy: { DEFAULT: '#0A1628', 2: '#0F1F38' },
-        steel: '#1B2B45',
-        line: '#26384f',
-        ink: '#E8EEF6',
-        muted: { DEFAULT: '#92A4BD', 2: '#62748d' },
-        // Signature accent: violet = oncology
-        violet: { DEFAULT: '#8B7CF6', deep: '#6D5BE0', soft: '#b4a9fa' },
+        // Ink-navy ramp: page, card, raised surface, hairline; three text roles.
+        navy: { DEFAULT: '#0C1220', 2: '#121A29' },
+        steel: '#1A2333',
+        line: '#232C3C',
+        ink: '#ECEFF4',
+        muted: { DEFAULT: '#A3AAB8', 2: '#7D8597' },
+        // The one accent. violet = text/selection on dark; violet-deep = filled buttons.
+        violet: { DEFAULT: '#8B7CF6', deep: '#6D5BE0', press: '#5B4BCB', soft: '#b4a9fa' },
         // Risk colour-coding: crimson = risk/emergency, amber = moderate, teal = low/normal.
         // Muted clinical tones (owner, 2026-10-31): brick, ochre and sage replace the
         // saturated red/amber/teal. Token names are kept so every screen follows.
@@ -32,12 +35,13 @@ export default {
         // navigation and headings only, never a result. Hues chosen clear of the
         // risk colours above. Oncology keeps the signature violet. See lib/specialty.
         spec: {
-          endo: '#3B82F6', // endourology & stones — blue
-          func: '#38BDF8', // functional, LUTS & BPH — sky
-          andro: '#A3E635', // andrology & infertility — lime
-          peds: '#F472B6', // paediatric — pink
-          recon: '#E879F9', // reconstruction & trauma — fuchsia
-          general: '#94A3B8', // general, access, peri-operative — slate
+          // Toned down in the unslop pass so they sit inside the palette as small dots.
+          endo: '#6E93D8', // endourology & stones — blue
+          func: '#6FB0D2', // functional, LUTS & BPH — sky
+          andro: '#9DB86B', // andrology & infertility — lime
+          peds: '#D48DB0', // paediatric — pink
+          recon: '#BC8CCB', // reconstruction & trauma — fuchsia
+          general: '#8C97A8', // general, access, peri-operative — slate
         },
       },
       fontFamily: {
@@ -54,24 +58,20 @@ export default {
         card: '16px',
       },
       boxShadow: {
-        'violet-glow': '0 12px 30px -10px rgba(139,124,246,.7)',
-        'violet-ring': '0 0 0 1px rgba(139,124,246,.4), 0 8px 24px -8px rgba(139,124,246,.6)',
-        device:
-          '0 0 0 2px #1f3251, 0 40px 80px -30px rgba(0,0,0,.9), 0 0 90px -30px rgba(139,124,246,.5)',
+        // Neutral depth only — no coloured glows (unslop).
+        device: '0 0 0 1px #232C3C, 0 32px 64px -24px rgba(0,0,0,.8)',
+        raised: 'inset 0 1px 0 rgba(255,255,255,0.08)',
       },
+      // Section headers (owner, 2026-11-22: "the moving bubbles and colours like before,
+      // with unslop edits"). Each is ONE hue with a slight tone shift inside it, never a
+      // blend of two hues: violet default, brick for on-call, pink for paediatrics.
       backgroundImage: {
-        'violet-mark': 'linear-gradient(135deg, #8B7CF6, #6D5BE0)',
-        // Page headers (components/PageHero): signature violet into a deep blue.
-        'violet-hero': 'linear-gradient(135deg, #8B7CF6 0%, #6D5BE0 48%, #3B4FD8 100%)',
-        // On-call: crimson is the emergency colour (CLAUDE.md), easing into violet.
-        'emergency-hero': 'linear-gradient(135deg, #C2655A 0%, #9A4252 50%, #5B2BB5 100%)',
-        // Pediatrics: its specialty pink into violet.
-        'peds-hero': 'linear-gradient(135deg, #F472B6 0%, #C35BD8 50%, #6D5BE0 100%)',
-        'ai-soft':
-          'linear-gradient(135deg, rgba(139,124,246,.16), rgba(109,91,224,.06))',
+        'violet-hero': 'linear-gradient(160deg, #6757D9 0%, #5141BC 100%)',
+        'emergency-hero': 'linear-gradient(160deg, #A9554C 0%, #8C443D 100%)',
+        'peds-hero': 'linear-gradient(160deg, #B7678A 0%, #985472 100%)',
       },
-      // Header circles drift very slowly (owner, 2026-10-31). Long, offset cycles so the
-      // two never sync; stopped by the reduced-motion rule in index.css.
+      // The header bubbles drift very slowly; long, offset cycles so the two never sync.
+      // Stopped by the reduced-motion rule in index.css.
       keyframes: {
         'drift-a': {
           '0%, 100%': { transform: 'translate(0, 0) scale(1)' },

@@ -43,7 +43,7 @@ export function MoreScreen() {
 
         {/* Medical disclaimer — required visible (CLAUDE.md) */}
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-          <h3 className="mb-2 text-[15px] font-semibold">Medical disclaimer</h3>
+          <h3 className="mb-2 text-[15px] font-medium">Medical disclaimer</h3>
           <p className="text-[13px] text-muted">
             UroApp is an educational and decision-support tool for licensed
             healthcare professionals. It stores no patient-identifiable data;
@@ -61,14 +61,14 @@ export function MoreScreen() {
             no passcode is configured, where the button would do nothing. */}
         {passcodeEnabled && (
           <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-            <h3 className="text-[15px] font-semibold">Access</h3>
+            <h3 className="text-[15px] font-medium">Access</h3>
             <p className="mb-3 text-[12px] text-muted-2">
               Locking clears this device’s unlock; the passcode is needed again.
             </p>
             <button
               type="button"
               onClick={() => void lockApp()}
-              className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+              className="min-h-[44px] w-full rounded-[10px] border border-line bg-navy py-3 text-[14px] font-medium text-ink transition-colors hover:border-violet"
             >
               Lock this device
             </button>
@@ -81,9 +81,9 @@ export function MoreScreen() {
             RevenueCat owns the real entitlement. */}
         {import.meta.env.DEV && (
         <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-          <h3 className="text-[15px] font-semibold">Subscription tier</h3>
+          <h3 className="text-[15px] font-medium">Subscription tier</h3>
           <p className="mb-3 text-[12px] text-muted-2">
-            Development only — overrides the RevenueCat entitlement on this device.
+            Development only: overrides the RevenueCat entitlement on this device.
           </p>
           <div className="flex gap-2">
             {TIERS.map((t) => (
@@ -94,7 +94,7 @@ export function MoreScreen() {
                 className={cn(
                   'min-h-[44px] flex-1 rounded-[10px] border px-3 py-2.5 text-[13px] transition-colors',
                   t === tier
-                    ? 'border-violet bg-violet/[0.18] font-semibold text-violet-soft'
+                    ? 'border-violet bg-violet/[0.18] font-medium text-violet-soft'
                     : 'border-line bg-navy text-muted hover:border-violet',
                 )}
               >
@@ -107,7 +107,7 @@ export function MoreScreen() {
 
         {/* Which build this is. A deployed copy otherwise gives no way to tell
             whether the latest commit has gone live. */}
-        <p className="text-center font-mono text-[11px] text-muted-2">
+        <p className="text-center font-mono text-[12px] text-muted-2">
           {previewMode ? 'Web preview' : 'Build'} {__BUILD_COMMIT__} · {builtAt}
         </p>
       </PageBody>

@@ -21,7 +21,7 @@ export function ToolsCard({
     <DashCard title="Your tools" action={{ label: 'All calculators', onClick: onBrowse }}>
       {pinned.length > 0 && (
         <div className="mb-4">
-          <div className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-amber">
+          <div className="mb-2 flex items-center gap-1.5 text-[12px] font-medium text-amber">
             <StarIcon filled className="text-[12px]" /> Pinned
           </div>
           <div className="flex flex-wrap gap-2">
@@ -34,7 +34,7 @@ export function ToolsCard({
 
       {recent.length > 0 && (
         <div className="mb-4">
-          <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-2">Recently used</div>
+          <div className="mb-2 text-[12px] font-medium text-muted-2">Recently used</div>
           <div className="flex flex-wrap gap-2">
             {recent.map((id) => (
               <Chip key={id} id={id} onOpen={onOpenCalculator} />

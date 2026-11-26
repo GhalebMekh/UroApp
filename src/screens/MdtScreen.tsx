@@ -21,7 +21,7 @@ const STORAGE_KEY = 'uroapp.mdt.v1';
 const CALC_TITLE = new Map(CALCULATORS.map((c) => [c.id, c.title]));
 
 const inputCls =
-  'w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13px] text-ink outline-none focus:border-violet';
+  'w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
 
 function Field({
   label,
@@ -38,7 +38,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-[7px] block text-[13px] font-semibold text-muted">{label}</span>
+      <span className="mb-2 block text-[13px] font-medium text-muted">{label}</span>
       {textarea ? (
         <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={2} className={cn(inputCls, 'resize-y')} />
       ) : (
@@ -74,7 +74,7 @@ function sheetHtml(cases: MdtCase[], title: string): string {
     `<h1>${escapeHtml(title)}</h1>` +
     `<p class="sub">${cases.length} case${cases.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString('en-GB'))}</p>` +
     cases.map(caseHtml).join('') +
-    `<div class="note">De-identified — initials and age only, no names or medical-record numbers. ` +
+    `<div class="note">De-identified: initials and age only, no names or medical-record numbers. ` +
     `A working sheet for the meeting, not a medical record. Dispose of securely.</div>`
   );
 }
@@ -125,8 +125,8 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
     <>
       <PageHero
         eyebrow="MDT"
-        title="Tumour board case sheets."
-        lede="Prepare each case in the same structure, then print the list for the meeting. Stored on this device, de-identified — initials and age only."
+        title="Tumour board case sheets"
+        lede="Prepare each case in the same structure, then print the list for the meeting. Stored on this device, de-identified: initials and age only."
       />
       <PageBody>
         {printError && (
@@ -141,7 +141,7 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
               <button
                 type="button"
                 onClick={add}
-                className="min-h-[44px] rounded-[11px] bg-violet px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+                className="min-h-[44px] rounded-[10px] bg-violet-deep px-5 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
               >
                 + New case
               </button>
@@ -150,14 +150,14 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
                   <button
                     type="button"
                     onClick={() => print(sorted, 'MDT list')}
-                    className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink hover:border-violet"
+                    className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-4 py-3 text-[13px] font-medium text-ink hover:border-violet"
                   >
                     Print MDT list
                   </button>
                   <button
                     type="button"
                     onClick={() => save(sorted, 'MDT list', `mdt-list-${todayISO()}`)}
-                    className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink hover:border-teal"
+                    className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-4 py-3 text-[13px] font-medium text-ink hover:border-teal"
                   >
                     Save MDT list
                   </button>
@@ -181,8 +181,8 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
                     className="block w-full rounded-[14px] border border-line bg-navy-2 p-4 text-left transition-colors hover:border-violet"
                   >
                     <div className="flex items-center gap-2">
-                      <span className="text-[15px] font-semibold">{c.initials || 'Unnamed'}</span>
-                      <span className="rounded-[6px] bg-violet/[0.16] px-2 py-0.5 text-[11px] font-semibold text-violet-soft">
+                      <span className="text-[15px] font-medium">{c.initials || 'Unnamed'}</span>
+                      <span className="rounded-[6px] bg-violet/[0.16] px-2 py-0.5 text-[12px] font-medium text-violet-soft">
                         {SITE_LABEL[c.site]}
                       </span>
                       <span className="ml-auto text-[12px] text-muted-2">{c.mdtDate}</span>
@@ -204,8 +204,8 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
               <div className="flex gap-2">
                 <button
                   type="button"
-                  onClick={() => print([open], `MDT case — ${open.initials || 'unnamed'}`)}
-                  className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-3 text-[13px] font-semibold text-ink hover:border-violet"
+                  onClick={() => print([open], `MDT case: ${open.initials || 'unnamed'}`)}
+                  className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-3 text-[13px] font-medium text-ink hover:border-violet"
                 >
                   Print case
                 </button>
@@ -224,7 +224,7 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
                 <Field label="Initials" value={open.initials} onChange={(v) => update({ initials: v })} placeholder="e.g. A.M." />
                 <Field label="Age" value={open.age} onChange={(v) => update({ age: v })} placeholder="e.g. 68" />
                 <label className="block">
-                  <span className="mb-[7px] block text-[13px] font-semibold text-muted">Sex</span>
+                  <span className="mb-2 block text-[13px] font-medium text-muted">Sex</span>
                   <select value={open.sex} onChange={(e) => update({ sex: e.target.value as MdtCase['sex'] })} className={inputCls}>
                     <option value="">—</option>
                     <option value="male">Male</option>
@@ -232,13 +232,13 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
                   </select>
                 </label>
                 <label className="block">
-                  <span className="mb-[7px] block text-[13px] font-semibold text-muted">MDT date</span>
+                  <span className="mb-2 block text-[13px] font-medium text-muted">MDT date</span>
                   <DateInput value={open.mdtDate} onChange={(v) => update({ mdtDate: v })} className={inputCls} />
                 </label>
               </div>
 
               <label className="block">
-                <span className="mb-[7px] block text-[13px] font-semibold text-muted">Tumour site</span>
+                <span className="mb-2 block text-[13px] font-medium text-muted">Tumour site</span>
                 <select value={open.site} onChange={(e) => update({ site: e.target.value as TumourSite })} className={inputCls}>
                   {(Object.keys(SITE_LABEL) as TumourSite[]).map((s) => (
                     <option key={s} value={s}>
@@ -257,20 +257,20 @@ export function MdtScreen({ onOpenCalculator }: { onOpenCalculator: (id: string)
               <Field label="Risk scores" value={open.scores} onChange={(v) => update({ scores: v })} placeholder="e.g. CAPRA 4 (intermediate)" />
 
               <div>
-                <div className="mb-[7px] text-[12px] font-semibold uppercase tracking-[0.08em] text-muted-2">Open a calculator</div>
+                <div className="mb-2 text-[12px] font-medium text-muted-2">Open a calculator</div>
                 <div className="flex flex-wrap gap-2">
                   {[...SITE_TOOLS[open.site], ...COMMON_TOOLS].map((id) => (
                     <button
                       key={id}
                       type="button"
                       onClick={() => onOpenCalculator(id)}
-                      className="min-h-[44px] rounded-[10px] border border-line bg-navy px-3 text-[12.5px] text-muted hover:border-violet hover:text-ink"
+                      className="min-h-[44px] rounded-[10px] border border-line bg-navy px-3 text-[12px] text-muted hover:border-violet hover:text-ink"
                     >
                       {CALC_TITLE.get(id)}
                     </button>
                   ))}
                 </div>
-                <p className="mt-1.5 text-[11.5px] text-muted-2">This case is saved — come back with Back.</p>
+                <p className="mt-1.5 text-[12px] text-muted-2">This case is saved. Come back with Back.</p>
               </div>
 
               <Field label="MDT recommendation" value={open.recommendation} onChange={(v) => update({ recommendation: v })} textarea placeholder="Filled in at or after the meeting" />

@@ -109,7 +109,7 @@ export function OperativeRehearsalScreen({
   const dangerReady = dangerQuiz(proc).length >= 2;
 
   const field =
-    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[14px] text-ink outline-none focus:border-violet';
+    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[14px] text-ink outline-none focus:border-violet';
 
   return (
     <>
@@ -121,7 +121,7 @@ export function OperativeRehearsalScreen({
       <PageBody narrow>
 
         <label className="block">
-          <span className="mb-[7px] block text-[13px] font-semibold text-muted">Procedure</span>
+          <span className="mb-2 block text-[13px] font-medium text-muted">Procedure</span>
           <select value={procedureId} onChange={(e) => setProcedureId(e.target.value)} className={field}>
             {PROCEDURES.map((p) => (
               <option key={p.id} value={p.id}>
@@ -145,7 +145,7 @@ export function OperativeRehearsalScreen({
         </div>
 
         {/* Mode */}
-        <div className="flex gap-1.5 rounded-[11px] border border-line bg-navy p-1">
+        <div className="flex gap-1.5 rounded-[10px] border border-line bg-navy p-1">
           {MODES.map((m) => (
             <button
               key={m.id}
@@ -155,7 +155,7 @@ export function OperativeRehearsalScreen({
                 setRound((r) => r + 1);
               }}
               className={cn(
-                'min-h-[44px] flex-1 rounded-[8px] px-2 py-2 text-[12.5px] font-semibold transition-colors',
+                'min-h-[44px] flex-1 rounded-[8px] px-2 py-2 text-[12px] font-medium transition-colors',
                 mode === m.id ? 'bg-violet/[0.18] text-violet-soft' : 'text-muted hover:text-ink',
               )}
             >
@@ -193,7 +193,7 @@ export function OperativeRehearsalScreen({
         {/* Due for refresh across procedures */}
         {practised.size > 0 && (
           <div className="rounded-[14px] border border-line bg-navy-2 p-5">
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.08em] text-muted-2">
+            <div className="mb-2 text-[12px] font-medium text-muted-2">
               Your progress
             </div>
             <p className="text-[13px] text-muted">
@@ -209,7 +209,7 @@ export function OperativeRehearsalScreen({
                     key={p.id}
                     type="button"
                     onClick={() => setProcedureId(p.id)}
-                    className="min-h-[44px] rounded-[10px] border border-amber/40 bg-amber/[0.08] px-3 py-2 text-left text-[12.5px] text-ink hover:border-amber"
+                    className="min-h-[44px] rounded-[10px] border border-amber/40 bg-amber/[0.08] px-3 py-2 text-left text-[12px] text-ink hover:border-amber"
                   >
                     {p.name}
                   </button>
@@ -219,7 +219,7 @@ export function OperativeRehearsalScreen({
           </div>
         )}
 
-        <p className="text-[11.5px] text-muted-2">
+        <p className="text-[12px] text-muted-2">
           A rehearsal aid, not a substitute for supervised operating. Steps are summarised from each
           procedure’s cited operative source; confirm technique with the operating surgeon. Progress
           is kept on this device.
@@ -232,8 +232,8 @@ export function OperativeRehearsalScreen({
 function Stat({ label, value, tone }: { label: string; value: string; tone?: string }) {
   return (
     <div className="rounded-[12px] border border-line bg-navy-2 px-3 py-2.5">
-      <div className={cn('font-mono text-[16px] font-semibold text-ink', tone)}>{value}</div>
-      <div className="text-[11px] text-muted-2">{label}</div>
+      <div className={cn('font-mono text-[16px] font-medium text-ink', tone)}>{value}</div>
+      <div className="text-[12px] text-muted-2">{label}</div>
     </div>
   );
 }
@@ -295,7 +295,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
         <button
           type="button"
           onClick={() => setShowRef((v) => !v)}
-          className="flex min-h-[44px] w-full items-center justify-between px-5 py-3 text-left text-[13px] font-semibold text-violet-soft"
+          className="flex min-h-[44px] w-full items-center justify-between px-5 py-3 text-left text-[13px] font-medium text-violet-soft"
         >
           Anatomy &amp; complications reference
           <span>{showRef ? '−' : '+'}</span>
@@ -311,8 +311,8 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
       {!checked ? (
         <>
           <div>
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-muted-2">
-              Your order ({sequence.length}/{n}) — tap to remove
+            <div className="mb-2 text-[12px] font-medium text-muted-2">
+              Your order ({sequence.length}/{n}): tap to remove
             </div>
             {sequence.length === 0 ? (
               <p className="rounded-[12px] border border-dashed border-line bg-navy px-4 py-4 text-center text-[13px] text-muted-2">
@@ -327,7 +327,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
                       onClick={() => setSequence((s) => s.filter((x) => x !== idx))}
                       className="flex min-h-[44px] w-full items-start gap-3 rounded-[10px] border border-violet/40 bg-violet/[0.10] px-3 py-2.5 text-left text-[13px] text-ink transition-colors hover:border-violet"
                     >
-                      <span className="font-mono text-[12px] font-semibold text-violet-soft">{pos + 1}.</span>
+                      <span className="font-mono text-[12px] font-medium text-violet-soft">{pos + 1}.</span>
                       <span>{proc.steps[idx]}</span>
                     </button>
                   </li>
@@ -338,8 +338,8 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
 
           {pool.length > 0 && (
             <div>
-              <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.06em] text-muted-2">
-                Remaining steps — tap to add
+              <div className="mb-2 text-[12px] font-medium text-muted-2">
+                Remaining steps: tap to add
               </div>
               <ul className="space-y-2">
                 {pool.map((idx) => (
@@ -365,7 +365,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
             type="button"
             onClick={check}
             disabled={sequence.length !== n}
-            className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-40"
+            className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90 disabled:cursor-default disabled:opacity-40"
           >
             Check order
           </button>
@@ -374,7 +374,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
         <>
           <div className="flex items-baseline justify-between rounded-[16px] border border-line bg-navy-2 p-5">
             <div>
-              <div className="font-display text-[28px] font-semibold">
+              <div className="font-mono text-[28px] font-medium">
                 {correctCount}
                 <span className="text-[16px] text-muted-2"> / {n}</span>
               </div>
@@ -382,7 +382,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
             </div>
             {timed && (
               <div className="text-right">
-                <div className="font-mono text-[20px] font-semibold text-ink">{formatTime(frozen)}</div>
+                <div className="font-mono text-[20px] font-medium text-ink">{formatTime(frozen)}</div>
                 <div className="text-[12px] text-muted-2">time</div>
               </div>
             )}
@@ -398,7 +398,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
                     ok ? 'border-teal/40 bg-teal/[0.08]' : 'border-crimson/40 bg-crimson/[0.08]',
                   )}
                 >
-                  <span className={cn('font-mono text-[12px] font-semibold', ok ? 'text-teal' : 'text-crimson')}>
+                  <span className={cn('font-mono text-[12px] font-medium', ok ? 'text-teal' : 'text-crimson')}>
                     {ok ? '✓' : '✗'} {pos + 1}.
                   </span>
                   <span className="text-ink">{step}</span>
@@ -409,7 +409,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
           <button
             type="button"
             onClick={reset}
-            className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+            className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
           >
             Try again
           </button>
@@ -422,7 +422,7 @@ function OrderRound({ proc, onDone }: { proc: Procedure; onDone: (c: number, t: 
 function RefList({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
-      <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-2">{title}</div>
+      <div className="mb-1.5 text-[12px] font-medium text-muted-2">{title}</div>
       <ul className="list-disc space-y-1 pl-5 text-muted">
         {items.map((a) => (
           <li key={a}>{a}</li>
@@ -475,7 +475,7 @@ function QuizRound({
     return (
       <div className="space-y-4">
         <div className="rounded-[16px] border border-line bg-navy-2 p-5">
-          <div className="font-display text-[28px] font-semibold">
+          <div className="font-mono text-[28px] font-medium">
             {score}
             <span className="text-[16px] text-muted-2"> / {questions.length}</span>
           </div>
@@ -484,7 +484,7 @@ function QuizRound({
         <button
           type="button"
           onClick={onRestart}
-          className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+          className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
         >
           New round
         </button>
@@ -494,11 +494,11 @@ function QuizRound({
 
   return (
     <div className="space-y-4">
-      <div className="text-[12px] font-semibold uppercase tracking-[0.06em] text-muted-2">
+      <div className="text-[12px] font-medium text-muted-2">
         Question {i + 1} of {questions.length} · {score} correct
       </div>
-      <div className="rounded-[14px] border border-violet/40 bg-violet/[0.08] p-4 text-[13.5px] text-ink">{q.prompt}</div>
-      <p className="text-[13px] font-semibold text-muted">{ask}</p>
+      <div className="rounded-[14px] border border-violet/40 bg-violet/[0.08] p-4 text-[13px] text-ink">{q.prompt}</div>
+      <p className="text-[13px] font-medium text-muted">{ask}</p>
       <ul className="space-y-2">
         {q.options.map((o) => {
           const isAnswer = o === q.answer;
@@ -531,7 +531,7 @@ function QuizRound({
           <button
             type="button"
             onClick={next}
-            className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+            className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
           >
             {i + 1 < questions.length ? 'Next question' : 'See score'}
           </button>

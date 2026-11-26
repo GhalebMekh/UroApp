@@ -27,11 +27,11 @@ export function ProGate({ feature, inline = false, children }: ProGateProps) {
 
   return (
     <div className={inline ? 'mb-5' : 'mx-auto max-w-wrap px-6 py-12'}>
-      <div className="rounded-card border border-line bg-ai-soft p-7 text-center">
-        <div className="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-[11px] bg-steel text-[20px] text-violet-soft">
+      <div className="rounded-card border border-line bg-navy-2 p-7 text-center">
+        <div className="mx-auto mb-4 grid h-11 w-11 place-items-center rounded-[10px] bg-steel text-[20px] text-violet-soft">
           <LockIcon />
         </div>
-        <h3 className="mb-2 font-display text-[18px] font-semibold">{TIER_LABEL[required]} feature</h3>
+        <h3 className="mb-2 font-display text-[18px] font-medium">{TIER_LABEL[required]} feature</h3>
         <p className="mx-auto max-w-sm text-[14px] text-muted">
           {FEATURE_LABEL[feature]} is part of UroApp {TIER_LABEL[required]}. Subscriptions are
           managed through Apple.
@@ -39,7 +39,7 @@ export function ProGate({ feature, inline = false, children }: ProGateProps) {
         <button
           type="button"
           onClick={() => openPlans(feature)}
-          className="mt-5 min-h-[44px] rounded-[11px] bg-violet px-6 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+          className="mt-5 min-h-[44px] rounded-[10px] bg-violet-deep px-6 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
         >
           See plans
         </button>

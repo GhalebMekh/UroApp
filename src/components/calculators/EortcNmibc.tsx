@@ -136,7 +136,7 @@ export function EortcNmibc() {
         </SelectField>
       ))}
 
-      <div className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+      <div className="mt-1 text-[12px] font-medium text-muted-2">
         Recurrence
       </div>
       <ResultRow
@@ -145,7 +145,7 @@ export function EortcNmibc() {
         caption={rec ? `1-yr / 5-yr: ${rec.oneYr} / ${rec.fiveYr} (score 0–17)` : 'Select all six factors'}
       />
 
-      <div className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+      <div className="mt-3 text-[12px] font-medium text-muted-2">
         Progression
       </div>
       <ResultRow

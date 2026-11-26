@@ -2,7 +2,8 @@ import type { ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
 const TONE = {
-  violet: 'text-violet-soft',
+  // Neutral by default; a colour only when the section carries a status (on-call).
+  violet: 'text-ink',
   crimson: 'text-crimson',
   amber: 'text-amber',
   teal: 'text-teal',
@@ -25,12 +26,12 @@ export function DashCard({
   return (
     <section className={cn('flex flex-col rounded-card border border-line bg-navy-2 p-4 sm:p-5', className)}>
       <div className="mb-3 flex min-h-[24px] items-center justify-between gap-3">
-        <h2 className={cn('text-[11px] font-semibold uppercase tracking-[0.14em]', TONE[tone])}>{title}</h2>
+        <h2 className={cn('text-[14px] font-medium', TONE[tone])}>{title}</h2>
         {action && (
           <button
             type="button"
             onClick={action.onClick}
-            className="-my-2.5 min-h-[44px] shrink-0 px-1 text-[12.5px] font-semibold text-violet-soft transition-colors hover:text-ink"
+            className="-my-2.5 min-h-[44px] shrink-0 px-1 text-[13px] font-medium text-violet transition-colors hover:text-violet-soft"
           >
             {action.label} <span aria-hidden="true">→</span>
           </button>

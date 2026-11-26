@@ -3,9 +3,9 @@ import { isValidPin } from '@/lib/appLock';
 import { useAppLock } from '@/lib/appLockContext';
 
 const inputClass =
-  'min-h-[44px] w-full rounded-[12px] border border-line bg-navy px-4 py-3 font-mono text-[16px] tracking-[0.3em] text-ink placeholder:tracking-normal placeholder-muted-2 focus:border-violet focus:outline-none';
+  'min-h-[44px] w-full rounded-[12px] border border-line bg-navy px-4 py-3 font-mono text-[16px]  text-ink placeholder:tracking-normal placeholder-muted-2 focus:border-violet focus:outline-none';
 const secondaryButton =
-  'min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy px-3 py-2.5 text-[13px] font-semibold text-ink transition-colors hover:border-violet';
+  'min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[13px] font-medium text-ink transition-colors hover:border-violet';
 
 const digitsOnly = (v: string) => v.replace(/\D/g, '').slice(0, 8);
 
@@ -49,7 +49,7 @@ export function AppLockSettings() {
 
   return (
     <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[15px] font-semibold">App lock</h3>
+      <h3 className="text-[15px] font-medium">App lock</h3>
       <p className="mb-4 mt-1 text-[12px] text-muted-2">
         Locks your ward list, logbook, MDT sheets and CME record behind your own PIN
         {lock.biometry ? ` or ${lock.biometry}` : ''}. Calculators and on-call tools stay open. It
@@ -60,7 +60,7 @@ export function AppLockSettings() {
         <button
           type="button"
           onClick={() => setMode('setup')}
-          className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+          className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
         >
           Set a PIN
         </button>
@@ -106,7 +106,7 @@ export function AppLockSettings() {
             </label>
           )}
           <p className="text-[12px] text-muted-2">
-            A forgotten PIN can’t be recovered — removing the lock then erases the locked data on
+            A forgotten PIN can’t be recovered; removing the lock then erases the locked data on
             this device.
           </p>
           {error && (
@@ -120,7 +120,7 @@ export function AppLockSettings() {
             </button>
             <button
               type="submit"
-              className="min-h-[44px] flex-1 rounded-[11px] bg-violet px-3 py-2.5 text-[13px] font-semibold text-white transition hover:bg-violet-deep"
+              className="min-h-[44px] flex-1 rounded-[10px] bg-violet-deep px-3 py-2.5 text-[13px] font-medium text-white transition hover:bg-violet-press"
             >
               Turn on lock
             </button>
@@ -130,8 +130,8 @@ export function AppLockSettings() {
 
       {lock.settings.enabled && mode === 'idle' && (
         <div className="space-y-3">
-          <p className="rounded-[10px] border border-teal/40 bg-teal/[0.08] px-3 py-2 text-[12.5px] text-ink">
-            Lock is on{lock.unlocked ? ' — unlocked for now. Tap “Lock now” to check it.' : ' and locked.'}
+          <p className="rounded-[10px] border border-teal/40 bg-teal/[0.08] px-3 py-2 text-[12px] text-ink">
+            Lock is on{lock.unlocked ? ', unlocked for now. Tap “Lock now” to check it.' : ' and locked.'}
           </p>
           {lock.biometry && (
             <label className="flex min-h-[44px] items-center gap-3 text-[13px] text-ink">
@@ -182,7 +182,7 @@ export function AppLockSettings() {
             <button
               type="submit"
               disabled={pin.length < 4}
-              className="min-h-[44px] flex-1 rounded-[11px] bg-violet px-3 py-2.5 text-[13px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-50"
+              className="min-h-[44px] flex-1 rounded-[10px] bg-violet-deep px-3 py-2.5 text-[13px] font-medium text-white transition hover:bg-violet-press disabled:opacity-50"
             >
               Turn off
             </button>

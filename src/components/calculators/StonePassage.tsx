@@ -54,14 +54,14 @@ export function StonePassage() {
         ))}
       </SelectField>
 
-      <div className="mt-1 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">By width</div>
+      <div className="mt-1 text-[12px] font-medium text-muted-2">By width</div>
       <ResultRow
         score={sizeOpt ? `${sizeOpt.rate}%` : '—'}
         band={sizeOpt ? band(sizeOpt.rate) : undefined}
         caption={sizeOpt ? 'spontaneous passage rate' : 'Select a stone width'}
       />
 
-      <div className="mt-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">By location</div>
+      <div className="mt-3 text-[12px] font-medium text-muted-2">By location</div>
       <ResultRow
         score={locOpt ? `${locOpt.rate}%` : '—'}
         band={locOpt ? band(locOpt.rate) : undefined}

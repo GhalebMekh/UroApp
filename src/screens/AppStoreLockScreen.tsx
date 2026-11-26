@@ -13,7 +13,7 @@ export function AppStoreLockScreen({ title, blurb }: { title: string; blurb: str
       <PageBody narrow>
         <div className="rounded-[20px] border border-line bg-navy-2 p-8 text-center">
           <div className="mb-4 flex justify-center">
-            <BrandMark className="h-10 w-10 text-[22px]" />
+            <BrandMark className="h-10 w-10 text-[20px]" />
           </div>
           <p className="text-[14px] text-muted">
             This preview includes the calculators and guideline summaries. {title} arrives with the

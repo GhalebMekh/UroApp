@@ -61,7 +61,7 @@ export function ScrotalPain() {
       <div className="space-y-2.5">
         {CAUSES.map((c) => (
           <article key={c.name} className="rounded-[14px] border border-line bg-navy p-4">
-            <h4 className={`text-[14.5px] font-semibold ${c.urgent ? 'text-crimson' : 'text-ink'}`}>{c.name}</h4>
+            <h4 className={`text-[14px] font-medium ${c.urgent ? 'text-crimson' : 'text-ink'}`}>{c.name}</h4>
             <p className="mb-2 text-[12px] text-muted-2">{c.share}</p>
             <ul className="mb-2 list-disc space-y-1 pl-5 text-[13px] text-muted">
               {c.points.map((p) => (
@@ -74,7 +74,7 @@ export function ScrotalPain() {
       </div>
 
       <div className="mt-5 border-t border-line pt-4">
-        <h4 className="mb-2 text-[14px] font-semibold">If this is cord torsion</h4>
+        <h4 className="mb-2 text-[14px] font-medium">If this is cord torsion</h4>
         <NumberField label="Hours since the pain began" value={hours} onChange={setHours} unit="h" min="0" />
         {risk && (
           <ResultRow

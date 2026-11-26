@@ -70,7 +70,7 @@ export function Dashboard({
               <button
                 type="button"
                 onClick={() => setEditing(true)}
-                className="min-h-[44px] rounded-full border border-line px-5 text-[13.5px] font-semibold text-muted transition-colors hover:text-ink"
+                className="min-h-[44px] rounded-full border border-line px-5 text-[13px] font-medium text-muted transition-colors hover:text-ink"
               >
                 Edit Home
               </button>

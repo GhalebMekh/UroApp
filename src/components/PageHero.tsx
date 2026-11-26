@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import { useEffect, useRef, type PointerEvent, type ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 import { SearchIcon } from './icons';
 
@@ -10,10 +10,16 @@ const TONE_BG: Record<HeroTone, string> = {
   pediatric: 'bg-peds-hero',
 };
 
+/** How far (px) the bubbles lean toward a finger on the header. */
+const PULL = 22;
+
 /**
- * The gradient band every screen opens with. It is pulled up under the top bar
- * (which stays clear over it until the page scrolls — see TopBar `overHero`),
- * so the colour runs to the top of the screen as on Home.
+ * The coloured band every screen opens with. Owner, 2026-11-22: keep the
+ * section colours and moving bubbles from before, with the unslop edits —
+ * each band is one hue (no violet-to-blue blend), the bubbles are soft, drift
+ * slowly, and lean a little toward where you touch the header, then float back.
+ * Reduce Motion stops both. Pulled up under the top bar so the colour runs to
+ * the top of the screen.
  */
 export function HeroShell({
   tone = 'violet',
@@ -24,20 +30,53 @@ export function HeroShell({
   className?: string;
   children: ReactNode;
 }) {
+  const layer = useRef<HTMLSpanElement>(null);
+  const still = useRef(false);
+
+  useEffect(() => {
+    still.current = !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  }, []);
+
+  function lean(e: PointerEvent<HTMLElement>) {
+    const el = layer.current;
+    if (!el || still.current) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = ((e.clientX - r.left) / r.width - 0.5) * 2; // -1 … 1
+    const y = ((e.clientY - r.top) / r.height - 0.5) * 2;
+    el.style.transform = `translate(${(x * PULL).toFixed(1)}px, ${(y * PULL).toFixed(1)}px)`;
+  }
+
+  function release() {
+    if (layer.current) layer.current.style.transform = 'translate(0px, 0px)';
+  }
+
   return (
     <header
+      onPointerDown={lean}
+      onPointerMove={(e) => {
+        // Follow a finger, or a mouse only while its button is held.
+        if (e.pointerType !== 'mouse' || e.buttons) lean(e);
+      }}
+      onPointerUp={release}
+      onPointerCancel={release}
+      onPointerLeave={release}
       className={cn(
         'relative -mt-[calc(4rem+env(safe-area-inset-top))] overflow-hidden pt-[calc(4rem+env(safe-area-inset-top))]',
-        // Bleed the background under side insets (iPhone Duo's vertical status bar, landscape
-        // camera); the padding keeps the content itself clear of them.
+        // Bleed the colour under side insets; the padding keeps the content clear of them.
         'bleed-safe-x',
         TONE_BG[tone],
       )}
     >
-      {/* Soft light shapes, purely decorative. */}
-      <span aria-hidden="true" className="pointer-events-none absolute -right-16 -top-10 h-72 w-72 rounded-full bg-white/[0.09] animate-drift-a" />
-      <span aria-hidden="true" className="pointer-events-none absolute -bottom-20 left-1/3 h-44 w-44 rounded-full bg-white/[0.06] animate-drift-b" />
-      {/* Default bottom space leaves room for the PageSheet's rounded edge to overlap. */}
+      {/* Two soft bubbles: they drift on their own (inner spans) and lean toward a touch (outer layer). */}
+      <span
+        ref={layer}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none"
+      >
+        <span className="absolute -right-16 -top-12 h-72 w-72 animate-drift-a rounded-full bg-white/[0.08]" />
+        <span className="absolute -bottom-20 left-1/3 h-44 w-44 animate-drift-b rounded-full bg-white/[0.06]" />
+      </span>
+      {/* Bottom space leaves room for the PageSheet's rounded edge to overlap. */}
       <div className={cn('relative mx-auto max-w-wrap px-4 pt-4 sm:px-6 md:pt-6', className ?? 'pb-12 md:pb-14')}>
         {children}
       </div>
@@ -45,7 +84,7 @@ export function HeroShell({
   );
 }
 
-/** A screen's header: eyebrow (section), title, one-line description, then any controls. */
+/** A screen's header: section label, title, one-line description, then any controls. */
 export function PageHero({
   eyebrow,
   title,
@@ -58,7 +97,7 @@ export function PageHero({
   title: ReactNode;
   lede?: ReactNode;
   tone?: HeroTone;
-  /** Right-aligned beside the eyebrow, e.g. an "All calculators →" link. */
+  /** Right-aligned beside the section label, e.g. an "All calculators" link. */
   action?: { label: string; onClick: () => void };
   /** Controls shown under the description: search, tabs, filters. */
   children?: ReactNode;
@@ -67,26 +106,26 @@ export function PageHero({
     <HeroShell tone={tone}>
       {(eyebrow || action) && (
         <div className="mb-1 flex min-h-[24px] items-center justify-between gap-3">
-          <div className="text-[11px] font-semibold uppercase tracking-[0.14em] text-white/75">{eyebrow}</div>
+          <div className="text-[13px] text-white/75">{eyebrow}</div>
           {action && (
             <button
               type="button"
               onClick={action.onClick}
-              className="-my-2.5 min-h-[44px] shrink-0 px-1 text-[12.5px] font-semibold text-white/90 transition-colors hover:text-white"
+              className="-my-2.5 min-h-[44px] shrink-0 px-1 text-[13px] font-medium text-white/90 transition-colors hover:text-white"
             >
-              {action.label} <span aria-hidden="true">→</span>
+              {action.label}
             </button>
           )}
         </div>
       )}
-      <h1 className="font-display text-[30px] font-bold leading-[1.1] text-white md:text-[36px]">{title}</h1>
+      <h1 className="font-display text-[28px] font-medium leading-[1.15] text-white md:text-[32px]">{title}</h1>
       {lede && <p className="mt-2 max-w-2xl text-[14px] leading-relaxed text-white/80">{lede}</p>}
       {children && <div className="mt-5">{children}</div>}
     </HeroShell>
   );
 }
 
-/** Segmented tabs styled for the gradient header. */
+/** Segmented tabs on the coloured header: a translucent track, the selected tab in white. */
 export function HeroTabs<T extends string>({
   items,
   value,
@@ -103,7 +142,7 @@ export function HeroTabs<T extends string>({
 }) {
   return (
     <div
-      className={cn('grid gap-1 rounded-[13px] border border-white/20 bg-white/[0.10] p-1', className)}
+      className={cn('grid gap-1 rounded-[12px] border border-white/15 bg-white/[0.10] p-1', className)}
       style={{ gridTemplateColumns: `repeat(${items.length}, minmax(0, 1fr))` }}
     >
       {items.map((it) => {
@@ -115,13 +154,13 @@ export function HeroTabs<T extends string>({
             onClick={() => onChange(it.id)}
             aria-pressed={active}
             className={cn(
-              'flex min-h-[44px] items-center justify-center gap-1.5 rounded-[10px] py-2 text-[13px] font-semibold transition-colors',
+              'flex min-h-[44px] items-center justify-center gap-1.5 rounded-[8px] py-2 text-[13px] font-medium transition-colors',
               dense ? 'px-1' : 'px-2',
-              active ? 'bg-white text-violet-deep shadow-sm' : 'text-white/85 hover:bg-white/10',
+              active ? 'bg-white text-navy' : 'text-white/85 hover:bg-white/10',
             )}
           >
             {it.label}
-            {it.count !== undefined && <span className={cn('text-[11px]', active ? 'opacity-60' : 'opacity-70')}>{it.count}</span>}
+            {it.count !== undefined && <span className="font-mono text-[12px] opacity-60">{it.count}</span>}
           </button>
         );
       })}
@@ -129,7 +168,7 @@ export function HeroTabs<T extends string>({
   );
 }
 
-/** Wrap-around chips styled for the gradient header (for longer option lists). */
+/** Wrap-around chips on the coloured header (for longer option lists). */
 export function HeroChips<T extends string>({
   items,
   value,
@@ -150,8 +189,10 @@ export function HeroChips<T extends string>({
             onClick={() => onChange(it.id)}
             aria-pressed={active}
             className={cn(
-              'min-h-[44px] rounded-[11px] border px-3.5 py-2 text-[13px] font-semibold transition-colors',
-              active ? 'border-white bg-white text-violet-deep' : 'border-white/25 bg-white/[0.10] text-white/90 hover:bg-white/[0.18]',
+              'min-h-[44px] rounded-[10px] border px-3.5 py-2 text-[13px] font-medium transition-colors',
+              active
+                ? 'border-white bg-white text-navy'
+                : 'border-white/20 bg-white/[0.10] text-white/90 hover:bg-white/[0.16]',
             )}
           >
             {it.label}
@@ -162,7 +203,7 @@ export function HeroChips<T extends string>({
   );
 }
 
-/** The search field styled for the gradient header. */
+/** The search field on the coloured header. */
 export function HeroSearch({
   value,
   onChange,
@@ -175,7 +216,7 @@ export function HeroSearch({
   label: string;
 }) {
   return (
-    <label className="flex min-h-[48px] w-full items-center gap-3 rounded-[14px] border border-white/20 bg-white/[0.12] px-4 focus-within:border-white/60 sm:max-w-md">
+    <label className="flex min-h-[48px] w-full items-center gap-3 rounded-[12px] border border-white/20 bg-white/[0.12] px-4 focus-within:border-white/60 sm:max-w-md">
       <SearchIcon className="shrink-0 text-[18px] text-white/75" />
       <input
         type="search"
@@ -190,11 +231,11 @@ export function HeroSearch({
 }
 
 /**
- * The navy sheet a screen's content sits on: full width, rounded top corners,
- * overlapping the bottom of the PageHero so the page reads as layered, as on Home.
+ * The navy sheet a screen's content sits on: rounded top corners overlapping
+ * the bottom of the coloured header, so the page reads as layered.
  */
 export function PageSheet({ children }: { children: ReactNode }) {
-  return <div className="relative -mt-6 rounded-t-[26px] bg-navy">{children}</div>;
+  return <div className="relative -mt-6 rounded-t-[24px] bg-navy">{children}</div>;
 }
 
 /**

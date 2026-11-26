@@ -81,7 +81,7 @@ export function SemenAnalysisInterpreter() {
 
       {result.flags.length > 0 && (
         <div className="mt-4 space-y-2">
-          <div className="text-sm font-semibold text-muted">{result.interpretation}:</div>
+          <div className="text-sm font-medium text-muted">{result.interpretation}:</div>
           {result.flags.map((flag, i) => (
             <div
               key={i}
@@ -91,7 +91,7 @@ export function SemenAnalysisInterpreter() {
                   : 'border-teal bg-teal/[0.08] text-teal'
               }`}
             >
-              <div className="font-semibold">{flag.parameter}</div>
+              <div className="font-medium">{flag.parameter}</div>
               <div className="text-xs">
                 {flag.value} {flag.status === 'low' ? `(LLN: ${flag.lln})` : '✓'}
               </div>

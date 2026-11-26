@@ -19,7 +19,7 @@ const SCOPES: { id: ConferenceScope; label: string }[] = [
 
 const chip = (on: boolean) =>
   cn(
-    'min-h-[44px] flex-1 rounded-[10px] border px-3 text-[13px] font-semibold transition-colors',
+    'min-h-[44px] flex-1 rounded-[10px] border px-3 text-[13px] font-medium transition-colors',
     on ? 'border-violet bg-violet/[0.16] text-ink' : 'border-line bg-navy text-muted hover:text-ink',
   );
 
@@ -49,7 +49,7 @@ export function NotificationSettings() {
 
   return (
     <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[15px] font-semibold">Notifications</h3>
+      <h3 className="text-[15px] font-medium">Notifications</h3>
       {!supported ? (
         <p className="mt-2 text-[13px] text-muted">Reminders are available in the iPhone and iPad app.</p>
       ) : (
@@ -57,8 +57,8 @@ export function NotificationSettings() {
           <p className="mt-1 text-[13px] text-muted">Reminders are set on this device; nothing is sent to a server.</p>
 
           <div className="mt-4">
-            <div className="text-[13.5px] font-semibold">Weekly reads</div>
-            <p className="mb-2 text-[12.5px] text-muted-2">Saturday 9:00, when the new papers are in.</p>
+            <div className="text-[13px] font-medium">Weekly reads</div>
+            <p className="mb-2 text-[12px] text-muted-2">Saturday 9:00, when the new papers are in.</p>
             <div className="flex gap-2">
               <button type="button" aria-pressed={!prefs.weekly} onClick={() => void update({ weekly: false })} className={chip(!prefs.weekly)}>
                 Off
@@ -70,8 +70,8 @@ export function NotificationSettings() {
           </div>
 
           <div className="mt-4">
-            <div className="text-[13.5px] font-semibold">Conferences</div>
-            <p className="mb-2 text-[12.5px] text-muted-2">Two weeks before and the day before, at 9:00.</p>
+            <div className="text-[13px] font-medium">Conferences</div>
+            <p className="mb-2 text-[12px] text-muted-2">Two weeks before and the day before, at 9:00.</p>
             <div className="flex flex-wrap gap-2">
               {SCOPES.map((s) => (
                 <button
@@ -88,7 +88,7 @@ export function NotificationSettings() {
           </div>
 
           {denied && (
-            <p className="mt-4 rounded-[10px] border border-amber/50 bg-amber/[0.10] px-4 py-3 text-[12.5px] text-muted">
+            <p className="mt-4 rounded-[10px] border border-amber/50 bg-amber/[0.10] px-4 py-3 text-[12px] text-muted">
               Notifications are turned off for UroApp. Turn them on in Settings → Notifications → UroApp, then try again.
             </p>
           )}

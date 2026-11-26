@@ -23,11 +23,11 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
     // The heading lives in the Residency header (ResidencyScreen).
     <div className="mx-auto max-w-wrap px-4 pb-12 pt-6 sm:px-6">
       <div className="max-w-md">
-        <label className="mb-[7px] block text-[13px] font-semibold text-muted">Procedure</label>
+        <label className="mb-2 block text-[13px] font-medium text-muted">Procedure</label>
         <select
           value={id}
           onChange={(e) => setId(e.target.value)}
-          className="min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[14px] text-ink outline-none focus:border-violet"
+          className="min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[14px] text-ink outline-none focus:border-violet"
         >
           {groups.map(([category, procs]) => (
             <optgroup key={category} label={category}>
@@ -44,18 +44,18 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
       <div className="mt-6 rounded-[20px] border border-line bg-navy-2 p-6">
         <span
           className={cn(
-            'mb-2 inline-flex rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.06em]',
+            'mb-2 inline-flex rounded-full border px-2.5 py-0.5 text-[12px] font-medium  ',
             SPECIALTY[specialtyOfProcedureCategory(proc.category)].chip,
           )}
         >
           {proc.category}
         </span>
-        <h3 className="font-display text-[22px] font-semibold">{proc.name}</h3>
+        <h3 className="font-display text-[20px] font-medium">{proc.name}</h3>
         <p className="mt-2 text-[14px] text-muted">{proc.summary}</p>
 
         {proc.preop && (
           <div className="mt-6 rounded-[14px] border border-line bg-navy p-5">
-            <div className="mb-4 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">
+            <div className="mb-4 text-[12px] font-medium text-violet-soft">
               Before theatre
             </div>
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-3">
@@ -74,19 +74,19 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
 
         {proc.dangerZones && proc.dangerZones.length > 0 && (
           <div className="mt-6">
-            <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-amber">
+            <div className="mb-3 text-[12px] font-medium text-amber">
               Danger zones & bail-outs
             </div>
             <ul className="space-y-2.5">
               {proc.dangerZones.map((z) => (
                 <li key={`${z.step}-${z.structure}`} className="rounded-[12px] border border-amber/30 bg-amber/[0.06] p-4">
-                  <div className="text-[13.5px] font-semibold text-ink">
+                  <div className="text-[13px] font-medium text-ink">
                     <span className="mr-2 font-mono text-[12px] text-amber">Step {z.step + 1}</span>
                     {z.structure}
                   </div>
                   <p className="mt-1 text-[13px] text-muted">{z.risk}</p>
                   <p className="mt-1.5 text-[13px] text-ink">
-                    <span className="font-semibold text-amber">If it happens: </span>
+                    <span className="font-medium text-amber">If it happens: </span>
                     {z.bailout}
                   </p>
                 </li>
@@ -102,16 +102,16 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
         )}
 
         <p className="mt-6 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12px] text-muted-2">
-          Summarised in UroApp's own words — not a verbatim reproduction. Confirm technique against
+          Summarised in UroApp's own words, not a verbatim reproduction. Confirm technique against
           the operating surgeon and the primary source.
         </p>
-        <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-2">
+        <div className="mt-3 text-[12px] font-medium text-muted-2">
           Operative source
         </div>
         <CitationNote citation={proc.citation} />
         {proc.extrasSource && (
           <>
-            <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-2">
+            <div className="mt-3 text-[12px] font-medium text-muted-2">
               Before / after theatre & danger zones
             </div>
             <CitationNote citation={proc.extrasSource} />
@@ -119,7 +119,7 @@ export function ProceduresScreen({ initialId }: { initialId?: string }) {
         )}
         {proc.guideline && (
           <>
-            <div className="mt-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-2">
+            <div className="mt-3 text-[12px] font-medium text-muted-2">
               Society guideline
             </div>
             <CitationNote citation={proc.guideline} />
@@ -143,10 +143,10 @@ function Section({
 }) {
   return (
     <div>
-      <div className={`mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] ${tone}`}>{title}</div>
+      <div className={`mb-3 text-[12px] font-medium   ${tone}`}>{title}</div>
       <ol className="space-y-2">
         {items.map((item, i) => (
-          <li key={i} className="flex gap-2.5 text-[13.5px] text-muted">
+          <li key={i} className="flex gap-2.5 text-[13px] text-muted">
             <span className={`shrink-0 font-mono text-[12px] ${ordered ? tone : 'text-muted-2'}`}>
               {ordered ? `${i + 1}.` : '•'}
             </span>

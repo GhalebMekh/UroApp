@@ -279,7 +279,7 @@ function AdmissionBadge({ admission }: { admission: Admission }) {
   return (
     <span
       className={cn(
-        'shrink-0 rounded-[7px] px-2.5 py-1 text-[11px] font-semibold',
+        'shrink-0 rounded-[8px] px-2.5 py-1 text-[12px] font-medium',
         admission === 'er' ? 'bg-crimson/[0.16] text-crimson' : 'bg-teal/[0.16] text-teal',
       )}
     >
@@ -298,7 +298,7 @@ function ReminderBadge({ reminders }: { reminders: Reminder[] }) {
     <span
       title={overdue > 0 ? `${overdue} overdue` : `${outstanding} outstanding`}
       className={cn(
-        'shrink-0 rounded-full border px-2 py-0.5 text-[11px] font-semibold',
+        'shrink-0 rounded-full border px-2 py-0.5 text-[12px] font-medium',
         overdue > 0
           ? 'border-crimson/50 bg-crimson/[0.12] text-crimson'
           : 'border-line bg-steel text-muted-2',
@@ -331,7 +331,7 @@ function PatientList({
         <button
           type="button"
           onClick={onAdd}
-          className="min-h-[44px] rounded-[11px] bg-violet px-5 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+          className="min-h-[44px] rounded-[10px] bg-violet-deep px-5 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
         >
           + Add patient
         </button>
@@ -340,14 +340,14 @@ function PatientList({
             <button
               type="button"
               onClick={() => setHandoverError(!printDocument('Ward handover', buildHandoverHtml(patients)))}
-              className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink transition-colors hover:border-violet"
+              className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-4 py-3 text-[13px] font-medium text-ink transition-colors hover:border-violet"
             >
               Print handover
             </button>
             <button
               type="button"
               onClick={() => setHandoverError(!saveDocument('Ward handover', buildHandoverHtml(patients), '', stem))}
-              className="min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] font-semibold text-ink transition-colors hover:border-teal"
+              className="min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-4 py-3 text-[13px] font-medium text-ink transition-colors hover:border-teal"
             >
               Save handover
             </button>
@@ -381,11 +381,11 @@ function PatientList({
               <article key={p.id} className="flex items-center gap-3 rounded-[14px] border border-line bg-navy-2 p-4">
                 <button type="button" onClick={() => onOpen(p.id)} className="min-w-0 flex-1 text-left">
                   <div className="flex items-center gap-2">
-                    <span className="truncate text-[15px] font-semibold">{p.name || 'Unnamed'}</span>
+                    <span className="truncate text-[15px] font-medium">{p.name || 'Unnamed'}</span>
                     <AdmissionBadge admission={p.admission} />
                     <ReminderBadge reminders={p.reminders} />
                   </div>
-                  <div className="mt-0.5 truncate text-[12.5px] text-muted-2">{meta || 'Tap to add details'}</div>
+                  <div className="mt-0.5 truncate text-[12px] text-muted-2">{meta || 'Tap to add details'}</div>
                 </button>
                 <button
                   type="button"
@@ -405,7 +405,7 @@ function PatientList({
 }
 
 const inputCls =
-  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13.5px] text-ink outline-none focus:border-violet';
+  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
 
 function Field({
   label,
@@ -422,7 +422,7 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-[7px] block text-[13px] font-semibold text-muted">{label}</span>
+      <span className="mb-2 block text-[13px] font-medium text-muted">{label}</span>
       {textarea ? (
         <textarea value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} rows={2} className={cn(inputCls, 'resize-y')} />
       ) : (
@@ -446,7 +446,7 @@ function ChipRow<T extends string>({
 }) {
   return (
     <label className="block">
-      <span className="mb-[7px] block text-[13px] font-semibold text-muted">{label}</span>
+      <span className="mb-2 block text-[13px] font-medium text-muted">{label}</span>
       <div className="flex flex-wrap gap-2">
         {options.map((o) => (
           <button
@@ -454,7 +454,7 @@ function ChipRow<T extends string>({
             type="button"
             onClick={() => onChange(value === o.value ? '' : o.value)}
             className={cn(
-              'min-h-[44px] flex-1 rounded-[10px] border px-3 text-[12px] font-semibold transition-colors',
+              'min-h-[44px] flex-1 rounded-[10px] border px-3 text-[12px] font-medium transition-colors',
               value === o.value
                 ? 'border-violet bg-violet/[0.18] text-violet-soft'
                 : 'border-line bg-navy text-muted hover:border-violet',
@@ -501,7 +501,7 @@ function RemindersSection({
   return (
     <Section title="Plan reminders">
       {overdue > 0 && (
-        <div className="rounded-[10px] border border-crimson/40 bg-crimson/[0.1] px-3 py-2 text-[12.5px] text-crimson">
+        <div className="rounded-[10px] border border-crimson/40 bg-crimson/[0.1] px-3 py-2 text-[12px] text-crimson">
           {overdue} {overdue === 1 ? 'reminder is' : 'reminders are'} overdue.
         </div>
       )}
@@ -514,7 +514,7 @@ function RemindersSection({
           placeholder="e.g. Chase histology; repeat Hb; book stent removal"
         />
         <div className="block">
-          <span className="mb-[7px] block text-[13px] font-semibold text-muted">Due (optional)</span>
+          <span className="mb-2 block text-[13px] font-medium text-muted">Due (optional)</span>
           {/* Gregorian date selects + time; `due` stays "YYYY-MM-DDTHH:mm" (lib/reminders.ts). */}
           <div className="space-y-2">
             <DateInput
@@ -538,7 +538,7 @@ function RemindersSection({
       <button
         type="button"
         onClick={add}
-        className="min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+        className="min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-medium text-violet-soft transition-colors hover:bg-violet/[0.26]"
       >
         Add reminder
       </button>
@@ -577,7 +577,7 @@ function RemindersSection({
                 <div className="min-w-0 flex-1">
                   <div
                     className={cn(
-                      'text-[13.5px]',
+                      'text-[13px]',
                       r.done ? 'text-muted-2 line-through' : 'text-ink',
                     )}
                   >
@@ -585,7 +585,7 @@ function RemindersSection({
                   </div>
                   <span
                     className={cn(
-                      'mt-1 inline-block rounded-full border px-2 py-0.5 text-[11px]',
+                      'mt-1 inline-block rounded-full border px-2 py-0.5 text-[12px]',
                       REMINDER_ACCENT[status],
                     )}
                   >
@@ -596,7 +596,7 @@ function RemindersSection({
                 <button
                   type="button"
                   onClick={() => onChange(reminders.filter((x) => x.id !== r.id))}
-                  className="shrink-0 text-[11px] text-muted-2 hover:text-crimson"
+                  className="shrink-0 text-[12px] text-muted-2 hover:text-crimson"
                 >
                   Remove
                 </button>
@@ -642,20 +642,20 @@ function CatheterSection({
         type="button"
         onClick={() => onChange({ present: !c.present })}
         className={cn(
-          'min-h-[44px] w-full rounded-[10px] border px-3 text-[13px] font-semibold transition-colors',
+          'min-h-[44px] w-full rounded-[10px] border px-3 text-[13px] font-medium transition-colors',
           c.present
             ? 'border-violet bg-violet/[0.18] text-violet-soft'
             : 'border-line bg-navy text-muted hover:border-violet',
         )}
       >
-        {c.present ? 'Catheter in situ' : 'No catheter — tap to add'}
+        {c.present ? 'Catheter in situ' : 'No catheter. Tap to add'}
       </button>
 
       {c.present && (
         <>
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
-              <span className="mb-[7px] block text-[13px] font-semibold text-muted">Inserted</span>
+              <span className="mb-2 block text-[13px] font-medium text-muted">Inserted</span>
               <DateInput
                 value={c.inserted}
                 max={todayISO()}
@@ -668,8 +668,8 @@ function CatheterSection({
           </div>
 
           {days !== null && (
-            <div className="rounded-[10px] border border-line bg-navy px-3 py-2 text-[12.5px] text-muted-2">
-              In situ <span className="font-mono text-ink">day {days}</span> — infection risk rises
+            <div className="rounded-[10px] border border-line bg-navy px-3 py-2 text-[12px] text-muted-2">
+              In situ <span className="font-mono text-ink">day {days}</span>. Infection risk rises
               with dwell time; review the need for it daily.
             </div>
           )}
@@ -698,7 +698,7 @@ function CatheterSection({
             type="button"
             onClick={() => onChange({ cbi: !c.cbi })}
             className={cn(
-              'min-h-[44px] w-full rounded-[10px] border px-3 text-[12px] font-semibold transition-colors',
+              'min-h-[44px] w-full rounded-[10px] border px-3 text-[12px] font-medium transition-colors',
               c.cbi
                 ? 'border-teal bg-teal/[0.16] text-teal'
                 : 'border-line bg-navy text-muted hover:border-teal',
@@ -708,8 +708,8 @@ function CatheterSection({
           </button>
 
           {mismatch && (
-            <div className="rounded-[10px] border border-amber/40 bg-amber/[0.1] px-3 py-2 text-[12.5px] text-amber">
-              CBI runs through the third channel — a 2-way catheter cannot irrigate. Check the
+            <div className="rounded-[10px] border border-amber/40 bg-amber/[0.1] px-3 py-2 text-[12px] text-amber">
+              CBI runs through the third channel; a 2-way catheter cannot irrigate. Check the
               catheter actually in situ.
             </div>
           )}
@@ -723,7 +723,7 @@ function CatheterSection({
 
           {/* Output log */}
           <div className="border-t border-line pt-3.5">
-            <div className="mb-2.5 text-[12px] font-semibold uppercase tracking-[0.1em] text-teal">
+            <div className="mb-2.5 text-[12px] font-medium text-teal">
               Urine output
             </div>
 
@@ -758,7 +758,7 @@ function CatheterSection({
 
             {c.cbi && (
               <p className="mt-2 text-[12px] text-muted-2">
-                On CBI the bag collects irrigant plus urine — record both so the true output is
+                On CBI the bag collects irrigant plus urine, so record both so the true output is
                 the difference, not the bag volume.
               </p>
             )}
@@ -766,7 +766,7 @@ function CatheterSection({
             <button
               type="button"
               onClick={addEntry}
-              className="mt-3 min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+              className="mt-3 min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] px-3 text-[13px] font-medium text-violet-soft transition-colors hover:bg-violet/[0.26]"
             >
               Add reading
             </button>
@@ -788,13 +788,13 @@ function CatheterSection({
                       )}
                     >
                       <div className="flex items-baseline justify-between gap-3">
-                        <span className="text-[11px] text-muted-2">
+                        <span className="text-[12px] text-muted-2">
                           {new Date(e.datetime).toLocaleString('en-GB')}
                         </span>
                         <button
                           type="button"
                           onClick={() => onChange({ log: c.log.filter((x) => x.id !== e.id) })}
-                          className="text-[11px] text-muted-2 hover:text-crimson"
+                          className="text-[12px] text-muted-2 hover:text-crimson"
                         >
                           Remove
                         </button>
@@ -807,7 +807,7 @@ function CatheterSection({
                           </span>
                         )}
                         {c.cbi && e.volume.trim() && (
-                          <span className="text-[11.5px] text-muted-2">
+                          <span className="text-[12px] text-muted-2">
                             ({e.volume} drained − {e.irrigation.trim() || '0'} in)
                           </span>
                         )}
@@ -819,7 +819,7 @@ function CatheterSection({
                       </div>
                       {retaining && (
                         <div className="mt-1.5 text-[12px] text-crimson">
-                          More irrigant in than out — check for clot retention and a blocked
+                          More irrigant in than out: check for clot retention and a blocked
                           catheter; the bladder may be filling.
                         </div>
                       )}
@@ -838,7 +838,7 @@ function CatheterSection({
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-3.5 rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[18px] font-semibold">{title}</h3>
+      <h3 className="font-display text-[18px] font-medium">{title}</h3>
       {children}
     </section>
   );
@@ -896,7 +896,7 @@ function PatientDetail({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <label className="block">
-              <span className="mb-[7px] block text-[13px] font-semibold text-muted">Sex</span>
+              <span className="mb-2 block text-[13px] font-medium text-muted">Sex</span>
               <div className="flex gap-2">
                 {(['male', 'female'] as Sex[]).map((s) => (
                   <button
@@ -904,7 +904,7 @@ function PatientDetail({
                     type="button"
                     onClick={() => onChange({ sex: patient.sex === s ? '' : s })}
                     className={cn(
-                      'min-h-[44px] flex-1 rounded-[10px] border px-2 text-[12px] font-semibold capitalize transition-colors',
+                      'min-h-[44px] flex-1 rounded-[10px] border px-2 text-[12px] font-medium capitalize transition-colors',
                       patient.sex === s ? 'border-violet bg-violet/[0.18] text-violet-soft' : 'border-line bg-navy text-muted hover:border-violet',
                     )}
                   >
@@ -916,7 +916,7 @@ function PatientDetail({
             <Field label="Bed / ward" value={patient.location} onChange={(v) => onChange({ location: v })} placeholder="e.g. W4-12" />
           </div>
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Admission</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Admission</span>
             <div className="flex gap-2">
               {(['er', 'elective'] as Admission[]).map((a) => (
                 <button
@@ -924,7 +924,7 @@ function PatientDetail({
                   type="button"
                   onClick={() => onChange({ admission: a })}
                   className={cn(
-                    'min-h-[44px] flex-1 rounded-[10px] border px-2 py-[10px] text-[12px] font-semibold transition-colors',
+                    'min-h-[44px] flex-1 rounded-[10px] border px-2 py-3 text-[12px] font-medium transition-colors',
                     patient.admission === a ? 'border-violet bg-violet/[0.18] text-violet-soft' : 'border-line bg-navy text-muted hover:border-violet',
                   )}
                 >
@@ -943,7 +943,7 @@ function PatientDetail({
         </Section>
       </div>
 
-      <Section title="Upon assessment — examination">
+      <Section title="Upon assessment: examination">
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {EXAM_FIELDS.map((f) => (
             <Field key={f.key} label={`${f.label} examination`} value={patient.exam[f.key]} onChange={(v) => setExam(f.key, v)} />
@@ -956,7 +956,7 @@ function PatientDetail({
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {LAB_FIELDS.map((f) => (
               <label key={f.key} className="block">
-                <span className="mb-[6px] block text-[12px] font-semibold text-muted">{f.label}</span>
+                <span className="mb-2 block text-[12px] font-medium text-muted">{f.label}</span>
                 <input value={patient.labs[f.key]} onChange={(e) => setLabs(f.key, e.target.value)} className={inputCls} />
               </label>
             ))}
@@ -984,7 +984,7 @@ function PatientDetail({
         />
       </div>
 
-      <Section title="Progress — SOAP">
+      <Section title="Progress: SOAP">
         <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
           <Field label="Subjective" value={note.s} onChange={(v) => setNote((n) => ({ ...n, s: v }))} textarea placeholder="Symptoms, overnight events" />
           <Field label="Objective" value={note.o} onChange={(v) => setNote((n) => ({ ...n, o: v }))} textarea placeholder="Vitals, exam, results" />
@@ -994,7 +994,7 @@ function PatientDetail({
         <button
           type="button"
           onClick={addNote}
-          className="min-h-[44px] rounded-[10px] bg-violet px-4 text-[13px] font-semibold text-white transition hover:bg-violet-deep"
+          className="min-h-[44px] rounded-[10px] bg-violet-deep px-4 text-[13px] font-medium text-white transition hover:bg-violet-press"
         >
           Add SOAP note
         </button>
@@ -1006,8 +1006,8 @@ function PatientDetail({
             patient.notes.map((n) => (
               <div key={n.id} className="rounded-[12px] border border-line bg-navy p-3.5">
                 <div className="mb-1.5 flex items-center justify-between">
-                  <span className="text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</span>
-                  <button type="button" onClick={() => removeNote(n.id)} className="text-[11px] text-muted-2 hover:text-crimson">
+                  <span className="text-[12px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</span>
+                  <button type="button" onClick={() => removeNote(n.id)} className="text-[12px] text-muted-2 hover:text-crimson">
                     remove
                   </button>
                 </div>
@@ -1023,14 +1023,14 @@ function PatientDetail({
         <button
           type="button"
           onClick={() => setView('summary')}
-          className="min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
+          className="min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
         >
           Save patient
         </button>
         <button
           type="button"
           onClick={onBack}
-          className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14.5px] font-semibold text-ink transition-colors hover:border-violet"
+          className="min-h-[44px] w-full rounded-[10px] border border-line bg-navy-2 py-3 text-[14px] font-medium text-ink transition-colors hover:border-violet"
         >
           Back to list
         </button>
@@ -1048,12 +1048,12 @@ function SoapLines({ note }: { note: SoapNote }) {
     ['P', note.p],
   ];
   return (
-    <div className="space-y-1 text-[13.5px] text-muted">
+    <div className="space-y-1 text-[13px] text-muted">
       {rows
         .filter(([, v]) => v.trim())
         .map(([k, v]) => (
           <p key={k}>
-            <span className="font-semibold text-violet-soft">{k}:</span> {v}
+            <span className="font-medium text-violet-soft">{k}:</span> {v}
           </p>
         ))}
     </div>
@@ -1102,12 +1102,12 @@ function buildHandoverHtml(patients: Patient[]): string {
           ? [
               net !== null ? `${net} mL${p.catheter.cbi ? ' net' : ''}` : '',
               last.colour ? COLOUR_LABELS[last.colour] : '',
-              isRetaining(last, p.catheter.cbi) ? 'MORE IN THAN OUT — check for blockage' : '',
+              isRetaining(last, p.catheter.cbi) ? 'MORE IN THAN OUT: check for blockage' : '',
             ]
               .filter(Boolean)
               .join(', ')
           : '';
-        catheter = row('Catheter', [describeCatheter(p.catheter), reading && `last: ${reading}`].filter(Boolean).join(' — '));
+        catheter = row('Catheter', [describeCatheter(p.catheter), reading && `last: ${reading}`].filter(Boolean).join(' · '));
       }
 
       const open = sortReminders(p.reminders).filter((r) => !r.done);
@@ -1137,7 +1137,7 @@ function buildHandoverHtml(patients: Patient[]): string {
     `<h1>Ward handover</h1>` +
     `<p class="sub">${patients.length} patient${patients.length === 1 ? '' : 's'} · generated ${escapeHtml(new Date().toLocaleString('en-GB'))}</p>` +
     blocks +
-    `<div class="note">De-identified working list — first name/initials and bed only, no full names or ` +
+    `<div class="note">De-identified working list: first name/initials and bed only, no full names or ` +
     `medical-record numbers. A personal aide-mémoire, not a medical record. Hand over through your ` +
     `hospital's approved channel and dispose of securely.</div>`
   );
@@ -1166,7 +1166,7 @@ function catheterHtml(c: Catheter): string {
       const bits = [
         net !== null ? `${net} mL${c.cbi ? ' net' : ''}` : '',
         e.colour ? COLOUR_LABELS[e.colour] : '',
-        isRetaining(e, c.cbi) ? 'more in than out — check for blockage' : '',
+        isRetaining(e, c.cbi) ? 'more in than out: check for blockage' : '',
       ].filter(Boolean);
       return `<div class="row"><b>${escapeHtml(new Date(e.datetime).toLocaleString('en-GB'))}</b> ${escapeHtml(bits.join(' · '))}</div>`;
     })
@@ -1208,7 +1208,7 @@ function buildSummaryHtml(p: Patient): string {
     remindersHtml(p.reminders) +
     catheterHtml(p.catheter) +
     (soap ? `<h2>Progress (SOAP)</h2>${soap}` : '') +
-    `<div class="note">De-identified working summary — a first name/initials and bed only, no full name or ` +
+    `<div class="note">De-identified working summary: a first name/initials and bed only, no full name or ` +
     `medical-record number. A personal aide-mémoire, not a medical record. Dispose of securely.</div>`
   );
 }
@@ -1216,7 +1216,7 @@ function buildSummaryHtml(p: Patient): string {
 function SummaryRow({ label, value }: { label: string; value: string }) {
   if (!value.trim()) return null;
   return (
-    <div className="text-[13.5px]">
+    <div className="text-[13px]">
       <span className="text-muted-2">{label}:</span> <span className="text-ink">{value}</span>
     </div>
   );
@@ -1225,7 +1225,7 @@ function SummaryRow({ label, value }: { label: string; value: string }) {
 function SummaryBlock({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border-t border-line px-5 py-4">
-      <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">{title}</div>
+      <div className="mb-2 text-[12px] font-medium text-violet-soft">{title}</div>
       {children}
     </div>
   );
@@ -1239,12 +1239,12 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
 
   function print() {
     setExportError(false);
-    if (!printDocument(`Round summary — ${p.name || 'patient'}`, buildSummaryHtml(p))) setExportError(true);
+    if (!printDocument(`Round summary: ${p.name || 'patient'}`, buildSummaryHtml(p))) setExportError(true);
   }
   function save() {
     setExportError(false);
     const stem = `round-summary-${p.name || 'patient'}-${todayISO()}`;
-    if (!saveDocument(`Round summary — ${p.name || 'patient'}`, buildSummaryHtml(p), '', stem)) setExportError(true);
+    if (!saveDocument(`Round summary: ${p.name || 'patient'}`, buildSummaryHtml(p), '', stem)) setExportError(true);
   }
 
   return (
@@ -1256,15 +1256,15 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
         <button
           type="button"
           onClick={onEdit}
-          className="min-h-[44px] rounded-[11px] border border-violet bg-violet/[0.18] px-4 text-[13.5px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+          className="min-h-[44px] rounded-[10px] border border-violet bg-violet/[0.18] px-4 text-[13px] font-medium text-violet-soft transition-colors hover:bg-violet/[0.26]"
         >
           Edit patient
         </button>
       </div>
 
-      <div className="overflow-hidden rounded-[18px] border border-line bg-navy-2">
+      <div className="overflow-hidden rounded-[16px] border border-line bg-navy-2">
         <div className="px-5 py-5">
-          <h3 className="font-display text-[26px] font-semibold leading-tight">{p.name || 'Patient'}</h3>
+          <h3 className="font-display text-[24px] font-medium leading-tight">{p.name || 'Patient'}</h3>
           <p className="mt-0.5 text-[14px] text-muted">
             {sexAge}
             {p.location ? ` · Bed ${p.location}` : ''} · {p.admission === 'er' ? 'Via ER' : 'Elective'}
@@ -1297,14 +1297,14 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
 
         {p.reason.trim() && (
           <SummaryBlock title="Admitted as case of">
-            <p className="text-[13.5px] text-ink">{p.reason}</p>
+            <p className="text-[13px] text-ink">{p.reason}</p>
           </SummaryBlock>
         )}
 
         <SummaryBlock title="Upon assessment">
           <div className="space-y-1">
             {EXAM_FIELDS.map((f) => (
-              <div key={f.key} className="text-[13.5px]">
+              <div key={f.key} className="text-[13px]">
                 <span className="text-muted-2">{f.label} examination:</span>{' '}
                 <span className="text-ink">{p.exam[f.key] || '—'}</span>
               </div>
@@ -1314,19 +1314,19 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
 
         {labs.length > 0 && (
           <SummaryBlock title="Labs">
-            <p className="text-[13.5px] text-ink">{labs.join(' · ')}</p>
+            <p className="text-[13px] text-ink">{labs.join(' · ')}</p>
           </SummaryBlock>
         )}
 
         {p.imaging.trim() && (
           <SummaryBlock title="Imaging">
-            <p className="text-[13.5px] text-ink">{p.imaging}</p>
+            <p className="text-[13px] text-ink">{p.imaging}</p>
           </SummaryBlock>
         )}
 
         {p.activeIssues.trim() && (
           <SummaryBlock title="Active issues">
-            <p className="text-[13.5px] text-ink">{p.activeIssues}</p>
+            <p className="text-[13px] text-ink">{p.activeIssues}</p>
           </SummaryBlock>
         )}
 
@@ -1357,7 +1357,7 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
             <div className="space-y-3">
               {p.notes.map((n) => (
                 <div key={n.id} className="rounded-[10px] border border-line bg-navy p-3">
-                  <div className="mb-1 text-[11.5px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</div>
+                  <div className="mb-1 text-[12px] text-muted-2">{new Date(n.date).toLocaleString('en-GB')}</div>
                   <SoapLines note={n} />
                 </div>
               ))}
@@ -1369,15 +1369,15 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
       <button
         type="button"
         onClick={onEdit}
-        className="mt-4 min-h-[44px] w-full rounded-[11px] border border-violet bg-violet/[0.18] py-3 text-[14.5px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+        className="mt-4 min-h-[44px] w-full rounded-[10px] border border-violet bg-violet/[0.18] py-3 text-[14px] font-medium text-violet-soft transition-colors hover:bg-violet/[0.26]"
       >
         Edit patient
       </button>
       <div className="mt-2 flex gap-2">
-        <button type="button" onClick={print} className="min-h-[44px] flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep">
+        <button type="button" onClick={print} className="min-h-[44px] flex-1 rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press">
           Print
         </button>
-        <button type="button" onClick={save} className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal">
+        <button type="button" onClick={save} className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-3 text-[14px] font-medium text-ink transition-colors hover:border-teal">
           Save file
         </button>
       </div>
@@ -1389,8 +1389,8 @@ function PatientSummary({ patient: p, onBack, onEdit }: { patient: Patient; onBa
         </p>
       )}
 
-      <p className="mt-4 text-[11.5px] text-muted-2">
-        De-identified summary — first name/initials and bed only, no full name or MRN. A personal
+      <p className="mt-4 text-[12px] text-muted-2">
+        De-identified summary: first name/initials and bed only, no full name or MRN. A personal
         aide-mémoire, not a medical record. Dispose of securely.
       </p>
     </div>

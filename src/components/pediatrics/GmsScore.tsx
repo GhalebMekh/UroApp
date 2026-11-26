@@ -25,7 +25,7 @@ function Component({
         onChange={onChange}
         options={POINTS.map((p) => ({ value: p, label: String(p) }))}
       />
-      <p className="-mt-2 mb-3.5 min-h-[18px] text-[12.5px] text-muted">{value ? table[value] : 'Tap 1–4'}</p>
+      <p className="-mt-2 mb-3.5 min-h-[20px] text-[12px] text-muted">{value ? table[value] : 'Tap 1–4'}</p>
     </div>
   );
 }

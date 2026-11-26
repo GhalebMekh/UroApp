@@ -29,10 +29,10 @@ function DoseRow({ d, w }: { d: PedAbxDose; w: number | null }) {
   return (
     <article className="rounded-[12px] border border-line bg-navy p-4">
       <div className="flex items-baseline justify-between gap-2">
-        <span className="text-[15px] font-semibold">{d.drug}</span>
+        <span className="text-[15px] font-medium">{d.drug}</span>
         <span className="shrink-0 text-[12px] text-muted-2">{d.route} · {d.frequency}</span>
       </div>
-      <div className="mt-0.5 text-[12.5px] text-muted">{d.indication}</div>
+      <div className="mt-0.5 text-[12px] text-muted">{d.indication}</div>
       <div className="mt-2 font-mono text-[13px] text-ink">
         {mgkg(d)} mg/kg/day{d.basis ? <span className="text-muted-2"> ({d.basis})</span> : null}
       </div>
@@ -49,7 +49,7 @@ function DoseRow({ d, w }: { d: PedAbxDose; w: number | null }) {
       )}
 
       {d.note && <div className="mt-1.5 text-[12px] text-amber">{d.note}</div>}
-      <div className="mt-1.5 text-[11px] text-muted-2">Source: {d.source}</div>
+      <div className="mt-1.5 text-[12px] text-muted-2">Source: {d.source}</div>
     </article>
   );
 }
@@ -62,7 +62,7 @@ export function PediatricAntibiotics() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">Antibiotic dosing (UTI)</h3>
+      <h3 className="font-display text-[20px] font-medium">Antibiotic dosing (UTI)</h3>
       <p className="mb-4 text-[13px] text-muted-2">
         Weight-based doses for community-acquired UTI, children ≥ 3 months, if susceptible
       </p>
@@ -74,7 +74,7 @@ export function PediatricAntibiotics() {
         if (items.length === 0) return null;
         return (
           <div key={g.category} className="mb-4">
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+            <div className="mb-2 text-[12px] font-medium text-muted-2">
               {g.label}
             </div>
             <div className="space-y-2.5">

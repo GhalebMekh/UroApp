@@ -39,7 +39,7 @@ const PERIODS: { id: Period; label: string }[] = [
 const UNIT: Record<Period, string> = { monthly: 'month', yearly: 'year' };
 
 const secondary =
-  'min-h-[44px] rounded-[11px] border border-line bg-navy-2 px-4 py-2.5 text-[14px] font-semibold text-ink transition-colors hover:border-violet disabled:opacity-50';
+  'min-h-[44px] rounded-[10px] border border-line bg-navy-2 px-4 py-2.5 text-[14px] font-medium text-ink transition-colors hover:border-violet disabled:opacity-50';
 
 type Note = { tone: 'ok' | 'warn'; text: string };
 
@@ -108,8 +108,8 @@ export function PlansScreen({ feature, onDone }: { feature: GatedFeature | null;
           <StatusLine status={status} sample={sample} onRetry={() => void purchases.reloadPlans()} />
 
           {subscription && (
-            <p className="rounded-[14px] border border-line bg-navy-2 px-4 py-3 text-[13.5px] text-muted">
-              You have <span className="font-semibold text-ink">UroApp {TIER_LABEL[subscription.tier]}</span>
+            <p className="rounded-[14px] border border-line bg-navy-2 px-4 py-3 text-[13px] text-muted">
+              You have <span className="font-medium text-ink">UroApp {TIER_LABEL[subscription.tier]}</span>
               {PRODUCTS[subscription.productId] && ` (${PRODUCTS[subscription.productId]!.period})`} ·{' '}
               {renewalText(subscription)}
             </p>
@@ -155,7 +155,7 @@ export function PlansScreen({ feature, onDone }: { feature: GatedFeature | null;
           </div>
 
           {note && (
-            <p role={note.tone === 'warn' ? 'alert' : 'status'} className={cn('text-[13.5px]', note.tone === 'warn' ? 'text-amber' : 'text-violet-soft')}>
+            <p role={note.tone === 'warn' ? 'alert' : 'status'} className={cn('text-[13px]', note.tone === 'warn' ? 'text-amber' : 'text-violet-soft')}>
               {note.text}
             </p>
           )}
@@ -177,7 +177,7 @@ function StatusLine({ status, sample, onRetry }: { status: PurchasesState['statu
     return (
       <Banner>
         Prices couldn’t be loaded from the App Store. Check your connection.{' '}
-        <button type="button" onClick={onRetry} className="-my-3 min-h-[44px] font-semibold text-violet-soft hover:text-ink">
+        <button type="button" onClick={onRetry} className="-my-3 min-h-[44px] font-medium text-violet-soft hover:text-ink">
           Try again
         </button>
       </Banner>
@@ -187,7 +187,7 @@ function StatusLine({ status, sample, onRetry }: { status: PurchasesState['statu
 }
 
 function Banner({ children }: { children: ReactNode }) {
-  return <p className="rounded-[14px] border border-line bg-ai-soft px-4 py-3 text-[13.5px] text-muted">{children}</p>;
+  return <p className="rounded-[14px] border border-line bg-navy-2 px-4 py-3 text-[13px] text-muted">{children}</p>;
 }
 
 function CardShell({ highlight, className, children }: { highlight?: boolean; className?: string; children: ReactNode }) {
@@ -208,7 +208,7 @@ function Included({ items, strong }: { items: string[]; strong?: string }) {
   return (
     <ul className="space-y-2">
       {items.map((item) => (
-        <li key={item} className={cn('flex gap-2.5 text-[13.5px]', item === strong ? 'font-semibold text-ink' : 'text-muted')}>
+        <li key={item} className={cn('flex gap-2.5 text-[13px]', item === strong ? 'font-medium text-ink' : 'text-muted')}>
           <CheckIcon className="mt-0.5 shrink-0 text-[16px] text-violet-soft" />
           {item}
         </li>
@@ -219,7 +219,7 @@ function Included({ items, strong }: { items: string[]; strong?: string }) {
 
 function CurrentBadge() {
   return (
-    <span className="rounded-full bg-violet/[0.18] px-2.5 py-0.5 text-[11px] font-semibold text-violet-soft">Current plan</span>
+    <span className="rounded-full bg-violet/[0.18] px-2.5 py-0.5 text-[12px] font-medium text-violet-soft">Current plan</span>
   );
 }
 
@@ -228,11 +228,11 @@ function FreeCard({ current }: { current: boolean }) {
   return (
     <CardShell className="order-last md:order-none">
       <div className="mb-1 flex items-center justify-between gap-2">
-        <h2 className="font-display text-[19px] font-bold">Resident</h2>
+        <h2 className="font-display text-[18px] font-semibold">Resident</h2>
         {current && <CurrentBadge />}
       </div>
-      <p className="mb-4 font-display text-[28px] font-bold leading-tight">Free</p>
-      <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">Always included</p>
+      <p className="mb-4 font-display text-[28px] font-semibold leading-tight">Free</p>
+      <p className="mb-3 text-[12px] font-medium text-muted-2">Always included</p>
       <Included items={FREE_FEATURES} />
     </CardShell>
   );
@@ -269,24 +269,24 @@ function PaidCard({
   return (
     <CardShell highlight={feature !== null}>
       <div className="mb-1 flex items-center justify-between gap-2">
-        <h2 className="font-display text-[19px] font-bold">UroApp {TIER_LABEL[tier]}</h2>
+        <h2 className="font-display text-[18px] font-semibold">UroApp {TIER_LABEL[tier]}</h2>
         {isCurrent && <CurrentBadge />}
       </div>
 
       {/* The billed amount is the largest price on the card (guideline 3.1.2(c)). */}
-      <div className="mb-4 min-h-[78px]">
+      <div className="mb-4 min-h-[80px]">
         {plan ? (
           <>
             <p className="font-display leading-tight">
-              <span className="text-[28px] font-bold">{plan.price}</span>
+              <span className="text-[28px] font-semibold">{plan.price}</span>
               <span className="text-[14px] text-muted"> / {UNIT[period]}</span>
             </p>
-            <p className="mt-0.5 text-[12.5px] text-muted-2">
+            <p className="mt-0.5 text-[12px] text-muted-2">
               Auto-renews every {UNIT[period]}
               {plan.perMonth && ` · ${plan.perMonth} a month`}
             </p>
             {intro && (
-              <p className="mt-1.5 text-[13px] font-semibold text-violet-soft">
+              <p className="mt-1.5 text-[13px] font-medium text-violet-soft">
                 {intro}, then {plan.price} / {UNIT[period]}
               </p>
             )}
@@ -298,7 +298,7 @@ function PaidCard({
         )}
       </div>
 
-      <p className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+      <p className="mb-3 text-[12px] font-medium text-muted-2">
         Everything in {tier === 'pro' ? 'Resident' : 'Pro'}, plus
       </p>
       {/* Grows so the buttons line up when the cards sit side by side (iPad). */}
@@ -311,9 +311,9 @@ function PaidCard({
         onClick={() => plan && onBuy(plan)}
         disabled={!action.enabled || busy !== null}
         className={cn(
-          'mt-5 min-h-[48px] w-full rounded-[12px] px-4 py-3 text-[14.5px] font-semibold transition',
+          'mt-5 min-h-[48px] w-full rounded-[12px] px-4 py-3 text-[14px] font-medium transition',
           action.enabled
-            ? 'bg-violet text-white hover:bg-violet-deep disabled:opacity-60'
+            ? 'bg-violet-deep text-white hover:bg-violet-press disabled:opacity-60'
             : 'border border-line bg-navy text-muted-2',
         )}
       >
@@ -326,7 +326,7 @@ function PaidCard({
 /** Auto-renewal terms and the two required links (guideline 3.1.2). */
 function FinePrint() {
   return (
-    <div className="space-y-2 border-t border-line pt-5 text-[12.5px] leading-relaxed text-muted-2">
+    <div className="space-y-2 border-t border-line pt-5 text-[12px] leading-relaxed text-muted-2">
       <p>
         Payment is charged to your Apple ID when you confirm the purchase. A subscription renews automatically at
         the same price and length unless it is cancelled at least 24 hours before the end of the current period;
@@ -335,11 +335,11 @@ function FinePrint() {
         buy a subscription. Manage or cancel in Settings → your name → Subscriptions.
       </p>
       <p className="flex flex-wrap gap-x-4">
-        <a href={TERMS_URL} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center font-semibold text-violet-soft hover:text-ink">
+        <a href={TERMS_URL} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center font-medium text-violet-soft hover:text-ink">
           Terms of Use (EULA)
         </a>
         {PRIVACY_URL && (
-          <a href={PRIVACY_URL} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center font-semibold text-violet-soft hover:text-ink">
+          <a href={PRIVACY_URL} target="_blank" rel="noreferrer" className="inline-flex min-h-[44px] items-center font-medium text-violet-soft hover:text-ink">
             Privacy Policy
           </a>
         )}

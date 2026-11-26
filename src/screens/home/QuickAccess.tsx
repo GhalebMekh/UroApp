@@ -33,14 +33,14 @@ export function QuickAccess({
                 onClick={() => onOpenLink(link)}
                 className="group relative flex min-h-[44px] flex-col items-center gap-2 rounded-[12px] px-1 py-2.5 text-center transition-colors hover:bg-steel"
               >
-                <span className="grid h-11 w-11 place-items-center rounded-[12px] border border-line bg-navy text-[20px] text-violet-soft transition-colors group-hover:border-violet/60">
+                <span className="grid h-8 w-8 place-items-center text-[24px] text-ink">
                   <Icon />
                 </span>
-                <span className="text-[11.5px] font-semibold leading-tight text-muted transition-colors group-hover:text-ink">
+                <span className="text-[12px] font-medium leading-tight text-muted transition-colors group-hover:text-ink">
                   {label}
                 </span>
                 {locked && required && (
-                  <span className="absolute right-1 top-1 rounded-[5px] bg-violet/[0.18] px-1 py-px text-[9px] font-semibold uppercase tracking-[0.04em] text-violet-soft">
+                  <span className="absolute right-1 top-1 text-[11px] text-muted-2">
                     {TIER_LABEL[required]}
                   </span>
                 )}

@@ -6,7 +6,7 @@ import { usePurchases } from '@/lib/purchasesContext';
 import { cn } from '@/lib/cn';
 
 const secondary =
-  'min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy px-3 py-2.5 text-center text-[13px] font-semibold text-ink transition-colors hover:border-violet disabled:opacity-50';
+  'min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-center text-[13px] font-medium text-ink transition-colors hover:border-violet disabled:opacity-50';
 
 /**
  * The plan, the way to the plans screen, Restore Purchases (visible whenever
@@ -38,7 +38,7 @@ export function SubscriptionSettings() {
 
   return (
     <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[15px] font-semibold">Subscription</h3>
+      <h3 className="text-[15px] font-medium">Subscription</h3>
       <p className="mb-4 mt-1 text-[13px] text-muted">
         {subscription ? (
           <>
@@ -51,7 +51,7 @@ export function SubscriptionSettings() {
       <button
         type="button"
         onClick={() => purchases.openPlans()}
-        className="mb-2.5 min-h-[44px] w-full rounded-[11px] bg-violet px-3 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep"
+        className="mb-2.5 min-h-[44px] w-full rounded-[10px] bg-violet-deep px-3 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
       >
         {tier === 'resident' ? 'See plans' : 'Change plan'}
       </button>

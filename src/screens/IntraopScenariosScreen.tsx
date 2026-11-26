@@ -67,7 +67,7 @@ export function IntraopScenariosScreen() {
   }
 
   const field =
-    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[14px] text-ink outline-none focus:border-violet';
+    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[14px] text-ink outline-none focus:border-violet';
 
   const chosen = selected !== null && node ? node.choices[selected] : null;
 
@@ -76,7 +76,7 @@ export function IntraopScenariosScreen() {
       <PageHero
         eyebrow="OR decisions"
         title="Intra-op scenarios"
-        lede="Work a case decision by decision. Each turn shows the situation; choose the next move and see the consequence. The preferred action is drawn from the cited guideline — a poor choice can end the case."
+        lede="Work a case decision by decision. Each turn shows the situation; choose the next move and see the consequence. The preferred action is drawn from the cited guideline, and a poor choice can end the case."
       />
       <PageBody narrow>
 
@@ -93,14 +93,14 @@ export function IntraopScenariosScreen() {
                 aria-selected={active}
                 onClick={() => selectLevel(l.id)}
                 className={cn(
-                  'min-h-[44px] flex-1 rounded-[11px] border px-3 py-2 text-left transition-colors',
+                  'min-h-[44px] flex-1 rounded-[10px] border px-3 py-2 text-left transition-colors',
                   active ? 'border-violet bg-violet/[0.14]' : 'border-line bg-navy-2 hover:border-violet/60',
                 )}
               >
-                <span className={cn('block text-[14px] font-semibold', active ? 'text-ink' : 'text-muted')}>
+                <span className={cn('block text-[14px] font-medium', active ? 'text-ink' : 'text-muted')}>
                   {l.label} <span className="font-mono text-[12px] text-muted-2">{count}</span>
                 </span>
-                <span className="block text-[11.5px] text-muted-2">{l.hint}</span>
+                <span className="block text-[12px] text-muted-2">{l.hint}</span>
               </button>
             );
           })}
@@ -108,7 +108,7 @@ export function IntraopScenariosScreen() {
 
         {inLevel.length > 1 && (
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Case</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Case</span>
             <select value={scenario.id} onChange={(e) => selectScenario(e.target.value)} className={field}>
               {inLevel.map((s) => (
                 <option key={s.id} value={s.id}>
@@ -123,9 +123,9 @@ export function IntraopScenariosScreen() {
         <div className="rounded-[14px] border border-line bg-navy-2 p-5">
           <div className="mb-2 flex flex-wrap items-center gap-2">
             <DifficultyBadge level={levelOf(scenario)} />
-            <span className="font-mono text-[11px] text-muted-2">{scenario.nodes.length} decisions</span>
+            <span className="font-mono text-[12px] text-muted-2">{scenario.nodes.length} decisions</span>
           </div>
-          <div className="mb-1.5 text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">
+          <div className="mb-1.5 text-[12px] font-medium text-violet-soft">
             {scenario.title}
           </div>
           <p className="text-[13px] leading-relaxed text-muted">{scenario.vignette}</p>
@@ -134,17 +134,17 @@ export function IntraopScenariosScreen() {
         {status === 'complete' ? (
           <div className="space-y-4">
             <div className="rounded-[16px] border border-teal/50 bg-teal/[0.10] p-5">
-              <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-teal">
+              <div className="mb-1 text-[12px] font-medium text-teal">
                 Case completed
               </div>
               <p className="text-[13px] text-muted">
                 You worked the case to the end{' '}
                 {missteps === 0 ? (
-                  <span className="font-semibold text-teal">with no missteps.</span>
+                  <span className="font-medium text-teal">with no missteps.</span>
                 ) : (
                   <>
                     with{' '}
-                    <span className="font-semibold text-amber">
+                    <span className="font-medium text-amber">
                       {missteps} misstep{missteps === 1 ? '' : 's'}
                     </span>{' '}
                     along the way.
@@ -167,13 +167,13 @@ export function IntraopScenariosScreen() {
         ) : (
           node && (
             <div className="space-y-4">
-              <div className="text-[12px] font-semibold uppercase tracking-[0.06em] text-muted-2">
+              <div className="text-[12px] font-medium text-muted-2">
                 Decision {nodeIndex + 1} of {scenario.nodes.length}
               </div>
 
               <div className="rounded-[16px] border border-line bg-navy-2 p-5">
-                <p className="mb-3 text-[13.5px] leading-relaxed text-ink">{node.situation}</p>
-                <p className="text-[14px] font-semibold text-violet-soft">{node.question}</p>
+                <p className="mb-3 text-[13px] leading-relaxed text-ink">{node.situation}</p>
+                <p className="text-[14px] font-medium text-violet-soft">{node.question}</p>
               </div>
 
               <div className="space-y-2.5">
@@ -197,7 +197,7 @@ export function IntraopScenariosScreen() {
                       )}
                     >
                       {selected !== null && isChosen && (
-                        <span className={cn('font-semibold', c.correct ? 'text-teal' : 'text-crimson')}>
+                        <span className={cn('font-medium', c.correct ? 'text-teal' : 'text-crimson')}>
                           {c.correct ? '✓' : '✗'}
                         </span>
                       )}
@@ -219,7 +219,7 @@ export function IntraopScenariosScreen() {
                     <button
                       type="button"
                       onClick={() => setSelected(null)}
-                      className="min-h-[44px] w-full rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+                      className="min-h-[44px] w-full rounded-[10px] border border-line bg-navy-2 py-3 text-[14px] font-medium text-ink transition-colors hover:border-violet"
                     >
                       Try again
                     </button>
@@ -230,8 +230,8 @@ export function IntraopScenariosScreen() {
           )
         )}
 
-        <p className="text-[11.5px] text-muted-2">
-          Education and decision support only — a teaching case, not a substitute for supervised
+        <p className="text-[12px] text-muted-2">
+          Education and decision support only: a teaching case, not a substitute for supervised
           operating or the treating team’s judgment. Guideline-preferred actions are summarised from
           the cited source.
         </p>
@@ -241,16 +241,16 @@ export function IntraopScenariosScreen() {
 }
 
 const primaryBtn =
-  'min-h-[44px] w-full rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90';
+  'min-h-[44px] w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90';
 
 /** Difficulty label — violet shades only; teal/amber/crimson stay reserved for risk (CLAUDE.md). */
 function DifficultyBadge({ level }: { level: Level }) {
   return level === 'advanced' ? (
-    <span className="rounded-full bg-violet px-2.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-white">
+    <span className="rounded-full bg-violet-deep px-2.5 py-0.5 text-[12px] font-medium text-white">
       Advanced
     </span>
   ) : (
-    <span className="rounded-full border border-violet/50 px-2.5 py-0.5 text-[10.5px] font-semibold uppercase tracking-[0.06em] text-violet-soft">
+    <span className="rounded-full border border-violet/50 px-2.5 py-0.5 text-[12px] font-medium text-violet-soft">
       Core
     </span>
   );
@@ -271,13 +271,13 @@ function OutcomeCard({ tone, text }: { tone: 'good' | 'warn' | 'bad'; text: stri
 
 function SourceLine({ label, url }: { label: string; url: string }) {
   return (
-    <p className="text-[11.5px] text-muted-2">
+    <p className="text-[12px] text-muted-2">
       Source:{' '}
       <a
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="font-semibold text-violet hover:text-violet-soft"
+        className="font-medium text-violet hover:text-violet-soft"
       >
         {label} ↗
       </a>

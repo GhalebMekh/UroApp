@@ -52,11 +52,11 @@ export function PasscodeGate({ children }: { children: ReactNode }) {
       <div className="w-full max-w-sm">
         <div className="mb-7 flex items-center gap-2.5">
           <BrandMark className="h-9 w-9 text-[20px]" />
-          <span className="text-[17px] font-bold tracking-[-0.02em]">UroApp</span>
+          <span className="text-[16px] font-semibold">UroApp</span>
         </div>
 
-        <h1 className="font-display text-[26px] font-semibold">Enter passcode</h1>
-        <p className="mt-2 text-[13.5px] text-muted">
+        <h1 className="font-display text-[24px] font-medium">Enter passcode</h1>
+        <p className="mt-2 text-[13px] text-muted">
           This app holds a de-identified ward round list. Enter the passcode to continue.
         </p>
 
@@ -87,14 +87,14 @@ export function PasscodeGate({ children }: { children: ReactNode }) {
           <button
             type="submit"
             disabled={checking || entry.trim() === ''}
-            className="min-h-[44px] w-full rounded-[12px] bg-violet py-3.5 text-[15px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-50"
+            className="min-h-[44px] w-full rounded-[12px] bg-violet-deep py-3.5 text-[15px] font-medium text-white transition hover:bg-violet-press disabled:opacity-50"
           >
             Unlock
           </button>
         </form>
 
         <p className="mt-6 text-[12px] text-muted-2">
-          Never enter patient-identifiable details anywhere in this app — initials and a bed or ward
+          Never enter patient-identifiable details anywhere in this app. Initials and a bed or ward
           only.
         </p>
       </div>

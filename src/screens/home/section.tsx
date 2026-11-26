@@ -23,13 +23,13 @@ export function Section({
   return (
     <section id={id} className="border-t border-line py-20">
       <Wrap>
-        <div className="mb-3.5 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-violet-soft">
+        <div className="mb-3.5 text-[12px] font-medium text-violet-soft">
           {eyebrow}
         </div>
-        <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-semibold leading-[1.1] tracking-[-0.02em]">
+        <h2 className="mb-4 font-display text-[clamp(28px,4vw,40px)] font-medium leading-[1.1]">
           {title}
         </h2>
-        {lede && <p className="max-w-xl text-[16.5px] text-muted">{lede}</p>}
+        {lede && <p className="max-w-xl text-[16px] text-muted">{lede}</p>}
         {children}
       </Wrap>
     </section>

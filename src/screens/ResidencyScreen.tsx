@@ -16,12 +16,12 @@ import { PreopScreen } from './PreopScreen';
 const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: string; lede: ReactNode; tone?: HeroTone }> = {
   inpatient: {
     eyebrow: 'Rounding',
-    title: 'Ward round list.',
+    title: 'Ward round list',
     lede: (
       <>
         A working list for your patients, stored only on this device.{' '}
-        <b className="font-semibold text-white">
-          De-identified — a first name or initials and a bed/ward, never a full name or MRN.
+        <b className="font-medium text-white">
+          De-identified: a first name or initials and a bed/ward, never a full name or MRN.
         </b>{' '}
         A personal aide-mémoire, not a medical record.
       </>
@@ -29,29 +29,29 @@ const COPY: Record<'inpatient' | 'oncall' | OrTab, { eyebrow: string; title: str
   },
   oncall: {
     eyebrow: 'On-call',
-    title: 'The next 30 minutes.',
-    lede: 'Immediate management of the commonest urological emergencies. Decision-support only — escalate to your senior and follow local protocol.',
+    title: 'The next 30 minutes',
+    lede: 'Immediate management of the commonest urological emergencies. Decision-support only. Escalate to your senior and follow local protocol.',
     tone: 'emergency',
   },
   logbook: {
     eyebrow: 'Operative log',
-    title: 'Surgical logbook.',
-    lede: 'Your case log, stored on this device. De-identified by design — no names or medical-record numbers, only date, patient gender, procedure, your role and any complication.',
+    title: 'Surgical logbook',
+    lede: 'Your case log, stored on this device. De-identified by design: no names or medical-record numbers, only date, patient gender, procedure, your role and any complication.',
   },
   stents: {
     eyebrow: 'Stent register',
-    title: 'No forgotten stents.',
+    title: 'No forgotten stents',
     lede: 'Every ureteric stent still in, with its remove-by date and a reminder a week before. Stored only on this device, initials only.',
   },
   preop: {
     eyebrow: 'Pre-op checklists',
-    title: 'Ready for theatre.',
-    lede: 'Tomorrow’s cases, each with a checklist to tick off — consent, marking, bloods, anticoagulation plan and the items for that operation. Stored only on this device, initials only.',
+    title: 'Ready for theatre',
+    lede: 'Tomorrow’s cases, each with a checklist to tick off: consent, marking, bloods, anticoagulation plan and the items for that operation. Stored only on this device, initials only.',
   },
   procedures: {
     eyebrow: 'Procedures',
-    title: 'Anatomy, steps & complications.',
-    lede: 'Operative reference for the OR and viva — the relevant anatomy, the steps of the procedure, and the complications to watch for. Summarised from the cited source.',
+    title: 'Anatomy, steps & complications',
+    lede: 'Operative reference for the OR and viva: the relevant anatomy, the steps of the procedure, and the complications to watch for. Summarised from the cited source.',
   },
   consent: {
     eyebrow: 'Operative reference',
@@ -103,7 +103,7 @@ export function ResidencyScreen({
               id: s.id,
               label: (
                 <>
-                  <s.Icon className="text-[17px]" />
+                  <s.Icon className="text-[16px]" />
                   {s.label}
                 </>
               ),

@@ -33,7 +33,7 @@ export function PsaToolkit() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">PSA toolkit</h3>
+      <h3 className="font-display text-[20px] font-medium">PSA toolkit</h3>
       <p className="mb-4 text-[13px] text-muted-2">
         PSA density, velocity, doubling time and free/total ratio — daily clinic use
       </p>
@@ -45,7 +45,7 @@ export function PsaToolkit() {
             type="button"
             onClick={() => setTab(t.id)}
             className={cn(
-              'min-h-[44px] rounded-[9px] px-2 py-2 text-[12px] font-semibold transition-colors',
+              'min-h-[44px] rounded-[8px] px-2 py-2 text-[12px] font-medium transition-colors',
               tab === t.id ? 'bg-violet/[0.18] text-violet-soft' : 'text-muted hover:text-ink',
             )}
           >
@@ -67,7 +67,7 @@ function TabFooter({ context, citation }: { context: string; citation: Citation 
   return (
     <>
       <p className="mt-3 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12px] text-muted">
-        <span className="font-semibold text-violet-soft">EAU context · </span>
+        <span className="font-medium text-violet-soft">EAU context · </span>
         {context}
       </p>
       <CitationNote citation={citation} />
@@ -229,7 +229,7 @@ function ReadingsEditor({ readings, setReadings }: SeriesProps) {
 
   return (
     <div className="mb-3.5">
-      <div className="mb-[7px] text-[13px] font-semibold text-muted">PSA readings over time</div>
+      <div className="mb-2 text-[13px] font-medium text-muted">PSA readings over time</div>
       <div className="space-y-2">
         {readings.map((r, i) => (
           <div key={i} className="flex items-center gap-2">
@@ -237,7 +237,7 @@ function ReadingsEditor({ readings, setReadings }: SeriesProps) {
               value={r.date}
               onChange={(v) => update(i, { date: v })}
               wrapperClassName="flex-1"
-              className="rounded-[10px] border border-line bg-navy px-3 py-[10px] text-[13px] text-ink outline-none focus:border-violet"
+              className="rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet"
               label="PSA date"
               />
             <div className="flex w-[120px] items-center gap-1.5 rounded-[10px] border border-line bg-navy px-3 focus-within:border-violet">
@@ -249,16 +249,16 @@ function ReadingsEditor({ readings, setReadings }: SeriesProps) {
                 placeholder="PSA"
                 step="0.1"
                 min="0"
-                className="w-full bg-transparent py-[10px] font-mono text-[13px] text-ink outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
+                className="w-full bg-transparent py-3 font-mono text-[13px] text-ink outline-none [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
               />
-              <span className="shrink-0 text-[11px] text-muted-2">ng/mL</span>
+              <span className="shrink-0 text-[12px] text-muted-2">ng/mL</span>
             </div>
             <button
               type="button"
               onClick={() => remove(i)}
               disabled={readings.length <= 2}
               aria-label="Remove reading"
-              className="grid h-[38px] w-[38px] shrink-0 place-items-center rounded-[10px] border border-line text-muted-2 transition-colors hover:border-crimson hover:text-crimson disabled:opacity-30 disabled:hover:border-line disabled:hover:text-muted-2"
+              className="grid h-[40px] w-[40px] shrink-0 place-items-center rounded-[10px] border border-line text-muted-2 transition-colors hover:border-crimson hover:text-crimson disabled:opacity-30 disabled:hover:border-line disabled:hover:text-muted-2"
             >
               ✕
             </button>
@@ -268,7 +268,7 @@ function ReadingsEditor({ readings, setReadings }: SeriesProps) {
       <button
         type="button"
         onClick={add}
-        className="mt-2 rounded-[10px] border border-line bg-navy px-3 py-2 text-[12px] font-semibold text-violet-soft transition-colors hover:border-violet"
+        className="mt-2 rounded-[10px] border border-line bg-navy px-3 py-2 text-[12px] font-medium text-violet-soft transition-colors hover:border-violet"
       >
         + Add reading
       </button>

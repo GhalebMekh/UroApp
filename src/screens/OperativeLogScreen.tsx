@@ -46,7 +46,7 @@ const COMMON_PROCEDURES = [
 ];
 
 const inputCls =
-  'w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13px] text-ink outline-none focus:border-violet';
+  'w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
 
 /** Dropdown of "no complication" plus the seven Clavien–Dindo grades. */
 function GradeSelect({
@@ -197,7 +197,7 @@ export function OperativeLogScreen() {
         <thead><tr><th>Date</th><th>Procedure</th><th>Patient gender</th><th>Role</th><th>Complication (Clavien–Dindo)</th></tr></thead>
         <tbody>${rows || '<tr><td colspan="5">No cases logged.</td></tr>'}</tbody>
       </table>
-      <div class="note">De-identified by design — this log records no patient names or
+      <div class="note">De-identified by design: this log records no patient names or
       medical-record numbers. It is a personal training record, not a medical record.
       Complications graded by Clavien–Dindo (Dindo et al., Ann Surg 2004; PMID 15273542);
       "d" = still present at discharge.</div>`;
@@ -220,10 +220,10 @@ export function OperativeLogScreen() {
       <div className="grid grid-cols-1 gap-5 lg:grid-cols-[360px_1fr]">
         {/* Entry form */}
         <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-          <h3 className="mb-4 font-display text-[19px] font-semibold">Add a case</h3>
+          <h3 className="mb-4 font-display text-[18px] font-medium">Add a case</h3>
 
           <label className="mb-3.5 block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Date of surgery</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Date of surgery</span>
             <DateInput value={date} max={todayISO()} onChange={(v) => setDate(v)} className={inputCls} />
           </label>
 
@@ -238,7 +238,7 @@ export function OperativeLogScreen() {
           />
 
           <label className="mb-3.5 block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Procedure</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Procedure</span>
             <input
               list="uro-procedures"
               value={procedure}
@@ -265,9 +265,9 @@ export function OperativeLogScreen() {
           />
 
           <label className="mb-3.5 block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Complication (Clavien–Dindo)</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Complication (Clavien–Dindo)</span>
             <GradeSelect value={cdGrade} onChange={setCdGrade} />
-            <span className="mt-1.5 block text-[11.5px] text-muted-2">
+            <span className="mt-1.5 block text-[12px] text-muted-2">
               Not sure of the grade? Use the Clavien–Dindo grader in Calculators. You can add or
               change this later.
             </span>
@@ -287,7 +287,7 @@ export function OperativeLogScreen() {
                 />
               )}
               <label className="mb-3.5 block">
-                <span className="mb-[7px] block text-[13px] font-semibold text-muted">What happened (optional)</span>
+                <span className="mb-2 block text-[13px] font-medium text-muted">What happened (optional)</span>
                 <input value={note} onChange={(e) => setNote(e.target.value)} placeholder="e.g. urosepsis, clot retention" className={inputCls} />
               </label>
             </>
@@ -297,7 +297,7 @@ export function OperativeLogScreen() {
             type="button"
             onClick={add}
             disabled={!procedure.trim() || !date}
-            className="mt-2 w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep disabled:cursor-default disabled:opacity-40"
+            className="mt-2 w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press disabled:cursor-default disabled:opacity-40"
           >
             Add to logbook
           </button>
@@ -323,14 +323,14 @@ export function OperativeLogScreen() {
               <button
                 type="button"
                 onClick={printLog}
-                className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-2.5 text-[13.5px] font-semibold text-ink transition-colors hover:border-violet"
+                className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-2.5 text-[13px] font-medium text-ink transition-colors hover:border-violet"
               >
                 Print
               </button>
               <button
                 type="button"
                 onClick={saveLog}
-                className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-2.5 text-[13.5px] font-semibold text-ink transition-colors hover:border-teal"
+                className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-2.5 text-[13px] font-medium text-ink transition-colors hover:border-teal"
               >
                 Save file
               </button>
@@ -347,23 +347,23 @@ export function OperativeLogScreen() {
           {byProcedure.length > 0 && (
             <ProGate feature="audit" inline>
             <div className="mb-5 overflow-x-auto rounded-[16px] border border-line bg-navy-2">
-              <div className="px-4 pt-4 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">
+              <div className="px-4 pt-4 text-[12px] font-medium text-violet-soft">
                 Your audit by procedure
               </div>
-              <table className="mt-2 w-full min-w-[460px] text-left text-[12.5px]">
-                <thead className="text-[10.5px] uppercase tracking-[0.06em] text-muted-2">
+              <table className="mt-2 w-full min-w-[460px] text-left text-[12px]">
+                <thead className="text-[12px] text-muted-2">
                   <tr>
-                    <th className="px-4 py-2 font-semibold">Procedure</th>
-                    <th className="px-2 py-2 font-semibold">Cases</th>
-                    <th className="px-2 py-2 font-semibold">As lead</th>
-                    <th className="px-2 py-2 font-semibold">Complications</th>
-                    <th className="px-4 py-2 font-semibold">Highest</th>
+                    <th className="px-4 py-2 font-medium">Procedure</th>
+                    <th className="px-2 py-2 font-medium">Cases</th>
+                    <th className="px-2 py-2 font-medium">As lead</th>
+                    <th className="px-2 py-2 font-medium">Complications</th>
+                    <th className="px-4 py-2 font-medium">Highest</th>
                   </tr>
                 </thead>
                 <tbody>
                   {byProcedure.map((s) => (
                     <tr key={s.procedure} className="border-t border-line">
-                      <td className="px-4 py-2.5 font-semibold text-ink">{s.procedure}</td>
+                      <td className="px-4 py-2.5 font-medium text-ink">{s.procedure}</td>
                       <td className="px-2 py-2.5 font-mono text-ink">{s.cases}</td>
                       <td className="px-2 py-2.5 font-mono text-muted">{s.asLead}</td>
                       <td className="px-2 py-2.5 font-mono text-muted">
@@ -371,7 +371,7 @@ export function OperativeLogScreen() {
                       </td>
                       <td className="px-4 py-2.5">
                         {s.highest ? (
-                          <span className={cn('rounded-[6px] border px-1.5 py-0.5 font-mono text-[11px]', CD_BADGE[cdBand(s.highest)])}>
+                          <span className={cn('rounded-[6px] border px-1.5 py-0.5 font-mono text-[12px]', CD_BADGE[cdBand(s.highest)])}>
                             {s.highest}
                           </span>
                         ) : (
@@ -382,8 +382,8 @@ export function OperativeLogScreen() {
                   ))}
                 </tbody>
               </table>
-              <p className="px-4 pb-3 pt-2 text-[11px] text-muted-2">
-                Small numbers make rates unstable — read percentages alongside the case count.
+              <p className="px-4 pb-3 pt-2 text-[12px] text-muted-2">
+                Small numbers make rates unstable, so read percentages alongside the case count.
               </p>
             </div>
             </ProGate>
@@ -401,12 +401,12 @@ export function OperativeLogScreen() {
                 <article key={e.id} className="rounded-[14px] border border-line bg-navy-2 p-4">
                   <div className="flex items-center gap-3">
                     <div className="min-w-0 flex-1">
-                      <div className="truncate text-[14.5px] font-semibold">{e.procedure}</div>
+                      <div className="truncate text-[14px] font-medium">{e.procedure}</div>
                       <div className="mt-0.5 text-[12px] text-muted-2">
                         {e.date} · {e.gender === 'male' ? 'Male' : 'Female'}
                       </div>
                     </div>
-                    <span className={cn('shrink-0 rounded-[7px] px-2.5 py-1 text-[11px] font-semibold', ROLE_BADGE[e.role])}>
+                    <span className={cn('shrink-0 rounded-[8px] px-2.5 py-1 text-[12px] font-medium', ROLE_BADGE[e.role])}>
                       {ROLE_LABEL[e.role]}
                     </span>
                     <button
@@ -433,7 +433,7 @@ export function OperativeLogScreen() {
                         aria-pressed={e.cdDisability}
                         onClick={() => update(e.id, { cdDisability: !e.cdDisability })}
                         className={cn(
-                          'min-h-[44px] rounded-[10px] border px-3 text-[12px] font-semibold transition-colors',
+                          'min-h-[44px] rounded-[10px] border px-3 text-[12px] font-medium transition-colors',
                           e.cdDisability ? 'border-amber bg-amber/[0.14] text-amber' : 'border-line bg-navy text-muted hover:border-amber',
                         )}
                       >
@@ -441,7 +441,7 @@ export function OperativeLogScreen() {
                       </button>
                     )}
                     {e.cdGrade && (
-                      <span className={cn('rounded-[7px] border px-2 py-1 font-mono text-[11.5px]', CD_BADGE[cdBand(e.cdGrade)])}>
+                      <span className={cn('rounded-[8px] border px-2 py-1 font-mono text-[12px]', CD_BADGE[cdBand(e.cdGrade)])}>
                         {cdLabel(e.cdGrade, e.cdDisability)}
                       </span>
                     )}
@@ -468,8 +468,8 @@ export function OperativeLogScreen() {
 function Stat({ label, value, tone, sub }: { label: string; value: number; tone: string; sub?: string }) {
   return (
     <div className="rounded-[14px] border border-line bg-navy-2 p-4">
-      <div className="text-[10px] uppercase tracking-[0.08em] text-muted-2">{label}</div>
-      <div className={cn('mt-1 font-display text-[26px] font-semibold', tone)}>
+      <div className="text-[12px] text-muted-2">{label}</div>
+      <div className={cn('mt-1 font-mono text-[24px] font-medium', tone)}>
         {value}
         {sub && <span className="ml-1.5 font-sans text-[12px] text-muted-2">{sub}</span>}
       </div>

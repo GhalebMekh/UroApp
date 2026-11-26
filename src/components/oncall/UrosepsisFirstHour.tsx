@@ -30,18 +30,18 @@ export function UrosepsisFirstHour() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">Urosepsis — the first hour</h3>
-      <p className="mb-[18px] text-[13px] text-muted-2">
+      <h3 className="font-display text-[20px] font-medium">Urosepsis — the first hour</h3>
+      <p className="mb-5 text-[13px] text-muted-2">
         Recognition, timings and source control for the septic urological patient
       </p>
 
-      <div className="mb-[18px] rounded-[12px] border border-amber/40 bg-amber/[0.08] px-4 py-3 text-[12.5px] text-amber">
+      <div className="mb-5 rounded-[12px] border border-amber/40 bg-amber/[0.08] px-4 py-3 text-[12px] text-amber">
         Surviving Sepsis 2021 recommends <strong>against</strong> qSOFA as a single screening tool
         (strong recommendation). Screen with NEWS2. qSOFA below is an escalation prompt — it
         predicts death and prolonged ICU stay, it does not rule sepsis out.
       </div>
 
-      <div className="mb-[7px] text-[13px] font-semibold text-muted">qSOFA</div>
+      <div className="mb-2 text-[13px] font-medium text-muted">qSOFA</div>
       {QSOFA_CRITERIA.map((c) => (
         <SegmentedField<'no' | 'yes'>
           key={c.key}
@@ -55,7 +55,7 @@ export function UrosepsisFirstHour() {
         />
       ))}
 
-      <div className="mb-[7px] mt-5 text-[13px] font-semibold text-muted">
+      <div className="mb-2 mt-5 text-[13px] font-medium text-muted">
         Septic shock criteria (Sepsis-3)
       </div>
       <SegmentedField<'no' | 'yes'>
@@ -78,27 +78,27 @@ export function UrosepsisFirstHour() {
       />
 
       {/* Result */}
-      <div className={cn('mt-[18px] rounded-[14px] border bg-steel px-[18px] py-[15px]', accent.border)}>
+      <div className={cn('mt-5 rounded-[14px] border bg-steel px-5 py-4', accent.border)}>
         <div className="flex items-baseline gap-3.5">
-          <div className={cn('min-w-[64px] font-display text-[32px] font-semibold', accent.text)}>
+          <div className={cn('min-w-[64px] font-mono text-[32px] font-medium', accent.text)}>
             {result.qsofaScore}
             <span className="text-[16px] text-muted-2">/3</span>
           </div>
-          <div className={cn('text-[13px] font-semibold', accent.text)}>{result.headline}</div>
+          <div className={cn('text-[13px] font-medium', accent.text)}>{result.headline}</div>
         </div>
 
         <div className={cn('mt-3.5 rounded-[10px] border px-3 py-2.5', accent.border, accent.bg)}>
           <div className="text-[13px] text-ink">{result.antimicrobial.text}</div>
           {result.antimicrobial.timing && (
-            <div className={cn('mt-1 font-mono text-[12px] font-semibold', accent.text)}>
+            <div className={cn('mt-1 font-mono text-[12px] font-medium', accent.text)}>
               {result.antimicrobial.timing}
             </div>
           )}
         </div>
       </div>
 
-      <div className="mt-[18px]">
-        <div className="mb-3 text-[12px] font-semibold uppercase tracking-[0.1em] text-teal">
+      <div className="mt-5">
+        <div className="mb-3 text-[12px] font-medium text-teal">
           Do now
         </div>
         <ol className="space-y-2.5">
@@ -110,7 +110,7 @@ export function UrosepsisFirstHour() {
               <span className="text-muted">
                 {s.text}
                 {s.timing && (
-                  <span className="ml-2 whitespace-nowrap rounded-full border border-line px-2 py-0.5 font-mono text-[11px] text-muted-2">
+                  <span className="ml-2 whitespace-nowrap rounded-full border border-line px-2 py-0.5 font-mono text-[12px] text-muted-2">
                     {s.timing}
                   </span>
                 )}

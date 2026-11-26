@@ -41,7 +41,7 @@ function CalcRow({ entry, onOpen, showGroup = false }: { entry: CalcEntry; onOpe
           aria-pressed={pinned}
           aria-label={pinned ? `Unpin ${entry.title} from Home` : `Pin ${entry.title} to Home`}
           className={cn(
-            'grid h-11 w-11 shrink-0 place-items-center rounded-full text-[17px] transition-colors',
+            'grid h-11 w-11 shrink-0 place-items-center rounded-full text-[16px] transition-colors',
             pinned ? 'text-amber' : 'text-muted-2 hover:text-ink',
           )}
         >
@@ -152,7 +152,7 @@ export function CalculatorsScreen({ onOpen }: { onOpen: (id: string) => void }) 
           <>
             {pinned.length > 0 && (
               <section className="mt-6 rounded-card border border-line bg-navy-2 p-1.5 sm:max-w-2xl">
-                <h3 className="flex items-center gap-2 px-3 pb-1 pt-2.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-amber">
+                <h3 className="flex items-center gap-2 px-3 pb-1 pt-2.5 text-[12px] font-medium text-amber">
                   <StarIcon filled className="text-[13px]" /> Pinned
                 </h3>
                 <ul>

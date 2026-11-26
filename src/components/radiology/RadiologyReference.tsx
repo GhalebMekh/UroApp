@@ -30,7 +30,7 @@ export function RadiologyReference() {
             type="button"
             onClick={() => setSystemId(s.id)}
             className={cn(
-              'min-h-[44px] rounded-[9px] px-2 py-2 text-[12.5px] font-semibold transition-colors',
+              'min-h-[44px] rounded-[8px] px-2 py-2 text-[12px] font-medium transition-colors',
               s.id === systemId ? 'bg-violet/[0.18] text-violet-soft' : 'text-muted hover:text-ink',
             )}
           >
@@ -39,9 +39,9 @@ export function RadiologyReference() {
         ))}
       </div>
 
-      <h3 className="font-display text-[21px] font-semibold">{system.name}</h3>
+      <h3 className="font-display text-[20px] font-medium">{system.name}</h3>
       <p className="text-[13px] text-muted-2">{system.modality}</p>
-      <p className="mt-2 text-[13.5px] text-muted">{system.outcome}</p>
+      <p className="mt-2 text-[13px] text-muted">{system.outcome}</p>
 
       <div className="mt-4 space-y-2.5">
         {system.categories.map((c) => (
@@ -49,22 +49,22 @@ export function RadiologyReference() {
             <div className="flex items-center gap-3">
               <span
                 className={cn(
-                  'grid h-9 min-w-[36px] place-items-center rounded-[9px] border px-2 font-mono text-[15px] font-semibold',
+                  'grid h-9 min-w-[36px] place-items-center rounded-[8px] border px-2 font-mono text-[15px] font-medium',
                   RISK_BADGE[c.risk],
                 )}
               >
                 {c.code}
               </span>
               <div>
-                <div className="text-[15px] font-semibold">{c.label}</div>
-                <div className={cn('text-[11px] font-semibold uppercase tracking-[0.06em]', RISK_BADGE[c.risk].split(' ')[1])}>
+                <div className="text-[15px] font-medium">{c.label}</div>
+                <div className={cn('text-[12px] font-medium  ', RISK_BADGE[c.risk].split(' ')[1])}>
                   {RISK_LABEL[c.risk]}
                 </div>
               </div>
             </div>
-            <p className="mt-3 text-[13.5px] text-muted">{c.criteria}</p>
+            <p className="mt-3 text-[13px] text-muted">{c.criteria}</p>
             <p className="mt-2 text-[13px]">
-              <span className="font-semibold text-violet-soft">Management · </span>
+              <span className="font-medium text-violet-soft">Management · </span>
               <span className="text-muted">{c.management}</span>
             </p>
           </article>
@@ -80,11 +80,11 @@ export function RadiologyReference() {
           href={system.radiopaediaUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] border border-line bg-navy px-3.5 py-2.5 text-[12.5px] text-muted transition-colors hover:border-violet hover:text-ink"
+          className="mt-4 flex min-h-[44px] items-center justify-between gap-3 rounded-[10px] border border-line bg-navy px-3.5 py-2.5 text-[12px] text-muted transition-colors hover:border-violet hover:text-ink"
         >
           <span>
             Worked examples and images on Radiopaedia
-            <span className="block text-[11px] text-muted-2">
+            <span className="block text-[12px] text-muted-2">
               External — opens in a browser and needs a connection
             </span>
           </span>

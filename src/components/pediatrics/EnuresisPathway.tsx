@@ -99,8 +99,8 @@ export function EnuresisPathway() {
         </p>
         {FIRST_LINE.map((t) => (
           <article key={t.title} className="rounded-[14px] border border-line bg-navy p-4">
-            <h4 className="text-[14.5px] font-semibold">{t.title}</h4>
-            <p className="mb-2 text-[12.5px] text-violet-soft">{t.when}</p>
+            <h4 className="text-[14px] font-medium">{t.title}</h4>
+            <p className="mb-2 text-[12px] text-violet-soft">{t.when}</p>
             <ul className="list-disc space-y-1 pl-5 text-[13px] text-muted">
               {t.notes.map((n) => (
                 <li key={n}>{n}</li>

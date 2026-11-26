@@ -40,15 +40,15 @@ export function DisclaimerGate({ children }: { children: ReactNode }) {
           >
             <div className="mb-4 flex items-center gap-2.5">
               <BrandMark className="h-9 w-9 text-[20px]" />
-              <span className="text-[17px] font-bold tracking-[-0.02em]">UroApp</span>
+              <span className="text-[16px] font-semibold">UroApp</span>
             </div>
-            <h2 id="disclaimer-title" className="mb-3 font-display text-[22px] font-semibold">
+            <h2 id="disclaimer-title" className="mb-3 font-display text-[20px] font-medium">
               Medical disclaimer
             </h2>
-            <div className="space-y-3 text-[13.5px] text-muted">
+            <div className="space-y-3 text-[13px] text-muted">
               <p>
                 UroApp is an <b className="text-ink">educational and reference tool for healthcare
-                professionals</b> — urologists, residents and medical students. It is not for patient use.
+                professionals</b>: urologists, residents and medical students. It is not for patient use.
               </p>
               <p>
                 Its content summarises published literature and guidelines (such as EAU and AUA), with
@@ -63,7 +63,7 @@ export function DisclaimerGate({ children }: { children: ReactNode }) {
               <p>UroApp stores <b className="text-ink">no patient-identifiable data</b>.</p>
             </div>
 
-            <label className="mt-5 flex min-h-[44px] cursor-pointer items-start gap-3 rounded-[12px] border border-line bg-navy p-3 text-[13.5px]">
+            <label className="mt-5 flex min-h-[44px] cursor-pointer items-start gap-3 rounded-[12px] border border-line bg-navy p-3 text-[13px]">
               <input
                 type="checkbox"
                 checked={ticked}
@@ -91,7 +91,7 @@ export function DisclaimerGate({ children }: { children: ReactNode }) {
               type="button"
               onClick={accept}
               disabled={!ticked}
-              className="mt-4 w-full rounded-[12px] bg-violet py-3.5 text-[15px] font-semibold text-white transition hover:bg-violet-deep disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-violet"
+              className="mt-4 w-full rounded-[12px] bg-violet-deep py-3.5 text-[15px] font-medium text-white transition hover:bg-violet-press disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:bg-violet"
             >
               I agree &amp; understand
             </button>

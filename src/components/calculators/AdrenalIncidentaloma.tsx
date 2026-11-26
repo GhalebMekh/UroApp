@@ -81,7 +81,7 @@ export function AdrenalIncidentaloma() {
       subtitle="Imaging category and hormone work-up — ESE/ENSAT 2023"
       citation={CITATIONS.eseAdrenal2023}
     >
-      <div className="mb-[7px] text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">Imaging</div>
+      <div className="mb-2 text-[12px] font-medium text-violet-soft">Imaging</div>
       <SegmentedField<YN> label="Unenhanced (non-contrast) CT done?" value={ctDone} onChange={setCtDone} options={YES_NO} />
       {ctDone === 'yes' && (
         <>
@@ -110,14 +110,14 @@ export function AdrenalIncidentaloma() {
       <ResultRow
         score={c ? c.score : '—'}
         band={c?.band}
-        caption={c ? <><span className="font-semibold">{c.head}.</span> {c.body}</> : 'Enter HU, size and appearance.'}
+        caption={c ? <><span className="font-medium">{c.head}.</span> {c.body}</> : 'Enter HU, size and appearance.'}
       />
 
-      <div className="mb-[7px] mt-6 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">Hormone work-up</div>
+      <div className="mb-2 mt-6 text-[12px] font-medium text-violet-soft">Hormone work-up</div>
       <SegmentedField<YN> label="Hypertension" value={htn} onChange={setHtn} options={YES_NO} />
       <SegmentedField<YN> label="Unexplained hypokalaemia" value={hypoK} onChange={setHypoK} options={YES_NO} />
 
-      <ul className="mb-4 space-y-1.5 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12.5px] text-muted">
+      <ul className="mb-4 space-y-1.5 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12px] text-muted">
         <li>
           <span className="text-ink">Everyone:</span> clinical assessment for hormone excess, and a 1 mg
           overnight dexamethasone suppression test (R.3.1–3.2). It may be skipped in frail patients with
@@ -167,8 +167,8 @@ export function AdrenalIncidentaloma() {
         <p
           className={
             dstOutcome === 'excluded'
-              ? 'rounded-[10px] border border-teal/40 bg-teal/[0.08] px-3 py-2.5 text-[12.5px] text-teal'
-              : 'rounded-[10px] border border-amber/40 bg-amber/[0.08] px-3 py-2.5 text-[12.5px] text-amber'
+              ? 'rounded-[10px] border border-teal/40 bg-teal/[0.08] px-3 py-2.5 text-[12px] text-teal'
+              : 'rounded-[10px] border border-amber/40 bg-amber/[0.08] px-3 py-2.5 text-[12px] text-amber'
           }
         >
           {dstOutcome === 'excluded' && `≤ ${cutoff}: autonomous cortisol secretion excluded (R.3.3).`}
@@ -180,7 +180,7 @@ export function AdrenalIncidentaloma() {
       )}
 
       <p className="mt-3 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12px] text-muted-2">
-        <span className="font-semibold text-amber">Washout CT is not used to call a lesion benign here.</span>{' '}
+        <span className="font-medium text-amber">Washout CT is not used to call a lesion benign here.</span>{' '}
         The familiar cut-offs (absolute 60%, relative 40%) came from the 2016 guideline; the 2023 update
         rates their evidence in incidentalomas as very low, and in one study they missed 22% and 8% of
         malignant tumours. If washout is done, the delayed phase needs at least 10 minutes.

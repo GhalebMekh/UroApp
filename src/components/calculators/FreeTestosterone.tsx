@@ -103,7 +103,7 @@ export function FreeTestosterone() {
       )}
 
       <p className="mt-3 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[12px] text-muted-2">
-        <span className="font-semibold text-amber">No free-T threshold is offered.</span> The AUA
+        <span className="font-medium text-amber">No free-T threshold is offered.</span> The AUA
         guideline declines to endorse one, noting published cut-offs range 4.6–7.0 ng/dL across
         studies. It sets the diagnostic line at a <span className="text-ink">total</span>{' '}
         testosterone below 300 ng/dL (≈10.4 nmol/L), and only alongside symptoms.

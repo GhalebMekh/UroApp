@@ -1,8 +1,10 @@
 import type { Citation } from '@/data/citations';
 
 /**
- * Renders the primary-source line under a calculator. The "verify against the
- * primary source" wording is required by the clinical-safety rules — keep it.
+ * The source line under every clinical value — UroApp's signature detail
+ * (unslop direction, 2026-11-22): one mono line, the same everywhere. The
+ * "verify against the primary source" wording is required by the
+ * clinical-safety rules — keep it.
  */
 export function CitationNote({ citation }: { citation: Citation }) {
   const ref = citation.pmid
@@ -12,17 +14,17 @@ export function CitationNote({ citation }: { citation: Citation }) {
       : (citation.label ?? 'source');
 
   return (
-    <p className="mt-3 text-[11.5px] text-muted-2">
-      {citation.authors}, <i>{citation.journal}</i> {citation.year} —{' '}
+    <p className="mt-4 border-t border-line pt-3 font-mono text-[12px] leading-relaxed text-muted-2">
+      <span className="text-muted">Source</span> · {citation.authors}, {citation.journal} {citation.year} ·{' '}
       <a
         href={citation.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-violet-soft underline"
+        className="text-violet underline decoration-violet/40 underline-offset-2 hover:text-violet-soft"
       >
         {ref}
       </a>
-      . Verify against the primary source before clinical use.
+      <span className="mt-1 block font-sans">Verify against the primary source before clinical use.</span>
     </p>
   );
 }

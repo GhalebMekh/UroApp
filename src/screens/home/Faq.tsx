@@ -6,7 +6,7 @@ export function Faq() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <Section id="faq" eyebrow="FAQ" title="Questions, answered.">
+    <Section id="faq" eyebrow="FAQ" title="Questions, answered">
       <div className="mt-10 max-w-[760px]">
         {FAQS.map((item, i) => {
           const isOpen = open === i;
@@ -16,12 +16,12 @@ export function Faq() {
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
                 aria-expanded={isOpen}
-                className="flex w-full items-center justify-between py-4 text-left text-[15px] font-semibold"
+                className="flex w-full items-center justify-between py-4 text-left text-[15px] font-medium"
               >
                 {item.q}
-                <span className="text-[19px] text-violet-soft">{isOpen ? '–' : '+'}</span>
+                <span className="text-[18px] text-violet-soft">{isOpen ? '–' : '+'}</span>
               </button>
-              {isOpen && <p className="mb-[18px] text-[14px] text-muted">{item.a}</p>}
+              {isOpen && <p className="mb-5 text-[14px] text-muted">{item.a}</p>}
             </div>
           );
         })}

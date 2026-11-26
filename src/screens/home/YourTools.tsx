@@ -18,11 +18,11 @@ export function YourTools({ onOpenCalculator }: { onOpenCalculator: (id: string)
   return (
     <section className="border-b border-line pb-8 pt-8">
       <Wrap>
-        <h2 className="mb-4 font-display text-[22px] font-semibold">Your tools</h2>
+        <h2 className="mb-4 font-display text-[20px] font-medium">Your tools</h2>
 
         {pinned.length > 0 && (
           <div className="mb-5">
-            <div className="mb-2 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-amber">
+            <div className="mb-2 flex items-center gap-1.5 text-[12px] font-medium text-amber">
               <StarIcon filled className="text-[12px]" /> Pinned
             </div>
             <div className="flex flex-wrap gap-2">
@@ -35,7 +35,7 @@ export function YourTools({ onOpenCalculator }: { onOpenCalculator: (id: string)
 
         {recent.length > 0 && (
           <div>
-            <div className="mb-2 text-[11px] font-semibold uppercase tracking-[0.1em] text-muted-2">
+            <div className="mb-2 text-[12px] font-medium text-muted-2">
               Recently used
             </div>
             <div className="flex flex-wrap gap-2">

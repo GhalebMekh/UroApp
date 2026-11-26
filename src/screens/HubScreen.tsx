@@ -34,8 +34,8 @@ function Hub({
               onClick={() => onNavigate(w.id)}
               className="flex min-h-[52px] w-full items-center gap-3 rounded-[12px] px-3 py-3 text-left transition-colors hover:bg-steel"
             >
-              <span className="flex-1 text-[14.5px] font-semibold">{w.label}</span>
-              <span className="text-[11px] font-semibold uppercase tracking-[0.06em] text-violet-soft">{w.note}</span>
+              <span className="flex-1 text-[14px] font-medium">{w.label}</span>
+              <span className="text-[12px] font-medium text-violet-soft">{w.note}</span>
               <ChevronRightIcon className="shrink-0 text-[16px] text-muted-2" />
             </button>
           ))}
@@ -69,7 +69,7 @@ export function ClinicalHubScreen({ onNavigate }: { onNavigate: (s: Screen) => v
     <Hub
       eyebrow="Point of care"
       title="Clinical"
-      blurb="Bedside decision tools — validated calculators, imaging references, drug-interaction checks, follow-up schedules and paediatric dosing."
+      blurb="Bedside decision tools: validated calculators, imaging references, drug-interaction checks, follow-up schedules and paediatric dosing."
       items={CLINICAL_ITEMS}
       onNavigate={onNavigate}
     />
@@ -81,7 +81,7 @@ export function AcademicHubScreen({ onNavigate }: { onNavigate: (s: Screen) => v
     <Hub
       eyebrow="Learning & reference"
       title="Academic"
-      blurb="Study, reference and training — AUA/EAU guidelines, upcoming conferences, and operative rehearsal and decision scenarios."
+      blurb="Study, reference and training: AUA/EAU guidelines, upcoming conferences, and operative rehearsal and decision scenarios."
       items={ACADEMIC_ITEMS}
       onNavigate={onNavigate}
     />

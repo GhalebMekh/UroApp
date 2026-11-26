@@ -59,7 +59,7 @@ function buildPrintHtml(p: ConsentProcedure, f: CaseFields): string {
     </table>`;
 
   return `<!doctype html><html><head><meta charset="utf-8">
-  <title>${esc(p.name.en)} — Consent</title>
+  <title>${esc(p.name.en)}: consent</title>
   <style>
     * { box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, Arial, sans-serif; color: #111; margin: 24px; font-size: 12px; line-height: 1.5; }
@@ -140,10 +140,10 @@ function Section({
   return (
     <div className="border-t border-line px-5 py-4">
       <div className="mb-2 flex items-baseline justify-between gap-4">
-        <h4 className="text-[13px] font-semibold uppercase tracking-[0.05em] text-violet-soft">
+        <h4 className="text-[13px] font-medium text-violet-soft">
           {heading.en}
         </h4>
-        <h4 dir="rtl" className="text-[13px] font-semibold text-violet-soft">
+        <h4 dir="rtl" className="text-[13px] font-medium text-violet-soft">
           {heading.ar}
         </h4>
       </div>
@@ -185,7 +185,7 @@ export function ConsentScreen() {
       <div className="mx-auto max-w-3xl space-y-5">
         {/* Procedure picker */}
         <div>
-          <label className="mb-1.5 block text-[12px] font-semibold text-ink">Procedure</label>
+          <label className="mb-1.5 block text-[12px] font-medium text-ink">Procedure</label>
           <select
             value={selectedId}
             onChange={(e) => setSelectedId(e.target.value)}
@@ -202,8 +202,8 @@ export function ConsentScreen() {
         {/* Optional, non-persisted case fields */}
         <div className="rounded-[12px] border border-line bg-navy-2 p-4">
           <div className="mb-3 flex items-center gap-2">
-            <span className="text-[12px] font-semibold text-ink">Case details</span>
-            <span className="rounded-full border border-line px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.04em] text-muted-2">
+            <span className="text-[12px] font-medium text-ink">Case details</span>
+            <span className="rounded-full border border-line px-2 py-0.5 text-[12px] font-medium text-muted-2">
               optional · not saved
             </span>
           </div>
@@ -214,7 +214,7 @@ export function ConsentScreen() {
             <input className={input} placeholder="Surgeon / الجراح" value={fields.surgeon} onChange={(e) => set('surgeon', e.target.value)} />
             <DateInput className={input} value={fields.date} onChange={(v) => set('date', v)} />
           </div>
-          <p className="mt-2 text-[11px] text-muted-2">
+          <p className="mt-2 text-[12px] text-muted-2">
             These fields stay on this device for this session only and are never stored by the app.
           </p>
         </div>
@@ -226,7 +226,7 @@ export function ConsentScreen() {
               setPrintError(false);
               print();
             }}
-            className="flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+            className="flex-1 rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
           >
             Print consent (EN + AR)
           </button>
@@ -236,7 +236,7 @@ export function ConsentScreen() {
               setPrintError(false);
               save();
             }}
-            className="flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal"
+            className="flex-1 rounded-[10px] border border-line bg-navy-2 py-3 text-[14px] font-medium text-ink transition-colors hover:border-teal"
           >
             Save file
           </button>
@@ -245,7 +245,7 @@ export function ConsentScreen() {
         {printError && (
           <p className="rounded-[10px] border border-crimson/50 bg-crimson/[0.10] px-4 py-3 text-[12px] text-muted">
             Printing was blocked by the browser. Use your browser’s own Print command
-            (Ctrl/Cmd + P) — or allow pop-ups for this site — and choose “Save as PDF”.
+            (Ctrl/Cmd + P), or allow pop-ups for this site, and choose “Save as PDF”.
           </p>
         )}
 
@@ -253,8 +253,8 @@ export function ConsentScreen() {
         <div className="overflow-hidden rounded-[16px] border border-line bg-navy-2">
           <div className="bg-steel/40 px-5 py-4">
             <div className="flex items-baseline justify-between gap-4">
-              <h3 className="text-[15px] font-semibold">{proc.name.en}</h3>
-              <h3 dir="rtl" className="text-[15px] font-semibold">
+              <h3 className="text-[15px] font-medium">{proc.name.en}</h3>
+              <h3 dir="rtl" className="text-[15px] font-medium">
                 {proc.name.ar}
               </h3>
             </div>
@@ -290,9 +290,9 @@ export function ConsentScreen() {
             </div>
           </Section>
 
-          <div className="border-t border-line px-5 py-3 text-[11px] text-muted-2">
+          <div className="border-t border-line px-5 py-3 text-[12px] text-muted-2">
             Source: {proc.source.url ? (
-              <a href={proc.source.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-violet hover:text-violet-soft">
+              <a href={proc.source.url} target="_blank" rel="noopener noreferrer" className="font-medium text-violet hover:text-violet-soft">
                 {proc.source.label} ↗
               </a>
             ) : (
@@ -303,8 +303,8 @@ export function ConsentScreen() {
 
         {/* Disclaimer */}
         <div className="rounded-[12px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
-          <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
-            Template — verify before use
+          <div className="mb-1 text-[12px] font-medium text-amber">
+            Template: verify before use
           </div>
           <p className="text-[12px] leading-relaxed text-muted">
             {B.disclaimer.en}

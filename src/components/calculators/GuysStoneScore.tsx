@@ -56,14 +56,14 @@ export function GuysStoneScore() {
         {GRADES.map((g) => (
           <article key={g.code} className="rounded-[14px] border border-line bg-navy p-4">
             <div className="flex items-center gap-3">
-              <span className={cn('grid h-9 min-w-[40px] place-items-center rounded-[9px] border px-2 font-mono text-[15px] font-semibold', BADGE[g.band])}>
+              <span className={cn('grid h-9 min-w-[40px] place-items-center rounded-[8px] border px-2 font-mono text-[15px] font-medium', BADGE[g.band])}>
                 {g.code}
               </span>
               <div className="text-[12px] text-muted-2">
-                Reported stone-free rate <span className="font-semibold text-ink">{g.sfr}</span>
+                Reported stone-free rate <span className="font-medium text-ink">{g.sfr}</span>
               </div>
             </div>
-            <p className="mt-3 text-[13.5px] text-muted">{g.definition}</p>
+            <p className="mt-3 text-[13px] text-muted">{g.definition}</p>
           </article>
         ))}
       </div>

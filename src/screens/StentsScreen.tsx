@@ -26,8 +26,8 @@ import {
 } from '@/lib/stents';
 
 const inputCls =
-  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13.5px] text-ink outline-none focus:border-violet';
-const fieldLabel = 'mb-[7px] block text-[13px] font-semibold text-muted';
+  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
+const fieldLabel = 'mb-2 block text-[13px] font-medium text-muted';
 
 /** Overdue is a risk cue (crimson); due within the week is amber (CLAUDE.md colour rules). */
 const STATUS_CHIP: Record<StentStatus, string> = {
@@ -109,27 +109,27 @@ export function StentsScreen() {
           <button
             type="button"
             onClick={() => setEditing('new')}
-            className="min-h-[48px] w-full rounded-[12px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
+            className="min-h-[48px] w-full rounded-[12px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
           >
             + Add a stent
           </button>
         )}
 
-        <p className="text-[12.5px] leading-relaxed text-muted-2">
+        <p className="text-[12px] leading-relaxed text-muted-2">
           {notificationsSupported()
             ? `You get a notification at 9:00, ${STENT_LEAD_DAYS} days before each remove-by date. `
             : 'Reminders arrive in the UroApp iPhone and iPad app. '}
-          Stored only on this device and never backed up. Initials only — no names or record numbers.
+          Stored only on this device and never backed up. Initials only, no names or record numbers.
         </p>
         {denied && (
-          <p className="text-[12.5px] text-amber">
+          <p className="text-[12px] text-amber">
             Notifications are off for UroApp, so no reminders will arrive. Turn them on in Settings →
             Notifications → UroApp.
           </p>
         )}
 
         {loaded && active.length === 0 && editing !== 'new' && (
-          <div className="rounded-[14px] border border-line bg-navy-2 px-5 py-8 text-center text-[13.5px] text-muted">
+          <div className="rounded-[14px] border border-line bg-navy-2 px-5 py-8 text-center text-[13px] text-muted">
             No stents in the register. Add one after a case and it will remind you before it’s due out.
           </div>
         )}
@@ -159,7 +159,7 @@ export function StentsScreen() {
               type="button"
               onClick={() => setShowRemoved((v) => !v)}
               aria-expanded={showRemoved}
-              className="min-h-[44px] text-[13px] font-semibold text-violet-soft hover:text-ink"
+              className="min-h-[44px] text-[13px] font-medium text-violet-soft hover:text-ink"
             >
               {showRemoved ? 'Hide' : 'Show'} removed ({removed.length})
             </button>
@@ -186,8 +186,8 @@ export function StentsScreen() {
 function Stat({ label, value, tone }: { label: string; value: number; tone?: string }) {
   return (
     <div className="rounded-[14px] border border-line bg-navy-2 p-3.5">
-      <div className="text-[10.5px] uppercase tracking-[0.08em] text-muted-2">{label}</div>
-      <div className={cn('mt-1 font-display text-[24px] font-semibold', tone)}>{value}</div>
+      <div className="text-[12px] text-muted-2">{label}</div>
+      <div className={cn('mt-1 font-mono text-[24px] font-medium', tone)}>{value}</div>
     </div>
   );
 }
@@ -209,13 +209,13 @@ function StentRow({
 }) {
   const status = stentStatus(s, today);
   const days = dwellDays(s, today);
-  const action = 'min-h-[44px] rounded-[10px] px-3 text-[13px] font-semibold transition-colors';
+  const action = 'min-h-[44px] rounded-[10px] px-3 text-[13px] font-medium transition-colors';
 
   return (
     <li className="rounded-[14px] border border-line bg-navy-2 p-4">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0">
-          <div className="text-[15px] font-semibold text-ink">
+          <div className="text-[15px] font-medium text-ink">
             {s.label ? `Patient ${s.label}` : 'Stent'} · {SIDE_LABEL[s.side]}
             {s.size && <span className="font-normal text-muted"> · {s.size}</span>}
           </div>
@@ -226,7 +226,7 @@ function StentRow({
             {s.removed ? ` · removed ${formatDay(s.removed)}` : ` · remove by ${formatDay(s.removeBy)}`}
           </div>
         </div>
-        <span className={cn('shrink-0 rounded-full border px-2.5 py-0.5 text-[11.5px] font-semibold', STATUS_CHIP[status])}>
+        <span className={cn('shrink-0 rounded-full border px-2.5 py-0.5 text-[12px] font-medium', STATUS_CHIP[status])}>
           {status === 'removed' ? 'Removed' : dueText(s, today)}
         </span>
       </div>
@@ -280,8 +280,8 @@ function StentForm({
   const canSave = d.label.trim() !== '' && d.removeBy !== '' && !idWarning && !beforeInsert;
 
   return (
-    <section className="rounded-[18px] border border-violet/50 bg-navy-2 p-5">
-      <h3 className="mb-4 font-display text-[18px] font-semibold">{title}</h3>
+    <section className="rounded-[16px] border border-violet/50 bg-navy-2 p-5">
+      <h3 className="mb-4 font-display text-[18px] font-medium">{title}</h3>
 
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
         <label className="block">
@@ -327,7 +327,7 @@ function StentForm({
               className={cn(
                 'min-h-[44px] rounded-[10px] border px-2 text-[13px] transition-colors',
                 d.side === side
-                  ? 'border-violet bg-violet/[0.18] font-semibold text-violet-soft'
+                  ? 'border-violet bg-violet/[0.18] font-medium text-violet-soft'
                   : 'border-line bg-navy text-muted hover:border-violet',
               )}
             >
@@ -355,25 +355,25 @@ function StentForm({
               key={s.label}
               type="button"
               onClick={() => set({ removeBy: shortcutDate(d.inserted, s) })}
-              className="min-h-[36px] rounded-full border border-line bg-navy px-3 text-[12px] font-semibold text-muted transition-colors hover:border-violet hover:text-ink"
+              className="min-h-[36px] rounded-full border border-line bg-navy px-3 text-[12px] font-medium text-muted transition-colors hover:border-violet hover:text-ink"
             >
               {s.label}
             </button>
           ))}
         </div>
       )}
-      <p className="mt-2 text-[11.5px] text-muted-2">
+      <p className="mt-2 text-[12px] text-muted-2">
         Shortcuts count from the insertion date. The remove-by date is your team’s plan; the app
         doesn’t suggest one.
       </p>
 
       {idWarning && (
-        <p role="alert" className="mt-3 text-[12.5px] text-amber">
-          That looks like a record or ID number. Use initials only — this register holds no identifiers.
+        <p role="alert" className="mt-3 text-[12px] text-amber">
+          That looks like a record or ID number. Use initials only; this register holds no identifiers.
         </p>
       )}
       {beforeInsert && (
-        <p role="alert" className="mt-3 text-[12.5px] text-amber">
+        <p role="alert" className="mt-3 text-[12px] text-amber">
           The remove-by date is before the insertion date.
         </p>
       )}
@@ -383,14 +383,14 @@ function StentForm({
           type="button"
           onClick={() => onSave({ ...d, label: d.label.trim(), note: d.note.trim(), size: d.size.trim() })}
           disabled={!canSave}
-          className="min-h-[44px] flex-1 rounded-[11px] bg-violet px-3 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-40"
+          className="min-h-[44px] flex-1 rounded-[10px] bg-violet-deep px-3 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press disabled:opacity-40"
         >
           Save
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy px-3 py-2.5 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+          className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[14px] font-medium text-ink transition-colors hover:border-violet"
         >
           Cancel
         </button>

@@ -1,14 +1,9 @@
 import { cn } from '@/lib/cn';
 
-/** The violet "U" tile used in the nav, footer, and hero. */
+/** The "U" mark: one flat accent tile, no gradient or glow (unslop, 2026-11-22). */
 export function BrandMark({ className }: { className?: string }) {
   return (
-    <span
-      className={cn(
-        'grid place-items-center rounded-[9px] bg-violet-mark font-display font-bold text-white shadow-violet-ring',
-        className,
-      )}
-    >
+    <span className={cn('grid place-items-center rounded-[8px] bg-violet-deep font-display font-medium text-white', className)}>
       U
     </span>
   );

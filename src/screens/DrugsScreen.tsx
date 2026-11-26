@@ -29,7 +29,7 @@ function SeverityBadge({ severity }: { severity: InteractionSeverity }) {
   return (
     <span
       className={cn(
-        'inline-flex flex-shrink-0 items-center rounded-full border px-2.5 py-0.5 text-[11px] font-semibold uppercase tracking-[0.04em]',
+        'inline-flex flex-shrink-0 items-center rounded-full border px-2.5 py-0.5 text-[12px] font-medium  ',
         BAND_STYLES[meta.band],
       )}
     >
@@ -54,7 +54,7 @@ function InteractionCard({ item, defaultOpen }: { item: DrugInteraction; default
         aria-expanded={open}
         className="flex min-h-[52px] w-full flex-wrap items-center justify-between gap-2 rounded-[14px] px-4 py-3 text-left transition-colors hover:bg-steel"
       >
-        <span className="min-w-0 flex-1 break-words text-[14px] font-semibold leading-snug">
+        <span className="min-w-0 flex-1 break-words text-[14px] font-medium leading-snug">
           {item.drugA}
           <span className="mx-1.5 text-violet-soft">⟷</span>
           {item.drugB}
@@ -71,11 +71,11 @@ function InteractionCard({ item, defaultOpen }: { item: DrugInteraction; default
         <div className="px-4 pb-4">
           <dl className="space-y-2 text-[13px]">
             <div>
-              <dt className="font-semibold text-ink">Effect</dt>
+              <dt className="font-medium text-ink">Effect</dt>
               <dd className="text-muted">{item.effect}</dd>
             </div>
             <div>
-              <dt className="font-semibold text-ink">Management</dt>
+              <dt className="font-medium text-ink">Management</dt>
               <dd className="text-muted">{item.management}</dd>
             </div>
           </dl>
@@ -86,7 +86,7 @@ function InteractionCard({ item, defaultOpen }: { item: DrugInteraction; default
                 href={item.source.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-semibold text-violet transition-colors hover:text-violet-soft"
+                className="font-medium text-violet transition-colors hover:text-violet-soft"
               >
                 {item.source.label} ↗
               </a>
@@ -143,11 +143,11 @@ export function DrugsScreen() {
 
         {/* Prominent clinical-judgment disclaimer (required) */}
         <div className="rounded-[14px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
-          <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
+          <div className="mb-1 text-[12px] font-medium text-amber">
             Decision support only
           </div>
           <p className="text-[13px] leading-relaxed text-muted">
-            This is a curated, guideline-grounded reference — <strong>not</strong> a comprehensive
+            This is a curated, guideline-grounded reference, <strong>not</strong> a comprehensive
             interaction checker. It does not capture every drug, dose, or patient-specific factor.
             Always verify against current prescribing information and a full interaction database,
             and treat every entry as one input to your own clinical judgment. The final decision
@@ -171,7 +171,7 @@ export function DrugsScreen() {
           <div className="space-y-8">
             {groups.map((group) => (
               <div key={group.category}>
-                <h3 className="mb-3 text-[14px] font-semibold uppercase tracking-[0.05em] text-violet-soft">
+                <h3 className="mb-3 text-[14px] font-medium text-violet-soft">
                   {group.category}
                   <span className="ml-1.5 text-[12px] text-muted-2">({group.items.length})</span>
                 </h3>

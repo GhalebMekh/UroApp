@@ -54,10 +54,10 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
 
   return (
     <div className="rounded-[14px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[14px] font-semibold">Surveillance patients</h3>
-      <p className="mb-3 mt-1 text-[12.5px] text-muted-2">
+      <h3 className="text-[14px] font-medium">Surveillance patients</h3>
+      <p className="mb-3 mt-1 text-[12px] text-muted-2">
         Add a patient on the schedule shown below. You get a notification {FOLLOWUP_LEAD_DAYS} days
-        before each visit, at 9:00. Use initials or a bed number only — it shows on the lock screen.
+        before each visit, at 9:00. Use initials or a bed number only, as it shows on the lock screen.
       </p>
       <div className="flex gap-2">
         <input
@@ -65,19 +65,19 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
           onChange={(e) => setLabel(e.target.value.slice(0, 24))}
           placeholder="Patient initials, e.g. AK"
           aria-label="Patient initials"
-          className="min-h-[44px] min-w-0 flex-1 rounded-[10px] border border-line bg-navy px-3 text-[13.5px] text-ink outline-none focus:border-violet"
+          className="min-h-[44px] min-w-0 flex-1 rounded-[10px] border border-line bg-navy px-3 text-[13px] text-ink outline-none focus:border-violet"
         />
         <button
           type="button"
           onClick={() => void add()}
-          className="min-h-[44px] shrink-0 rounded-[10px] border border-violet bg-violet/[0.18] px-4 text-[13px] font-semibold text-violet-soft transition-colors hover:bg-violet/[0.26]"
+          className="min-h-[44px] shrink-0 rounded-[10px] border border-violet bg-violet/[0.18] px-4 text-[13px] font-medium text-violet-soft transition-colors hover:bg-violet/[0.26]"
         >
           Add patient
         </button>
       </div>
-      {missing && <p className="mt-3 text-[12.5px] text-amber">Enter the patient's initials first.</p>}
+      {missing && <p className="mt-3 text-[12px] text-amber">Enter the patient's initials first.</p>}
       {denied && (
-        <p className="mt-3 text-[12.5px] text-amber">
+        <p className="mt-3 text-[12px] text-amber">
           Notifications are off for UroApp. Turn them on in Settings → Notifications → UroApp.
         </p>
       )}
@@ -88,7 +88,7 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
             return (
               <li key={p.id} className="flex items-center gap-3 rounded-[10px] border border-line bg-navy px-3 py-2">
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-[13px] font-semibold text-ink">{p.label ? `Patient ${p.label}` : p.title}</div>
+                  <div className="truncate text-[13px] font-medium text-ink">{p.label ? `Patient ${p.label}` : p.title}</div>
                   <div className="truncate text-[12px] text-muted-2">
                     {p.label ? `${p.title} · ` : ''}
                     {next ? `next ${next.due}` : 'no visits left'}
@@ -97,7 +97,7 @@ function FollowUpReminders({ title, visits }: { title: string; visits: { label: 
                 <button
                   type="button"
                   onClick={() => persist(plans.filter((x) => x.id !== p.id))}
-                  className="min-h-[44px] shrink-0 px-2 text-[12.5px] font-semibold text-muted hover:text-ink"
+                  className="min-h-[44px] shrink-0 px-2 text-[12px] font-medium text-muted hover:text-ink"
                 >
                   Remove
                 </button>
@@ -155,7 +155,7 @@ export function SurveillanceScreen() {
       .join('');
 
     return `
-      <h1>Surveillance schedule — ${escapeHtml(diagnosis.name)}</h1>
+      <h1>Surveillance schedule: ${escapeHtml(diagnosis.name)}</h1>
       <p class="sub">${escapeHtml(protocol.label)} · ${escapeHtml(diagnosis.indexLabel)}: ${escapeHtml(indexDate)} · generated ${new Date().toLocaleDateString('en-GB')}</p>
       <p>${escapeHtml(protocol.description)}</p>
       <table>
@@ -166,7 +166,7 @@ export function SurveillanceScreen() {
       <p>${escapeHtml(protocol.thereafter)}</p>
       <h2>Notes</h2>
       <ul>${protocol.notes.map((n) => `<li>${escapeHtml(n)}</li>`).join('')}</ul>
-      <div class="note">Summarised from ${escapeHtml(protocol.source.label)} in UroApp's own words —
+      <div class="note">Summarised from ${escapeHtml(protocol.source.label)} in UroApp's own words;
       not a verbatim reproduction. Decision support only: the treating clinician sets the actual
       follow-up, adjusting for the individual patient. Verify against the primary source.</div>`;
   }
@@ -183,7 +183,7 @@ export function SurveillanceScreen() {
   }
 
   const field =
-    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13.5px] text-ink outline-none focus:border-violet';
+    'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
 
   if (!diagnosis || !protocol) return null;
 
@@ -199,7 +199,7 @@ export function SurveillanceScreen() {
         {/* Inputs */}
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Diagnosis</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Diagnosis</span>
             <select value={diagnosisId} onChange={(e) => selectDiagnosis(e.target.value)} className={field}>
               {SURVEILLANCE.map((d) => (
                 <option key={d.id} value={d.id}>
@@ -210,7 +210,7 @@ export function SurveillanceScreen() {
           </label>
 
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">Risk group</span>
+            <span className="mb-2 block text-[13px] font-medium text-muted">Risk group</span>
             <select value={protocol.id} onChange={(e) => setProtocolId(e.target.value)} className={field}>
               {diagnosis.protocols.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -221,7 +221,7 @@ export function SurveillanceScreen() {
           </label>
 
           <label className="block">
-            <span className="mb-[7px] block text-[13px] font-semibold text-muted">
+            <span className="mb-2 block text-[13px] font-medium text-muted">
               {diagnosis.indexLabel}
             </span>
             <DateInput value={indexDate} onChange={(v) => setIndexDate(v)} className={field} />
@@ -235,14 +235,14 @@ export function SurveillanceScreen() {
           <button
             type="button"
             onClick={print}
-            className="flex-1 rounded-[11px] bg-violet py-3 text-[14px] font-semibold text-white transition-opacity hover:opacity-90"
+            className="flex-1 rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition-opacity hover:opacity-90"
           >
             Print schedule
           </button>
           <button
             type="button"
             onClick={save}
-            className="flex-1 rounded-[11px] border border-line bg-navy-2 py-3 text-[14px] font-semibold text-ink transition-colors hover:border-teal"
+            className="flex-1 rounded-[10px] border border-line bg-navy-2 py-3 text-[14px] font-medium text-ink transition-colors hover:border-teal"
           >
             Save file
           </button>
@@ -255,13 +255,13 @@ export function SurveillanceScreen() {
           </p>
         )}
 
-        <FollowUpReminders title={`${diagnosis.name} — ${protocol.label}`} visits={rows} />
+        <FollowUpReminders title={`${diagnosis.name}: ${protocol.label}`} visits={rows} />
 
         {/* Schedule */}
         {/* Mobile-first: rows stack on a phone (fixed columns would squeeze the
             investigations text into ~75px); the table layout returns at sm+. */}
         <div className="overflow-hidden rounded-[16px] border border-line bg-navy-2">
-          <div className="hidden border-b border-line bg-steel/40 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.06em] text-muted-2 sm:grid sm:grid-cols-[110px_120px_1fr] sm:gap-3">
+          <div className="hidden border-b border-line bg-steel/40 px-5 py-3 text-[12px] font-medium text-muted-2 sm:grid sm:grid-cols-[110px_120px_1fr] sm:gap-3">
             <span>Visit</span>
             <span>Due</span>
             <span>Investigations</span>
@@ -272,10 +272,10 @@ export function SurveillanceScreen() {
               className="border-b border-line px-5 py-3 last:border-b-0 sm:grid sm:grid-cols-[110px_120px_1fr] sm:gap-3"
             >
               <div className="mb-1.5 flex items-baseline justify-between gap-3 sm:mb-0 sm:block">
-                <span className="text-[13px] font-semibold text-violet-soft">{r.label}</span>
-                <span className="font-mono text-[12.5px] text-ink sm:hidden">{r.due || '—'}</span>
+                <span className="text-[13px] font-medium text-violet-soft">{r.label}</span>
+                <span className="font-mono text-[12px] text-ink sm:hidden">{r.due || '—'}</span>
               </div>
-              <span className="hidden font-mono text-[12.5px] text-ink sm:block">{r.due || '—'}</span>
+              <span className="hidden font-mono text-[12px] text-ink sm:block">{r.due || '—'}</span>
               <span className="text-[13px] text-muted">
                 {r.tests.map((t) => (
                   <span key={t} className="block">
@@ -289,12 +289,12 @@ export function SurveillanceScreen() {
 
         {/* Thereafter + notes */}
         <div className="rounded-[14px] border border-line bg-navy-2 p-5">
-          <h3 className="mb-2 text-[13px] font-semibold uppercase tracking-[0.05em] text-violet-soft">
+          <h3 className="mb-2 text-[13px] font-medium text-violet-soft">
             After the schedule
           </h3>
           <p className="text-[13px] text-muted">{protocol.thereafter}</p>
 
-          <h3 className="mb-2 mt-4 text-[13px] font-semibold uppercase tracking-[0.05em] text-violet-soft">
+          <h3 className="mb-2 mt-4 text-[13px] font-medium text-violet-soft">
             Notes
           </h3>
           <ul className="list-disc space-y-1.5 pl-5 text-[13px] text-muted">
@@ -303,13 +303,13 @@ export function SurveillanceScreen() {
             ))}
           </ul>
 
-          <p className="mt-4 text-[11.5px] text-muted-2">
+          <p className="mt-4 text-[12px] text-muted-2">
             Source:{' '}
             <a
               href={protocol.source.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-semibold text-violet hover:text-violet-soft"
+              className="font-medium text-violet hover:text-violet-soft"
             >
               {protocol.source.label} ↗
             </a>
@@ -318,7 +318,7 @@ export function SurveillanceScreen() {
 
         {/* Disclaimer */}
         <div className="rounded-[12px] border border-amber/50 bg-amber/[0.10] px-5 py-4">
-          <div className="mb-1 text-[12px] font-semibold uppercase tracking-[0.06em] text-amber">
+          <div className="mb-1 text-[12px] font-medium text-amber">
             Decision support only
           </div>
           <p className="text-[12px] leading-relaxed text-muted">

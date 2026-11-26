@@ -59,13 +59,13 @@ export function UtiWorkup() {
       <div className="space-y-4">
         {SECTIONS.map((s) => (
           <div key={s.title}>
-            <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-violet-soft">
+            <div className="mb-2 text-[12px] font-medium text-violet-soft">
               {s.title}
             </div>
             <ul className="space-y-1.5">
               {s.rows.map((r) => (
                 <li key={r.k} className="text-[13px] text-muted">
-                  <span className="font-semibold text-ink">{r.k}</span> — {r.v}
+                  <span className="font-medium text-ink">{r.k}</span> — {r.v}
                 </li>
               ))}
             </ul>

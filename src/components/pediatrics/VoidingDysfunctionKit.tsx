@@ -84,7 +84,7 @@ export function VoidingDysfunctionKit() {
       )}
 
       <div className="mt-5 border-t border-line pt-4">
-        <h4 className="mb-1 text-[14px] font-semibold">DVSS total</h4>
+        <h4 className="mb-1 text-[14px] font-medium">DVSS total</h4>
         <p className="mb-3 text-[12px] text-muted-2">
           Score the published Dysfunctional Voiding Symptom Score form (10 items, 0–3 each), then enter
           the total here. The questionnaire belongs to its authors and isn’t reproduced in the app.

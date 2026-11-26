@@ -34,10 +34,19 @@
     }
   }
 
-  /* Headings use Geist, tightened a little at display sizes as Geist's own
-     specimens do; a tracking-* utility still overrides this. */
+  /* Headings use Geist at normal tracking (unslop: tight tracking only for
+     display text of 40px and up, none here). Hierarchy comes from size and
+     colour; inline bold stays at 600 at most. */
   .font-display {
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
+  }
+  b,
+  strong {
+    font-weight: 600;
+  }
+  /* Figures line up in columns everywhere. */
+  .font-mono {
+    font-variant-numeric: tabular-nums;
   }
 
   /* Arabic text gets a dedicated Arabic face, so the bilingual consent forms and

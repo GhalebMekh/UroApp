@@ -35,10 +35,10 @@ export function SfuHydronephrosis() {
       <div className="space-y-2.5">
         {GRADES.map((g) => (
           <article key={g.code} className="flex items-center gap-3 rounded-[14px] border border-line bg-navy p-4">
-            <span className={cn('grid h-9 min-w-[36px] place-items-center rounded-[9px] border font-mono text-[15px] font-semibold', BADGE[g.band])}>
+            <span className={cn('grid h-9 min-w-[36px] place-items-center rounded-[8px] border font-mono text-[15px] font-medium', BADGE[g.band])}>
               {g.code}
             </span>
-            <p className="text-[13.5px] text-muted">{g.finding}</p>
+            <p className="text-[13px] text-muted">{g.finding}</p>
           </article>
         ))}
       </div>

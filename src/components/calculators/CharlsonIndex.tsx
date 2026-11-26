@@ -22,7 +22,7 @@ export function CharlsonIndex() {
       citation={CITATIONS.charlson}
     >
       <div className="mb-3.5">
-        <div className="mb-[7px] text-[13px] font-semibold text-muted">Conditions</div>
+        <div className="mb-2 text-[13px] font-medium text-muted">Conditions</div>
         <div className="flex flex-wrap gap-2">
           {CHARLSON_CONDITIONS.map((c) => {
             const on = !!conditions[c.key];
@@ -34,7 +34,7 @@ export function CharlsonIndex() {
                 onClick={() => toggle(c.key)}
                 className={cn(
                   'min-h-[44px] rounded-[10px] border px-3 py-2 text-left text-[12px] transition-colors',
-                  on ? 'border-violet bg-violet/[0.18] font-semibold text-violet-soft' : 'border-line bg-navy text-muted hover:border-violet',
+                  on ? 'border-violet bg-violet/[0.18] font-medium text-violet-soft' : 'border-line bg-navy text-muted hover:border-violet',
                 )}
               >
                 {c.label} <span className="font-mono text-muted-2">+{c.weight}</span>

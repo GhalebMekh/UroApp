@@ -180,11 +180,11 @@ export function BottomNav({ items, current, onNavigate }: BottomNavProps) {
                 onClick={() => onNavigate(id)}
                 aria-current={id === current ? 'page' : undefined}
                 className={cn(
-                  'flex min-h-[52px] w-full flex-col items-center justify-center gap-0.5 rounded-full py-1.5 text-[10.5px] font-medium transition-colors',
+                  'flex min-h-[52px] w-full flex-col items-center justify-center gap-0.5 rounded-full py-1.5 text-[11px] font-medium transition-colors',
                   active ? 'text-white' : 'text-ink/75 hover:text-ink',
                 )}
               >
-                <Icon className="text-[21px]" />
+                <Icon className="text-[20px]" />
                 {label}
               </button>
             </li>

@@ -5,10 +5,10 @@ import { INSTITUTION_MAX, NAME_MAX, ROLES, ROLE_LABEL, type Profile } from '@/li
 const input =
   'min-h-[44px] w-full rounded-[12px] border border-line bg-navy px-4 py-3 text-[15px] text-ink placeholder-muted-2 focus:border-violet focus:outline-none';
 const primary =
-  'min-h-[44px] w-full rounded-[11px] bg-violet px-3 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-50';
+  'min-h-[44px] w-full rounded-[10px] bg-violet-deep px-3 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press disabled:opacity-50';
 const secondary =
-  'min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy px-3 py-2.5 text-[13px] font-semibold text-ink transition-colors hover:border-violet disabled:opacity-50';
-const link = 'min-h-[44px] text-[13px] font-semibold text-violet-soft hover:text-ink';
+  'min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[13px] font-medium text-ink transition-colors hover:border-violet disabled:opacity-50';
+const link = 'min-h-[44px] text-[13px] font-medium text-violet-soft hover:text-ink';
 
 type Mode = 'signin' | 'signup' | 'verify' | 'forgot' | 'reset';
 
@@ -95,7 +95,7 @@ function SignedOut() {
       autoComplete="one-time-code"
       placeholder="6-digit code"
       aria-label="Code from the email"
-      className={`${input} text-center font-mono tracking-[0.3em] placeholder:tracking-normal`}
+      className={`${input} text-center font-mono  placeholder:tracking-normal`}
     />
   );
   const emailField = (
@@ -138,7 +138,7 @@ function SignedOut() {
       {mode === 'verify' && (
         <>
           <p className="text-[13px] text-muted">
-            We emailed a code to <span className="font-semibold text-ink">{email}</span>. Enter it to
+            We emailed a code to <span className="font-medium text-ink">{email}</span>. Enter it to
             confirm your account.
           </p>
           {codeField}
@@ -147,7 +147,7 @@ function SignedOut() {
       {mode === 'reset' && (
         <>
           <p className="text-[13px] text-muted">
-            If an account exists for <span className="font-semibold text-ink">{email}</span>, we emailed
+            If an account exists for <span className="font-medium text-ink">{email}</span>, we emailed
             it a code.
           </p>
           {codeField}
@@ -199,7 +199,7 @@ function ProfileForm() {
 
   return (
     <form onSubmit={save} className="space-y-3" noValidate>
-      <h4 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-muted">Profile</h4>
+      <h4 className="text-[13px] font-medium text-muted">Profile</h4>
       <input
         value={draft.displayName}
         onChange={(e) => edit({ displayName: e.target.value })}
@@ -231,7 +231,7 @@ function ProfileForm() {
         aria-label="Hospital / institution"
         className={input}
       />
-      <p className="text-[12px] text-muted-2">Printed on your logbook and CME record. About you only — never patients.</p>
+      <p className="text-[12px] text-muted-2">Printed on your logbook and CME record. About you only, never patients.</p>
       {error && <Alert>{error}</Alert>}
       {saved && <Alert tone="teal">Profile saved.</Alert>}
       <button type="submit" disabled={busy} className={primary}>
@@ -257,13 +257,13 @@ function SignedIn() {
   return (
     <div className="space-y-5">
       <p className="text-[13px] text-muted">
-        Signed in as <span className="font-semibold text-ink">{account.email}</span>
+        Signed in as <span className="font-medium text-ink">{account.email}</span>
       </p>
 
       <ProfileForm />
 
       <div className="space-y-3 border-t border-line pt-4">
-        <h4 className="text-[13px] font-semibold uppercase tracking-[0.08em] text-muted">Backup &amp; sync</h4>
+        <h4 className="text-[13px] font-medium text-muted">Backup &amp; sync</h4>
         <p className="text-[13px] text-ink">{syncText}</p>
         {sync.error && <Alert>{sync.error}</Alert>}
         <button
@@ -292,7 +292,7 @@ function SignedIn() {
           <div className="space-y-2">
             <p className="text-[13px] text-muted">
               Keep your logbook, CME record, favourites and rehearsal progress on this device after signing out?
-              Remove them if this device will be used by someone else — your backup stays in your account.
+              Remove them if this device will be used by someone else. Your backup stays in your account.
             </p>
             <button type="button" disabled={busy} onClick={() => void act(() => account.signOut(false))} className={`${secondary} w-full`}>
               Sign out, keep data here
@@ -308,14 +308,14 @@ function SignedIn() {
         {confirm === 'delete' && (
           <div className="space-y-2">
             <p className="text-[13px] text-muted">
-              This <span className="font-semibold text-ink">permanently deletes</span> your account, profile
+              This <span className="font-medium text-ink">permanently deletes</span> your account, profile
               and cloud backup. It can’t be undone. Data already on this device stays here.
             </p>
             <button
               type="button"
               disabled={busy}
               onClick={() => void act(() => account.deleteAccount())}
-              className="min-h-[44px] w-full rounded-[11px] border border-amber/50 bg-amber/10 text-[13px] font-semibold text-amber disabled:opacity-50"
+              className="min-h-[44px] w-full rounded-[10px] border border-amber/50 bg-amber/10 text-[13px] font-medium text-amber disabled:opacity-50"
             >
               {busy ? 'Deleting…' : 'Delete my account permanently'}
             </button>
@@ -336,7 +336,7 @@ export function AccountSettings() {
 
   return (
     <section className="rounded-[16px] border border-line bg-navy-2 p-5">
-      <h3 className="text-[15px] font-semibold">Account</h3>
+      <h3 className="text-[15px] font-medium">Account</h3>
       <p className="mb-4 mt-1 text-[12px] text-muted-2">
         Optional. Backs up your logbook, CME record, favourites and rehearsal progress, and keeps them in step between your
         iPhone and iPad. Your ward list and MDT sheets never leave this device.

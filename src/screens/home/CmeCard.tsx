@@ -53,10 +53,10 @@ export function CmeCard({ onOpen }: { onOpen: () => void }) {
               reminder.daysLeft < 0 ? 'border-crimson/50 bg-crimson/[0.10]' : 'border-amber/50 bg-amber/[0.10]',
             )}
           >
-            <span className="text-[14px] font-semibold">
+            <span className="text-[14px] font-medium">
               {reminder.daysLeft < 0 ? `Cycle ended ${reminder.remaining} h short` : `${reminder.remaining} h to go`}
             </span>
-            <span className="mt-0.5 text-[12.5px] text-muted">
+            <span className="mt-0.5 text-[12px] text-muted">
               {reminder.daysLeft < 0
                 ? 'Check with your licensing body.'
                 : `${reminder.daysLeft} day${reminder.daysLeft === 1 ? '' : 's'} left · about ${reminder.perMonth} h a month`}
@@ -68,10 +68,10 @@ export function CmeCard({ onOpen }: { onOpen: () => void }) {
             key={c.id}
             type="button"
             onClick={onOpen}
-            className="flex min-h-[44px] w-full flex-col rounded-[12px] border border-line bg-navy px-3.5 py-3 text-left hover:border-violet/60"
+            className="flex min-h-[44px] w-full flex-col rounded-[8px] px-2 py-2 text-left transition-colors hover:bg-steel"
           >
-            <span className="text-[14px] font-semibold">Log {c.name}?</span>
-            <span className="mt-0.5 text-[12.5px] text-muted">You marked it as attending. Add the hours from your certificate.</span>
+            <span className="text-[14px] font-medium">Log {c.name}?</span>
+            <span className="mt-0.5 text-[12px] text-muted">You marked it as attending. Add the hours from your certificate.</span>
           </button>
         ))}
       </div>

@@ -94,7 +94,7 @@ export function SearchOverlay({
                   className="flex w-full items-center justify-between rounded-[10px] px-3 py-2.5 text-left transition-colors hover:bg-steel"
                 >
                   <span className="text-[14px] font-medium text-ink">{item.label}</span>
-                  <span className="ml-3 shrink-0 text-[11px] text-muted-2">{item.sub}</span>
+                  <span className="ml-3 shrink-0 text-[12px] text-muted-2">{item.sub}</span>
                 </button>
               </li>
             ))

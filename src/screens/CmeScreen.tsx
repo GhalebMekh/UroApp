@@ -26,10 +26,10 @@ import { formatSpan } from '@/lib/conferenceDates';
 import { compressImage, deleteCertificate, loadCertificates, saveCertificate } from '@/lib/cmeCertificates';
 
 const inputCls =
-  'w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13px] text-ink outline-none focus:border-violet';
+  'w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
 
 function Label({ children }: { children: React.ReactNode }) {
-  return <span className="mb-[7px] block text-[13px] font-semibold text-muted">{children}</span>;
+  return <span className="mb-2 block text-[13px] font-medium text-muted">{children}</span>;
 }
 
 /** CME / CPD tracker. */
@@ -87,7 +87,7 @@ export function CmeScreen() {
   /** Fill the form from an attended conference; hours are left for the user. */
   function startLogging(c: AttendingConference) {
     setLoggingConf(c.id);
-    setTitle(c.fullName === c.name ? c.name : `${c.name} — ${c.fullName}`);
+    setTitle(c.fullName === c.name ? c.name : `${c.name}: ${c.fullName}`);
     setProvider(c.organisation);
     setDate(c.startDate <= today ? c.startDate : today);
     setType('conference');
@@ -222,23 +222,23 @@ export function CmeScreen() {
     <>
       <PageHero
         eyebrow="CME / CPD"
-        title="Your CPD hours."
-        lede="Log each activity as you go, and the record is ready when your licence renewal comes round. Set the hours and cycle your licensing body requires — the app doesn't assume them."
+        title="Your CPD hours"
+        lede="Log each activity as you go, and the record is ready when your licence renewal comes round. Set the hours and cycle your licensing body requires; the app doesn't assume them."
       />
       <PageBody>
         {reminder && (
           <div
             role="status"
             className={cn(
-              'mb-5 rounded-[16px] border px-5 py-4 text-[13.5px]',
+              'mb-5 rounded-[16px] border px-5 py-4 text-[13px]',
               reminder.daysLeft < 0 ? 'border-crimson/50 bg-crimson/[0.10]' : 'border-amber/50 bg-amber/[0.10]',
             )}
           >
-            <div className="font-semibold text-ink">
+            <div className="font-medium text-ink">
               {reminder.daysLeft < 0
                 ? `Your cycle ended ${-reminder.daysLeft} day${reminder.daysLeft === -1 ? '' : 's'} ago, ${reminder.remaining} h short.`
                 : reminder.daysLeft === 0
-                  ? `Your cycle ends today — ${reminder.remaining} h to go.`
+                  ? `Your cycle ends today, ${reminder.remaining} h to go.`
                   : `${reminder.remaining} h to go, ${reminder.daysLeft} day${reminder.daysLeft === 1 ? '' : 's'} left in this cycle.`}
             </div>
             <div className="mt-0.5 text-muted">
@@ -251,8 +251,8 @@ export function CmeScreen() {
 
         {dueConfs.map((c) => (
           <div key={c.id} className="mb-5 flex flex-wrap items-center gap-3 rounded-[16px] border border-violet/50 bg-violet/[0.10] px-5 py-4">
-            <div className="min-w-0 flex-1 text-[13.5px]">
-              <div className="font-semibold text-ink">You attended {c.name}. Log it?</div>
+            <div className="min-w-0 flex-1 text-[13px]">
+              <div className="font-medium text-ink">You attended {c.name}. Log it?</div>
               <div className="mt-0.5 text-muted">
                 {formatSpan(c.startDate, c.endDate)} · {c.organisation}. Enter the hours from your certificate.
               </div>
@@ -260,14 +260,14 @@ export function CmeScreen() {
             <button
               type="button"
               onClick={() => startLogging(c)}
-              className="min-h-[44px] rounded-[10px] bg-violet px-4 text-[13px] font-semibold text-white hover:bg-violet-deep"
+              className="min-h-[44px] rounded-[10px] bg-violet-deep px-4 text-[13px] font-medium text-white hover:bg-violet-press"
             >
               Log it
             </button>
             <button
               type="button"
               onClick={() => updateConf(c.id, 'dismissed')}
-              className="min-h-[44px] rounded-[10px] border border-line px-3 text-[13px] font-semibold text-muted hover:text-ink"
+              className="min-h-[44px] rounded-[10px] border border-line px-3 text-[13px] font-medium text-muted hover:text-ink"
             >
               Not now
             </button>
@@ -300,20 +300,20 @@ export function CmeScreen() {
           </div>
 
           <div className="mt-5 flex flex-wrap items-baseline gap-x-6 gap-y-1">
-            <div className="font-display text-[34px] font-semibold text-ink">
+            <div className="font-display text-[36px] font-medium text-ink">
               {summary.total}
               <span className="ml-1.5 font-sans text-[14px] text-muted-2">{target.hours > 0 ? `of ${target.hours} h` : 'hours'}</span>
             </div>
             <div className="text-[13px] text-muted">{summary.accredited} h accredited</div>
             {summary.remaining !== null && (
-              <div className={cn('text-[13px] font-semibold', summary.remaining === 0 ? 'text-teal' : 'text-amber')}>
+              <div className={cn('text-[13px] font-medium', summary.remaining === 0 ? 'text-teal' : 'text-amber')}>
                 {summary.remaining === 0 ? 'Target met' : `${summary.remaining} h to go`}
               </div>
             )}
           </div>
           {summary.percent !== null && (
             <div className="mt-3 h-2.5 overflow-hidden rounded-full bg-steel" role="progressbar" aria-valuenow={summary.percent} aria-valuemin={0} aria-valuemax={100}>
-              <div className={cn('h-full rounded-full', summary.percent >= 100 ? 'bg-teal' : 'bg-violet')} style={{ width: `${summary.percent}%` }} />
+              <div className={cn('h-full rounded-full', summary.percent >= 100 ? 'bg-teal' : 'bg-violet-deep')} style={{ width: `${summary.percent}%` }} />
             </div>
           )}
           {Object.keys(summary.byType).length > 0 && (
@@ -325,12 +325,12 @@ export function CmeScreen() {
               ))}
             </div>
           )}
-          {!cycleSet && <p className="mt-3 text-[12px] text-muted-2">No cycle dates set — every activity counts.</p>}
+          {!cycleSet && <p className="mt-3 text-[12px] text-muted-2">No cycle dates set, so every activity counts.</p>}
         </section>
 
         <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-[360px_1fr]">
           <section ref={formRef} className="scroll-mt-24 space-y-3.5 rounded-[20px] border border-line bg-navy-2 p-6">
-            <h3 className="font-display text-[19px] font-semibold">Log an activity</h3>
+            <h3 className="font-display text-[18px] font-medium">Log an activity</h3>
             <label className="block">
               <Label>Date</Label>
               <DateInput value={date} max={todayISO()} onChange={(v) => setDate(v)} className={inputCls} />
@@ -364,7 +364,7 @@ export function CmeScreen() {
               aria-pressed={accredited}
               onClick={() => setAccredited((v) => !v)}
               className={cn(
-                'min-h-[44px] w-full rounded-[10px] border px-3 text-[13px] font-semibold transition-colors',
+                'min-h-[44px] w-full rounded-[10px] border px-3 text-[13px] font-medium transition-colors',
                 accredited ? 'border-teal bg-teal/[0.14] text-teal' : 'border-line bg-navy text-muted',
               )}
             >
@@ -394,18 +394,18 @@ export function CmeScreen() {
                 <button
                   type="button"
                   onClick={() => formFile.current?.click()}
-                  className="min-h-[44px] w-full rounded-[10px] border border-dashed border-line bg-navy px-3 text-[13px] font-semibold text-muted hover:border-violet hover:text-ink"
+                  className="min-h-[44px] w-full rounded-[10px] border border-dashed border-line bg-navy px-3 text-[13px] font-medium text-muted hover:border-violet hover:text-ink"
                 >
                   Add a photo of the certificate
                 </button>
               )}
-              <p className="mt-1.5 text-[11.5px] text-muted-2">Photos stay on this device and are not synced.</p>
+              <p className="mt-1.5 text-[12px] text-muted-2">Photos stay on this device and are not synced.</p>
             </div>
             <button
               type="button"
               onClick={add}
               disabled={!canAdd}
-              className="w-full rounded-[11px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-40"
+              className="w-full rounded-[10px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press disabled:opacity-40"
             >
               Add activity
             </button>
@@ -417,21 +417,21 @@ export function CmeScreen() {
                 <button
                   type="button"
                   onClick={() => setPrintError(!printDocument('CME / CPD record', body(), CERT_CSS))}
-                  className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-2.5 text-[13.5px] font-semibold text-ink hover:border-violet"
+                  className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-2.5 text-[13px] font-medium text-ink hover:border-violet"
                 >
                   Print record
                 </button>
                 <button
                   type="button"
                   onClick={() => setPrintError(!saveDocument('CME / CPD record', body(), CERT_CSS, `cpd-record-${todayISO()}`))}
-                  className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-2.5 text-[13.5px] font-semibold text-ink hover:border-teal"
+                  className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-2.5 text-[13px] font-medium text-ink hover:border-teal"
                 >
                   Save record
                 </button>
                 <button
                   type="button"
                   onClick={exportCsv}
-                  className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy-2 py-2.5 text-[13.5px] font-semibold text-ink hover:border-teal"
+                  className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy-2 py-2.5 text-[13px] font-medium text-ink hover:border-teal"
                 >
                   Spreadsheet
                 </button>
@@ -461,7 +461,7 @@ export function CmeScreen() {
                   return (
                     <article key={a.id} className={cn('flex items-center gap-3 rounded-[14px] border border-line bg-navy-2 p-4', !counted && 'opacity-50')}>
                       <div className="min-w-0 flex-1">
-                        <div className="truncate text-[14.5px] font-semibold">{a.title}</div>
+                        <div className="truncate text-[14px] font-medium">{a.title}</div>
                         <div className="mt-0.5 text-[12px] text-muted-2">
                           {a.date} · {CME_TYPE_LABEL[a.type]}
                           {a.provider && ` · ${a.provider}`}
@@ -518,18 +518,18 @@ export function CmeScreen() {
           onClick={() => setViewing(null)}
         >
           <div className="flex items-center gap-3 py-3" onClick={(e) => e.stopPropagation()}>
-            <div className="min-w-0 flex-1 truncate text-[14.5px] font-semibold">{viewing.title}</div>
+            <div className="min-w-0 flex-1 truncate text-[14px] font-medium">{viewing.title}</div>
             <button
               type="button"
               onClick={() => removeCert(viewing.id)}
-              className="min-h-[44px] rounded-[10px] border border-line px-3 text-[13px] font-semibold text-muted hover:border-crimson hover:text-crimson"
+              className="min-h-[44px] rounded-[10px] border border-line px-3 text-[13px] font-medium text-muted hover:border-crimson hover:text-crimson"
             >
               Remove
             </button>
             <button
               type="button"
               onClick={() => setViewing(null)}
-              className="min-h-[44px] rounded-[10px] bg-violet px-4 text-[13px] font-semibold text-white"
+              className="min-h-[44px] rounded-[10px] bg-violet-deep px-4 text-[13px] font-medium text-white"
             >
               Done
             </button>

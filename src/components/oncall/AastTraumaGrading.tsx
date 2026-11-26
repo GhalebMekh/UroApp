@@ -29,13 +29,13 @@ export function AastTraumaGrading() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">AAST injury grading</h3>
-      <p className="mb-[18px] text-[13px] text-muted-2">
+      <h3 className="font-display text-[20px] font-medium">AAST injury grading</h3>
+      <p className="mb-5 text-[13px] text-muted-2">
         Organ Injury Scale for genitourinary trauma — {scale.edition}
       </p>
 
       {/* Organ selector */}
-      <div className="mb-[18px] flex flex-wrap gap-2">
+      <div className="mb-5 flex flex-wrap gap-2">
         {AAST_SCALES.map((s) => (
           <button
             key={s.organ}
@@ -45,7 +45,7 @@ export function AastTraumaGrading() {
               setGrade(null);
             }}
             className={cn(
-              'min-h-[44px] flex-1 rounded-[10px] border px-3.5 py-2 text-[13px] font-semibold transition-colors',
+              'min-h-[44px] flex-1 rounded-[10px] border px-3.5 py-2 text-[13px] font-medium transition-colors',
               s.organ === organ
                 ? 'border-violet bg-violet/[0.18] text-violet-soft'
                 : 'border-line bg-navy text-muted hover:border-violet',
@@ -76,7 +76,7 @@ export function AastTraumaGrading() {
             >
               <span
                 className={cn(
-                  'mt-px min-w-[34px] shrink-0 font-display text-[19px] font-semibold',
+                  'mt-px min-w-[36px] shrink-0 font-display text-[18px] font-medium',
                   on ? band.text : 'text-muted-2',
                 )}
               >
@@ -85,7 +85,7 @@ export function AastTraumaGrading() {
               <span className="flex-1 space-y-1.5">
                 {entry.criteria.map((c) => (
                   <span key={c.label} className="block">
-                    <span className="block text-[13.5px] text-ink">{c.label}</span>
+                    <span className="block text-[13px] text-ink">{c.label}</span>
                     {c.detail && (
                       <span className="block text-[12px] text-muted-2">{c.detail}</span>
                     )}
@@ -101,12 +101,12 @@ export function AastTraumaGrading() {
       {selected && accent && (
         <div
           className={cn(
-            'mt-[18px] rounded-[14px] border bg-steel px-[18px] py-[15px]',
+            'mt-5 rounded-[14px] border bg-steel px-5 py-4',
             accent.border,
           )}
         >
           <div className="flex items-baseline gap-3.5">
-            <div className={cn('min-w-[64px] font-display text-[32px] font-semibold', accent.text)}>
+            <div className={cn('min-w-[64px] font-mono text-[32px] font-medium', accent.text)}>
               {ROMAN[selected.grade]}
             </div>
             <div className="text-[13px] text-muted">{selected.implication}</div>
@@ -115,13 +115,13 @@ export function AastTraumaGrading() {
       )}
 
       {/* Grading rules */}
-      <div className="mt-[18px]">
-        <div className="mb-2 text-[12px] font-semibold uppercase tracking-[0.1em] text-amber">
+      <div className="mt-5">
+        <div className="mb-2 text-[12px] font-medium text-amber">
           Grading rules
         </div>
         <ul className="space-y-1.5">
           {scale.rules.map((r) => (
-            <li key={r} className="flex gap-2.5 text-[12.5px] text-muted-2">
+            <li key={r} className="flex gap-2.5 text-[12px] text-muted-2">
               <span aria-hidden="true" className="text-muted-2">
                 &middot;
               </span>

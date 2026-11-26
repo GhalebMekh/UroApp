@@ -38,7 +38,7 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
             const shown = !layout.hidden.includes(card);
             return (
               <li key={card} className="flex items-center gap-2 rounded-[12px] border border-line bg-navy px-3 py-1.5">
-                <span className={cn('flex-1 text-[14.5px] font-semibold', !shown && 'text-muted line-through')}>
+                <span className={cn('flex-1 text-[14px] font-medium', !shown && 'text-muted line-through')}>
                   {CARD_LABEL[card]}
                 </span>
                 <button type="button" aria-label={`Move ${CARD_LABEL[card]} up`} disabled={i === 0} className={btn}
@@ -55,8 +55,8 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
                   }
                   className="grid min-h-[44px] w-14 shrink-0 place-items-center"
                 >
-                  <span className={cn('relative h-7 w-12 rounded-full transition-colors', shown ? 'bg-violet' : 'bg-steel')}>
-                    <span className={cn('absolute top-0.5 h-6 w-6 rounded-full bg-white transition-all', shown ? 'left-[22px]' : 'left-0.5')} />
+                  <span className={cn('relative h-7 w-12 rounded-full transition-colors', shown ? 'bg-violet-deep' : 'bg-steel')}>
+                    <span className={cn('absolute top-0.5 h-6 w-6 rounded-full bg-white transition-[color,background-color,border-color,opacity,transform]', shown ? 'left-6' : 'left-0.5')} />
                   </span>
                 </button>
               </li>
@@ -66,7 +66,7 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
       </DashCard>
 
       <DashCard title={`Quick access · ${quick.length} of ${MAX_QUICK}`}>
-        <h3 className="mb-2 text-[13px] font-semibold text-ink">On your Home</h3>
+        <h3 className="mb-2 text-[13px] font-medium text-ink">On your Home</h3>
         {quick.length === 0 && <p className="mb-2 text-[13px] text-muted">Nothing pinned yet.</p>}
         <ul className="grid gap-2">
           {quick.map((id, i) => {
@@ -75,7 +75,7 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
             return (
               <li key={id} className="flex items-center gap-2 rounded-[12px] border border-violet/60 bg-violet/[0.12] px-3 py-1">
                 <span className="text-[18px] text-violet-soft"><t.Icon /></span>
-                <span className="flex-1 text-[14px] font-semibold">{t.label}</span>
+                <span className="flex-1 text-[14px] font-medium">{t.label}</span>
                 <button type="button" aria-label={`Move ${t.label} up`} disabled={i === 0} className={btn}
                   onClick={() => save((l) => ({ quick: moveItem(pinned(l), id, -1) }))}>↑</button>
                 <button type="button" aria-label={`Move ${t.label} down`} disabled={i === quick.length - 1} className={btn}
@@ -87,8 +87,8 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
           })}
         </ul>
 
-        <h3 className="mb-1 mt-5 text-[13px] font-semibold text-ink">Add a shortcut</h3>
-        <p className="mb-2 text-[12.5px] text-muted">
+        <h3 className="mb-1 mt-5 text-[13px] font-medium text-ink">Add a shortcut</h3>
+        <p className="mb-2 text-[12px] text-muted">
           {quick.length >= MAX_QUICK
             ? `All ${MAX_QUICK} places are used. Remove one above (✕) to add another.`
             : 'Tap + to add it to your Home.'}
@@ -100,7 +100,7 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
               type="button"
               disabled={quick.length >= MAX_QUICK}
               onClick={() => save((l) => ({ quick: toggleTile(pinned(l), id) }))}
-              className="flex min-h-[48px] items-center gap-2 rounded-[12px] border border-line bg-navy px-3 text-left text-[13.5px] font-semibold text-muted transition-colors hover:text-ink disabled:opacity-40"
+              className="flex min-h-[48px] items-center gap-2 rounded-[12px] border border-line bg-navy px-3 text-left text-[13px] font-medium text-muted transition-colors hover:text-ink disabled:opacity-40"
             >
               <span className="text-[18px] text-violet-soft"><Icon /></span>
               <span className="flex-1">{label}</span>
@@ -111,7 +111,7 @@ export function HomeEditor({ layout, quick, onDone }: { layout: HomeLayout; quic
         <button
           type="button"
           onClick={() => setHomeLayout(DEFAULT_LAYOUT)}
-          className="mt-4 min-h-[44px] self-start text-[13px] font-semibold text-muted underline-offset-2 hover:text-ink hover:underline"
+          className="mt-4 min-h-[44px] self-start text-[13px] font-medium text-muted underline-offset-2 hover:text-ink hover:underline"
         >
           Reset Home to default
         </button>

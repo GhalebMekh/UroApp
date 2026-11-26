@@ -39,7 +39,20 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
 - Commit messages: imperative mood, ≤ 72 chars.
 
 ## Design system (match exactly — do not redesign without being asked)
-- Ground: dark navy `#0A1628`; cards `#0F1F38`; steel `#1B2B45`; lines `#26384f`
+- **Read `docs/DESIGN.md` before any UI work** — the design brief from the unslop + DeSlop passes
+  (direction, bold move = mono readout figures, tokens, voice, structure rules).
+- **Unslop pass (owner, 2026-11-22, for 1.1)** — direction: product = offline reference and shift tool
+  for urology residents/urologists in the Gulf; character = exact, calm, on-shift; world = the
+  hospital at night. Rules that follow from it: quiet chrome (no hue-to-hue gradients, glows,
+  coloured shadows; the header bubbles are the one owner-approved exception); violet is the ONE accent (selection, primary action) — filled buttons
+  use `violet-deep` so white text reaches 4.5:1; text sizes from 11/12/13/14/15/16/18/20/24/28/32;
+  spacing and radii on a 4px grid; weights 400/500 (600 rare), no uppercase tracked labels, no
+  trailing periods on titles/labels, no greeting headlines; icons 1.5 stroke. Two "moments" carry
+  colour: the calculator result (mono score + 3-step risk bar, `ResultRow`) and Home's On-call card.
+  Signature: the mono source line (`CitationNote`) under every clinical value. The tab-bar spring
+  rebound is kept on purpose (owner).
+- Ground (greyer ink-navy since the unslop pass): page `#0C1220`; cards `#121A29`; steel
+  `#1A2333`; lines `#232C3C`; text ink `#ECEFF4` / muted `#A3AAB8` / muted-2 `#7D8597`
 - Signature accent: violet `#8B7CF6` (oncology). Risk colours are muted clinical tones (owner
   2026-10-31, replacing saturated red/teal as "looking AI-generated"): `crimson` token = brick
   `#C2655A` (risk/emergency only), `teal` token = sage `#7FA88A` (low), `amber` token = ochre
@@ -51,17 +64,20 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
   endourology/stones blue, functional/LUTS sky, andrology lime, paediatric pink,
   reconstruction/trauma fuchsia, general slate. For navigation/headings/category chips only —
   never on a result; teal/amber/crimson stay reserved for risk.
-- Every screen opens on a gradient header (owner 2026-10-27): `components/PageHero.tsx` —
+- Every screen opens on a coloured header (owner 2026-10-27; kept after the unslop pass at the
+  owner's request, 2026-11-22: one hue per tone, no hue-to-hue blend, two soft bubbles that drift
+  and lean toward a touch): `components/PageHero.tsx` —
   `PageHero` (eyebrow, title, lede, plus controls such as `HeroSearch`/`HeroTabs`/`HeroChips`)
   and `PageBody`/`PageSheet` (content on a navy sheet with rounded top corners overlapping the
   header). Tones: `violet` default, `emergency` (on-call), `pediatric`. Home uses `HeroShell`
-  directly with greeting, profile button and search, and its cards overlap the band. The top
+  directly with the date as title (no greeting), profile button and search; its cards overlap
+  the band. The top
   bar is clear over the header until the page scrolls. New screens must use PageHero, not their
   own eyebrow/h2. Navy stays the app background (owner kept it).
 - Glass (owner 2026-10-31, after iOS 26 Liquid Glass): `.glass` / `.glass-clear` in index.css,
   for the navigation layer only — floating pill tab bar, top bar and its buttons. Content cards
   stay solid for contrast. Solid fallback under Reduce Transparency; keep it.
-- Icons: inline stroke SVGs in `src/components/icons.tsx` (1em, currentColor, 1.8 stroke).
+- Icons: inline stroke SVGs in `src/components/icons.tsx` (1em, currentColor, 1.5 stroke).
   Do NOT use emoji as UI icons.
 - Risk categories are always color-coded low=teal / moderate=amber / high=crimson
 

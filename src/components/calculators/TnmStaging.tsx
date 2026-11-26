@@ -19,7 +19,7 @@ export function TnmStaging() {
 
   return (
     <section className="rounded-[20px] border border-line bg-navy-2 p-6">
-      <h3 className="font-display text-[21px] font-semibold">TNM quick staging</h3>
+      <h3 className="font-display text-[20px] font-medium">TNM quick staging</h3>
       <p className="mb-4 text-[13px] text-muted-2">
         AJCC 8th edition stage groups — tap through the categories
       </p>
@@ -32,7 +32,7 @@ export function TnmStaging() {
             type="button"
             onClick={() => selectCancer(c.id)}
             className={cn(
-              'min-h-[44px] rounded-[9px] px-2 py-2 text-[12px] font-semibold transition-colors',
+              'min-h-[44px] rounded-[8px] px-2 py-2 text-[12px] font-medium transition-colors',
               c.id === cancerId ? 'bg-violet/[0.18] text-violet-soft' : 'text-muted hover:text-ink',
             )}
           >

@@ -74,7 +74,7 @@ export function ArticlesScreen() {
               <button
                 type="button"
                 onClick={() => void load()}
-                className="ml-2 font-semibold text-violet-soft hover:underline"
+                className="ml-2 font-medium text-violet-soft hover:underline"
               >
                 Try again
               </button>
@@ -82,7 +82,7 @@ export function ArticlesScreen() {
           )}
 
           {status === 'ready' && articles.length === 0 && (
-            <p className="text-[14px] text-muted">Nothing in this subspecialty this week — check back next week.</p>
+            <p className="text-[14px] text-muted">Nothing in this subspecialty this week. Check back next week.</p>
           )}
 
           {articles.map((a) => {
@@ -90,9 +90,9 @@ export function ArticlesScreen() {
             const facts = [a.studyType, a.size, a.journal, a.pubDate.slice(0, 4)].filter(Boolean).join(' · ');
             return (
               <article key={a.pmid} className="rounded-[16px] border border-line bg-navy-2 p-5">
-                <h3 className="font-display text-[16px] font-semibold leading-snug text-ink">{a.question ?? a.title}</h3>
-                <p className="mt-1.5 text-[12.5px] font-semibold text-violet-soft">{facts}</p>
-                {a.question && <p className="mt-2 line-clamp-2 text-[12.5px] text-muted">{a.title}</p>}
+                <h3 className="font-display text-[16px] font-medium leading-snug text-ink">{a.question ?? a.title}</h3>
+                <p className="mt-1.5 text-[12px] font-medium text-violet-soft">{facts}</p>
+                {a.question && <p className="mt-2 line-clamp-2 text-[12px] text-muted">{a.title}</p>}
                 <p className="mt-1 text-[12px] text-muted-2">
                   {a.authors} · {formatDate(a.pubDate)} · PMID {a.pmid}
                 </p>
@@ -100,7 +100,7 @@ export function ArticlesScreen() {
                   href={a.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-semibold text-violet-soft hover:text-ink"
+                  className="mt-2 inline-flex min-h-[44px] items-center gap-1.5 text-[13px] font-medium text-violet-soft hover:text-ink"
                 >
                   Open in PubMed
                   <ExternalLinkIcon className="h-3.5 w-3.5" />

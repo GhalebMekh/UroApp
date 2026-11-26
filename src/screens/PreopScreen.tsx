@@ -34,9 +34,9 @@ import {
 } from '@/lib/preop';
 
 const inputCls =
-  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-[11px] text-[13.5px] text-ink outline-none focus:border-violet';
-const fieldLabel = 'mb-[7px] block text-[13px] font-semibold text-muted';
-const action = 'min-h-[44px] rounded-[10px] px-3 text-[13px] font-semibold transition-colors';
+  'min-h-[44px] w-full rounded-[10px] border border-line bg-navy px-3 py-3 text-[13px] text-ink outline-none focus:border-violet';
+const fieldLabel = 'mb-2 block text-[13px] font-medium text-muted';
+const action = 'min-h-[44px] rounded-[10px] px-3 text-[13px] font-medium transition-colors';
 
 /** The operation picker's value for "type my own". */
 const OTHER = '__other';
@@ -197,29 +197,29 @@ export function PreopScreen() {
           <button
             type="button"
             onClick={() => setEditing('new')}
-            className="min-h-[48px] w-full rounded-[12px] bg-violet py-3 text-[14.5px] font-semibold text-white transition hover:bg-violet-deep"
+            className="min-h-[48px] w-full rounded-[12px] bg-violet-deep py-3 text-[14px] font-medium text-white transition hover:bg-violet-press"
           >
             + Add a case
           </button>
         )}
 
-        <p className="text-[12.5px] leading-relaxed text-muted-2">
+        <p className="text-[12px] leading-relaxed text-muted-2">
           {notificationsSupported()
             ? `If anything is still unticked, you get one notification at ${PREOP_HOUR}:00 on the day of surgery. `
             : 'Reminders arrive in the UroApp iPhone and iPad app. '}
           Cases delete themselves {KEEP_DAYS} days after the operation. Stored only on this device and never backed up.
-          Initials only — no names or record numbers. Swipe a case left to delete it, or press and hold it for Edit and
+          Initials only, no names or record numbers. Swipe a case left to delete it, or press and hold it for Edit and
           Delete.
         </p>
         {denied && (
-          <p className="text-[12.5px] text-amber">
+          <p className="text-[12px] text-amber">
             Notifications are off for UroApp, so no reminders will arrive. Turn them on in Settings → Notifications →
             UroApp.
           </p>
         )}
 
         {loaded && upcoming.length === 0 && editing !== 'new' && (
-          <div className="rounded-[14px] border border-line bg-navy-2 px-5 py-8 text-center text-[13.5px] text-muted">
+          <div className="rounded-[14px] border border-line bg-navy-2 px-5 py-8 text-center text-[13px] text-muted">
             No cases yet. Add tomorrow’s list and tick each item off as it’s done.
           </div>
         )}
@@ -232,7 +232,7 @@ export function PreopScreen() {
               type="button"
               onClick={() => setShowPast((v) => !v)}
               aria-expanded={showPast}
-              className="min-h-[44px] text-[13px] font-semibold text-violet-soft hover:text-ink"
+              className="min-h-[44px] text-[13px] font-medium text-violet-soft hover:text-ink"
             >
               {showPast ? 'Hide' : 'Show'} done ({past.length})
             </button>
@@ -245,10 +245,10 @@ export function PreopScreen() {
             type="button"
             onClick={() => setCustomising((v) => !v)}
             aria-expanded={customising}
-            className="flex min-h-[48px] w-full items-center justify-between px-4 text-left text-[14px] font-semibold text-ink"
+            className="flex min-h-[48px] w-full items-center justify-between px-4 text-left text-[14px] font-medium text-ink"
           >
             Customise the general list
-            <span className="text-[12.5px] font-normal text-muted-2">{generalItems(store).length} items</span>
+            <span className="text-[12px] font-normal text-muted-2">{generalItems(store).length} items</span>
           </button>
           {customising && <Customise store={store} onChange={update} />}
         </section>
@@ -260,8 +260,8 @@ export function PreopScreen() {
 function Stat({ label, value, tone }: { label: string; value: number; tone?: string }) {
   return (
     <div className="rounded-[14px] border border-line bg-navy-2 p-3.5">
-      <div className="text-[10.5px] uppercase tracking-[0.08em] text-muted-2">{label}</div>
-      <div className={cn('mt-1 font-display text-[24px] font-semibold', tone)}>{value}</div>
+      <div className="text-[12px] text-muted-2">{label}</div>
+      <div className={cn('mt-1 font-mono text-[24px] font-medium', tone)}>{value}</div>
     </div>
   );
 }
@@ -311,7 +311,7 @@ function CaseCard({
           className="flex w-full select-none items-start justify-between gap-3 bg-navy-2 p-4 text-left [-webkit-touch-callout:none]"
         >
           <div className="min-w-0">
-            <div className="text-[15px] font-semibold text-ink">
+            <div className="text-[15px] font-medium text-ink">
               {c.label ? `Patient ${c.label}` : 'Case'} · <span className="font-normal">{c.operation}</span>
             </div>
             {c.note && <div className="mt-0.5 text-[13px] text-muted">{c.note}</div>}
@@ -321,12 +321,12 @@ function CaseCard({
             </div>
             <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-steel">
               <div
-                className="h-full rounded-full bg-violet transition-[width]"
+                className="h-full rounded-full bg-violet-deep transition-[width]"
                 style={{ width: total ? `${(done / total) * 100}%` : 0 }}
               />
             </div>
           </div>
-          <span className={cn('shrink-0 rounded-full border px-2.5 py-0.5 text-[11.5px] font-semibold', chip)}>
+          <span className={cn('shrink-0 rounded-full border px-2.5 py-0.5 text-[12px] font-medium', chip)}>
             {isPast ? 'Done' : left === 0 ? 'Ready' : `${left} open`}
           </span>
         </button>
@@ -337,7 +337,7 @@ function CaseCard({
           <ItemList items={general} ticked={ticked} onTick={onTick} />
           {proc.items.length > 0 && (
             <>
-              <h4 className="mb-1 mt-4 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted-2">
+              <h4 className="mb-1 mt-4 text-[12px] font-medium text-muted-2">
                 For this operation
               </h4>
               <ItemList items={proc.items} ticked={ticked} onTick={onTick} />
@@ -390,13 +390,13 @@ function ItemList({
             >
               <span
                 className={cn(
-                  'mt-[1px] flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-[7px] border transition-colors',
-                  on ? 'border-violet bg-violet text-white' : 'border-line bg-navy',
+                  'mt-[1px] flex h-[24px] w-[24px] shrink-0 items-center justify-center rounded-[8px] border transition-colors',
+                  on ? 'border-violet bg-violet-deep text-white' : 'border-line bg-navy',
                 )}
               >
                 {on && <CheckIcon className="text-[15px]" />}
               </span>
-              <span className={cn('text-[13.5px] leading-snug', on ? 'text-muted-2 line-through' : 'text-ink')}>
+              <span className={cn('text-[13px] leading-snug', on ? 'text-muted-2 line-through' : 'text-ink')}>
                 {it.text}
               </span>
             </button>
@@ -440,8 +440,8 @@ function CaseForm({
     d.label.trim() !== '' && d.operation.trim() !== '' && d.attending.trim() !== '' && d.date !== '' && !idWarning;
 
   return (
-    <section className="rounded-[18px] border border-violet/50 bg-navy-2 p-5">
-      <h3 className="mb-4 font-display text-[18px] font-semibold">{title}</h3>
+    <section className="rounded-[16px] border border-violet/50 bg-navy-2 p-5">
+      <h3 className="mb-4 font-display text-[18px] font-medium">{title}</h3>
 
       <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2">
         <label className="block">
@@ -509,7 +509,7 @@ function CaseForm({
           className={cn(inputCls, 'mt-2')}
         />
       )}
-      <p className="mt-2 text-[11.5px] text-muted-2">
+      <p className="mt-2 text-[12px] text-muted-2">
         The app’s procedures add their own items from the cited “Before theatre” section; any other operation gets the
         general list.
       </p>
@@ -542,8 +542,8 @@ function CaseForm({
       </label>
 
       {idWarning && (
-        <p role="alert" className="mt-3 text-[12.5px] text-amber">
-          That looks like a record or ID number. Use initials only — this list holds no identifiers.
+        <p role="alert" className="mt-3 text-[12px] text-amber">
+          That looks like a record or ID number. Use initials only; this list holds no identifiers.
         </p>
       )}
 
@@ -560,14 +560,14 @@ function CaseForm({
             })
           }
           disabled={!canSave}
-          className="min-h-[44px] flex-1 rounded-[11px] bg-violet px-3 py-3 text-[14px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-40"
+          className="min-h-[44px] flex-1 rounded-[10px] bg-violet-deep px-3 py-3 text-[14px] font-medium text-white transition hover:bg-violet-press disabled:opacity-40"
         >
           Save
         </button>
         <button
           type="button"
           onClick={onCancel}
-          className="min-h-[44px] flex-1 rounded-[11px] border border-line bg-navy px-3 py-2.5 text-[14px] font-semibold text-ink transition-colors hover:border-violet"
+          className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy px-3 py-2.5 text-[14px] font-medium text-ink transition-colors hover:border-violet"
         >
           Cancel
         </button>
@@ -597,7 +597,7 @@ function Customise({
 
   return (
     <div className="border-t border-line px-4 pb-4 pt-2">
-      <p className="py-2 text-[12.5px] text-muted-2">Changes apply to every case. Hidden items come back with Show.</p>
+      <p className="py-2 text-[12px] text-muted-2">Changes apply to every case. Hidden items come back with Show.</p>
       <ul>
         {GENERAL_ITEMS.map((g) => {
           const off = hidden.has(g.id);
@@ -606,7 +606,7 @@ function Customise({
               key={g.id}
               className="flex min-h-[44px] items-center justify-between gap-3 border-b border-line/60 py-1.5"
             >
-              <span className={cn('text-[13.5px]', off ? 'text-muted-2 line-through' : 'text-ink')}>{g.text}</span>
+              <span className={cn('text-[13px]', off ? 'text-muted-2 line-through' : 'text-ink')}>{g.text}</span>
               <button
                 type="button"
                 onClick={() =>
@@ -627,7 +627,7 @@ function Customise({
             key={c.id}
             className="flex min-h-[44px] items-center justify-between gap-3 border-b border-line/60 py-1.5"
           >
-            <span className="text-[13.5px] text-ink">{c.text}</span>
+            <span className="text-[13px] text-ink">{c.text}</span>
             <button
               type="button"
               onClick={() =>
@@ -656,14 +656,14 @@ function Customise({
           type="button"
           onClick={add}
           disabled={!text.trim() || idWarning}
-          className="min-h-[44px] shrink-0 rounded-[10px] bg-violet px-4 text-[13.5px] font-semibold text-white transition hover:bg-violet-deep disabled:opacity-40"
+          className="min-h-[44px] shrink-0 rounded-[10px] bg-violet-deep px-4 text-[13px] font-medium text-white transition hover:bg-violet-press disabled:opacity-40"
         >
           Add
         </button>
       </div>
       {idWarning && (
-        <p role="alert" className="mt-2 text-[12.5px] text-amber">
-          That looks like a record or ID number. Items are shared by every case — no identifiers.
+        <p role="alert" className="mt-2 text-[12px] text-amber">
+          That looks like a record or ID number. Items are shared by every case, so no identifiers.
         </p>
       )}
     </div>

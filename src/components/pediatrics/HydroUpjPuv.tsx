@@ -80,9 +80,9 @@ export function HydroUpjPuv() {
             type="button"
             onClick={() => setOpen(t.id)}
             className={cn(
-              'min-h-[44px] flex-1 rounded-[10px] border px-3 py-2 text-[12.5px] transition-colors',
+              'min-h-[44px] flex-1 rounded-[10px] border px-3 py-2 text-[12px] transition-colors',
               t.id === open
-                ? 'border-violet bg-violet/[0.18] font-semibold text-violet-soft'
+                ? 'border-violet bg-violet/[0.18] font-medium text-violet-soft'
                 : 'border-line bg-navy text-muted hover:border-violet',
             )}
           >

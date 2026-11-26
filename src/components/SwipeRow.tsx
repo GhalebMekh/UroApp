@@ -124,7 +124,7 @@ export function SwipeRow({
             setOffset(0);
             onDelete();
           }}
-          className="w-full bg-steel text-[13.5px] font-semibold text-ink"
+          className="w-full bg-steel text-[13px] font-medium text-ink"
         >
           Delete
         </button>
@@ -163,7 +163,7 @@ export function SwipeRow({
               setMenu(false);
               onEdit();
             }}
-            className="min-h-[44px] flex-1 rounded-[10px] border border-violet bg-violet/[0.18] text-[13.5px] font-semibold text-violet-soft"
+            className="min-h-[44px] flex-1 rounded-[10px] border border-violet bg-violet/[0.18] text-[13px] font-medium text-violet-soft"
           >
             Edit
           </button>
@@ -174,7 +174,7 @@ export function SwipeRow({
               setMenu(false);
               onDelete();
             }}
-            className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy text-[13.5px] font-semibold text-ink"
+            className="min-h-[44px] flex-1 rounded-[10px] border border-line bg-navy text-[13px] font-medium text-ink"
           >
             Delete
           </button>
@@ -182,7 +182,7 @@ export function SwipeRow({
             type="button"
             role="menuitem"
             onClick={() => setMenu(false)}
-            className="min-h-[44px] rounded-[10px] px-3 text-[13.5px] font-semibold text-muted"
+            className="min-h-[44px] rounded-[10px] px-3 text-[13px] font-medium text-muted"
           >
             Cancel
           </button>
