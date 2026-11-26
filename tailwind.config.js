@@ -51,7 +51,10 @@ export default {
         // [dir="rtl"] rule in index.css.
         display: ['"Geist Variable"', 'system-ui', 'sans-serif'],
         sans: ['"Geist Variable"', 'system-ui', 'sans-serif'],
-        mono: ['"Geist Mono Variable"', 'ui-monospace', 'monospace'],
+        // Readout figures: Apple's system font (SF Pro on iPhone) with tabular
+        // figures from index.css (owner, 2026-11-26, replacing Geist Mono).
+        // The class keeps the name font-mono so every readout follows it.
+        mono: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Text"', 'system-ui', 'sans-serif'],
         arabic: ['"IBM Plex Sans Arabic"', '"Geeza Pro"', 'sans-serif'],
       },
       borderRadius: {

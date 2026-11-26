@@ -57,6 +57,8 @@ blueprint and the prioritized roadmap in `/docs/PRD_v2.md`.
   2026-10-31, replacing saturated red/teal as "looking AI-generated"): `crimson` token = brick
   `#C2655A` (risk/emergency only), `teal` token = sage `#7FA88A` (low), `amber` token = ochre
   `#C9A35A` (moderate). Change them in tailwind.config.js only — never hard-code hexes.
+- Readout figures (`font-mono` class) use Apple's system font, SF Pro, with tabular figures
+  (owner 2026-11-26, replacing Geist Mono); headings and UI stay Geist.
 - Type (owner change 2026-10-31): **Geist** for headings and UI, **Geist Mono** for numerics,
   bundled via Fontsource (replaced SF Pro + Inter + JetBrains Mono). Arabic/RTL text is forced to IBM Plex Sans Arabic (`font-arabic`) via the
   `[dir="rtl"]` rule in index.css.

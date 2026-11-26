@@ -12,7 +12,8 @@ first, then build it.
 - **Character.** Exact, calm, on-shift.
 - **World.** The hospital at night: theatre lights, monitor readouts, chart paper.
 - **One bold move: readout figures.** Every clinical number (scores, doses, ranges, counts) and
-  every source line is set in Geist Mono with tabular figures, like a monitor readout. Everything
+  every source line is set in Apple's system font (SF Pro; owner 2026-11-26, replacing Geist
+  Mono) with tabular figures, so numbers line up like a monitor readout. Everything
   else stays quiet around it.
 - **Moments** (the only places with rich colour):
   1. The calculator result: the score as a large mono figure over a three-step Low / Moderate /
@@ -20,7 +21,7 @@ first, then build it.
   2. Home's On-call card: the six emergencies, one tap from the first screen.
 - **Signature.** The mono source line under every clinical value (`CitationNote`):
   `Source · authors, journal year · PMID`, then the verify warning. Same style everywhere.
-- **What survives** (owner's earlier choices): violet as the accent, Geist / Geist Mono, the muted
+- **What survives** (owner's earlier choices): violet as the accent, Geist (SF Pro for readouts), the muted
   risk colours (brick, ochre, sage), the navy ground, glass on the navigation layer only, the
   tab-bar glide with its spring rebound (owner, from an iOS 26 recording), and the coloured
   section headers with moving bubbles (owner, 2026-11-22, after seeing them removed): violet
