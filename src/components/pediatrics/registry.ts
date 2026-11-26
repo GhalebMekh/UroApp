@@ -11,6 +11,7 @@ import { EnuresisPathway } from './EnuresisPathway';
 import { UdtPathway } from './UdtPathway';
 import { GmsScore } from './GmsScore';
 import { ScrotalPain } from './ScrotalPain';
+import { NeonatalVitals } from './NeonatalVitals';
 
 export type PediatricSection = 'hydro' | 'bladder' | 'genitalia' | 'ward';
 
@@ -41,6 +42,7 @@ export const PEDIATRIC_TOOLS: PediatricTool[] = [
   { id: 'scrotal-pain', title: 'Scrotal pain in children', section: 'genitalia', Component: ScrotalPain },
   { id: 'udt', title: 'Undescended testis', section: 'genitalia', Component: UdtPathway },
   { id: 'gms', title: 'GMS hypospadias score', section: 'genitalia', Component: GmsScore },
+  { id: 'neonatal-vitals', title: 'Neonatal vital signs', section: 'ward', Component: NeonatalVitals },
   { id: 'fluids', title: 'Maintenance fluids', section: 'ward', Component: PediatricFluids },
   { id: 'antibiotics', title: 'Antibiotic dosing', section: 'ward', Component: PediatricAntibiotics },
 ];

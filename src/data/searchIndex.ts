@@ -28,6 +28,7 @@ const kw = (...parts: string[]) => parts.join(' ').toLowerCase();
 
 /** Extra search terms for each pediatric tool (by registry id). */
 const PEDS_KEYWORDS: Record<string, string> = {
+  'neonatal-vitals': 'neonatal newborn neonate vital signs heart rate pulse breathing respiratory rate blood pressure hypertension urine output oliguria aki temperature hypothermia spo2 oxygen saturation cchd pulse oximetry preterm premature nicu',
   fluids: 'paediatric fluids holliday segar maintenance bolus weight',
   antibiotics: 'paediatric antibiotic uti spids dosing amoxicillin ceftriaxone gentamicin',
   sfu: 'sfu hydronephrosis grading fernbach',
