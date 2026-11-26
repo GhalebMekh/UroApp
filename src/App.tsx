@@ -31,6 +31,7 @@ import { OperativeRehearsalScreen } from '@/screens/OperativeRehearsalScreen';
 import { IntraopScenariosScreen } from '@/screens/IntraopScenariosScreen';
 import { DrugsScreen } from '@/screens/DrugsScreen';
 import { ArticlesScreen } from '@/screens/ArticlesScreen';
+import { TrialsScreen } from '@/screens/TrialsScreen';
 import { MoreScreen } from '@/screens/MoreScreen';
 import { PlansScreen } from '@/screens/PlansScreen';
 import { AppStoreLockScreen } from '@/screens/AppStoreLockScreen';
@@ -226,6 +227,11 @@ export default function App() {
           {currentScreen === 'articles' && (
             <ProGate feature="articles">
               <ArticlesScreen />
+            </ProGate>
+          )}
+          {currentScreen === 'trials' && (
+            <ProGate feature="trials">
+              <TrialsScreen />
             </ProGate>
           )}
           {currentScreen === 'plans' && <PlansScreen feature={plansFeature} onDone={goBack} />}

@@ -13,6 +13,7 @@ describe('tier map', () => {
       rehearsal: 'pro',
       scenarios: 'pro',
       articles: 'pro',
+      trials: 'pro',
       mdt: 'elite',
       cme: 'elite',
       audit: 'elite',

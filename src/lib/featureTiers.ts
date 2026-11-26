@@ -25,6 +25,7 @@ export type GatedFeature =
   | 'rehearsal'
   | 'scenarios'
   | 'articles'
+  | 'trials'
   | 'mdt'
   | 'cme'
   | 'audit';
@@ -39,6 +40,7 @@ export const FEATURE_TIER: Record<GatedFeature, Exclude<Tier, 'resident'>> = {
   rehearsal: 'pro',
   scenarios: 'pro',
   articles: 'pro',
+  trials: 'pro',
   mdt: 'elite',
   cme: 'elite',
   audit: 'elite',
@@ -54,6 +56,7 @@ export const FEATURE_LABEL: Record<GatedFeature, string> = {
   rehearsal: 'Operative rehearsal',
   scenarios: 'Intra-op scenarios',
   articles: 'Weekly reads',
+  trials: 'The landmark trials digest',
   mdt: 'MDT case sheets',
   cme: 'The CME / CPD tracker',
   audit: 'Your surgical audit',

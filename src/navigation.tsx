@@ -27,6 +27,7 @@ export type Screen =
   | 'scenarios'
   | 'drugs'
   | 'articles'
+  | 'trials'
   | 'plans'
   | 'more';
 
@@ -73,6 +74,7 @@ export const NAV_PARENT: Partial<Record<Screen, Screen>> = {
   pediatricTool: 'clinical',
   guidelines: 'academic',
   articles: 'academic',
+  trials: 'academic',
   conferences: 'academic',
   cme: 'academic',
   rehearsal: 'academic',

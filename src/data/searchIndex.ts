@@ -9,6 +9,7 @@ import { PROCEDURES } from './procedures';
 import { EMERGENCIES } from './oncall';
 import { RAD_SYSTEMS } from './radiology';
 import { GUIDELINES } from './guidelines';
+import { TRIALS } from './trials';
 
 export interface SearchItem {
   label: string;
@@ -85,6 +86,7 @@ export const SEARCH_INDEX: SearchItem[] = [
     pedsId: t.id,
     keywords: kw(t.title, PEDS_KEYWORDS[t.id] ?? ''),
   })),
+  { label: 'Landmark trials', sub: 'Academic · trials digest', screen: 'trials', keywords: kw('landmark trials digest rct evidence journal club', ...TRIALS.map((t) => t.name)) },
   { label: 'TWIST score', sub: 'On-call · torsion', screen: 'residency', link: { residency: { section: 'oncall', emergency: 'torsion' } }, keywords: kw('twist testicular torsion score barbosa') },
   { label: 'Operative logbook', sub: 'OR · Logbook', screen: 'residency', link: { residency: { section: 'or', orTab: 'logbook' } }, keywords: kw('logbook surgical cases log role') },
   { label: 'Stent register', sub: 'OR · Stents', screen: 'residency', link: { residency: { section: 'or', orTab: 'stents' } }, keywords: kw('stent register dj double j ureteric jj removal exchange forgotten reminder due overdue') },

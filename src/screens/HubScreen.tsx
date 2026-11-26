@@ -58,6 +58,7 @@ const CLINICAL_ITEMS: HubItem[] = [
 const ACADEMIC_ITEMS: HubItem[] = [
   { id: 'guidelines', label: 'Guidelines', note: 'AUA · EAU' },
   { id: 'articles', label: 'Weekly reads', note: 'PubMed · weekly' },
+  { id: 'trials', label: 'Landmark trials', note: 'ProtecT · CARMENA · POUT' },
   { id: 'conferences', label: 'Conferences', note: 'Dates · calendar' },
   { id: 'cme', label: 'CME / CPD tracker', note: 'Hours · cycle' },
   { id: 'rehearsal', label: 'Operative rehearsal', note: 'Step drill' },
